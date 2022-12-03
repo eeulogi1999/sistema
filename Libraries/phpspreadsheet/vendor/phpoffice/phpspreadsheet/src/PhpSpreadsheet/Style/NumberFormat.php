@@ -31,8 +31,8 @@ class NumberFormat extends Supervisor
     const FORMAT_DATE_XLSX16 = 'd-mmm';
     const FORMAT_DATE_XLSX17 = 'mmm-yy';
     const FORMAT_DATE_XLSX22 = 'm/d/yy h:mm';
-    const FORMAT_DATE_DATETIMESQL = 'yyyy-mm-dd h:mm';
-    const FORMAT_DATE_DATETIME = 'd/m/yy h:mm';
+    const FORMAT_DATE_DATETIMESQL = 'yyyy-mm-dd h:mm:ss';
+    const FORMAT_DATE_DATETIME = 'd/m/yy h:mm:ss';
     const FORMAT_DATE_TIME1 = 'h:mm AM/PM';
     const FORMAT_DATE_TIME2 = 'h:mm:ss AM/PM';
     const FORMAT_DATE_TIME3 = 'h:mm';

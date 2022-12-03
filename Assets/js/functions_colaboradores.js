@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
-    $('#col_gpe_id').loadOptions('personas', ['gpe_nombre']);
+    $('#col_gpe_id').loadOptions('personas', ['gpe_nombre','gpe_apellidos']);
     $('#col_gar_id').loadOptions('areas', ['gar_nombre']);
     $('#col_est_id').loadOptions('establecimientos', ['est_nombre']);
     $("#tab_gpe").click(function(e) {
@@ -58,4 +58,19 @@ async function setGpe() {
         await $('#col_gpe_id').loadOptions('personas',['gpe_nombre','gpe_apellidos']);
         $('#col_gpe_id').val(gpe.gpe_id); 
     }
+}
+async function setGar() {
+    gar = await set('gar',null,null,true);
+    resetModal('gar');
+    if (gar.status) {
+        await $('#col_gar_id').loadOptions('areas', ['gar_nombre']);;
+        $('#col_gar_id').val(gar.gar_id); 
+    }
+}
+
+function openModalCol() {
+    openModal('col');
+    $("#col_est_id").val(1);
+    //col_gar_id
+    $("#col_puesto").val(''); 
 }

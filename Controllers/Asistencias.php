@@ -43,13 +43,16 @@ class Asistencias extends Controllers{
         die();
     }
     public function importAsi(){
-        $destino = 'Assets/excel/asi_xls.xls';   
+        $destino = 'Assets/excel/asi_xls.xls';  
         $move = move_uploaded_file($_FILES['asi_xls']['tmp_name'], $destino);
-        if ($move==1) {
-            $reader = new PhpOffice\PhpSpreadsheet\Reader\Xls();
+        if (true) {  //$move==1
+            //$reader = new PhpOffice\PhpSpreadsheet\Reader\Xls();
+            //$reader->setReadDataOnly(true);
+
+            $reader = PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($destino);
             $reader->setReadDataOnly(true);
-            $spreadsheet = $reader->load('Assets/excel/asi_xls.xls');
-            $spreadsheet->getActiveSheet()->getStyle('C')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_DATETIMESQL);
+            $spreadsheet = $reader->load($destino);
+            //$spreadsheet->getActiveSheet()->getStyle('D')->getNumberFormat()->setFormatCode(PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDD);
             $sheet = $spreadsheet->getSheet($spreadsheet->getFirstSheetIndex());
             $de = $sheet->toArray();
             $a=0;
@@ -64,23 +67,23 @@ class Asistencias extends Controllers{
                 }
                 $gpe=$this->personas->insertRegistro(array('gpe_identificacion'=>rand(10000000, 99999999),
                 'gpe_nombre'=>$ri[0],'gpe_apellidos'=>$si),array('gpe_nombre','gpe_apellidos'));
-                $col=$this->colaboradores->insertRegistro(array('col_cod'=>$de[$i][0],
+                $col=$this->colaboradores->insertRegistro(array('col_cod'=>$de[$i][2],
                 'col_gpe_id'=>$gpe['gpe_id'],
                 'col_gar_id'=>3,
                 'col_puesto'=>'Colaborador',
                 'col_est_id'=>$_SESSION['est']['est_id']),array('col_cod'));
-                $dt = explode(' ',$de[$i][2]);
+                $dtstr = DateTime::createFromFormat('j/m/Y H:i:s', $de[$i][3])->format('Y-m-d H:i:s');
+                $dt = explode(' ',$dtstr);
                 $h = explode(':',$dt[1]);
-                
                 if ($h[0]<12) {
                     $asi1=$this->asistencias->insertRegistro(array('asi_col_id'=>$col['col_id'],
-                    'asi_horaE'=>$de[$i][2]),array('asi_col_id','asi_horaE'));
+                    'asi_horaE'=>$dtstr),array('asi_col_id','asi_horaE'));
                 }
                 if (intval($h[0])>12) {
                     $asis=$this->asistencias->searchRegistro(array('asi_col_id'=>$col['col_id'],
                     'custom'=>'DATE_FORMAT(asi_horaE, "%Y-%m-%d") = "'.$dt[0].'"'));
                     if (!empty($asis)) {
-                        $asi2=$this->asistencias->updateRegistro(array('asi_id'=>$asis['asi_id'],'asi_horaS'=>$de[$i][2]));
+                        $asi2=$this->asistencias->updateRegistro(array('asi_id'=>$asis['asi_id'],'asi_horaS'=>$dtstr));
                         $a += 1;
                     }
                 }
