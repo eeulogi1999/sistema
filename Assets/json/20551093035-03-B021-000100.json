@@ -1,0 +1,319 @@
+{
+    "_D": "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2",
+    "_A": "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+    "_B": "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+    "_E": "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
+    "Invoice": [{
+        "UBLVersionID": [{
+            "_": "2.1"
+        }],
+        "CustomizationID": [{
+            "_": "2.0"
+        }],
+        "ID": [{
+            "_": "B021-000100"
+        }],
+        "IssueDate": [{
+            "_": "2021-12-02"
+        }],
+        "IssueTime": [{
+            "_": "16:58:51"
+        }],
+        "InvoiceTypeCode": [{
+            "_": "03",
+            "listName": "Tipo de Documento",
+            "listSchemeURI": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51",
+            "listID": "0101",
+            "name": "Tipo de Operacion",
+            "listURI": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01",
+            "listAgencyName": "PE:SUNAT"
+        }],
+        "Note": [{
+            "_": "MONTO EN LETRAS",
+            "languageLocaleID": "1000"
+        }],
+        "DocumentCurrencyCode": [{
+            "_": "PEN",
+            "listID": "ISO 4217 Alpha",
+            "listName": "Currency",
+            "listAgencyName": "United Nations Economic Commission for Europe"
+        }],
+        "LineCountNumeric": [{
+            "_": 2
+        }],
+        "Signature": [{
+            "ID": [{
+                "_": "IDSignature"
+            }],
+            "SignatoryParty": [{
+                "PartyIdentification": [{
+                    "ID": [{
+                        "_": "20551093035"
+                    }]
+                }],
+                "PartyName": [{
+                    "Name": [{
+                        "_": "EMISOR RAZON SOCIAL"
+                    }]
+                }]
+            }],
+            "DigitalSignatureAttachment": [{
+                "ExternalReference": [{
+                    "URI": [{
+                        "_": "IDSignature"
+                    }]
+                }]
+            }]
+        }],
+        "AccountingSupplierParty": [{
+            "Party": [{
+                "PartyIdentification": [{
+                    "ID": [{
+                        "_": "20551093035",
+                        "schemeID": "6",
+                        "schemeName": "Documento de Identidad",
+                        "schemeAgencyName": "PE:SUNAT",
+                        "schemeURI": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                    }]
+                }],
+                "PartyName": [{
+                    "Name": [{
+                        "_": "EMISOR NOMBRE COMERCIAL"
+                    }]
+                }],
+                "PartyLegalEntity": [{
+                    "RegistrationName": [{
+                        "_": "EMISOR RAZON SOCIAL S.A.C."
+                    }],
+                    "RegistrationAddress": [{
+                        "ID": [{
+                            "_": "130501",
+                            "schemeAgencyName": "PE:INEI",
+                            "schemeName": "Ubigeos"
+                        }],
+                        "AddressTypeCode": [{
+                            "_": "0000",
+                            "listAgencyName": "PE:SUNAT",
+                            "listName": "Establecimientos anexos"
+                        }],
+                        "CityName": [{
+                            "_": "PROVINCIA"
+                        }],
+                        "CountrySubentity": [{
+                            "_": "DEPARTAMENTO"
+                        }],
+                        "District": [{
+                            "_": "DISTRITO"
+                        }],
+                        "AddressLine": [{
+                            "Line": [{
+                                "_": "DIRECCION EMISOR"
+                            }]
+                        }],
+                        "Country": [{
+                            "IdentificationCode": [{
+                                "_": "PE",
+                                "listID": "ISO 3166-1",
+                                "listAgencyName": "United Nations Economic Commission for Europe",
+                                "listName": "Country"
+                            }]
+                        }]
+                    }]
+                }]
+            }]
+        }],
+        "AccountingCustomerParty": [{
+            "Party": [{
+                "PartyIdentification": [{
+                    "ID": [{
+                        "_": "76346289",
+                        "schemeID": "1",
+                        "schemeName": "Documento de Identidad",
+                        "schemeAgencyName": "PE:SUNAT",
+                        "schemeURI": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                    }]
+                }],
+                "PartyName": [{
+                    "Name": [{
+                        "_": "RECEPTOR NOMBRE COMERCIAL"
+                    }]
+                }],
+                "PartyLegalEntity": [{
+                    "RegistrationName": [{
+                        "_": "RAZON SOCIAL RECEPTOR"
+                    }],
+                    "RegistrationAddress": [{
+                        "ID": [{
+                            "_": "140124",
+                            "schemeAgencyName": "PE:INEI",
+                            "schemeName": "Ubigeos"
+                        }],
+                        "CityName": [{
+                            "_": "PROVINCIA"
+                        }],
+                        "CountrySubentity": [{
+                            "_": "DEPARTAMENTO"
+                        }],
+                        "District": [{
+                            "_": "DISTRITO"
+                        }],
+                        "AddressLine": [{
+                            "Line": [{
+                                "_": "DIRECCION RECEPTOR"
+                            }]
+                        }],
+                        "Country": [{
+                            "IdentificationCode": [{
+                                "_": "PE",
+                                "listID": "ISO 3166-1",
+                                "listAgencyName": "United Nations Economic Commission for Europe",
+                                "listName": "Country"
+                            }]
+                        }]
+                    }]
+                }],
+                "Contact": [{
+                    "ElectronicMail": [{
+                        "_": "correo@efact.pe"
+                    }]
+                }]
+            }]
+        }],
+        "TaxTotal": [{
+            "TaxAmount": [{
+                "_": "90.00",
+                "currencyID": "PEN"
+            }],
+            "TaxSubtotal": [{
+                "TaxableAmount": [{
+                    "_": "500.00",
+                    "currencyID": "PEN"
+                }],
+                "TaxAmount": [{
+                    "_": "90.00",
+                    "currencyID": "PEN"
+                }],
+                "TaxCategory": [{
+                    "TaxScheme": [{
+                        "ID": [{
+                            "_": "1000",
+                            "schemeName": "Codigo de tributos",
+                            "schemeURI": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05",
+                            "schemeAgencyName": "PE:SUNAT"
+                        }],
+                        "Name": [{
+                            "_": "IGV"
+                        }],
+                        "TaxTypeCode": [{
+                            "_": "VAT"
+                        }]
+                    }]
+                }]
+            }]
+        }],
+        "LegalMonetaryTotal": [{
+            "LineExtensionAmount": [{
+                "_": "500.00",
+                "currencyID": "PEN"
+            }],
+            "TaxInclusiveAmount": [{
+                "_": "590.00",
+                "currencyID": "PEN"
+            }],
+            "PayableAmount": [{
+                "_": "590.00",
+                "currencyID": "PEN"
+            }]
+        }],
+        "InvoiceLine": [{
+                "ID": [{
+                    "_": "1"
+                }],
+                "Note": [{
+                    "_": "UNIDAD"
+                }],
+                "InvoicedQuantity": [{
+                    "_": "1",
+                    "unitCode": "ZZ",
+                    "unitCodeListID": "UN/ECE rec 20",
+                    "unitCodeListAgencyName": "United Nations Economic Commission for Europe"
+                }],
+                "LineExtensionAmount": [{
+                    "_": "100.00",
+                    "currencyID": "PEN"
+                }],
+                "PricingReference": [{
+                    "AlternativeConditionPrice": [{
+                        "PriceAmount": [{
+                            "_": "118.00",
+                            "currencyID": "PEN"
+                        }],
+                        "PriceTypeCode": [{
+                            "_": "01",
+                            "listName": "Tipo de Precio",
+                            "listAgencyName": "PE:SUNAT",
+                            "listURI": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16"
+                        }]
+                    }]
+                }],
+                "TaxTotal": [{
+                    "TaxAmount": [{
+                        "_": "18.00",
+                        "currencyID": "PEN"
+                    }],
+                    "TaxSubtotal": [{
+                        "TaxableAmount": [{
+                            "_": "100.00",
+                            "currencyID": "PEN"
+                        }],
+                        "TaxAmount": [{
+                            "_": "18.00",
+                            "currencyID": "PEN"
+                        }],
+                        "TaxCategory": [{
+                            "Percent": [{
+                                "_": 18.00
+                            }],
+                            "TaxExemptionReasonCode": [{
+                                "_": "10",
+                                "listAgencyName": "PE:SUNAT",
+                                "listName": "Afectacion del IGV",
+                                "listURI": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07"
+                            }],
+                            "TaxScheme": [{
+                                "ID": [{
+                                    "_": "1000",
+                                    "schemeName": "Codigo de tributos",
+                                    "schemeURI": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05",
+                                    "schemeAgencyName": "PE:SUNAT"
+                                }],
+                                "Name": [{
+                                    "_": "IGV"
+                                }],
+                                "TaxTypeCode": [{
+                                    "_": "VAT"
+                                }]
+                            }]
+                        }]
+                    }]
+                }],
+                "Item": [{
+                    "Description": [{
+                        "_": "DESCRIPCION"
+                    }],
+                    "SellersItemIdentification": [{
+                        "ID": [{
+                            "_": "CODIGO"
+                        }]
+                    }]
+                }],
+                "Price": [{
+                    "PriceAmount": [{
+                        "_": "100.00",
+                        "currencyID": "PEN"
+                    }]
+                }]
+            }
+        ]
+    }]
+}

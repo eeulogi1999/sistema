@@ -1,0 +1,62 @@
+{
+	"info": {
+		"_postman_id": "a8ec6d69-1889-4373-8df4-43f4f5db72a8",
+		"name": "cacel-resumen",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19025920"
+	},
+	"item": [
+		{
+			"name": "https://sistema.companycacel.com/Gerencial/getGerencial",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "1sistemas-SOM",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "administrador@regomsa.com.pe",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "gcl_id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "alm_id",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "periodo",
+						"value": "2022-10",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://sistema.companycacel.com/Gerencial/getGerencial",
+					"protocol": "https",
+					"host": [
+						"sistema",
+						"companycacel",
+						"com"
+					],
+					"path": [
+						"Gerencial",
+						"getGerencial"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

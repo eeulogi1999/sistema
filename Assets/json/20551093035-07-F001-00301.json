@@ -1,0 +1,679 @@
+{
+    "_D": "urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2",
+    "_A": "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+    "_B": "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+    "_E": "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
+        "CreditNote" : [ 
+            {
+                "UBLVersionID" : [ 
+                    {
+                        "_" : "2.1"
+                    }
+                ],
+                "CustomizationID" : [ 
+                    {
+                        "_" : "2.0"
+                    }
+                ],
+                "ID" : [ 
+                    {
+                        "_" : "F001-00301"
+                    }
+                ],
+                "IssueDate" : [ 
+                    {
+                        "_" : "2021-12-02"
+                    }
+                ],
+                "IssueTime" : [ 
+                    {
+                        "_" : "12:30:12"
+                    }
+                ],
+                "Note" : [ 
+                    {
+                        "_" : "CUATROCIENTOS TRECE Y 00/100 SOLES",
+                        "languageLocaleID" : "1000"
+                    }, 
+                    {
+                        "_" : "OBSERVACIONES GENERALES"
+                    }
+                ],
+                "DocumentCurrencyCode" : [ 
+                    {
+                        "_" : "PEN",
+                        "listID" : "ISO 4217 Alpha",
+                        "listName" : "Currency",
+                        "listAgencyName" : "United Nations Economic Commission for Europe"
+                    }
+                ],
+                "DiscrepancyResponse" : [ 
+                    {
+                        "ResponseCode" : [ 
+                            {
+                                "_" : "08",
+                                "listAgencyName" : "PE:SUNAT",
+                                "listName" : "Tipo de nota de credito",
+                                "listURI" : "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo09"
+                            }
+                        ],
+                        "Description" : [ 
+                            {
+                                "_" : "Bonificación"
+                            }
+                        ]
+                    }
+                ],
+                "BillingReference" : [ 
+                    {
+                        "InvoiceDocumentReference" : [ 
+                            {
+                                "ID" : [ 
+                                    {
+                                        "_" : "0001-0000006"
+                                    }
+                                ],
+                                "IssueDate" : [ 
+                                    {
+                                        "_" : "2021-12-15"
+                                    }
+                                ],
+                                "DocumentTypeCode" : [ 
+                                    {
+                                        "_" : "01",
+                                        "listName" : "Tipo de Documento",
+                                        "listSchemeURI" : "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01",
+                                        "listAgencyName" : "PE:SUNAT"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "Signature" : [ 
+                    {
+                        "ID" : [ 
+                            {
+                                "_" : "IDSignature"
+                            }
+                        ],
+                        "SignatoryParty" : [ 
+                            {
+                                "PartyIdentification" : [ 
+                                    {
+                                        "ID" : [ 
+                                            {
+                                                "_" : "20551093035"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "PartyName" : [ 
+                                    {
+                                        "Name" : [ 
+                                            {
+                                                "_" : "RAZON SOCIAL EMISOR"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "DigitalSignatureAttachment" : [ 
+                            {
+                                "ExternalReference" : [ 
+                                    {
+                                        "URI" : [ 
+                                            {
+                                                "_" : "IDSignature"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "AccountingSupplierParty" : [ 
+                    {
+                        "Party" : [ 
+                            {
+                                "PartyIdentification" : [ 
+                                    {
+                                        "ID" : [ 
+                                            {
+                                                "_" : "20551093035",
+                                                "schemeID" : "6",
+                                                "schemeName" : "Documento de Identidad",
+                                                "schemeAgencyName" : "PE:SUNAT",
+                                                "schemeURI" : "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "PartyName" : [ 
+                                    {
+                                        "Name" : [ 
+                                            {
+                                                "_" : "NOMBRE COMERCIAL EMISOR"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "PartyLegalEntity" : [ 
+                                    {
+                                        "RegistrationName" : [ 
+                                            {
+                                                "_" : "RAZON SOCIAL EMISOR"
+                                            }
+                                        ],
+                                        "RegistrationAddress" : [ 
+                                            {
+                                                "ID" : [ 
+                                                    {
+                                                        "_" : "150122",
+                                                        "schemeAgencyName" : "PE:INEI",
+                                                        "schemeName" : "Ubigeos"
+                                                    }
+                                                ],
+                                                "AddressTypeCode" : [ 
+                                                    {
+                                                        "_" : "0000",
+                                                        "listAgencyName" : "PE:SUNAT",
+                                                        "listName" : "Establecimientos anexos"
+                                                    }
+                                                ],
+                                                "CityName" : [ 
+                                                    {
+                                                        "_" : "LIMA"
+                                                    }
+                                                ],
+                                                "CountrySubentity" : [ 
+                                                    {
+                                                        "_" : "LIMA"
+                                                    }
+                                                ],
+                                                "District" : [ 
+                                                    {
+                                                        "_" : "MIRAFLORES"
+                                                    }
+                                                ],
+                                                "AddressLine" : [ 
+                                                    {
+                                                        "Line" : [ 
+                                                            {
+                                                                "_" : "DIRECCION EMISOR"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "Country" : [ 
+                                                    {
+                                                        "IdentificationCode" : [ 
+                                                            {
+                                                                "_" : "PE",
+                                                                "listID" : "ISO 3166-1",
+                                                                "listAgencyName" : "United Nations Economic Commission for Europe",
+                                                                "listName" : "Country"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "AccountingCustomerParty" : [ 
+                    {
+                        "Party" : [ 
+                            {
+                                "PartyIdentification" : [ 
+                                    {
+                                        "ID" : [ 
+                                            {
+                                                "_" : "20104498044",
+                                                "schemeID" : "6",
+                                                "schemeName" : "Documento de Identidad",
+                                                "schemeAgencyName" : "PE:SUNAT",
+                                                "schemeURI" : "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                            }
+                                        ]
+                                    }
+                                ],
+				"PartyName" : [ 
+                                    {
+                                        "Name" : [ 
+                                            {
+                                                "_" : "NOMBRE COMERCIAL RECEPTOR"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "PartyLegalEntity" : [ 
+                                    {
+                                        "RegistrationName" : [ 
+                                            {
+                                                "_" : "RAZON SOCIAL RECEPTOR"
+                                            }
+                                        ],
+                                        "RegistrationAddress" : [ 
+                                            {
+                                                "ID" : [ 
+                                                    {
+                                                        "_" : "140124",
+                                                        "schemeAgencyName" : "PE:INEI",
+                                                        "schemeName" : "Ubigeos"
+                                                    }
+                                                ],
+                                                "CityName" : [ 
+                                                    {
+                                                        "_" : "LIMA"
+                                                    }
+                                                ],
+                                                "CountrySubentity" : [ 
+                                                    {
+                                                        "_" : "LIMA"
+                                                    }
+                                                ],
+                                                "District" : [ 
+                                                    {
+                                                        "_" : "SAN ISIDRO"
+                                                    }
+                                                ],
+                                                "AddressLine" : [ 
+                                                    {
+                                                        "Line" : [ 
+                                                            {
+                                                                "_" : "DIRECCION RECEPTOR"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "Country" : [ 
+                                                    {
+                                                        "IdentificationCode" : [ 
+                                                            {
+                                                                "_" : "PE",
+                                                                "listID" : "ISO 3166-1",
+                                                                "listAgencyName" : "United Nations Economic Commission for Europe",
+                                                                "listName" : "Country"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "Contact" : [ 
+                                    {
+                                        "ElectronicMail" : [ 
+                                            {
+                                                "_" : "correo@efact.pe"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "TaxTotal" : [ 
+                    {
+                        "TaxAmount" : [ 
+                            {
+                                "_" : "63.00",
+                                "currencyID" : "PEN"
+                            }
+                        ],
+                        "TaxSubtotal" : [ 
+                            {
+                                "TaxableAmount" : [ 
+                                    {
+                                        "_" : "350.00",
+                                        "currencyID" : "PEN"
+                                    }
+                                ],
+                                "TaxAmount" : [ 
+                                    {
+                                        "_" : "63.00",
+                                        "currencyID" : "PEN"
+                                    }
+                                ],
+                                "TaxCategory" : [ 
+                                    {
+                                        "TaxScheme" : [ 
+                                            {
+                                                "ID" : [ 
+                                                    {
+                                                        "_" : "1000",
+                                                        "schemeName" : "Codigo de tributos",
+                                                        "schemeURI" : "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05",
+                                                        "schemeAgencyName" : "PE:SUNAT"
+                                                    }
+                                                ],
+                                                "Name" : [ 
+                                                    {
+                                                        "_" : "IGV"
+                                                    }
+                                                ],
+                                                "TaxTypeCode" : [ 
+                                                    {
+                                                        "_" : "VAT"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "LegalMonetaryTotal" : [ 
+                    {
+                        "LineExtensionAmount" : [ 
+                            {
+                                "_" : "350.00",
+                                "currencyID" : "PEN"
+                            }
+                        ],
+                        "PayableAmount" : [ 
+                            {
+                                "_" : "413.00",
+                                "currencyID" : "PEN"
+                            }
+                        ]
+                    }
+                ],
+                "CreditNoteLine" : [ 
+                    {
+                        "ID" : [ 
+                            {
+                                "_" : "1"
+                            }
+                        ],
+                        "Note" : [ 
+                            {
+                                "_" : "UNIDAD"
+                            }
+                        ],
+                        "CreditedQuantity" : [ 
+                            {
+                                "_" : "1",
+                                "unitCode" : "ZZ",
+                                "unitCodeListID" : "UN/ECE rec 20",
+                                "unitCodeListAgencyName" : "United Nations Economic Commission for Europe"
+                            }
+                        ],
+                        "LineExtensionAmount" : [ 
+                            {
+                                "_" : "100.00",
+                                "currencyID" : "PEN"
+                            }
+                        ],
+                        "PricingReference" : [ 
+                            {
+                                "AlternativeConditionPrice" : [ 
+                                    {
+                                        "PriceAmount" : [ 
+                                            {
+                                                "_" : "118.0000",
+                                                "currencyID" : "PEN"
+                                            }
+                                        ],
+                                        "PriceTypeCode" : [ 
+                                            {
+                                                "_" : "01",
+                                                "listName" : "Tipo de Precio",
+                                                "listAgencyName" : "PE:SUNAT",
+                                                "listURI" : "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "TaxTotal" : [ 
+                            {
+                                "TaxAmount" : [ 
+                                    {
+                                        "_" : "18.00",
+                                        "currencyID" : "PEN"
+                                    }
+                                ],
+                                "TaxSubtotal" : [ 
+                                    {
+                                        "TaxableAmount" : [ 
+                                            {
+                                                "_" : "100.00",
+                                                "currencyID" : "PEN"
+                                            }
+                                        ],
+                                        "TaxAmount" : [ 
+                                            {
+                                                "_" : "18.00",
+                                                "currencyID" : "PEN"
+                                            }
+                                        ],
+                                        "TaxCategory" : [ 
+                                            {
+                                                "Percent" : [ 
+                                                    {
+                                                        "_" : 18.00
+                                                    }
+                                                ],
+                                                "TaxExemptionReasonCode" : [ 
+                                                    {
+                                                        "_" : "10",
+                                                        "listAgencyName" : "PE:SUNAT",
+                                                        "listName" : "Afectacion del IGV",
+                                                        "listURI" : "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07"
+                                                    }
+                                                ],
+                                                "TaxScheme" : [ 
+                                                    {
+                                                        "ID" : [ 
+                                                            {
+                                                                "_" : "1000",
+                                                                "schemeName" : "Codigo de tributos",
+                                                                "schemeURI" : "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05",
+                                                                "schemeAgencyName" : "PE:SUNAT"
+                                                            }
+                                                        ],
+                                                        "Name" : [ 
+                                                            {
+                                                                "_" : "IGV"
+                                                            }
+                                                        ],
+                                                        "TaxTypeCode" : [ 
+                                                            {
+                                                                "_" : "VAT"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "Item" : [ 
+                            {
+                                "Description" : [ 
+                                    {
+                                        "_" : "DESCRIPCION"
+                                    }
+                                ],
+                                "SellersItemIdentification" : [ 
+                                    {
+                                        "ID" : [ 
+                                            {
+                                                "_" : "CODIGO"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "Price" : [ 
+                            {
+                                "PriceAmount" : [ 
+                                    {
+                                        "_" : "100.00",
+                                        "currencyID" : "PEN"
+                                    }
+                                ]
+                            }
+                        ]
+                    }, 
+                    {
+                        "ID" : [ 
+                            {
+                                "_" : "2"
+                            }
+                        ],
+                        "Note" : [ 
+                            {
+                                "_" : "UNIDAD"
+                            }
+                        ],
+                        "CreditedQuantity" : [ 
+                            {
+                                "_" : "5",
+                                "unitCode" : "ZZ",
+                                "unitCodeListID" : "UN/ECE rec 20",
+                                "unitCodeListAgencyName" : "United Nations Economic Commission for Europe"
+                            }
+                        ],
+                        "LineExtensionAmount" : [ 
+                            {
+                                "_" : "250.00",
+                                "currencyID" : "PEN"
+                            }
+                        ],
+                        "PricingReference" : [ 
+                            {
+                                "AlternativeConditionPrice" : [ 
+                                    {
+                                        "PriceAmount" : [ 
+                                            {
+                                                "_" : "59.0000",
+                                                "currencyID" : "PEN"
+                                            }
+                                        ],
+                                        "PriceTypeCode" : [ 
+                                            {
+                                                "_" : "01",
+                                                "listName" : "Tipo de Precio",
+                                                "listAgencyName" : "PE:SUNAT",
+                                                "listURI" : "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "TaxTotal" : [ 
+                            {
+                                "TaxAmount" : [ 
+                                    {
+                                        "_" : "45.00",
+                                        "currencyID" : "PEN"
+                                    }
+                                ],
+                                "TaxSubtotal" : [ 
+                                    {
+                                        "TaxableAmount" : [ 
+                                            {
+                                                "_" : "250.00",
+                                                "currencyID" : "PEN"
+                                            }
+                                        ],
+                                        "TaxAmount" : [ 
+                                            {
+                                                "_" : "45.00",
+                                                "currencyID" : "PEN"
+                                            }
+                                        ],
+                                        "TaxCategory" : [ 
+                                            {
+                                                "Percent" : [ 
+                                                    {
+                                                        "_" : 18.00
+                                                    }
+                                                ],
+                                                "TaxExemptionReasonCode" : [ 
+                                                    {
+                                                        "_" : "10",
+                                                        "listAgencyName" : "PE:SUNAT",
+                                                        "listName" : "Afectacion del IGV",
+                                                        "listURI" : "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07"
+                                                    }
+                                                ],
+                                                "TaxScheme" : [ 
+                                                    {
+                                                        "ID" : [ 
+                                                            {
+                                                                "_" : "1000",
+                                                                "schemeName" : "Codigo de tributos",
+                                                                "schemeURI" : "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05",
+                                                                "schemeAgencyName" : "PE:SUNAT"
+                                                            }
+                                                        ],
+                                                        "Name" : [ 
+                                                            {
+                                                                "_" : "IGV"
+                                                            }
+                                                        ],
+                                                        "TaxTypeCode" : [ 
+                                                            {
+                                                                "_" : "VAT"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "Item" : [ 
+                            {
+                                "Description" : [ 
+                                    {
+                                        "_" : "DESCRIPCION"
+                                    }
+                                ],
+                                "SellersItemIdentification" : [ 
+                                    {
+                                        "ID" : [ 
+                                            {
+                                                "_" : "CODIGO"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "Price" : [ 
+                            {
+                                "PriceAmount" : [ 
+                                    {
+                                        "_" : "50.00",
+                                        "currencyID" : "PEN"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+}
