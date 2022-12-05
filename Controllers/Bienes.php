@@ -86,7 +86,7 @@ class Bienes extends Controllers{
                 if($_SESSION['perMod']['gtp_d']){	
                     $btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'bie'".','.$arrData[$i]['bie_id'].')" title="Eliminar Bien"><i class="far fa-trash-alt"></i></button>';
                 }
-                $arrData[$i]['bie_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
+                $arrData[$i]['bie_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.'</div>';
                 array_push($arr,$arrData[$i]); 
                 $child = $this->getTretable($arrData[$i]['bie_id'],null,$arrData[$i]['bie_nro']);
                 for ($j=0; $j < count($child) ; $j++) { 

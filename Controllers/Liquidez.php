@@ -197,6 +197,7 @@ class Liquidez extends Controllers{
                 $r = array();
                 $r['ing_fecha'] = $sl['liq_fecha'];
                 $r['ing_tipo'] = 'SALDO INICIAL'; 
+                $r['ing_cuenta'] = ''; 
                 $r['ing_descripcion'] = 'POR PAGAR'; 
                 $r['ing_monto'] = abs($sl['liq_monto']);
                 array_push($ing,$r);
@@ -206,6 +207,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['ing_fecha'] = $arrMov[$i]['mov_fechaE'];
             $r['ing_tipo'] = $arrMov[$i]['mov_t12_id']['t12_descripcion'];
+            $r['ing_cuenta'] = $arrMov[$i]['mov_observaciones']; 
             $r['ing_descripcion'] = '<a href="#" onclick="getViewMov('.$arrMov[$i]['mov_id'].')">'.$arrMov[$i]['mov_serie'].'-'.str_pad($arrMov[$i]['mov_numero'],8,0,STR_PAD_LEFT).'</a>' ; 
             $r['ing_monto'] = $arrMov[$i]['mov_total'];
             array_push($ing,$r);
@@ -214,6 +216,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['ing_fecha'] = $arrCaj[$i]['caj_fecha'];
             $r['ing_tipo'] = CAJ[$arrCaj[$i]['caj_tipo']];
+            $r['ing_cuenta'] = $arrCaj[$i]['caj_cue_id']['cue_nombre'];
             $r['ing_descripcion'] = '<a href="#" onclick="viewCaj('.$arrCaj[$i]['caj_id'].','.$arrCaj[$i]['caj_tipo'].')">'.$arrCaj[$i]['caj_observaciones'].'</a>' ; 
             $r['ing_monto'] = abs($arrCaj[$i]['caj_monto']);
             array_push($ing,$r);
@@ -222,6 +225,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['ing_fecha'] = $nd[$i]['caj_fecha'];
             $r['ing_tipo'] = CAJ[$nd[$i]['caj_tipo']];
+            $r['ing_cuenta'] = $nd[$i]['caj_cue_id']['cue_nombre'];
             $r['ing_descripcion'] = '<a href="#" onclick="viewCaj('.$nd[$i]['caj_id'].','.$nd[$i]['caj_tipo'].')">'.$nd[$i]['caj_observaciones'].'</a>' ; 
             $r['ing_monto'] = abs($nd[$i]['caj_monto']);
             array_push($ing,$r);
@@ -243,6 +247,7 @@ class Liquidez extends Controllers{
                 $r = array();
                 $r['egr_fecha'] = $sl['liq_fecha'];
                 $r['egr_tipo'] = 'SALDO INICIAL' ; 
+                $r['egr_cuenta'] = ''; 
                 $r['egr_descripcion'] = 'POR COBRAR' ; 
                 $r['egr_monto'] = abs($sl['liq_monto']);
                 array_push($egr,$r);
@@ -252,6 +257,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['egr_fecha'] = $arrMov[$i]['mov_fechaE'];
             $r['egr_tipo'] = $arrMov[$i]['mov_t12_id']['t12_descripcion'];
+            $r['egr_cuenta'] = $arrMov[$i]['mov_observaciones']; 
             $r['egr_descripcion'] = '<a href="#" onclick="getViewMov('.$arrMov[$i]['mov_id'].')">'.$arrMov[$i]['mov_serie'].'-'.str_pad($arrMov[$i]['mov_numero'],8,0,STR_PAD_LEFT).'</a>' ; 
             $r['egr_monto'] =  floatval(json_decode($arrMov[$i]['mov_igv_id'],true)['mov_neto']);
             array_push($egr,$r);
@@ -260,6 +266,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['egr_fecha'] = $arrCaj[$i]['caj_fecha'];
             $r['egr_tipo'] = CAJ[$arrCaj[$i]['caj_tipo']];
+            $r['egr_cuenta'] = $arrCaj[$i]['caj_cue_id']['cue_nombre'];
             $r['egr_descripcion'] = '<a href="#" onclick="viewCaj('.$arrCaj[$i]['caj_id'].','.$arrCaj[$i]['caj_tipo'].')">'.$arrCaj[$i]['caj_observaciones'].'</a>' ; 
             $r['egr_monto'] = abs($arrCaj[$i]['caj_monto']);
             array_push($egr,$r);
@@ -268,6 +275,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['egr_fecha'] = $nc[$i]['caj_fecha'];
             $r['egr_tipo'] = CAJ[$nc[$i]['caj_tipo']];
+            $r['egr_cuenta'] = $nc[$i]['caj_cue_id']['cue_nombre'];
             $r['egr_descripcion'] = '<a href="#" onclick="viewCaj('.$nc[$i]['caj_id'].','.$nc[$i]['caj_tipo'].')">'.$nc[$i]['caj_observaciones'].'</a>' ; 
             $r['egr_monto'] = abs($nc[$i]['caj_monto']);
             array_push($egr,$r);

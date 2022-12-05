@@ -1,7 +1,6 @@
 <?php 
 @ob_start();
 require 'Libraries/html2pdf/vendor/autoload.php';
-use Spipu\Html2Pdf\Html2Pdf;
 require 'Libraries/numero2letras/vendor/autoload.php';
 require_once 'Libraries/dompdf/vendor/autoload.php';
 require_once 'Libraries/qr-code/vendor/autoload.php';
@@ -10,7 +9,6 @@ class Movimientos extends Controllers{
     public function __construct(){
         parent::__construct(strtolower(get_class($this)));   
         getPermisos(1);
-        //$this->newModel('mespecificaciones');   
         $this->newModel('mdetalles');          
         $this->newModel('agentes');
         $this->newModel('empresas');
@@ -334,7 +332,7 @@ class Movimientos extends Controllers{
         $data['mov']['mov_letras_pen'] = $this->formatter->toInvoice($data['mov']['mov_total'], 2, "SOLES");
         $data['mov']['mov_qr'] = $result->getDataUri();
         $html = getFile("Movimientos/pdf",$data);
-        $html2pdf = new Html2Pdf('p','A4','es','true','UTF-8');
+        $html2pdf = new Spipu\Html2Pdf\Html2Pdf('p','A4','es','true','UTF-8');
         $html2pdf->pdf->setTitle($data['mov']['mov_serie'].'-'.str_pad($data['mov']['mov_numero'],8,0,STR_PAD_LEFT));
         $html2pdf->writeHTML($html);
         $html2pdf->output('comprobante-'.$mov_id.'.pdf');   

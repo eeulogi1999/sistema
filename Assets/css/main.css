@@ -6397,6 +6397,7 @@ a.close.disabled {
   }
 }
 
+
 .tooltip {
   position: absolute;
   z-index: 1070;
@@ -15885,7 +15886,6 @@ be a descendant of the grid when it is being dragged.
   position: absolute;
   top: 0;
   left: 0;
-  display: inline-block;
   width: 100%;
   line-height: 30px;
   -webkit-backface-visibility: hidden;
@@ -16839,11 +16839,11 @@ be a descendant of the grid when it is being dragged.
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #dc3545;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #dc3545;
 }
 
 input:checked + .slider:before {

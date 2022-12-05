@@ -139,6 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#mov_age_id').children().text(age_table.getSelectedItem().age_ide+' - '+age_table.getSelectedItem().age_nombre);
     })
     $('#mov_fechaE').change(function (e) {ftnTcambio(this);});
+    $('#mde_gta_id').change(function (e){  mdeProducto();  })
     $('#set_mov').click(function(e) {
         e.preventDefault();
         divLoading.style.display = "flex";
@@ -264,7 +265,7 @@ function changet10t12(){
 function mdeProducto() {
     var mde_importe = $('#mde_vu').val() * $('#mde_q').val();
     $('#mde_importe').val(mde_importe.toFixed(2));
-    if ($('#mde_q').val() < 0.000000000001 || isNaN($('#mde_importe').val()) || $('#mde_vu').val() < 0.000000000001 ) {
+    if ($('#mde_q').val() < 0.000000000001 || isNaN($('#mde_importe').val()) || $('#mde_vu').val() < 0.000000000001  || isNaN(parseInt($('#mde_gta_id').val()))) {
         $('#set_mde').slideUp();
     } else {
         if (data.mov_tipo == '01' && $('#mde_q').val() > sbi_table.getSelectedItem().sbi_qs) {
@@ -305,6 +306,11 @@ function ftnTcambio(nodefecha) {
 function setMde(id=-1) {
     var mde_igv = $('#mde_igv').prop('checked')
     var mde_det = $('#mde_det').prop('checked')
+    if (mde_det) {
+        $('#mde_gta_id').val(1);
+    }else{
+        $('#mde_gta_id').val(9);
+    }
     if (id>=0) {
         var pin = id;
     } else {

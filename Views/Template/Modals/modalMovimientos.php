@@ -153,7 +153,7 @@
                             </div>
                           </div>
                         </th>
-                        <th>Tipo de IGV</th>
+                        <th style="display:none"  >Tipo de IGV</th>
                         <th>Importe</th>
                         <th>                          
                           <div class="form-row h-100 justify-content-center ">
@@ -182,7 +182,7 @@
                             required></select></td>
                         <td><input type="text" class="form-control valid " id="mde_vu" name="mde_vu" value="0.00"
                             disabled></td>
-                        <td><select type="text" class="form-control" id="mde_gta_id" name="mde_gta_id"></select></td>
+                        <td style="display:none" ><select type="text" class="form-control" id="mde_gta_id" name="mde_gta_id"></select></td>
                         <td><input type="text" class="form-control valid" id="mde_importe" name="mde_importe"
                             value="0.00" disabled>
                         </td>

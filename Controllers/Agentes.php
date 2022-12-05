@@ -69,7 +69,7 @@ class Agentes extends Controllers{
             if($_SESSION['perMod']['gtp_d']){	
                 $btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="far fa-trash-alt"></i></button>';
             }
-            $arrData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
+            $arrData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.'</div>';
         }
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();

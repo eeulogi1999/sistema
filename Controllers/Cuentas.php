@@ -17,6 +17,8 @@ class Cuentas extends Controllers{
         $data['page_functions_js'] = array("functions_cuentas.js");
         $this->views->getView($this,"cuentas",$data);
     }
+   
+
     public function getCuentas($p=null,$res=false){
         if (!empty($p)) {
             if ($p=='1') {
@@ -32,7 +34,8 @@ class Cuentas extends Controllers{
             $btnView = '';
             $btnEdit = '';
             $btnDelete = '';
-            $arrData[$i][$pre.'_nro'] = $i+1;
+            $btnStatus = '';
+             $arrData[$i][$pre.'_nro'] = $i+1;
             $arrData[$i][$pre.'_saldo'] = $this->cajas->searchRegistro(array('caj_cue_id'=>$arrData[$i][$pre.'_id'],'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),' SUM(caj_monto) AS saldo ')['saldo'];
             $arrData[$i][$pre.'_status'] = '<span class="badge badge-'.STATUS[array_keys(STATUS)[$arrData[$i][$pre.'_status']]].'">'.array_keys(STATUS)[$arrData[$i][$pre.'_status']].'</span>';
             if($_SESSION['perMod']['gtp_r']){
@@ -42,9 +45,10 @@ class Cuentas extends Controllers{
                 $btnEdit = '<button class="btn btn-primary  btn-sm" onClick="edit('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Editar '.$tabla.'"><i class="fas fa-pencil-alt"></i></button>';
             }
             if($_SESSION['perMod']['gtp_d']){	
+                //$btnStatus =  '<label class="switch"><input type="checkbox" id="set_gtc" '.($arrData[$i][$pre.'_status']).' onchange="off(this,'."'".$pre."',".$arrData[$i][$pre.'_id'].')"><span class="slider round"></span></label>';
                 $btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="far fa-trash-alt"></i></button>';
             }
-            $arrData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
+            $arrData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.'</div>';
         }
         if ($res) {
             return $arrData;

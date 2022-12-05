@@ -185,6 +185,11 @@
                         $gcl['gcl_gem_id']['gem_gdi_id']['gdi_gpr_id']['gpr_provincia'].' - '.
                         $gcl['gcl_gem_id']['gem_gdi_id']['gdi_distrito'] ?>
                         <br><br>
+                        <strong>Contactos</strong><br>
+                        <span>https://companycacel.com/</span> <br>
+                        <span>companycacelsac@gmail.com</span><br>
+                        <span>+51 922 012 611    +51 922 532 641</span>
+                        <br><br>
                         ESTABLECIMIENTO: <?= $alm['alm_est_id']['est_nombre'] ?> <br>
                         DIRECCION: <?=  $alm['alm_est_id']['est_direccion']?> <br>
                         <?= $alm['alm_est_id']['est_gdi_id']['gdi_gpr_id']['gpr_gde_id']['gde_departamento'].' - '.
@@ -287,7 +292,7 @@
 					$mde = $mov['mov_mde'][$i];
 			 ?>
             <tr>
-                <td class="text-center"><?= '-' ?></td>
+                <td class="text-center"><?= $mde['mde_bie_id']['bie_codigo'] ?></td>
                 <td class="text-center"><?= number_format($mde['mde_q'], 2,'.','') ?></td>
                 <td class="text-center"><?= $mde['mde_t6m_id']['t6m_descripcion'] ?></td>
                 <td><?= $mde['mde_bie_id']['bie_nombre'] ?></td>
@@ -335,7 +340,7 @@
     <div class="tbl-cliente">
         SON: <span><?= $mov['mov_letras_pen'] ?></span>
     </div>
-    <p class="text-center">Gracias por la confianza, el apoyo y ante todo por la preferecia! <br>
+    <p class="text-center">Gracias por la confianza, el apoyo y ante todo por la preferencia !<br>
     Dios lo bendiga hoy, mañana y siempre!</p>
 </body>
 </html>

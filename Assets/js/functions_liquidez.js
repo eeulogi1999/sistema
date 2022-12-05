@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"ing_fecha",header:{t:"FECHA",c:'text'},tipo:'string',footer:"TOTALES"},
                 {"data":"ing_tipo",header:{t:"TIPO",c:'text'},tipo:'string'},
+                {"data":"ing_cuenta",header:{t:"CUENTA",c:'text'},tipo:'string'},
                 {"data":"ing_descripcion",header:{t:"DESCRIPCION",c:'text'},tipo:'string'},
                 {"data":"ing_monto",header:{t:"TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }},
             ]
@@ -52,6 +53,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"egr_fecha",header:{t:"FECHA",c:'text'},tipo:'string',footer:"TOTALES"},
                 {"data":"egr_tipo",header:{t:"TIPO",c:'text'},tipo:'string'},
+                {"data":"egr_cuenta",header:{t:"CUENTA",c:'text'},tipo:'string'},
                 {"data":"egr_descripcion",header:{t:"DESCRIPCION",c:'text'},tipo:'string'},
                 {"data":"egr_monto",header:{t:"TOTAL",align:'right'},tipo:'money',style:{condition:{minzero:'text-danger'}},footer:{ c:"sum" }},
             ]

@@ -122,21 +122,22 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="5" class="text-right">Sub-Total:</th>
-                                    <td class="text-right"><?= formatMoney($mov['mov_subtotal']) ?>
-                                    </td>
+                                    <td colspan="3"> <strong>OBSERVACIONES: </strong></td>
+                                    <td colspan="2" class="text-right">Sub-Total:</td>
+                                    <td class="text-right"><?= formatMoney($mov['mov_subtotal']) ?></td>
                                 </tr>
                                 <tr>
-                                    <th colspan="5" class="text-right">Igv (18%):</th>
+                                    <td colspan="3" rowspan="2"><p><?= $mov['mov_observaciones'] ?></p></td>
+                                    <td colspan="2" class="text-right">Igv (18%):</td>
                                     <td class="text-right"><?= formatMoney($mov['mov_igv_id']['mov_igv']) ?></td>
                                 </tr>
                                 <tr>
-                                    <th colspan="5" class="text-right">Total:</th>
+                                    <td colspan="2" class="text-right">Total:</td>
                                     <td class="text-right"><?= formatMoney($mov['mov_total']) ?></td>
                                 </tr>
                                 <?php if (isset($mov['mov_igv_id']['mov_neto'])) { ?>
                                 <tr>
-                                    <th colspan="5" class="text-right">Neto a Pago:</th>
+                                    <td colspan="5" class="text-right">Neto a Pago:</td>
                                     <td class="text-right"><?= formatMoney($mov['mov_igv_id']['mov_neto']) ?></td>
                                 </tr>
                                 <?php } ?>

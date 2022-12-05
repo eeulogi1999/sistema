@@ -60,6 +60,36 @@ async function del(prefijo,id,res=false) {
     }
     return response;
 }
+async function off(node,prefijo,id,res=false) {
+    var table = capitalize(getTable(prefijo));
+    var confirm = new Promise((resolver, rechazar)=>{swal({title: "Cambiar estado de "+capitalize(getTable(prefijo)),
+    text: "¿Seguro que desea cambiar de Estado del Registro?",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Si, cambiar!",
+    cancelButtonText: "No, cambiar!",
+    closeOnConfirm: true,
+    closeOnCancel: true},function(isConfirm){
+        resolver(isConfirm);
+    })
+    });
+    if (await confirm) {
+        var json = {};
+        json[prefijo+'_id'] = id;
+        json[prefijo+'_status'] = +$(node).prop("checked");
+        var response = await set(prefijo,null,json,true)
+        if (!res) {
+            if (!response.status) {
+                swal("Atención!", response.msg, "error");
+            }
+        }
+    }else{
+        if (res) {
+            response = {status:false};
+        }
+    }
+    return response;
+}
 async function set(prefijo,where= null,json = null,res = false) {
     var table = capitalize(getTable(prefijo));
     if (json != null) {
