@@ -75,6 +75,10 @@ class Movimientos extends Controllers{
                 $arrData[$i]['mov_age_ide'] = '<span class="badge badge-warning">nulo</span>';
             }
             $arrData[$i]['mov_serie'] = $arrData[$i]['mov_serie'].'-'.str_pad($arrData[$i]['mov_numero'],8,0,STR_PAD_LEFT);
+            if ($mov_t12_id == 18) {
+                $mov_mov_id = $this->movimientos->selectRegistro($arrData[$i]['mov_id']);
+                $arrData[$i]['mov_serie2'] = $mov_mov_id['mov_serie'].'-'.str_pad($mov_mov_id['mov_numero'],8,0,STR_PAD_LEFT);
+            }
             $arrData[$i]['mov_subtotal'] = formatMoney($arrData[$i]['mov_subtotal']);
             $arrData[$i]['mov_igv'] = formatMoney(json_decode($arrData[$i]['mov_igv_id'],true)['mov_igv']);
             $arrData[$i]['mov_total'] = $arrData[$i]['mov_total'];
@@ -129,7 +133,7 @@ class Movimientos extends Controllers{
                                         'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = "'.date( "Y-m", strtotime($_POST['mov_fechaE'])).'"',
                                         'mov_t12_id'=>$_POST['mov_t12_id']),' MAX(mov_t12num) AS num ');
                 $mov = $_POST;
-                $mov['mov_tce_id'] = $tce;
+                $mov['mov_tce_id'] = $tce['tce_id'];
                 $mov['mov_t12num'] = intval($t12num['num'])+1;
                 $mov['mov_alm_id'] =  (isset($mov['mov_alm_id']))?$mov['mov_alm_id']:$_SESSION['alm']['alm_id'];
                 $mov['mov_tipo'] = (isset($mov['mov_tipo']))?$mov['mov_tipo']:$_SESSION['mov']['mov_tipo'];
@@ -163,7 +167,7 @@ class Movimientos extends Controllers{
                 $mov['mov_t12num'] = $b_mov['mov_t12num'];
                 $mov['mov_id'] = $b_mov['mov_id'];
                 $mov['mov_alm_id'] = $_SESSION['alm']['alm_id'];
-                $mov['mov_tipo'] = $_SESSION['mov']['mov_tipo'];
+                $mov['mov_tipo'] = (isset($mov['mov_tipo']))?$mov['mov_tipo']:$_SESSION['mov']['mov_tipo'];
                 $mov['mov_fechaR'] = $_POST['mov_fechaE'];
                 $mov['mov_fechaV'] = $_POST['mov_fechaE'];
                 $mov['mov_gus_id'] = $_SESSION['gus']['gus_id'];
@@ -214,20 +218,40 @@ class Movimientos extends Controllers{
     public function setMovimientoTI(){
         if ($_POST) {
             $base = $_POST;
-            $mov1 = $this->setMovimiento($_POST);
-            $base['mov_mde_id'] = json_decode($base['mov_mde_id'],true);
-            foreach ($base['mov_mde_id'] as $i => $mde) {
-                $base['mov_mde_id'][$i]['mde_bie_id']['bie_id'] = $mde['mde_f_bie_id'];
+            $base2 = $_POST;
+            if (intval($_POST['mov_id'])==0) {
+                $base['mov_mde_id'] = json_decode($base['mov_mde_id'],true);
+                foreach ($base['mov_mde_id'] as $i => $mde) {
+                    $base['mov_mde_id'][$i]['mde_bie_id']['bie_id'] = $mde['mde_f_bie_id']['bie_id'];
+                }
+                $base['mov_mde_id'] = json_encode($base['mov_mde_id'],JSON_UNESCAPED_UNICODE);
+                $base['mov_tipo'] = 2;
+                $base['mov_alm_id'] = $_SESSION['alm']['alm_id'];
+                $base['mov_t12_id'] = 18;
+                $base['mov_t10_id'] = 1;
+                $mov2= $this->setMovimiento($base);
+                $base2['mov_mov_id'] = $mov2['mov_id'];
+                $mov1 = $this->setMovimiento($base2);
+            } else {  //update
+                $base['mov_mde_id'] = json_decode($base['mov_mde_id'],true);
+                foreach ($base['mov_mde_id'] as $i => $mde) {
+                    $base['mov_mde_id'][$i]['mde_bie_id']['bie_id'] = $mde['mde_f_bie_id']['bie_id'];
+                }
+                $set = $this->movimientos->searchRegistro(array('mov_id'=>$base['mov_id']),'mov_mov_id')['mov_mov_id'];
+                $base['mov_id'] = $set;
+                $base['mov_mde_id'] = json_encode($base['mov_mde_id'],JSON_UNESCAPED_UNICODE);
+                $base['mov_tipo'] = 2;
+                $base['mov_alm_id'] = $_SESSION['alm']['alm_id'];
+                $base['mov_t12_id'] = 18;
+                $base['mov_t10_id'] = 1;
+                $mov2= $this->setMovimiento($base);
+                $base2['mov_mov_id'] = $set; 
+                $mov1 = $this->setMovimiento($base2);
             }
-            $base['mov_mde_id'] = json_encode($base['mov_mde_id'],JSON_UNESCAPED_UNICODE);
-            $base['mov_tipo'] = 2;
-            $base['mov_mov_id'] = $mov1['mov_id'];
-            $base['mov_alm_id'] = $_SESSION['alm']['alm_id'];
-            $base['mov_t12_id'] = 18;
-            $base['mov_t10_id'] = 1;
-            $mov2= $this->setMovimiento($base);
+            
+
         }
-        echo json_encode($mov2,JSON_UNESCAPED_UNICODE);
+        echo json_encode($mov1,JSON_UNESCAPED_UNICODE);
         die();
     }
     public function setMovimientoTA(){
@@ -258,11 +282,11 @@ class Movimientos extends Controllers{
         echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function getMovimiento($mov_id,$return = false) {      
+    public function getMovimiento($mov_id,$return = false) {     
         $mov = $this->movimientos->selectRegistro($mov_id);
-        $mov['mov_mde'] = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$mov_id),array('mde_mov_id')); 
-        $age = $mov['mov_age_id'];
-        if (!empty($age)) {
+        $mov['mov_mde_id'] = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$mov_id),array('mde_mov_id')); 
+        if (!empty($mov['mov_age_id'])) {
+            $age = $mov['mov_age_id'];
             if (!empty($mov['mov_age_id']['age_gem_id'])) {
                 $mov['mov_age_id']['age_ide'] =         $age['age_gem_id']['gem_ruc'];
                 $mov['mov_age_id']['age_nombre'] =      $age['age_gem_id']['gem_razonsocial'];
@@ -281,6 +305,12 @@ class Movimientos extends Controllers{
             }
         }
         if (!empty($mov)) {
+            if ($mov['mov_t12_id']['t12_id'] == 18 && $mov['mov_tipo'] == 1) { 
+                $mov_mov_id = $this->getMovimiento(intval($mov['mov_mov_id']),true);
+                foreach ($mov_mov_id['data']['mov_mde_id'] as $i => $mde) {
+                    $mov['mov_mde_id'][$i]['mde_f_bie_id'] = $mde['mde_bie_id'];
+                }
+            }
             $response = array('status'=>true,'msg'=>'ok','data'=>$mov);
         } else {
             $response = array('status'=>false,'msg'=>'Movimiento no Encontrado','data'=>$mov);

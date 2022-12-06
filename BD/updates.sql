@@ -88,3 +88,11 @@ ALTER TABLE `ppagos` ADD INDEX `ppagos_usuarios` (`ppa_gus_id`);
 ALTER TABLE `ppagos` ADD FOREIGN KEY (`ppa_col_id`) REFERENCES `colaboradores`(`col_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `ppagos` ADD FOREIGN KEY (`ppa_caj_id`) REFERENCES `cajas`(`caj_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `ppagos` ADD FOREIGN KEY (`ppa_gus_id`) REFERENCES `company5_bd_cacel`.`usuarios`(`gus_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+
+ALTER TABLE `movimientos` ADD `mov_mov_id` BIGINT NULL AFTER `mov_gus_id`;
+ALTER TABLE `cajas` ADD `caj_caj_id` BIGINT NULL AFTER `caj_gus_id`;
+ALTER TABLE `movimientos` ADD `mov_cue_id` BIGINT NULL AFTER `mov_tce_id`;
+ALTER TABLE `movimientos` ADD INDEX `movimientos_cuentas` (`mov_cue_id`);
+ALTER TABLE `movimientos` ADD CONSTRAINT `movimientos_cuentas` FOREIGN KEY (`mov_cue_id`) REFERENCES `cuentas`(`cue_id`) ON DELETE CASCADE ON UPDATE CASCADE;

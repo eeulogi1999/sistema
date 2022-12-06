@@ -126,6 +126,17 @@
                   </div>
                 </div>
               </div>
+              <div class="datosform pb-1">
+                <div class="row">
+                  <div class="col-md-4 text-right">
+                    <label for="mov_cue_id">Cuentas <span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <select class="form-control" data-live-search="true" id="mov_cue_id" name="mov_cue_id" required>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </form>
@@ -141,12 +152,12 @@
                             [<i class="fas fa-plus-circle">Seleccionar</i>]</a></th>
                         <th class="w-auto" id="new_f_bien" style="display:none" >Bien Destino</th>
                         <th>Cantidad</th>
-                        <th>Unidad Medida</th>
-                        <th class="w-5">
+                        <th>U. M.</th>
+                        <th width="100">
                           <div class="form-row h-100 justify-content-center ">
-                            <div class="col-4">P.U.
+                            <div class="col">P.U.
                             </div>
-                            <div class="col-8">
+                            <div class="col" style="display:none">
                               <label class="checkbox">
                                 <input type="checkbox" id="mde_igv" name="mde_igv">&nbsp;Con Igv
                               </label>
@@ -155,16 +166,9 @@
                         </th>
                         <th style="display:none"  >Tipo de IGV</th>
                         <th>Importe</th>
-                        <th>                          
-                          <div class="form-row h-100 justify-content-center ">
-                            <div class="col-8">Detraccion
-                            </div>
-                            <div class="col-4">
-                              <label class="checkbox">
-                                <input type="checkbox" id="mde_det" name="mde_det">&nbsp;%
-                              </label>
-                            </div>
-                          </div>
+                        <th  width="100">                          
+                          <span>Detraccion</span>
+                          <input type="checkbox" id="mde_det" name="mde_det">&nbsp;%
                         </th>
                         <th>Acciones</th>
                       </tr>
@@ -209,21 +213,7 @@
             <div class="tile">
               <div class="tile-body">
                 <div class="table-responsive">
-                  <table class="table table-hover table-bordered" id="mde" width="100%">
-                    <thead>
-                      <tr>
-                        <th>Cantidad</th>
-                        <th>Articulo</th>
-                        <th>Unidad Medida</th>
-                        <th>PU</th>
-                        <th>Tipo de IGV</th>
-                        <th>Importe</th>
-                        <th>Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody class="text-center">
-                    </tbody>
-                  </table>
+                  <table class="table table-hover table-bordered table-sm" id="mde" width="100%"></table>
                 </div>
               </div>
             </div>

@@ -37,6 +37,17 @@ class Gerencial extends Controllers{
         $data['page_functions_js'] = array("functions_gerencial.js","functions_reportes.js");
         $this->views->getView($this,"resultados",$data);
     }
+    public function Facturacion(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $data['page_tag'] = "Volumen de Facturaciones";
+        $data['page_title'] = "Volumen de Facturaciones";
+        $data['page_name'] = "Volumen de Facturaciones";
+        $data['page_data'] = array('age_tipo'=>0,'periodo'=>$_SESSION['periodo']);
+        $data['page_functions_js'] = array("functions_gerencial.js","functions_reportes.js");
+        $this->views->getView($this,"facturacion",$data);
+    }
     public function Cventas(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
@@ -88,6 +99,15 @@ class Gerencial extends Controllers{
         $res[4]['res_descripcion']='PAGAR';
         $res[4]['res_total'] = -$liq['liq_pagar'];
         $res[4]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resPagar()"><i class="far fa-eye"></i></button>';
+        if ($out) {
+            return $res;
+        } else {
+            echo json_encode($res,JSON_UNESCAPED_UNICODE);
+            die();
+        }
+    }
+    public function getFacturacion($out=false){
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
         if ($out) {
             return $res;
         } else {

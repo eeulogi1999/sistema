@@ -136,6 +136,9 @@
             color: #FFF;
             text-align: left;
         }
+        .det-mov{
+            font-size: 24px;
+        }
 
         .tblfoot_Final {
             background-color: #bf0811;
@@ -179,7 +182,7 @@
                         width="150">
                 </td>
                 <td class="text-center wd40">
-                    <h4><strong><?= $gcl['gcl_gem_id']['gem_razonsocial'] ?></strong></h4>
+                    <h4><strong><?= strtoupper($gcl['gcl_gem_id']['gem_razonsocial']) ?></strong></h4>
                     <p class="text-fs8"><?= $gcl['gcl_gem_id']['gem_direccion'] ?> <br>
                         <?= $gcl['gcl_gem_id']['gem_gdi_id']['gdi_gpr_id']['gpr_gde_id']['gde_departamento'].' - '.
                         $gcl['gcl_gem_id']['gem_gdi_id']['gdi_gpr_id']['gpr_provincia'].' - '.
@@ -198,10 +201,10 @@
                     </p>
 
                 </td>
-                <td class="text-center wd40 tbl-cliente">
-                    <p><span>RUC: <?= $gcl['gcl_gem_id']['gem_ruc'] ?></span><br><br>
-                        <strong class="text-uppercase"><?= $mov['mov_t10_id']['t10_descripcion']?></strong><br><br>
-                        <span><?= $mov['mov_serie'].'-'.str_pad($mov['mov_numero'],8,0,STR_PAD_LEFT) ?></span>
+                <td class="text-center wd40 tbl-cliente det-mov" >
+                    <p><span>RUC: <?= $gcl['gcl_gem_id']['gem_ruc'] ?></span><br>
+                        <strong class="text-uppercase"><?= $mov['mov_t10_id']['t10_descripcion']?></strong><br>
+                        <span><?= $mov['mov_serie'].'-'.str_pad($mov['mov_numero'],8,0,STR_PAD_LEFT) ?></span><br>
                     </p>
                 </td>
             </tr>
@@ -222,6 +225,10 @@
                 <tr>
                     <td class="wd10"><?= !empty($mov['mov_age_id']['age_gem_id'])?'RUC ':'Identificacion:' ?></td>
                     <td class="wd50"><?= $mov['mov_age_id']['age_ide'] ?></td>
+                    <td class="wd10">FECHA</td>
+                    <td class="wd10"><?= $mov['mov_fechaE'] ?></td>
+                    <td class="wd10">PAGO</td>
+                    <td class="wd10"><?= (empty($mov['mov_cre_id'])) ? 'Contado' : 'Credito' ; ?></td>
                 </tr>
                 <tr>
                     <td class="wd10">DIRECCION:</td>
@@ -254,26 +261,6 @@
         </tbody>
     </table>
     <br>
-    <table class="tbl-cliente">
-        <tbody>
-            <tr>
-                <td class="text-center tbl-subCliente wd20"><strong>Fecha de Emisión</strong></td>
-                <td class="text-center tbl-subCliente wd20"><strong>Forma de Pago</strong></td>
-                <td class="text-center tbl-subCliente wd20"><strong>Orden de compra</strong></td>
-                <td class="text-center tbl-subCliente wd20"><strong>Fecha de Vencimiento</strong></td>
-                <td class="text-center wd20"><strong>N° Guia de Remisión</strong></td>
-            </tr>
-            <tr>
-                <td class="text-center tbl-subCliente wd20"><?=  $mov['mov_fechaE']?></td>
-                <td class="text-center tbl-subCliente wd20">
-                    <?= (empty($mov['mov_cre_id'])) ? 'Contado' : 'Credito' ;  ?></td>
-                <td class="text-center tbl-subCliente wd20"><?= "" ?></td>
-                <td class="text-center tbl-subCliente wd20"><?= "" ?></td>
-                <td class="text-center wd20"><?= "" ?></td>
-            </tr>
-        </tbody>
-    </table>
-    <br>
     <table class="tbl-detalle">
         <thead>
             <tr>
@@ -288,8 +275,8 @@
         </thead>
         <tbody>
             <?php 
-				for ($i = 0; $i < count($mov['mov_mde']);$i++) {
-					$mde = $mov['mov_mde'][$i];
+				for ($i = 0; $i < count($mov['mov_mde_id']);$i++) {
+					$mde = $mov['mov_mde_id'][$i];
 			 ?>
             <tr>
                 <td class="text-center"><?= $mde['mde_bie_id']['bie_codigo'] ?></td>

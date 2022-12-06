@@ -32,7 +32,6 @@
                 <div class="tile-body">
                   <div class="table-responsive">
                   <table class="table table-hover table-bordered table-sm " id="mov_table" width="100%"></table>
-                    <!-- <div id="mov_table"></div> -->
                   </div>
                 </div>
               </div>

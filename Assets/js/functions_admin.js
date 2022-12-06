@@ -271,10 +271,15 @@ function previewFiles(th,content) {
         var tfoot = null;
         o.tf = {};
         var numerate = o.numerate;
-        o.data = await fetch(o.url)
-        .then(r => r.json())
-        .then(r => {return r})
-        .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
+        if (o.src != undefined) {
+            o.data = window[o.src];
+        }
+        if (o.url != undefined) {
+            o.data = await fetch(o.url)
+            .then(r => r.json())
+            .then(r => {return r})
+            .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
+        }
         var constructor = function () {
             if (typeof o.export == 'undefined') {
             $(table).parent().parent().prepend('<div class="btn-group float-left">'
@@ -427,14 +432,16 @@ function previewFiles(th,content) {
             }
         };
         var zise = function(){
-            var w = 230;
-            if (typeof o.export != 'undefined') {
-                w = (!o.export)?205:230;
-            }
-            if ((window.innerHeight-w)>table[0].offsetHeight) {
-                table[0].parentNode.style.height = (table[0].offsetHeight)+'px';
-            }else{
-                table[0].parentNode.style.height = (window.innerHeight-w)+'px';
+            if (typeof o.rezise == undefined ) {
+                var w = 230;
+                if (typeof o.export != 'undefined') {
+                    w = (!o.export)?205:230;
+                }
+                if ((window.innerHeight-w)>table[0].offsetHeight) {
+                    table[0].parentNode.style.height = (table[0].offsetHeight)+'px';
+                }else{
+                    table[0].parentNode.style.height = (window.innerHeight-w)+'px';
+                }
             }
         };
         var textFilter = function(n){
@@ -467,10 +474,15 @@ function previewFiles(th,content) {
             },
             reload: async function(url=null){
                 var url = (url)?url:o.url;
-                o.data = await fetch(url)
-                .then(r => r.json())
-                .then(r => {return r})
-                .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
+                if (o.src != undefined) {
+                    o.data = window[o.src];
+                }
+                if (o.url != undefined) {
+                    o.data = await fetch(o.url)
+                    .then(r => r.json())
+                    .then(r => {return r})
+                    .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
+                }
                 draw();
                 zise();
                 listenTree();

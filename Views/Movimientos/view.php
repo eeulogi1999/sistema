@@ -80,7 +80,8 @@
                         <div class=" p-3" style="height: 118px;">
                             <b class="text-right">Fecha :</b> <?= $mov['mov_fechaE']; ?><br>
                             <b>Moneda: </b><?= $mov['mov_gt4_id']['gt4_descripcion']; ?><br>
-                            <b>Monto:</b> <?= formatMoney($mov['mov_total']); ?>
+                            <b>Monto:</b> <?= formatMoney($mov['mov_total']); ?><br>
+                            <b>Cuenta:</b> <?= $mov['mov_cue_id']['cue_nombre']; ?>
                         </div>
 
                     </div>
@@ -93,14 +94,17 @@
                                     <th class="text-center">Cantidad</th>
                                     <th class="text-center">Codigo</th>
                                     <th class="text-left">Unidad Medida</th>
-                                    <th class="text-left">Descripción</th>
+                                    <th class="text-left">Material Origen</th>
+                                    <?php if ($mov['mov_t12_id']['t12_id']==18) { ?>
+                                        <th class="text-left">Material Destino</th>
+                                    <?php } ?>
                                     <th class="text-right">Precio Unitario</th>
                                     <th class="text-right">Importe</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php 
-                                $detalles = $mov['mov_mde'];
+                                $detalles = $mov['mov_mde_id'];
                                 if(count($detalles) > 0){
                                     foreach ($detalles as $producto) {
                                     ?>
@@ -108,10 +112,11 @@
                                     <td class="text-center"><?= $producto['mde_q']; ?></td>
                                     <td class="text-center"> <a href="#" onclick="ftnViewBie(<?= $producto['mde_bie_id']['bie_id'] ?>)" ><?= $producto['mde_bie_id']['bie_codigo'] ?></a></td>
                                     <td class="text-left"><?= $producto['mde_t6m_id']['t6m_descripcion']; ?></td>
-                                    <td class="text-left"><?= $producto['mde_bie_id']['bie_nombre'] ?>
-                                    </td>
-                                    <td class="text-right">
-                                        <?=formatMoney($producto['mde_vu']) ?></td>
+                                    <td class="text-left"><?= $producto['mde_bie_id']['bie_nombre'] ?></td>
+                                    <?php if ($mov['mov_t12_id']['t12_id']==18) { ?>
+                                        <td class="text-left"><?= $producto['mde_f_bie_id']['bie_nombre']; ?></td>
+                                    <?php } ?>
+                                    <td class="text-right"><?=formatMoney($producto['mde_vu']) ?></td>
                                     <td class="text-right"><?=formatMoney($producto['mde_importe']) ?></td>
                                 </tr>
                                 <?php 
@@ -122,12 +127,12 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="3"> <strong>OBSERVACIONES: </strong></td>
+                                    <td colspan="<?= ($mov['mov_t12_id']['t12_id']==18)?4:3?>"> <strong>OBSERVACIONES: </strong></td>
                                     <td colspan="2" class="text-right">Sub-Total:</td>
                                     <td class="text-right"><?= formatMoney($mov['mov_subtotal']) ?></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3" rowspan="2"><p><?= $mov['mov_observaciones'] ?></p></td>
+                                    <td colspan="<?= ($mov['mov_t12_id']['t12_id']==18)?4:3?>" rowspan="2"><p><?= $mov['mov_observaciones'] ?></p></td>
                                     <td colspan="2" class="text-right">Igv (18%):</td>
                                     <td class="text-right"><?= formatMoney($mov['mov_igv_id']['mov_igv']) ?></td>
                                 </tr>
@@ -137,7 +142,7 @@
                                 </tr>
                                 <?php if (isset($mov['mov_igv_id']['mov_neto'])) { ?>
                                 <tr>
-                                    <td colspan="5" class="text-right">Neto a Pago:</td>
+                                    <td colspan="<?= ($mov['mov_t12_id']['t12_id']==18)?6:5?>" class="text-right">Neto a Pago:</td>
                                     <td class="text-right"><?= formatMoney($mov['mov_igv_id']['mov_neto']) ?></td>
                                 </tr>
                                 <?php } ?>

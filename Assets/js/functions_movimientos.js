@@ -6,39 +6,77 @@ var url_mov= base_url+"/Movimientos/getMovimientos/"+data.mov_t12_id;
 document.addEventListener('DOMContentLoaded', function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#mov_table")) {
-        mov_table = $('#mov_table').autoTable({
-            "url":url_mov ,
+        if (data.mov_t12_id==18) {
+            mov_table = $('#mov_table').autoTable({
+                "url":url_mov ,
+                "numerate": true,
+                "columns":[
+                    {"data":"mov_t12_id.t12_descripcion",header:{t:"OPERACION",c:'text'},tipo:'string',footer:"TOTALES"},
+                    {"data":"mov_serie",header:{t:"DOC-ORIGEN",c:'text'},tipo:'string'},
+                    {"data":"mov_serie2",header:{t:"DOC-DESTINO",c:'text'},tipo:'string'},
+                    {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
+                    {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
+                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }},
+                    {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
+                    {"data":"mov_options",header:"ACCIONES",tipo:'string'}
+                ]
+            });
+        } else {
+            mov_table = $('#mov_table').autoTable({
+                "url":url_mov ,
+                "numerate": true,
+                "columns":[
+                    {"data":"mov_t12_id.t12_descripcion",header:{t:"OPERACION",c:'text'},tipo:'string',footer:"TOTALES"},
+                    {"data":"mov_serie",header:{t:"SERIE Y NUMERO",c:'text'},tipo:'string'},
+                    {"data":"mov_age_ide",header:{t:"AGENTE",c:'text'},tipo:'string'},
+                    {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
+                    {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
+                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }},
+                    {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
+                    {"data":"mov_options",header:"ACCIONES",tipo:'string'}
+                ]
+            });
+        }
+    }
+    if (data.mov_t12_id==18) {
+        mde = $('#mde').autoTable({
+            "src": "mde_json",
             "numerate": true,
+            "rezise": false,
+            "export": false,
             "columns":[
-                {"data":"mov_t12_id.t12_descripcion",header:{t:"OPERACION",c:'text'},tipo:'string',footer:"TOTALES"},
-                {"data":"mov_serie",header:{t:"SERIE Y NUMERO",c:'text'},tipo:'string'},
-                {"data":"mov_age_ide",header:{t:"AGENTE",c:'text'},tipo:'string'},
-                {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
-                {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
-                {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }},
-                {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
-                {"data":"mov_options",header:"ACCIONES",tipo:'string'}
+                {"data":"mde_q",header:"Cantidad",tipo:'float'},
+                {"data":"mde_bie_id.bie_nombre",header:"Material Origen",tipo:'string'},
+                {"data":"mde_f_bie_id.bie_nombre",header:"Material Destino",tipo:'string'},
+                {"data":"mde_t6m_id.t6m_sunat",header:"Unidad de Medida",tipo:'string'},
+                {"data":"mde_vu",header:"P.U.",tipo:'float'},
+                {"data":"mde_gta_id.gta_descripcion",header:"Tipo Igv",tipo:'string'},
+                {"data":"mde_importe",header:"Importe",tipo:'float'},
+                {"data":"mde_options",header:"Acciones",tipo:'string'}
+            ]
+        });
+    }else{
+        mde = $('#mde').autoTable({
+            "src": "mde_json",
+            "numerate": true,
+            "rezise": false,
+            "export": false,
+            "columns":[
+                {"data":"mde_q",header:"Cantidad",tipo:'float'},
+                {"data":"mde_bie_id.bie_nombre",header:"Articulo",tipo:'string'},
+                {"data":"mde_t6m_id.t6m_sunat",header:"Unidad de Medida",tipo:'string'},
+                {"data":"mde_vu",header:"P.U.",tipo:'float'},
+                {"data":"mde_gta_id.gta_descripcion",header:"Tipo Igv",tipo:'string'},
+                {"data":"mde_importe",header:"Importe",tipo:'float'},
+                {"data":"mde_options",header:"Acciones",tipo:'string'}
             ]
         });
     }
-    mde = $('#mde').jsonTables({
-        "src": "mde_json",
-        "numerate": true,
-        "columns":[
-            {"data":"mde_q",tipo:'float'},
-            {"data":"mde_bie_id.bie_nombre",tipo:'string'},
-            {"data":"mde_t6m_id.t6m_descripcion",tipo:'string'},
-            {"data":"mde_vu",tipo:'float'},
-            {"data":"mde_gta_id.gta_descripcion",tipo:'string'},
-            {"data":"mde_importe",tipo:'float'},
-            {"data":"mde_options",tipo:'string'}
-        ]
-    });
-    
     $('#mov_t12_id').loadOptions('t12operaciones',['t12_descripcion'],{'t12_status':1});
     $('#mov_t10_id').loadOptions('t10comprobantes',['t10_descripcion'],{'t10_status':1});
+    $('#mov_cue_id').loadOptions('cuentas',['cue_nombre'],{'cue_status':1});
     $('#mov_gt4_id').loadOptions('t4monedas',['gt4_descripcion']);
-    $('#mde_t6m_id').loadOptions('t6medidas',['t6m_descripcion']);
+    $('#mde_t6m_id').loadOptions('t6medidas',['t6m_sunat']);
     if (parseInt(data.mov_t12_id)==2) {
         $('#mde_gta_id').loadOptions('tafectaciones',['gta_descripcion'],{'gta_id':9});
     } else {
@@ -61,7 +99,11 @@ document.addEventListener('DOMContentLoaded', function () {
         var gtc = $(this).prop('checked');
         if (gtc) {
             $('#mde_detraccion').removeAttr("disabled");
+            $('#mov_cue_id').parent().parent().show();
+            document.querySelector('#mov_cue_id').focus();
+            //$('#mov_cue_id').attr('size',$('#mov_cue_id option').length);
         } else {
+            $('#mov_cue_id').parent().parent().hide();
             $('#mde_detraccion').attr('disabled', 'disabled');
         }
     });
@@ -207,6 +249,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 window.addEventListener('load', async () => {
     mov_table = await mov_table;
+    mde = await mde;
     divLoading.style.display = "none";
 });
 
@@ -330,7 +373,7 @@ function setMde(id=-1) {
         },
         mde_t6m_id: {
             t6m_id: parseInt($('#mde_t6m_id').val()),
-            t6m_descripcion: $('#mde_t6m_id').find('option:selected').text()
+            t6m_sunat: $('#mde_t6m_id').find('option:selected').text()
         },
         mde_gta_id: {
             gta_id: parseInt($('#mde_gta_id').val()),
@@ -339,7 +382,10 @@ function setMde(id=-1) {
         mde_q: parseFloat($('#mde_q').val()), 
         mde_vu: mde_igv ? parseFloat($('#mde_vu').val())/1.18 : parseFloat($('#mde_vu').val()),
         mde_igv: +mde_igv,
-        mde_f_bie_id: parseInt($('#mde_f_bie_id').val()),
+        mde_f_bie_id:{
+            bie_id: parseInt($('#mde_f_bie_id').val()),
+            bie_nombre: $('#mde_f_bie_id').find('option:selected').text()
+        },
         mde_detraccion: mde_det ? parseInt($('#mde_detraccion').val()):0,
         mde_importe: mde_igv ? parseFloat($('#mde_importe').val())/1.18 : parseFloat($('#mde_importe').val()),
         mde_options: '<div class="text-center"><button class="btn btn-primary btn-sm" onClick="event.preventDefault();editMde(' + pin + ');" title="Editar"><i class="fas fa-pencil-alt"></i></button>'+
@@ -364,7 +410,8 @@ function deleteMde(id) {
         closeOnCancel: true
     }, function (isConfirm) {
         if (isConfirm) {
-            delete mde_json[id];
+            mde_json.splice(id, 1)
+            //delete mde_json[id];
             mde.reload();
             subtotalMde();
         }
@@ -390,6 +437,11 @@ function editMde(id) {
     $('#set_mde').children('i').removeClass('fa-plus').addClass('fa-refresh');
     $('#set_mde').attr('onclick','event.preventDefault();setMde('+id+');')
     $('#set_mde').slideDown();
+    if (parseInt(data.mov_t12_id)==18) {
+        $('#mde_f_bie_id').parent().show() 
+        $('#new_f_bien').show();
+        $('#mde_f_bie_id').val(mde_json[id].mde_f_bie_id.bie_id);
+    }
     $("#mde_importe").removeAttr("disabled");
     $("#mde_q").removeAttr("disabled");
     $("#mde_vu").removeAttr("disabled");
@@ -407,8 +459,9 @@ function cleanMde() {
     $('#mde_detraccion').attr('disabled', 'disabled');
     if (parseInt(data.mov_t12_id)!=18) {
         $('#mde_f_bie_id').parent().hide() 
+        $('#new_f_bien').hide();
     }
-    $('#new_f_bien').hide();
+    
 }
 function openMde() {
     $("#mde_importe").removeAttr("disabled");
@@ -497,6 +550,7 @@ function openModalMov() {
     $('#set_mov span').html("Guardar");
     document.querySelector("#formMov").reset();
     $('#mov_ncr_id').attr('data','0');
+    $('#mov_cue_id').parent().parent().hide();
     switch (data.mov_t12_id) {
         case 16:
             $('#mov_t12_id').val(16);
@@ -568,7 +622,7 @@ function editMov(id) {
             $('#mde_gta_id').val(1);
             document.querySelector("#mov_fechaE").valueAsDate = new Date(mov.mov_fechaE);
             ftnTcambio(document.querySelector("#mov_fechaE"));
-            mde_json = mov.mov_mde;
+            mde_json = mov.mov_mde_id;
             for (const i in mde_json) {
                 mde_json[i]['mde_q'] = parseFloat(mde_json[i]['mde_q']).toFixed(2);
                 mde_json[i]['mde_vu'] = parseFloat(mde_json[i]['mde_vu']).toFixed(2);
