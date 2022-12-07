@@ -432,7 +432,7 @@ function previewFiles(th,content) {
             }
         };
         var zise = function(){
-            if (typeof o.rezise == undefined ) {
+            if (typeof o.rezise == 'undefined' ) {
                 var w = 230;
                 if (typeof o.export != 'undefined') {
                     w = (!o.export)?205:230;
