@@ -473,12 +473,12 @@ function previewFiles(th,content) {
                 return true;
             },
             reload: async function(url=null){
-                var url = (url)?url:o.url;
-                if (o.src != undefined) {
+                if (typeof o.src != 'undefined') {
                     o.data = window[o.src];
                 }
-                if (o.url != undefined) {
-                    o.data = await fetch(o.url)
+                if (typeof o.url != 'undefined') {
+                    var url = (url)?url:o.url;
+                    o.data = await fetch(url)
                     .then(r => r.json())
                     .then(r => {return r})
                     .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
