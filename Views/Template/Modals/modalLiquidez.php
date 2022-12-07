@@ -51,7 +51,13 @@
         </button>
       </div>
       <div class="modal-body">
-      <h2 class="text-center">CLIENTE</h2>
+      <div class="d-flex justify-content-center">
+        <h2>
+          AGENTE :<span id="h_age_id"></span> 
+          <a class="text-danger px-1" href="<?= base_url() ?>/Liquidez/getPdf"><i class="fas fa-file-pdf"></i></a>
+          <a class="text-success px-1" href="<?= base_url() ?>/Liquidez/getXlsx"><i class="fas fa-file-excel"></i></a>
+        </h2>
+      </div>
         <div class="row">
           <div class="col-md-6">
             <h3 class="text-center">INGRESOS</h3>

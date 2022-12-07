@@ -653,16 +653,16 @@ function previewFiles(th,content) {
         });
     }
 }
-function locationHref(){
-    let href = location.pathname.split("/");
-    var obj = {controller:href[2]};
-    if (typeof href[3] !== 'undefined') {
-        obj.metodo = href[3];
-    }
-    if (typeof href[4] !== 'undefined') {
-        obj.parametro = href[4];
-    }
-    return obj;
+function locationHref() {
+  let href = location.pathname.split("/");
+  var obj = { controller: href[2] };
+  if (typeof href[3] !== "undefined") {
+    obj.metodo = href[3];
+  }
+  if (typeof href[4] !== "undefined") {
+    obj.parametro = href[4];
+  }
+  return obj;
 }
 function getTable(prefijo) {
     let table;

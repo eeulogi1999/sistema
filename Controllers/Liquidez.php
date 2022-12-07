@@ -300,6 +300,41 @@ class Liquidez extends Controllers{
         echo json_encode($r,JSON_UNESCAPED_UNICODE);
         die();
     }
+    public function getPdf($mov_id){
+        ob_end_clean();
+        $data['gcl'] = $_SESSION['gcl'];
+        $data['alm'] = $_SESSION['alm'];
+        $dompdf = new Dompdf\Dompdf();
+        ob_end_clean();
+        $options = new Dompdf\Options();
+        $options->set(array('isRemoteEnabled'=>true));
+        $dompdf->setOptions($options);
+        $html = getFile("Liquidez/pdf",$data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('letter', 'landscape');
+        $dompdf->render();
+        $dompdf->stream('my.pdf',array('Attachment'=>0));
+        die();
+    }
+    public function getXlsx($mov_id){
+        ob_end_clean();
+        $data['gcl'] = $_SESSION['gcl'];
+        $data['alm'] = $_SESSION['alm'];
+        $data['mov'] = $this->getMovimiento($mov_id,true)['data'];
+        $data['mov']['mov_letras_pen'] = $this->formatter->toInvoice($data['mov']['mov_total'], 2, "SOLES");
+        $data['mov']['mov_qr'] = $result->getDataUri();
+        $dompdf = new Dompdf\Dompdf();
+        ob_end_clean();
+        $options = new Dompdf\Options();
+        $options->set(array('isRemoteEnabled'=>true));
+        $dompdf->setOptions($options);
+        $html = getFile("Movimientos/view",$data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4');
+        $dompdf->render();
+        $dompdf->stream('my.pdf',array('Attachment'=>0));
+        die();
+    }
 }
 
 ?>

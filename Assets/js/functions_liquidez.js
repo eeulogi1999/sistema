@@ -80,6 +80,13 @@ async function editLiq(id) {
 function viewLiq(id,a) {
     $('#liq_actual').text()
     $('#modalViewLiq').modal('show');
+    fetch(base_url + '/Main/get/age,'+id)
+    .then(r => r.json())
+    .then(r => {
+        var text = (r.data.age_gem_id==null)?r.data.age_gpe_id.gpe_nombre+' ,'+r.data.age_gpe_id.gpe_apellidos:r.data.age_gem_id.gem_razonsocial;
+        $("#h_age_id").text(text);
+    })
+    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
     mvb_mov.reload(base_url+"/Liquidez/getIng/"+id);
     setTimeout(() => {
         mvb_mov.rezise();
