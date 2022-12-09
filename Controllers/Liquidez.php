@@ -186,7 +186,7 @@ class Liquidez extends Controllers{
         }
         die();
     }
-    function getIng($age_id){
+    function getIng($age_id,$res=false){
         $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>2,'mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
         $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
         $nd = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>6,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
@@ -233,10 +233,14 @@ class Liquidez extends Controllers{
         usort($ing, function($a, $b) {
             return $a['ing_fecha'] <=> $b['ing_fecha'];
         });
-        echo json_encode($ing,JSON_UNESCAPED_UNICODE);
+        if ($res) {
+            return $ing;
+        } else {
+            echo json_encode($ing,JSON_UNESCAPED_UNICODE);
+        }
         die();
     }
-    function getEgr($age_id){
+    function getEgr($age_id,$res=false){
         $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>1,'mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
         $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>2,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
         $nc = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>7,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
@@ -283,7 +287,11 @@ class Liquidez extends Controllers{
         usort($egr, function($a, $b) {
             return $a['egr_fecha'] <=> $b['egr_fecha'];
         });
-        echo json_encode($egr,JSON_UNESCAPED_UNICODE);
+        if ($res) {
+            return $egr;
+        } else {
+            echo json_encode($egr,JSON_UNESCAPED_UNICODE);
+        }
         die();
     }
     public function cierre(){
@@ -300,12 +308,14 @@ class Liquidez extends Controllers{
         echo json_encode($r,JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function getPdf($mov_id){
+    public function getPdf($age_id){
         ob_end_clean();
         $data['gcl'] = $_SESSION['gcl'];
         $data['alm'] = $_SESSION['alm'];
+        $data['age'] = $this->agentes->selectRegistro($age_id);
+        $data['liq_egr'] = $this->getEgr($age_id,true);
+        $data['liq_ing'] = $this->getIng($age_id,true);
         $dompdf = new Dompdf\Dompdf();
-        ob_end_clean();
         $options = new Dompdf\Options();
         $options->set(array('isRemoteEnabled'=>true));
         $dompdf->setOptions($options);
@@ -316,24 +326,7 @@ class Liquidez extends Controllers{
         $dompdf->stream('my.pdf',array('Attachment'=>0));
         die();
     }
-    public function getXlsx($mov_id){
-        ob_end_clean();
-        $data['gcl'] = $_SESSION['gcl'];
-        $data['alm'] = $_SESSION['alm'];
-        $data['mov'] = $this->getMovimiento($mov_id,true)['data'];
-        $data['mov']['mov_letras_pen'] = $this->formatter->toInvoice($data['mov']['mov_total'], 2, "SOLES");
-        $data['mov']['mov_qr'] = $result->getDataUri();
-        $dompdf = new Dompdf\Dompdf();
-        ob_end_clean();
-        $options = new Dompdf\Options();
-        $options->set(array('isRemoteEnabled'=>true));
-        $dompdf->setOptions($options);
-        $html = getFile("Movimientos/view",$data);
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4');
-        $dompdf->render();
-        $dompdf->stream('my.pdf',array('Attachment'=>0));
-        die();
+    public function getXlsx($age_id){
     }
 }
 

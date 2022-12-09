@@ -80,6 +80,8 @@ async function editLiq(id) {
 function viewLiq(id,a) {
     $('#liq_actual').text()
     $('#modalViewLiq').modal('show');
+    $("#liq_pdf").attr("href",base_url+"/Liquidez/getPdf/"+id);
+    $("#liq_xlsx").attr("href",base_url+"/Liquidez/getXlsx/"+id);
     fetch(base_url + '/Main/get/age,'+id)
     .then(r => r.json())
     .then(r => {

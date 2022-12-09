@@ -54,8 +54,8 @@
       <div class="d-flex justify-content-center">
         <h2>
           AGENTE :<span id="h_age_id"></span> 
-          <a class="text-danger px-1" href="<?= base_url() ?>/Liquidez/getPdf"><i class="fas fa-file-pdf"></i></a>
-          <a class="text-success px-1" href="<?= base_url() ?>/Liquidez/getXlsx"><i class="fas fa-file-excel"></i></a>
+          <a class="text-danger px-1" target="_blank"  id="liq_pdf" href="#"><i class="fas fa-file-pdf"></i></a>
+          <a class="text-success px-1" target="_blank" id="liq_xlsx" href="#"><i class="fas fa-file-excel"></i></a>
         </h2>
       </div>
         <div class="row">
