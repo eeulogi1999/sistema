@@ -354,6 +354,23 @@ class Movimientos extends Controllers{
             ->size(100)
             ->margin(1)
             ->roundBlockSizeMode(new Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin())
+            ->labelText('DOC. Vitual')
+            ->labelFont(new Endroid\QrCode\Label\Font\NotoSans(11))
+            ->labelAlignment(new Endroid\QrCode\Label\Alignment\LabelAlignmentCenter())
+            ->validateResult(false)
+            ->build();
+        $web = Endroid\QrCode\Builder\Builder::create()
+            ->writer(new Endroid\QrCode\Writer\PngWriter())
+            ->writerOptions([])
+            ->data('https://companycacel.com/')
+            ->encoding(new Endroid\QrCode\Encoding\Encoding('UTF-8'))
+            ->errorCorrectionLevel(new Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh())
+            ->size(100)
+            ->margin(1)
+            ->roundBlockSizeMode(new Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin())
+            ->labelText('Pagina Web')
+            ->labelFont(new Endroid\QrCode\Label\Font\NotoSans(11))
+            ->labelAlignment(new Endroid\QrCode\Label\Alignment\LabelAlignmentCenter())
             ->validateResult(false)
             ->build();
         $data['gcl'] = $_SESSION['gcl'];
@@ -361,6 +378,7 @@ class Movimientos extends Controllers{
         $data['mov'] = $this->getMovimiento($mov_id,true)['data'];
         $data['mov']['mov_letras_pen'] = $this->formatter->toInvoice($data['mov']['mov_total'], 2, "SOLES");
         $data['mov']['mov_qr'] = $result->getDataUri();
+        $data['mov']['mov_qr_web'] = $web->getDataUri();
         $html = getFile("Movimientos/pdf",$data);
         $html2pdf = new Spipu\Html2Pdf\Html2Pdf('p','A4','es','true','UTF-8');
         $html2pdf->pdf->setTitle($data['mov']['mov_serie'].'-'.str_pad($data['mov']['mov_numero'],8,0,STR_PAD_LEFT));

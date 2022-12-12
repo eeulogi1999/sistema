@@ -1,6 +1,7 @@
 <?php 
 
 @ob_start();
+require_once 'Libraries/phpspreadsheet/vendor/autoload.php';
 require_once 'Controllers/Reportes.php';
 class Liquidez extends Controllers{
     public function __construct(){
@@ -327,6 +328,56 @@ class Liquidez extends Controllers{
         die();
     }
     public function getXlsx($age_id){
+        ob_end_clean();
+        $age = $this->agentes->selectRegistro($age_id);
+        $ing['data'] = $this->getIng($age_id,true);
+        $ing['columns'] = array(array('data'=>'ing_fecha'),array('data'=>'ing_tipo'),array('data'=>'ing_cuenta'),array('data'=>'ing_descripcion'),array('data'=>'ing_monto'));
+        $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $egr['data'] = $this->getEgr($age_id,true);
+        $egr['columns'] = array(array('data'=>'egr_fecha'),array('data'=>'egr_tipo'),array('data'=>'egr_cuenta'),array('data'=>'egr_descripcion'),array('data'=>'egr_monto'));
+        $o = $ing;
+        for ($j=1; $j < count($o['columns'])+1; $j++) { 
+            $spreadsheet->getActiveSheet()->getColumnDimensionByColumn($j)->setAutoSize(true);
+            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($j,1,$o['columns'][$j-1]['data']);
+        }
+        for ($i=2; $i < count($o['data'])+2 ; $i++) {
+            $r = $o['data'][$i-2];
+            for ($j=1; $j < count($o['columns'])+1; $j++) { 
+                $ne = explode('.',$o['columns'][$j-1]['data']);
+                $d = $r;
+                for ($n = 0; $n < count($ne); $n++) {  
+                    $d = $d[$ne[$n]];
+                }
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($j, $i, $d);
+            }
+        }
+        $o = $egr;
+        for ($j=7; $j < count($o['columns'])+7; $j++) { 
+            $spreadsheet->getActiveSheet()->getColumnDimensionByColumn($j)->setAutoSize(true);
+            $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($j,1,$o['columns'][$j-7]['data']);
+        }
+        for ($i=2; $i < count($o['data'])+2 ; $i++) {
+            $r = $o['data'][$i-2];
+            for ($j=7; $j < count($o['columns'])+7; $j++) { 
+                $ne = explode('.',$o['columns'][$j-7]['data']);
+                $d = $r;
+                for ($n = 0; $n < count($ne); $n++) {  
+                    $d = $d[$ne[$n]];
+                }
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($j, $i, $d);
+            }
+        }
+        $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="export.xlsx"');
+        header('Cache-Control: max-age=0');
+        header('Cache-Control: max-age=1');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
+        $writer->save('php://output');
+        die();
     }
 }
 

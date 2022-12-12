@@ -88,9 +88,8 @@
         .wd55 {
             width: 55%;
         }
-
-        .wd50 {
-            width: 50%;
+        .wd60 {
+            width: 60%;
         }
 
         .tbl-detalle {
@@ -137,7 +136,7 @@
             text-align: left;
         }
         .det-mov{
-            font-size: 24px;
+            font-size: 20px;
         }
 
         .tblfoot_Final {
@@ -170,6 +169,9 @@
             height: 100%;
             display: flex;
         }
+        .det-con{
+            font-size: 22px !important;
+        }
     </style>
 </head>
 
@@ -181,27 +183,24 @@
                     <img src="<?= base_url() ?>/.uploads/<?= $alm['alm_est_id']['est_logo'] ?>" alt="Logo"
                         width="150">
                 </td>
-                <td class="text-center wd40">
+                <td class="text-center wd50 ">
                     <h4><strong><?= strtoupper($gcl['gcl_gem_id']['gem_razonsocial']) ?></strong></h4>
-                    <p class="text-fs8"><?= $gcl['gcl_gem_id']['gem_direccion'] ?> <br>
+                    <p><?= $gcl['gcl_gem_id']['gem_direccion'] ?> <br>
                         <?= $gcl['gcl_gem_id']['gem_gdi_id']['gdi_gpr_id']['gpr_gde_id']['gde_departamento'].' - '.
                         $gcl['gcl_gem_id']['gem_gdi_id']['gdi_gpr_id']['gpr_provincia'].' - '.
                         $gcl['gcl_gem_id']['gem_gdi_id']['gdi_distrito'] ?>
+                        <br>
+                        SUCURSAL:<?=  $alm['alm_est_id']['est_direccion']?> <br>
+                        <?= $alm['alm_est_id']['est_gdi_id']['gdi_distrito'] ?>
                         <br><br>
                         <strong>Contactos</strong><br>
                         <span>https://companycacel.com/</span> <br>
                         <span>companycacelsac@gmail.com</span><br>
                         <span>+51 922 012 611    +51 922 532 641</span>
-                        <br><br>
-                        ESTABLECIMIENTO: <?= $alm['alm_est_id']['est_nombre'] ?> <br>
-                        DIRECCION: <?=  $alm['alm_est_id']['est_direccion']?> <br>
-                        <?= $alm['alm_est_id']['est_gdi_id']['gdi_gpr_id']['gpr_gde_id']['gde_departamento'].' - '.
-                        $alm['alm_est_id']['est_gdi_id']['gdi_gpr_id']['gpr_provincia'].' - '.
-                        $alm['alm_est_id']['est_gdi_id']['gdi_distrito'] ?>
                     </p>
 
                 </td>
-                <td class="text-center wd40 tbl-cliente det-mov" >
+                <td class="text-center wd30 tbl-cliente det-mov" >
                     <p><span>RUC: <?= $gcl['gcl_gem_id']['gem_ruc'] ?></span><br>
                         <strong class="text-uppercase"><?= $mov['mov_t10_id']['t10_descripcion']?></strong><br>
                         <span><?= $mov['mov_serie'].'-'.str_pad($mov['mov_numero'],8,0,STR_PAD_LEFT) ?></span><br>
@@ -326,6 +325,9 @@
     </table><br><br>
     <div class="tbl-cliente">
         SON: <span><?= $mov['mov_letras_pen'] ?></span>
+    </div><br>
+    <div class="text-center">
+        <img src="<?= $mov['mov_qr_web'] ?>" alt="" srcset="">
     </div>
     <p class="text-center">Gracias por la confianza, el apoyo y ante todo por la preferencia !<br>
     Dios lo bendiga hoy, mañana y siempre!</p>

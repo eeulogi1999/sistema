@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded',function () {
         mvb_mov = $('#mvb_mov').autoTable({
             "url":base_url+"/Liquidez/getIng/4",
             "numerate": true,
+            "export": false,
             "columns":[
                 {"data":"ing_fecha",header:{t:"FECHA",c:'text'},tipo:'string',footer:"TOTALES"},
                 {"data":"ing_tipo",header:{t:"TIPO",c:'text'},tipo:'string'},
@@ -50,6 +51,7 @@ document.addEventListener('DOMContentLoaded',function () {
         mvb_caj = $('#mvb_caj').autoTable({
             "url":base_url+"/Liquidez/getEgr/4" ,
             "numerate": true,
+            "export": false,
             "columns":[
                 {"data":"egr_fecha",header:{t:"FECHA",c:'text'},tipo:'string',footer:"TOTALES"},
                 {"data":"egr_tipo",header:{t:"TIPO",c:'text'},tipo:'string'},
