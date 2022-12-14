@@ -160,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p).toFixed(2));
         $('#mde_q').val(1.00);
         $('#mde_igv').prop('checked',parseInt(sbi_table.getSelectedItem().sbi_bie_id.bie_igv))
+        $('#mde_gta_id').val(9);
         mdeProducto()
     });
     $("#new_bien").click(function(e) {
