@@ -166,7 +166,7 @@ async function editCaj(id){
         case 2:  //egresos
             $('#caj_monto').val(-res.caj_monto)
             $('#caj_age_id').children().attr('value',res.caj_age_id.age_id);
-            var tex = (res.caj_age_id.age_gem_id == null)?res.caj_age_id.age_gpe_id.gpe_nombre:res.caj_age_id.age_gem_id.gem_razonsocial;
+            var tex = (res.caj_age_id.age_gem_id == null)?res.caj_age_id.age_gpe_id.gpe_nombre+' '+res.caj_age_id.age_gpe_id.gpe_apellidos:res.caj_age_id.age_gem_id.gem_razonsocial;
             $('#caj_age_id').children().text(tex);
             setTimeout(() => {
                 $('#caj_age_id').val(res.caj_age_id.age_id); 
@@ -177,7 +177,7 @@ async function editCaj(id){
             break;
         case 1:  //ingresos
             $('#caj_age_id').children().attr('value',res.caj_age_id.age_id);
-            var tex = (res.caj_age_id.age_gem_id == null)?res.caj_age_id.age_gpe_id.gpe_nombre:res.caj_age_id.age_gem_id.gem_razonsocial;
+            var tex = (res.caj_age_id.age_gem_id == null)?res.caj_age_id.age_gpe_id.gpe_nombre+' '+res.caj_age_id.age_gpe_id.gpe_apellidos:res.caj_age_id.age_gem_id.gem_razonsocial;
             $('#caj_age_id').children().text(tex);
             setTimeout(() => {
                 $('#caj_age_id').val(res.caj_age_id.age_id); 
@@ -201,7 +201,7 @@ async function editCaj(id){
             $('#caj_tga_id').parent().hide();
             break;
         case 6:   //ingresos adicionales
-            var tex = (res.caj_age_id.age_gem_id == null)?res.caj_age_id.age_gpe_id.gpe_nombre:res.caj_age_id.age_gem_id.gem_razonsocial;
+            var tex = (res.caj_age_id.age_gem_id == null)?res.caj_age_id.age_gpe_id.gpe_nombre+' '+res.caj_age_id.age_gpe_id.gpe_apellidos:res.caj_age_id.age_gem_id.gem_razonsocial;
             $('#caj_age_id').children().text(tex);
             setTimeout(() => {
                 $('#caj_age_id').val(res.caj_age_id.age_id); 
@@ -215,7 +215,7 @@ async function editCaj(id){
             $('#caj_t1m_id').parent().hide();
             break;
         case 7:   //movimeintos internos 
-            var tex = (res.caj_age_id.age_gem_id == null)?res.caj_age_id.age_gpe_id.gpe_nombre:res.caj_age_id.age_gem_id.gem_razonsocial;
+            var tex = (res.caj_age_id.age_gem_id == null)?res.caj_age_id.age_gpe_id.gpe_nombre+' '+res.caj_age_id.age_gpe_id.gpe_apellidos:res.caj_age_id.age_gem_id.gem_razonsocial;
             $('#caj_age_id').children().text(tex);
             setTimeout(() => {
                 $('#caj_age_id').val(res.caj_age_id.age_id); 
