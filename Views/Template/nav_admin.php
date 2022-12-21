@@ -298,17 +298,41 @@
                 <?php } ?>
                 <?php if(!empty($_SESSION['per'][3]['gtp_r'])){ ?>
                 <li tree='5.2'>
-                    <a class="app-menu__item" href="<?= base_url(); ?>/Gerencial/resultados">
+                    <a class="app-menu__item" href="<?= base_url(); ?>/Bienes/Smateriales">
                         <i class="app-menu__icon fas fa-file-alt" ></i>
-                        <span class="app-menu__label">Estado de Resultados</span>
+                        <span class="app-menu__label">Resumen de Materiales</span>
                     </a>
                 </li>
                 <?php } ?>
                 <?php if(!empty($_SESSION['per'][3]['gtp_r'])){ ?>
                 <li tree='5.3'>
+                    <a class="app-menu__item" href="<?= base_url(); ?>/Gerencial/cventas">
+                        <i class="app-menu__icon fas fa-file-alt" ></i>
+                        <span class="app-menu__label">Margen en Ventas</span>
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if(!empty($_SESSION['per'][3]['gtp_r'])){ ?>
+                <li tree='5.4'>
+                    <a class="app-menu__item" href="<?= base_url(); ?>/Gerencial/detracciones">
+                        <i class="app-menu__icon fas fa-file-alt" ></i>
+                        <span class="app-menu__label">Detracciones</span>
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if(!empty($_SESSION['per'][3]['gtp_r'])){ ?>
+                <li tree='5.5'>
                     <a class="app-menu__item" href="<?= base_url(); ?>/Gerencial/facturacion">
                         <i class="app-menu__icon fas fa-file-alt" ></i>
                         <span class="app-menu__label">Volumen de Facturaciones</span>
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if(!empty($_SESSION['per'][3]['gtp_r'])){ ?>
+                <li tree='5.6'>
+                    <a class="app-menu__item" href="<?= base_url(); ?>/Gerencial/resultados">
+                        <i class="app-menu__icon fas fa-file-alt" ></i>
+                        <span class="app-menu__label">Estado de Resultados</span>
                     </a>
                 </li>
                 <?php } ?>
@@ -334,6 +358,7 @@
             </ul>
         </li>
         <?php } ?>
+        <?php if(!empty($_SESSION['per'][5]['gtp_r'])){ ?>
         <li tree='7' class="treeview pl-1">
             <a class="app-menu__item" href="#" >
                 <i class="app-menu__icon far fa-address-book" ></i>
@@ -372,6 +397,7 @@
                 </li>
             </ul>
         </li>
+        <?php } ?>
         <li tree='8' class="pl-1">
             <a class="app-menu__item" href="<?= base_url(); ?>/logout">
                 <i class="app-menu__icon fa fa-sign-out" ></i>

@@ -383,6 +383,9 @@ function previewFiles(th,content) {
                                     }
                                 }
                             }
+                            if (typeof o.columns[j].style.bg != 'undefined') {
+                                cell.classList.add('bg-'+o.columns[j].style.bg);
+                            }
                             
                         }
                         switch (o.columns[j].tipo) {

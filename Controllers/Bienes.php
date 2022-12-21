@@ -36,6 +36,18 @@ class Bienes extends Controllers{
         $data['page_functions_js'] = array("functions_sbienes.js","functions_reportes.js","functions_movimientos.js");
         $this->views->getView($this,"sbienes",$data);
     }
+    public function Smateriales(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        } 
+        $data['estData'] = $this->establecimientos->selectRegistros(); 
+        $data['page_tag'] = "Saldos";
+        $data['page_title'] = "Saldos ";
+        $data['page_name'] = "Saldos";
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo']);
+        $data['page_functions_js'] = array("functions_smateriales.js","functions_reportes.js");
+        $this->views->getView($this,"sbienes",$data);
+    }
     public function Cventas(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');

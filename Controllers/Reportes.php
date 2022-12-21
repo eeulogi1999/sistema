@@ -30,6 +30,7 @@ class Reportes extends Controllers{
         $mtcv = 0;      // costo de venta
         $mtv = 0; 
         $qc = 0;
+        $qv = 0;
         $mtc = 0;
         $kar = array();
         foreach ($arrMde as $i => $mde) {
@@ -46,6 +47,7 @@ class Reportes extends Controllers{
                 $c_mde = array('c_q'=>$mde['mde_q'],'c_vu'=>$mde['mde_vu'],'c_importe'=>$mde['mde_importe']);
             }
             if ($mde['mde_tipo'] == 1) {
+                $qv += $mde['mde_q'];
                 $qcv += $mde['mde_q'];
                 $prom = ($qs==0)?0:$mts/$qs;
                 $v_mde = array('v_q'=>$mde['mde_q'],'v_vu'=>$prom,'v_importe'=>$mde['mde_q']*$prom);
@@ -71,6 +73,10 @@ class Reportes extends Controllers{
                 'sbi_alm_id'=>$_SESSION['alm']['alm_id'],
                 'sbi_bie_id'=>$bie_id,
                 'sbi_bat'=>$text,
+                'sbi_qc'=>$qc,
+                'sbi_mtc'=>$mtc,
+                'sbi_qv'=>$qv,
+                'sbi_mtcv'=>$mtcv,
                 'sbi_qs'=>$qs,
                 'sbi_p'=>($qs!=0) ? $mts/$qs : 0,
                 'sbi_mts'=>$mts);

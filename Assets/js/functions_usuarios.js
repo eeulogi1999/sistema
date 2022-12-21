@@ -1,5 +1,5 @@
 var gus_table;
-var url_gus = base_url+"/Main/getAll/gus";
+var url_gus = base_url+"/Usuarios/getUsuarios";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#gus_table")) {

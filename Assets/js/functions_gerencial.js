@@ -1,8 +1,9 @@
-var res_table,cve_table,sfi_table,fac_table;
+var res_table,cve_table,sfi_table,fac_table,det_table;
 var url_res = base_url+"/Gerencial/getGerencial";
 var url_cve = base_url+"/Reportes/getCventas";
 var url_sfi = base_url+"/Gerencial/getResultados";
 var url_fac = base_url+"/Gerencial/getFacturacion";
+var url_det = base_url+"/Gerencial/getDetracciones";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#res_table")) {
@@ -23,8 +24,8 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"cve_bie_id.bie_nombre",header:"MATERIAL",tipo:'string',footer:"TOTALES"},
                 {"data":"cve_qcv",header:'CANTIDAD',tipo:'float',footer:{ c:"sum" }},
-                {"data":"cve_mtcv",header:'COMPRA',tipo:'money',footer:{ c:"sum" }},
                 {"data":"cve_mtv",header:'VENTA',tipo:'money',footer:{ c:"sum" }},
+                {"data":"cve_mtcv",header:'COSTO DE VENTA',tipo:'money',footer:{ c:"sum" }},
                 {"data":"cve_margen",header:'MARGEN',tipo:'money',footer:{ c:"sum" },style:{condition:{minzero:'text-danger'}}},
                 {"data":"cve_options",header:{t:"OPCIONES",align:'center'},tipo:'string'}
             ]
@@ -50,6 +51,19 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
+    if (document.querySelector("#det_table")) {
+        det_table = $('#det_table').autoTable({
+            "url": url_det,
+            "numerate": true,
+            "columns":[
+                {"data":"mov_cue_id.cue_nombre",header:"SOCIOS",tipo:'string',footer:"TOTALES"},
+                {"data":"mov_sum",header:{t:"TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_detraccion",header:{t:"DETRACCION",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_impuesto",header:{t:"IMPUESTO",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_det_liq",header:{t:"DETRACCION LIQUIDA",align:'right'},tipo:'money',footer:{ c:"sum" }}
+            ]
+        });
+    }
 
 });
 
@@ -65,6 +79,9 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#fac_table")) {
         fac_table = await fac_table;
+    }
+    if (document.querySelector("#det_table")) {
+        det_table = await det_table;
     }
     divLoading.style.display = "none";
 });

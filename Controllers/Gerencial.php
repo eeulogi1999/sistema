@@ -48,6 +48,17 @@ class Gerencial extends Controllers{
         $data['page_functions_js'] = array("functions_gerencial.js","functions_reportes.js");
         $this->views->getView($this,"facturacion",$data);
     }
+    public function Detracciones(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $data['page_tag'] = "Detracciones";
+        $data['page_title'] = "Detracciones";
+        $data['page_name'] = "Detracciones";
+        $data['page_data'] = array('age_tipo'=>0,'periodo'=>$_SESSION['periodo']);
+        $data['page_functions_js'] = array("functions_gerencial.js","functions_reportes.js");
+        $this->views->getView($this,"detracciones",$data);
+    }
     public function Cventas(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
@@ -134,6 +145,22 @@ class Gerencial extends Controllers{
         $res[4]['sfi_des']='Gastos General';
         $gas = $this->cajas->selectRegistros(array('caj_tipo'=>3,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
         $res[4]['sfi_sum']=array_sum(array_column($gas,'caj_monto'));
+        if ($out) {
+            return $res;
+        } else {
+            echo json_encode($res,JSON_UNESCAPED_UNICODE);
+            die();
+        }
+    }
+    public function getDetracciones($out=false){
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+        foreach ($res as $i => $d) {
+            $res[$i]['mov_detraccion'] = $d['mov_sum']*0.177;
+            $res[$i]['mov_impuesto'] = $d['mov_sum']*0.025;
+            $res[$i]['mov_det_liq'] = $res[$i]['mov_detraccion']-$res[$i]['mov_impuesto'];
+        }
+        
+        
         if ($out) {
             return $res;
         } else {
