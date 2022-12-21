@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "thid": 'gro_id',
             "columns":[
                 {"data":"gro_nombrerol",header:{t:"NOMBRE"},tipo:'string'},
-                {"data":"gro_descripcion",header:{t:"DESCRIPCION",c:'text'},tipo:'string'},
+                {"data":"gro_descripcion",header:{t:"DESCRIPCION"},tipo:'string'},
                 {"data":"gro_status",header:{t:"ESTADO"},tipo:'string'},
                 {"data":"gro_options",header:"ACCIONES",tipo:'string'}
             ]

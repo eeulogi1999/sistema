@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"gus_gpe_id.gpe_gt2_id.gt2_descripcion",header:{t:"DOC"},tipo:'string'},
                 {"data":"gus_gpe_id.gpe_identificacion",header:{t:"IDENTIFICACION"},tipo:'string'},
-                {"data":"gus_gpe_id.gpe_nombre",header:{t:"NOMBRE",c:'text'},tipo:'string'},
+                {"data":"gus_gpe_id.gpe_nombre",header:{t:"NOMBRE"},tipo:'string'},
                 {"data":"gus_user",header:{t:"USUARIO"},tipo:'string'},
                 {"data":"gus_gar_id.gar_nombre",header:{t:"AREA"},tipo:'string'},
-                {"data":"gus_gro_id.gro_nombrerol",header:{t:"ROL",c:'text'},tipo:'string'},
+                {"data":"gus_gro_id.gro_nombrerol",header:{t:"ROL"},tipo:'string'},
                 {"data":"gus_gpe_id.gpe_gdi_id.gdi_distrito",header:{t:"DISTRITO"},tipo:'string'},
                 {"data":"gus_imagen",header:{t:"FOTO"},tipo:'string'},
                 {"data":"gus_status",header:{t:"ESTADO"},tipo:'string'},

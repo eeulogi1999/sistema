@@ -296,14 +296,14 @@
                     </a>
                 </li>
                 <?php } ?>
-                <!--<?php if(!empty($_SESSION['per'][3]['gtp_r'])){ ?>
+                <?php if(!empty($_SESSION['per'][3]['gtp_r'])){ ?>
                 <li tree='5.2'>
                     <a class="app-menu__item" href="<?= base_url(); ?>/Gerencial/resultados">
                         <i class="app-menu__icon fas fa-file-alt" ></i>
                         <span class="app-menu__label">Estado de Resultados</span>
                     </a>
                 </li>
-                <?php } ?> -->
+                <?php } ?>
                 <?php if(!empty($_SESSION['per'][3]['gtp_r'])){ ?>
                 <li tree='5.3'>
                     <a class="app-menu__item" href="<?= base_url(); ?>/Gerencial/facturacion">
