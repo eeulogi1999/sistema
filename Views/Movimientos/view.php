@@ -81,7 +81,7 @@
                             <b class="text-right">Fecha :</b> <?= $mov['mov_fechaE']; ?><br>
                             <b>Moneda: </b><?= $mov['mov_gt4_id']['gt4_descripcion']; ?><br>
                             <b>Monto:</b> <?= formatMoney($mov['mov_total']); ?><br>
-                            <b>Cuenta:</b> <?= $mov['mov_cue_id']['cue_nombre']; ?>
+                            <b>Cuenta:</b> <?= (!empty($mov['mov_cue_id']))?$mov['mov_cue_id']['cue_nombre']:''; ?>
                         </div>
 
                     </div>

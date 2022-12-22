@@ -8,11 +8,6 @@
 	$controller = $arrUrl[0];
 	$method = $arrUrl[0];
 	$params = "";
-	
-	if($arrUrl[0] == "Documentos" || $arrUrl[0] == "Monedas" || $arrUrl[0] == "Existencias" || $arrUrl[0] == "Unidades" || $arrUrl[0] == "Libro-Registro" || $arrUrl[0] == "Comprobante-Documento" || $arrUrl[0] == "Operaciones" ){
-		$controller = "tablas";
-		$method = "tablas";
-	}
 	if($arrUrl[0] == "facturas" || $arrUrl[0] == "boletas" || $arrUrl[0] == "creditos" || $arrUrl[0] == "debitos" ){
 		$controller = "comprobantes";
 		$method = "comprobantes";

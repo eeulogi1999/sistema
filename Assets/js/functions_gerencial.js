@@ -1,8 +1,8 @@
-var res_table,cve_table,sfi_table,fac_table,det_table;
+var res_table,cve_table,sfi_table,exp_table,det_table;
 var url_res = base_url+"/Gerencial/getGerencial";
 var url_cve = base_url+"/Reportes/getCventas";
 var url_sfi = base_url+"/Gerencial/getResultados";
-var url_fac = base_url+"/Gerencial/getFacturacion";
+var url_exp = base_url+"/Gerencial/getExportaciones";
 var url_det = base_url+"/Gerencial/getDetracciones";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
-    if (document.querySelector("#fac_table")) {
-        fac_table = $('#fac_table').autoTable({
-            "url": url_fac,
+    if (document.querySelector("#exp_table")) {
+        exp_table = $('#exp_table').autoTable({
+            "url": url_exp,
             "numerate": true,
             "columns":[
                 {"data":"mov_cue_id.cue_nombre",header:"CUENTAS",tipo:'string',footer:"TOTALES"},
@@ -77,8 +77,8 @@ window.addEventListener('load', async () => {
     if (document.querySelector("#sfi_table")) {
         sfi_table = await sfi_table;
     }
-    if (document.querySelector("#fac_table")) {
-        fac_table = await fac_table;
+    if (document.querySelector("#exp_table")) {
+        exp_table = await exp_table;
     }
     if (document.querySelector("#det_table")) {
         det_table = await det_table;

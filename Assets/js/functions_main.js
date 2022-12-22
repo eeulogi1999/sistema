@@ -114,10 +114,10 @@ async function set(prefijo,where= null,json = null,res = false) {
         .then(response => response.json())
         .then(response => {
             if (response.status) {
-                swal(capitalize(getTable(prefijo)), 'Guardado con Éxito', "success");
                 if (res) {
                     return response;
                 }else {
+                    swal(capitalize(getTable(prefijo)), 'Guardado con Éxito', "success");
                     resetModal(prefijo);
                     if (!isUndefined($$(prefijo+'_table'))){
                         $$(prefijo+'_table').clearAll();

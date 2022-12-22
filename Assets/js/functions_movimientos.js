@@ -100,11 +100,26 @@ document.addEventListener('DOMContentLoaded', function () {
         if (gtc) {
             $('#mde_detraccion').removeAttr("disabled");
             $('#mov_cue_id').parent().parent().show();
+            $('#mov_t10_id').val(2);
             document.querySelector('#mov_cue_id').focus();
             //$('#mov_cue_id').attr('size',$('#mov_cue_id option').length);
         } else {
             $('#mov_cue_id').parent().parent().hide();
             $('#mde_detraccion').attr('disabled', 'disabled');
+            $('#mov_t10_id').val(50);
+        }
+    });
+    $('#mde_exp').change(function (e) {
+        var gtc = $(this).prop('checked');
+        if (gtc) {
+            $('#mde_detraccion').removeAttr("disabled");
+            $('#mov_cue_id').parent().parent().show();
+            $('#mov_t10_id').val(51);
+            document.querySelector('#mov_cue_id').focus();
+        } else {
+            $('#mov_cue_id').parent().parent().hide();
+            $('#mde_detraccion').attr('disabled', 'disabled');
+            $('#mov_t10_id').val(50);
         }
     });
     $('#set_gtc').change(function (e) {
@@ -294,6 +309,8 @@ function changet10t12(){
             serie = 'NE01';
             break;
         case 50:
+        case 2:
+        case 51:
             serie = 'NS01';
             break;
         default:

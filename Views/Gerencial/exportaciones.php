@@ -17,7 +17,7 @@
       <div class="tile">
         <div class="tile-body">
           <div class="table-responsive">
-            <table class="table table-hover table-bordered table-sm " id="fac_table" width="100%"></table>
+            <table class="table table-hover table-bordered table-sm " id="exp_table" width="100%"></table>
           </div>
         </div>
       </div>

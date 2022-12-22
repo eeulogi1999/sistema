@@ -166,8 +166,10 @@
                         </th>
                         <th style="display:none"  >Tipo de IGV</th>
                         <th>Importe</th>
-                        <th  width="100">                          
-                          <span>Detraccion</span>
+                        <th  width="100">  
+                          <span>Exp.</span>
+                          <input type="checkbox" id="mde_exp" name="mde_exp">&nbsp;&nbsp;                        
+                          <span>Det.</span>
                           <input type="checkbox" id="mde_det" name="mde_det">&nbsp;%
                         </th>
                         <th>Acciones</th>

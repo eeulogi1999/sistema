@@ -23,7 +23,7 @@ class Liquidez extends Controllers{
         $data['page_tag'] = "Liquidez";
         $data['page_title'] = "Liquidez";
         $data['page_name'] = "Liquidez";
-        $data['page_data'] = array('age_tipo'=>0,'periodo'=>$_SESSION['periodo']);
+        $data['page_data'] = array('age_tipo'=>0,'periodo'=>$_SESSION['periodo'],'t'=>$_GET['t']);
         $data['page_functions_js'] = array("functions_liquidez.js","functions_agentes.js","functions_empresas.js","functions_personas.js","functions_movimientos.js","functions_cajas.js");
         $this->views->getView($this,"liquidez",$data);
     }
@@ -182,7 +182,7 @@ class Liquidez extends Controllers{
                 return $liqData;
                 break;
             default:
-            echo json_encode($liqData,JSON_UNESCAPED_UNICODE);
+                echo json_encode($liqData,JSON_UNESCAPED_UNICODE);
                 break;
         }
         die();
@@ -226,7 +226,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['ing_fecha'] = $nd[$i]['caj_fecha'];
             $r['ing_tipo'] = CAJ[$nd[$i]['caj_tipo']];
-            $r['ing_cuenta'] = $nd[$i]['caj_cue_id']['cue_nombre'];
+            $r['ing_cuenta'] = (!empty($nd[$i]['caj_cue_id']))?$nd[$i]['caj_cue_id']['cue_nombre']:'';
             $r['ing_descripcion'] = '<a href="#" onclick="viewCaj('.$nd[$i]['caj_id'].','.$nd[$i]['caj_tipo'].')">'.$nd[$i]['caj_observaciones'].'</a>' ; 
             $r['ing_monto'] = abs($nd[$i]['caj_monto']);
             array_push($ing,$r);

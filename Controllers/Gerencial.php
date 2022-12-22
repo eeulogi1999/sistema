@@ -37,16 +37,16 @@ class Gerencial extends Controllers{
         $data['page_functions_js'] = array("functions_gerencial.js","functions_reportes.js");
         $this->views->getView($this,"resultados",$data);
     }
-    public function Facturacion(){
+    public function Exportaciones(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
         }
-        $data['page_tag'] = "Volumen de Facturaciones";
-        $data['page_title'] = "Volumen de Facturaciones";
-        $data['page_name'] = "Volumen de Facturaciones";
+        $data['page_tag'] = "Exportaciones";
+        $data['page_title'] = "Exportaciones";
+        $data['page_name'] = "Exportaciones";
         $data['page_data'] = array('age_tipo'=>0,'periodo'=>$_SESSION['periodo']);
         $data['page_functions_js'] = array("functions_gerencial.js","functions_reportes.js");
-        $this->views->getView($this,"facturacion",$data);
+        $this->views->getView($this,"exportaciones",$data);
     }
     public function Detracciones(){
         if(empty($_SESSION['perMod']['gtp_r'])){
@@ -80,8 +80,6 @@ class Gerencial extends Controllers{
         $data['liq'] = $this->Liquidez->getLiquidez('todo');
         $data['gas'] = $this->cajas->selectCustoms('caj_tga_id,SUM(caj_monto) as caj_monto',array('caj_tipo'=>3,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' GROUP BY caj_tga_id'));
         $data['cve'] = $this->Reportes->getCventas(true);
-
-
         //$this->views->getView($this,"pdf",$data);
     }
 
@@ -117,8 +115,8 @@ class Gerencial extends Controllers{
             die();
         }
     }
-    public function getFacturacion($out=false){
-        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+    public function getExportaciones($out=false){
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
         if ($out) {
             return $res;
         } else {
@@ -153,7 +151,7 @@ class Gerencial extends Controllers{
         }
     }
     public function getDetracciones($out=false){
-        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
         foreach ($res as $i => $d) {
             $res[$i]['mov_detraccion'] = $d['mov_sum']*0.177;
             $res[$i]['mov_impuesto'] = $d['mov_sum']*0.025;

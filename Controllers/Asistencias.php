@@ -24,9 +24,9 @@ class Asistencias extends Controllers{
         $rw = array();
         for ($i=0; $i < count($rwcol); $i++) { 
             $r['asi_col_id'] = $rwcol[$i];
-            $r['asi_ndias'] = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]['col_id'],'custom'=>'WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'),"COUNT(asi_id) as 'nd'")['nd'];
+            $r['asi_ndias'] = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]['col_id'],'custom'=>'asi_ext IS NULL AND WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'),"COUNT(asi_id) as 'nd'")['nd'];
             //$r['asi_ndias'] = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]['col_id'],'custom'=>'WEEKOFYEAR(asi_horaE) = WEEKOFYEAR(CURDATE())'),"COUNT(asi_id) as 'nd'")['nd'];
-            $rwnh = $this->asistencias->selectRegistros(array('asi_col_id'=>$rwcol[$i]['col_id'],'custom'=>'WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'));
+            $rwnh = $this->asistencias->selectRegistros(array('asi_col_id'=>$rwcol[$i]['col_id'],'asi_ext'=>1,'custom'=>'WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'));
             $nh = 0;
             for ($j=0; $j < count($rwnh); $j++) { 
                 $dt1 = new DateTime($rwnh[$j]['asi_horaE']);
@@ -34,9 +34,10 @@ class Asistencias extends Controllers{
                 $dif = $dt1->diff($dt2);
                 $nh+=intval($dif->format('%h'));
             }
-            $view = '<button class="btn btn-warning btn-sm" onClick="viewAsi('.$r['asi_col_id']['col_id'].')" title="Ver Asistencias"><i class="far fa-eye"></i></button>'; 
+            $view = '<button class="btn btn-success btn-sm" onClick="viewAsi('.$r['asi_col_id']['col_id'].')" title="Asistencias"><i class="far fa-eye"></i></button>'; 
+            $hex = '<button class="btn btn-warning btn-sm" onClick="viewHex('.$r['asi_col_id']['col_id'].')" title="Horas Extras"><i class="far fa-eye"></i></button>'; 
             $r['asi_nhoras'] = $nh;
-            $r['asi_options'] = '<div class="text-center">'.$view.'</div>';
+            $r['asi_options'] = '<div class="text-center">'.$view.' '.$hex.'</div>';
             array_push($rw,$r); 
         }
         echo json_encode($rw,JSON_UNESCAPED_UNICODE);
@@ -96,11 +97,21 @@ class Asistencias extends Controllers{
         die();
     }
     public function getAsi($asi_col_id){
-        $rw = $this->asistencias->selectRegistros(array('asi_col_id'=>$asi_col_id),
+        $rw = $this->asistencias->selectRegistros(array('asi_col_id'=>$asi_col_id,'custom'=>'asi_ext IS NULL'),
         array('asi_col_id')); 
         $r = array();
         foreach ($rw as $i => $d) {
             array_push($r,array('title'=>'Asistio','id'=>$d['asi_id'],'start'=>date('Y-m-d\TH:i:s',strtotime($d['asi_horaE'])),'end'=>date('Y-m-d\TH:i:s',strtotime($d['asi_horaS']))));
+        }
+        echo json_encode($r,JSON_UNESCAPED_UNICODE);
+        die();
+    }
+    public function getHex($asi_col_id){
+        $rw = $this->asistencias->selectRegistros(array('asi_col_id'=>$asi_col_id,'asi_ext'=>1),
+        array('asi_col_id')); 
+        $r = array();
+        foreach ($rw as $i => $d) {
+            array_push($r,array('title'=>'Extras','id'=>$d['asi_id'],'start'=>date('Y-m-d\TH:i:s',strtotime($d['asi_horaE'])),'end'=>date('Y-m-d\TH:i:s',strtotime($d['asi_horaS']))));
         }
         echo json_encode($r,JSON_UNESCAPED_UNICODE);
         die();

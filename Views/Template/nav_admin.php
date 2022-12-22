@@ -272,9 +272,17 @@
                 <?php } ?>
                 <?php if(!empty($_SESSION['per'][3]['gtp_r'])){ ?>
                 <li tree='4.3'>
-                    <a class="app-menu__item" href="<?= base_url(); ?>/liquidez">
+                    <a class="app-menu__item" href="<?= base_url(); ?>/liquidez?t=ncuadre">
                         <i class="app-menu__icon fas fa-id-card-alt" ></i>
                         <span class="app-menu__label">Estado Actual</span>
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if(!empty($_SESSION['per'][3]['gtp_r'])){ ?>
+                <li tree='4.4'>
+                    <a class="app-menu__item" href="<?= base_url(); ?>/liquidez?t=cuadre">
+                        <i class="app-menu__icon fas fa-id-card-alt" ></i>
+                        <span class="app-menu__label">Historial Cuadre</span>
                     </a>
                 </li>
                 <?php } ?>
@@ -322,9 +330,9 @@
                 <?php } ?>
                 <?php if(!empty($_SESSION['per'][3]['gtp_r'])){ ?>
                 <li tree='5.5'>
-                    <a class="app-menu__item" href="<?= base_url(); ?>/Gerencial/facturacion">
+                    <a class="app-menu__item" href="<?= base_url(); ?>/Gerencial/exportaciones">
                         <i class="app-menu__icon fas fa-file-alt" ></i>
-                        <span class="app-menu__label">Volumen de Facturaciones</span>
+                        <span class="app-menu__label">Exportaciones</span>
                     </a>
                 </li>
                 <?php } ?>
@@ -358,7 +366,7 @@
             </ul>
         </li>
         <?php } ?>
-        <?php if(!empty($_SESSION['per'][5]['gtp_r'])){ ?>
+        <?php if(!empty($_SESSION['per'][4]['gtp_r'])){ ?>
         <li tree='7' class="treeview pl-1">
             <a class="app-menu__item" href="#" >
                 <i class="app-menu__icon far fa-address-book" ></i>

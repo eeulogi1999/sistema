@@ -89,6 +89,7 @@ function viewAsi(asi_col_id) {
         $('#modal_asi').modal('show');
         setTimeout(() => {
             calendar = new FullCalendar.Calendar($('#calendar')[0],{
+                timeZone: 'America/Lima',
                 headerToolbar: {
                   left: 'prev,next today',
                   center: 'title',
@@ -105,8 +106,10 @@ function viewAsi(asi_col_id) {
                 eventSources: [base_url + '/Asistencias/getAsi/'+asi_col_id],
                 select: async function(info) {
                     var asi = await set('asi',null,{asi_id:0,asi_col_id:asi_col_id,asi_horaE:info.startStr,asi_horaS:info.endStr},true);
+                    console.log(info.startStr.toString());
                     if (asi.status) {
                         calendar.refetchEvents();
+                        asi_table.reload();
                     }
                 },
                 eventDidMount: (info) =>{
@@ -115,6 +118,7 @@ function viewAsi(asi_col_id) {
                         var asi = await del('asi',info.event.id,true);
                         if (asi.status) {
                             calendar.refetchEvents();
+                            asi_table.reload();
                         }
                     })
                 },
@@ -122,16 +126,69 @@ function viewAsi(asi_col_id) {
                     var asi = await set('asi',null,{asi_id:info.event.id,asi_horaS:info.event.endStr},true);
                     if (asi.status) {
                         calendar.refetchEvents();
+                        asi_table.reload();
                     }
                 },
                 eventDrop:async (info)=>{
                     var asi = await set('asi',null,{asi_id:info.event.id,asi_horaE:info.event.startStr,asi_horaS:info.event.endStr},true);
                     if (asi.status) {
                         calendar.refetchEvents();
+                        asi_table.reload();
                     }
                 }
 
               });
               calendar.render();  
         }, 220);
+}
+function viewHex(asi_col_id) {
+    $('#modal_asi').modal('show');
+    setTimeout(() => {
+        calendar = new FullCalendar.Calendar($('#calendar')[0],{
+            timeZone: 'America/Lima',
+            headerToolbar: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+            },
+            initialView: 'timeGridWeek',
+            height: 'auto',
+            nowIndicator: true,
+            initialDate: new Date(),
+            navLinks: true,
+            editable: true,
+            selectable: true,
+            //eventClassNames: ['context-menu-one'],
+            eventSources: [base_url + '/Asistencias/getHex/'+asi_col_id],
+            select: async function(info) {
+                var asi = await set('asi',null,{asi_id:0,asi_ext:1,asi_col_id:asi_col_id,asi_horaE:info.startStr,asi_horaS:info.endStr},true);
+                if (asi.status) {
+                    calendar.refetchEvents();
+                }
+            },
+            eventDidMount: (info) =>{
+                info.el.addEventListener("contextmenu", async function(jsEvent){
+                    jsEvent.preventDefault();
+                    var asi = await del('asi',info.event.id,true);
+                    if (asi.status) {
+                        calendar.refetchEvents();
+                    }
+                })
+            },
+            eventResize: async function(info) {
+                var asi = await set('asi',null,{asi_id:info.event.id,asi_horaS:info.event.endStr},true);
+                if (asi.status) {
+                    calendar.refetchEvents();
+                }
+            },
+            eventDrop:async (info)=>{
+                var asi = await set('asi',null,{asi_id:info.event.id,asi_horaE:info.event.startStr,asi_horaS:info.event.endStr},true);
+                if (asi.status) {
+                    calendar.refetchEvents();
+                }
+            }
+
+          });
+          calendar.render();  
+    }, 220);
 }

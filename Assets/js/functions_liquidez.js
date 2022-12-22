@@ -1,6 +1,6 @@
 
 var liq_table,mvb_mov,mvb_caj;
-var url_liq = base_url+"/Liquidez/getLiquidez/ncuadre";
+var url_liq = base_url+"/Liquidez/getLiquidez/"+data.t;
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#liq_table")) {
