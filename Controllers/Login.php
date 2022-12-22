@@ -6,7 +6,6 @@
 			$this->newModel("accesos");
 			$this->newModel("clientes");
 		}
-		
 		public function login(){
 			$data['page_tag'] = "Login - Sistema";
 			$data['page_title'] = "Sistema CompanyCacel";
@@ -96,8 +95,6 @@
 			}
 			die();
 		}
-		
-
 		public function resetPass(){
 			if($_POST){
 				error_reporting(0);
@@ -106,16 +103,13 @@
 				}else{
 					$token = token();
 					$strEmail  =  strtolower(strClean($_POST['txtEmailReset']));
-					$arrData = $this->model->getUserEmail($strEmail);
-
+					$arrData = $this->usuarios->searchRegistro(array('gus_user'=>$strEmail));
 					if(empty($arrData)){
-						$arrResponse = array('status' => false, 'msg' => 'Usuario no existente.' ); 
+						$arrResponse = array('status' => false, 'msg' => 'Usuario no existente.'); 
 					}else{
-						$idpersona = $arrData['idpersona'];
-						$nombreUsuario = $arrData['nombres'].' '.$arrData['apellidos'];
-
-						$url_recovery = base_url().'/login/confirmUser/'.$strEmail.'/'.$token;
-						$requestUpdate = $this->model->setTokenUser($idpersona,$token);
+						$nombreUsuario = $arrData['gus_gpe_id']['gpe_nombre'].' '.$arrData['gus_gpe_id']['gpe_apellidos'];
+						$url_recovery = base_url().'/Login/confirmUser/'.$strEmail.'/'.$token;
+						$requestUpdate = $this->usuarios->updateRegistro(array('gus_id'=>$arrData['gus_id'],'gus_token'=>$token));
 
 						$dataUsuario = array('nombreUsuario' => $nombreUsuario,
 											 'email' => $strEmail,
@@ -123,7 +117,6 @@
 											 'url_recovery' => $url_recovery);
 						if($requestUpdate){
 							$sendEmail = sendEmail($dataUsuario,'email_cambioPassword');
-
 							if($sendEmail){
 								$arrResponse = array('status' => true, 
 												 'msg' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.');
@@ -141,16 +134,14 @@
 			}
 			die();
 		}
-
 		public function confirmUser(string $params){
-
 			if(empty($params)){
 				header('Location: '.base_url());
 			}else{
 				$arrParams = explode(',',$params);
 				$strEmail = strClean($arrParams[0]);
 				$strToken = strClean($arrParams[1]);
-				$arrResponse = $this->model->getUsuario($strEmail,$strToken);
+				$arrResponse = $this->usuarios->searchRegistro(array('gus_user'=>$strEmail,'gus_token'=>$strToken));
 				if(empty($arrResponse)){
 					header("Location: ".base_url());
 				}else{
@@ -159,7 +150,7 @@
 					$data['page_title'] = "Cambiar Contraseña";
 					$data['email'] = $strEmail;
 					$data['token'] = $strToken;
-					$data['idpersona'] = $arrResponse['idpersona'];
+					$data['idpersona'] = $arrResponse['gus_id'];
 					$data['page_functions_js'] = "functions_login.js";
 					$this->views->getView($this,"cambiar_password",$data);
 				}
@@ -168,11 +159,8 @@
 		}
 
 		public function setPassword(){
-
 			if(empty($_POST['idUsuario']) || empty($_POST['txtEmail']) || empty($_POST['txtToken']) || empty($_POST['txtPassword']) || empty($_POST['txtPasswordConfirm'])){
-
-					$arrResponse = array('status' => false, 
-										 'msg' => 'Error de datos' );
+					$arrResponse = array('status' => false, 'msg' => 'Error de datos' );
 				}else{
 					$intIdpersona = intval($_POST['idUsuario']);
 					$strPassword = $_POST['txtPassword'];
@@ -184,13 +172,13 @@
 						$arrResponse = array('status' => false, 
 											 'msg' => 'Las contraseñas no son iguales.' );
 					}else{
-						$arrResponseUser = $this->model->getUsuario($strEmail,$strToken);
+						$arrResponseUser = $this->usuarios->searchRegistro(array('gus_user'=>$strEmail,'gus_password'=>$strToken));
 						if(empty($arrResponseUser)){
 							$arrResponse = array('status' => false, 
 											 'msg' => 'Erro de datos.' );
 						}else{
 							$strPassword = hash("SHA256",$strPassword);
-							$requestPass = $this->model->insertPassword($intIdpersona,$strPassword);
+							$requestPass = $this->usuarios->insertRegistro(array('gus_id'=>$intIdpersona,'gus_password'=>$strPassword));
 
 							if($requestPass){
 								$arrResponse = array('status' => true, 

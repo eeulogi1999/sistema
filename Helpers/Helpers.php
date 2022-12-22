@@ -65,6 +65,7 @@
         ob_start();
         require_once("Views/Template/Email/".$template.".php");
         $mensaje = ob_get_clean();
+        mail('eeulogi1999àgmail.com', 'prueba', '<h1>Prueba</h1>');
         $send = mail($emailDestino, $asunto, $mensaje, $de);
         return $send;
     }

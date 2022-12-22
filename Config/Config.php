@@ -55,10 +55,10 @@
 
 
 	//Datos envio de correo
-	const NOMBRE_REMITENTE = "ERP";
-	const EMAIL_REMITENTE = "no-reply@regomsa.com.pe";
-	const NOMBRE_EMPESA = "Regomsa SAC";
-	const WEB_EMPRESA = "www.regomsa.com.pe";
+	const NOMBRE_REMITENTE = "Sistema Cacel";
+	const EMAIL_REMITENTE = "no-reply@companycacel.com";
+	const NOMBRE_EMPESA = "Comapany Cacel SAC";
+	const WEB_EMPRESA = "www.companycacel.com";
 
 	const DESCRIPCION = "SISTEMA ERP CONTABLE";
 	const SHAREDHASH = "ErpContable";
@@ -67,16 +67,16 @@
 	const DIRECCION = "Avenida las Américas Zona 13, Guatemala";
 	const TELEMPRESA = "+(502)78787845";
 	const WHATSAPP = "+50278787845";
-	const EMAIL_EMPRESA = "admin@regomsa.com.pe";
-	const EMAIL_PEDIDOS = "admin@regomsa.com.pe"; 
-	const EMAIL_SUSCRIPCION = "admin@regomsa.com.pe";
+	const EMAIL_EMPRESA = "admin@companycacel.com";
+	const EMAIL_PEDIDOS = "admin@companycacel.com"; 
+	const EMAIL_SUSCRIPCION = "admin@companycacel.com";
 
 	const CAT_SLIDER = "1,2,3";
 	const CAT_BANNER = "4,5,6";
 	const CAT_FOOTER = "1,2,3,4,5";
 
 	//Datos para Encriptar / Desencriptar
-	const KEY = 'sige-regomsa';
+	const KEY = 'sige-cacel';
 	const METHODENCRIPT = "AES-128-ECB";
 
 	//Envío
