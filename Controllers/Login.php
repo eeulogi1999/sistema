@@ -134,7 +134,7 @@
 			}
 			die();
 		}
-		public function confirmUser(string $params){
+		public function confirmUser($params){
 			if(empty($params)){
 				header('Location: '.base_url());
 			}else{
@@ -172,13 +172,13 @@
 						$arrResponse = array('status' => false, 
 											 'msg' => 'Las contraseñas no son iguales.' );
 					}else{
-						$arrResponseUser = $this->usuarios->searchRegistro(array('gus_user'=>$strEmail,'gus_password'=>$strToken));
+						$arrResponseUser = $this->usuarios->searchRegistro(array('gus_user'=>$strEmail,'gus_token'=>$strToken));
 						if(empty($arrResponseUser)){
 							$arrResponse = array('status' => false, 
 											 'msg' => 'Erro de datos.' );
 						}else{
 							$strPassword = hash("SHA256",$strPassword);
-							$requestPass = $this->usuarios->insertRegistro(array('gus_id'=>$intIdpersona,'gus_password'=>$strPassword));
+							$requestPass = $this->usuarios->updateRegistro(array('gus_id'=>$intIdpersona,'gus_password'=>$strPassword));
 
 							if($requestPass){
 								$arrResponse = array('status' => true, 

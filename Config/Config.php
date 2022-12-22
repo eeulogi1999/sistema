@@ -57,7 +57,7 @@
 	//Datos envio de correo
 	const NOMBRE_REMITENTE = "Sistema Cacel";
 	const EMAIL_REMITENTE = "no-reply@companycacel.com";
-	const NOMBRE_EMPESA = "Comapany Cacel SAC";
+	const NOMBRE_EMPESA = "Comap SAC";
 	const WEB_EMPRESA = "www.companycacel.com";
 
 	const DESCRIPCION = "SISTEMA ERP CONTABLE";
