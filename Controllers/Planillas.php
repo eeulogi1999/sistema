@@ -4,7 +4,6 @@ class Planillas extends Controllers{
     public function __construct(){
         parent::__construct('asistencias');   
         $this->newModel('colaboradores'); 
-        $this->newModel('personas'); 
         $this->newModel('ppagos'); 
         getPermisos(4);
     }
@@ -38,12 +37,13 @@ class Planillas extends Controllers{
             $view = '<button class="btn btn-warning btn-sm" onClick="viewAsi('.$r['pla_col_id']['col_id'].')" title="Ver Planilla"><i class="far fa-eye"></i></button>'; 
             $r['pla_hweek'] = $nh;
             $r['pla_sweek'] = $r['pla_col_id']['col_sbase']/4;
-            $r['pla_hextras'] =  (($nh-54)>0)?$nh-54:0; // pla_estado
+            $r['pla_hextras'] =  $nh; // pla_estado
             $r['pla_mhxtras'] =  $r['pla_hextras']*(($r['pla_sweek']/6)/8);
             $r['pla_sueldo'] = $r['pla_ndias']*($r['pla_sweek']/6);    //($r['pla_ndias'])*($r['pla_sweek']/6)+$r['pla_mhxtras'];
+            
             $add = $this->ppagos->selectRegistros(array('ppa_col_id'=>$rwcol[$i]['col_id'],'custom'=>'WEEKOFYEAR(ppa_fecha) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'));
             $pla_adelantos = 0;
-            foreach ($add as $i => $d) {
+            foreach ($add as $t => $d) {
                 $pla_adelantos+=abs($d['ppa_caj_id']['caj_monto']);
             }
             $r['pla_adelantos'] = $pla_adelantos;

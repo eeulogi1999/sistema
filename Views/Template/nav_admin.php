@@ -385,12 +385,6 @@
                         <span class="app-menu__label">Asistencias</span>
                     </a>
                 </li>
-                <li tree='7.3'>
-                    <a class="app-menu__item" href="<?= base_url(); ?>/utilitarios">
-                        <i class="app-menu__icon fas fa-ban" ></i>
-                        <span class="app-menu__label">Ausencias</span>
-                    </a>
-                </li>
                 <li tree='7.4'>
                     <a class="app-menu__item" href="<?= base_url(); ?>/planillas">
                         <i class="app-menu__icon fas fa-calendar-check" ></i>
