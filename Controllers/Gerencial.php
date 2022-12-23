@@ -108,17 +108,6 @@ class Gerencial extends Controllers{
         $res[4]['res_descripcion']='PAGAR';
         $res[4]['res_total'] = -$liq['liq_pagar'];
         $res[4]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resPagar()"><i class="far fa-eye"></i></button>';
-
-        $res[5]['res_descripcion']='AGENTE DSCG';
-        $g_ds = 0;
-        $rpt = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
-        foreach ($rpt as $i => $d) {
-            $g_ds += $d['mov_sum']*0.177-$d['mov_sum']*0.025;
-        }
-
-        $res[5]['res_total'] = $g_ds*0.25;
-        $res[5]['res_options']='---';
-
         if ($out) {
             return $res;
         } else {

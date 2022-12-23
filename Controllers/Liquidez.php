@@ -105,9 +105,20 @@ class Liquidez extends Controllers{
                 array('mov_age_id','mov_alm_id','mov_tce_id'));
 
             $liqData[$i][$pre.'_mtv'] = 0;
-            for ($j=0; $j < count($detr) ; $j++) { 
-                $liqData[$i][$pre.'_mtv'] = $liqData[$i][$pre.'_mtv']+floatval(json_decode($detr[$j]['mov_igv_id'],true)['mov_neto']);
+            if ($age['age_id'] == 2) {
+                $g_ds = 0;
+                $rpt = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+                foreach ($rpt as $i => $d) {
+                    $g_ds += $d['mov_sum']*0.177-$d['mov_sum']*0.025;
+                }  
+                $liqData[$i][$pre.'_mtv'] = $g_ds*0.25;
+            } else {
+                for ($j=0; $j < count($detr) ; $j++) { 
+                    $liqData[$i][$pre.'_mtv'] = $liqData[$i][$pre.'_mtv']+floatval(json_decode($detr[$j]['mov_igv_id'],true)['mov_neto']);
+                }
             }
+            
+            
             $liqData[$i][$pre.'_mti']=$this->cajas->searchRegistro(
                 array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
                 'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
