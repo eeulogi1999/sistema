@@ -105,10 +105,10 @@ class Liquidez extends Controllers{
                 array('mov_age_id','mov_alm_id','mov_tce_id'));
 
             $liqData[$i][$pre.'_mtv'] = 0;
-            if ($age['age_id'] == 2) {
+            if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
                 $g_ds = 0;
                 $rpt = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
-                foreach ($rpt as $i => $d) {
+                foreach ($rpt as $p => $d) {
                     $g_ds += $d['mov_sum']*0.177-$d['mov_sum']*0.025;
                 }  
                 $liqData[$i][$pre.'_mtv'] = $g_ds*0.25;
@@ -138,7 +138,6 @@ class Liquidez extends Controllers{
                     array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>7,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
                     'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
                     array('caj_age_id'))['caj_total_sum'];
-
             $liqData[$i][$pre.'_actual']=$liqData[$i][$pre.'_si']-$liqData[$i][$pre.'_mtc']+$liqData[$i][$pre.'_mtv']-$liqData[$i][$pre.'_mti']+$liqData[$i][$pre.'_mte']+$liqData[$i][$pre.'_castigo']+$liqData[$i][$pre.'_premio'];
             $text = '';
             switch (true) {
