@@ -65,6 +65,11 @@ class Liquidez extends Controllers{
         $liqPagar = array();
         $liq_ncuadre = array();
         $liq_sum = array('liq_cobrar'=>0,'liq_pagar'=>0);
+
+
+
+
+
         for ($i=0; $i < count($ageData); $i++) { 
             $btnView = '';
             $btnEdit = '';
@@ -165,6 +170,14 @@ class Liquidez extends Controllers{
             }
         
         }
+        //DSCG
+        $ds = $liqData[array_key_last($liqData)];
+        $g_ds = 0;
+        $rpt = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+        foreach ($rpt as $i => $d) {
+            $g_ds += $d['mov_sum']*0.177-$d['mov_sum']*0.025;
+        }
+        $liq_sum['liq_cobrar'] += $g_ds*0.25;
         switch ($res) {
             case 'cobrar':
                 echo json_encode($liqCobrar,JSON_UNESCAPED_UNICODE);
