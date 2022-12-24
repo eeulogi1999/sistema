@@ -338,9 +338,6 @@ function mdeProducto() {
     }
 }
 function ftnSetMov_numero(serie,t12_id,t10_id) {
-    if (t10_id==2) {
-        t10_id = 50;
-    }
     var formData = new FormData()
     formData.append('mov_t10_id',t10_id);
     formData.append('mov_t12_id',t12_id);

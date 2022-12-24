@@ -102,7 +102,15 @@ class Movimientos extends Controllers{
     public function getNumMovimiento(){
         $_POST['mov_alm_id'] = $_SESSION['alm']['alm_id'];
         $_POST['custom'] = 'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'];
-        $mov_numero = $this->movimientos->searchRegistro($_POST,"MAX(mov_numero) as 'next'")['next'];
+        if ($_POST['mov_t10_id']==50 || $_POST['mov_t10_id']==2) {
+            $_POST['mov_t10_id'] = 50;
+            $mun_n = $this->movimientos->searchRegistro($_POST,"MAX(mov_numero) as 'next'")['next'];
+            $_POST['mov_t10_id'] = 2;
+            $num_f= $this->movimientos->searchRegistro($_POST,"MAX(mov_numero) as 'next'")['next'];
+            $mov_numero = max($mun_n,$num_f);
+        } else {
+            $mov_numero = $this->movimientos->searchRegistro($_POST,"MAX(mov_numero) as 'next'")['next'];
+        }
         $arrData = array('mov_numero'=>str_pad($mov_numero+1,8,0,STR_PAD_LEFT));
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();
