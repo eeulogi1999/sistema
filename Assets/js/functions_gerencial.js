@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"mov_sum",header:{t:"SUB TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"mov_detraccion",header:{t:"DETRACCION",align:'right'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"mov_impuesto",header:{t:"IMPUESTO",align:'right'},tipo:'money',footer:{ c:"sum" }},
-                {"data":"mov_det_liq",header:{t:"RETORNO DETRACCION",align:'right'},tipo:'money',footer:{ c:"sum" }}
+                {"data":"mov_det_liq",header:{t:"RETORNO",align:'right'},tipo:'money',footer:{ c:"sum" }}
             ]
         });
     }
