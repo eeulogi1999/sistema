@@ -107,7 +107,7 @@ class Liquidez extends Controllers{
             $liqData[$i][$pre.'_mtv'] = 0;
             if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
                 $g_ds = 0;
-                $rpt = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+                $rpt = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
                 foreach ($rpt as $p => $d) {
                     $g_ds += $d['mov_sum']*0.177-$d['mov_sum']*0.025;
                 }  
