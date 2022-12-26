@@ -389,6 +389,9 @@ function previewFiles(th,content) {
                             
                         }
                         switch (o.columns[j].tipo) {
+                            case 'btn':
+                                cell.innerHTML = d +' '+btn;
+                                break;
                             case 'list':
                                 cell.innerHTML = data[o.columns[j].data][d];
                                 break;
@@ -679,4 +682,7 @@ function getTable(prefijo) {
     return table;
 }
 
+function btn(o={bg:'success',fn:'fn',id:1,title:'Registrar',icon:'fa-user-lock'}){
+    return `<button class="btn btn-${o.bg} btn-sm" onClick="${o.fn}(${o.id})" title="${o.title}"><i class="fas ${o.icon}"></i></button>`; 
+}
 

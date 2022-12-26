@@ -8,7 +8,6 @@
 				die();
 			}
 			getPermisos(1);
-			$this->newModel('usuarios');
 		}
 		public function Usuarios(){
 			$data['page_tag'] = "Usuarios";
@@ -39,13 +38,14 @@
 				if($_SESSION['perMod']['gtp_d']){
 					$btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="far fa-trash-alt"></i></button>';
 				}
-				$tpe = '<button class="btn btn-warning btn-sm" onClick="tpe('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="fas fa-user-lock"></i></button>';
-				$arrData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.' '.$tpe.'</div>';
+				$arrData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
 			}
 			unset($this->{$tabla});
 			echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
 			die();
 		}
+
+
 
 	}
  ?>

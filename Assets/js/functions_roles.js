@@ -1,5 +1,6 @@
-var gro_table;
-var url_gro = base_url+"/Main/getAll/gro";
+var gro_table,tpe_table;
+var url_gro = base_url+"/Roles/getRoles";
+var url_tpe = base_url+"/Roles/getTpermisos";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#gro_table")) {
@@ -15,9 +16,31 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
+    tpe_table = $('#tpe_table').autoTable({
+        "url": url_tpe,
+        "numerate": true,
+        "thid": 'tpe_id',
+        "columns":[
+            {"data":"gtp_gro_id.gro_descripcion",header:{t:"ROL"},tipo:'string'},
+            {"data":"gtp_gmo_id.gmo_descripcion",header:{t:"MODULO"},tipo:'string'},
+            {"data":"gtp_r",header:{t:"LEER"    ,align:'center'},tipo:'string'},
+            {"data":"gtp_w",header:{t:"AGREGAR" ,align:'center'},tipo:'string'},
+            {"data":"gtp_u",header:{t:"EDITAR"  ,align:'center'},tipo:'string'},
+            {"data":"gtp_d",header:{t:"ELIMINAR",align:'center'},tipo:'string'}
+        ]
+    });
 });
 
 window.addEventListener('load', async () => {
     gro_table = await gro_table;
+    tpe_table = await tpe_table;
     divLoading.style.display = "none";
 });
+
+
+function tpe(id) {
+    $('#modal_tpe').modal('show');
+    setTimeout(() => {
+        tpe_table.reload(url_tpe+'/'+id);
+    }, 220);
+}

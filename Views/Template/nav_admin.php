@@ -54,6 +54,14 @@
                     </a>
                 </li>
                 <?php } ?>
+                <?php if(!empty($_SESSION['per'][1]['gtp_r'])){ ?>
+                <li tree='1.6'>
+                    <a class="app-menu__item" href="<?= base_url(); ?>/modulos">
+                        <i class="app-menu__icon fas fa-warehouse"></i>
+                        <span class="app-menu__label">Modulos</span>
+                    </a>
+                </li>
+                <?php } ?>
             </ul>
         </li>
         <?php } ?>
