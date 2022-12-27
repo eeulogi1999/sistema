@@ -35,9 +35,13 @@
                             <label for="col_sbase">Monto<span class="required">*</span></label>
                             <input type="text" class="form-control" id="col_sbase" name="col_sbase" required="">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
                             <label for="col_puesto">Puesto<span class="required">*</span></label>
                             <input type="text" class="form-control" id="col_puesto" name="col_puesto" required="">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="col_fechaIT">Fecha de Inicio T.<span class="required">*</span></label>
+                            <input type="date" class="form-control valid validText" id="col_fechaIT" name="col_fechaIT" required="">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="col_est_id">Establecimiento<span class="required">*</span></label>
