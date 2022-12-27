@@ -304,7 +304,7 @@ class Movimientos extends Controllers{
                 $mov['mov_age_id']['age_gt2_id'] =      $this->t2identidades->selectRegistro(4);
             } else {
                 $mov['mov_age_id']['age_ide'] =         $age['age_gpe_id']['gpe_identificacion'];
-                $mov['mov_age_id']['age_nombre'] =      $age['age_gpe_id']['gpe_nombre'];
+                $mov['mov_age_id']['age_nombre'] =      $age['age_gpe_id']['gpe_nombre'].' - '.$age['age_gpe_id']['gpe_apellidos'];
                 $mov['mov_age_id']['age_apellidos'] =   $age['age_gpe_id']['gpe_apellidos'];
                 $mov['mov_age_id']['age_direccion'] =   $age['age_gpe_id']['gpe_direccion'];
                 $mov['mov_age_id']['age_email'] =       $age['age_gpe_id']['gpe_email'];
