@@ -218,7 +218,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['ing_fecha'] = $arrMov[$i]['mov_fechaE'];
             $r['ing_tipo'] = $arrMov[$i]['mov_t12_id']['t12_descripcion'];
-            $r['ing_cuenta'] = $arrMov[$i]['mov_observaciones']; 
+            $r['ing_cuenta'] = (!$arrMov[$i]['mov_cue_id'])?$arrMov[$i]['mov_cue_id']['cue_nombre']:''; 
             $r['ing_descripcion'] = '<a href="#" onclick="getViewMov('.$arrMov[$i]['mov_id'].')">'.$arrMov[$i]['mov_serie'].'-'.str_pad($arrMov[$i]['mov_numero'],8,0,STR_PAD_LEFT).'</a>' ; 
             $r['ing_monto'] = $arrMov[$i]['mov_total'];
             array_push($ing,$r);
@@ -272,7 +272,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['egr_fecha'] = $arrMov[$i]['mov_fechaE'];
             $r['egr_tipo'] = $arrMov[$i]['mov_t12_id']['t12_descripcion'];
-            $r['egr_cuenta'] = $arrMov[$i]['mov_observaciones']; 
+            $r['egr_cuenta'] = (!$arrMov[$i]['mov_cue_id'])?$arrMov[$i]['mov_cue_id']['cue_nombre']:''; 
             $r['egr_descripcion'] = '<a href="#" onclick="getViewMov('.$arrMov[$i]['mov_id'].')">'.$arrMov[$i]['mov_serie'].'-'.str_pad($arrMov[$i]['mov_numero'],8,0,STR_PAD_LEFT).'</a>' ; 
             $r['egr_monto'] =  floatval(json_decode($arrMov[$i]['mov_igv_id'],true)['mov_neto']);
             array_push($egr,$r);
