@@ -222,7 +222,6 @@ class Movimientos extends Controllers{
         }
         die();
     }
-
     public function setMovimientoTI(){
         if ($_POST) {
             $base = $_POST;

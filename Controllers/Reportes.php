@@ -207,9 +207,9 @@ class Reportes extends Controllers{
         $si['mov_t12_id'] = 16;
         $si['mov_t10_id'] = 1;
         $si['mov_tce_id'] = 1;
-        $si['mov_fechaE'] = '2022-12-01';
-        $si['mov_fechaR'] = '2022-12-01';
-        $si['mov_fechaV'] = '2022-12-01';
+        $si['mov_fechaE'] = '2023-01-01';
+        $si['mov_fechaR'] = '2023-01-01';
+        $si['mov_fechaV'] = '2023-01-01';
         $si['mov_tipo'] = 2;
         $si['mov_subtotal'] = 1;
         $si['mov_igv_id'] = '{"mov_igv": "0.00", "mov_neto": "1.00", "mov_gravada": "0.00", "mov_inafecta": "0.00", "mov_exonerada": "1.00"}';

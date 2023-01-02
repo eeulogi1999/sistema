@@ -15,7 +15,6 @@ class Liquidez extends Controllers{
         }
         getPermisos(4);
     }
-
     public function Liquidez(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
@@ -197,7 +196,7 @@ class Liquidez extends Controllers{
         }
         die();
     }
-    function getIng($age_id,$res=false){
+    public function getIng($age_id,$res=false){
         $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>2,'mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
         $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
         $nd = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>6,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
@@ -251,7 +250,7 @@ class Liquidez extends Controllers{
         }
         die();
     }
-    function getEgr($age_id,$res=false){
+    public function getEgr($age_id,$res=false){
         $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>1,'mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
         $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>2,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
         $nc = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>7,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
@@ -312,7 +311,7 @@ class Liquidez extends Controllers{
             $liq = array();
             $liq['liq_age_id'] = $sal[$i]['liq_age_id']['age_id'];
             $liq['liq_monto'] = $sal[$i]['liq_actual'];
-            $liq['liq_fecha'] = '2022-12-01';
+            $liq['liq_fecha'] = '2023-01-01';
             $d = $this->liquidez->insertRegistro($liq);
             $r = array('status' => true,'msg' => "Procesado Correctamente");
         }

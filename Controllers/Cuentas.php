@@ -17,8 +17,6 @@ class Cuentas extends Controllers{
         $data['page_functions_js'] = array("functions_cuentas.js");
         $this->views->getView($this,"cuentas",$data);
     }
-   
-
     public function getCuentas($p=null,$res=false){
         if (!empty($p)) {
             if ($p=='1') {
@@ -57,7 +55,6 @@ class Cuentas extends Controllers{
         }
         die();
     }
-
     public function cierre(){
         $sal = $this->getCuentas(null,true);
         $r = array('status' => false,'msg' => "No procesado");
@@ -67,7 +64,7 @@ class Cuentas extends Controllers{
             $caj['caj_numero'] = $i;
             $caj['caj_cue_id'] = $sal[$i]['cue_id'];
             $caj['caj_monto'] = $sal[$i]['cue_saldo'];
-            $caj['caj_fecha'] = '2022-12-01';
+            $caj['caj_fecha'] = '2023-01-01';
             $d = $this->cajas->insertRegistro($caj);
             $r = array('status' => true,'msg' => "Procesado Correctamente");
         }
