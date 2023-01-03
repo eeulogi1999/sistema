@@ -20,12 +20,12 @@ class Cuentas extends Controllers{
     public function getCuentas($p=null,$res=false){
         if (!empty($p)) {
             if ($p=='1') {
-                $arrData = $this->cuentas->selectRegistros(array('cue_id'=>22));
+                $arrData = $this->cuentas->selectRegistros(array('cue_status'=>1,'cue_id'=>22));
             } else {
-                $arrData = $this->cuentas->selectRegistros(array('custom'=>'cue_id != 22'));
+                $arrData = $this->cuentas->selectRegistros(array('cue_status'=>1,'custom'=>'cue_id != 22'));
             }
         } else {
-            $arrData = $this->cuentas->selectRegistros();
+            $arrData = $this->cuentas->selectRegistros(array('cue_status'=>1));
         }
         $pre = 'cue'; $tabla = 'Cuentas';
         for ($i=0; $i < count($arrData); $i++) { 

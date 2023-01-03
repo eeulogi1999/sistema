@@ -19,10 +19,16 @@
             <label for="cue_gt4_id">Moneda<span class="required">*</span></label>
             <select class="form-control" id="cue_gt4_id" name="cue_gt4_id"></select>
           </div>
+          <div class="form-group mb-1">
+            <label for="cue_status">Status<span class="required">*</span></label>
+            <select class="form-control" id="cue_status" name="cue_status" required>
+              <option value="1">Activo</option>
+              <option value="0">Inactivo</option>
+            </select>
+          </div>
         </form>
         <div class="tile-footer mt-3">
-          <button id="set_cue" class="btn btn-primary"
-            onclick="event.preventDefault();set('cue')"><i
+          <button id="set_cue" class="btn btn-primary" onclick="event.preventDefault();set('cue')"><i
               class="fa fa-fw fa-lg fa-check-circle"></i><span>Guardar</span></button>&nbsp;&nbsp;&nbsp;
           <button class="btn btn-danger" type="button" data-dismiss="modal"><i
               class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
@@ -43,27 +49,27 @@
         </button>
       </div>
       <div class="modal-body">
-          <div class="row">
-            <div class="col">
-              <h5 class="text-center">INGRESOS</h5>
-              <div class="table-responsive">
+        <div class="row">
+          <div class="col">
+            <h5 class="text-center">INGRESOS</h5>
+            <div class="table-responsive">
               <table class="table table-hover table-bordered table-sm " id="cue_i" width="100%"></table>
-              </div>
-            </div>
-            <div class="col">
-              <h5 class="text-center">EGRESOS</h5>
-              <div class="table-responsive">
-              <table class="table table-hover table-bordered table-sm " id="cue_e" width="100%"></table>
-              </div>
-            </div>
-            <div class="col">
-              <h5 class="text-center">GASTOS</h5>
-              <div class="table-responsive">
-              <table class="table table-hover table-bordered table-sm " id="cue_g" width="100%"></table>
-              </div>
             </div>
           </div>
-            <!-- <table class="table table-hover table-bordered table-sm " id="mvb_cue" width="100%"></table> -->
+          <div class="col">
+            <h5 class="text-center">EGRESOS</h5>
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered table-sm " id="cue_e" width="100%"></table>
+            </div>
+          </div>
+          <div class="col">
+            <h5 class="text-center">GASTOS</h5>
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered table-sm " id="cue_g" width="100%"></table>
+            </div>
+          </div>
+        </div>
+        <!-- <table class="table table-hover table-bordered table-sm " id="mvb_cue" width="100%"></table> -->
         <!-- <div id="mvb_cue"> -->
       </div>
       <div class="modal-footer">
