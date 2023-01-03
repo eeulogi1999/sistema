@@ -29,7 +29,7 @@
             </select>
           </div>
           <div class="tile-footer">
-            <button id="set_gmo" class="btn btn-primary" onclick="event.preventDefault();set('gmo')"><i
+            <button id="set_gmo" class="btn btn-primary" onclick="event.preventDefault();setGmo()"><i
                 class="fa fa-fw fa-lg fa-check-circle"></i><span>Guardar</span></button>&nbsp;&nbsp;&nbsp;
             <button class="btn btn-danger" type="button" data-dismiss="modal"><i
                 class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>

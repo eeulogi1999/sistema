@@ -298,6 +298,16 @@ function previewFiles(th,content) {
                 if (typeof o.columns[i].header === 'object') {
                     var ne = o.columns[i].data.split('.');
                     var ix = ne[ne.length-1];
+                    //let th = $(thead).children('tr').append('<th></th>');
+                    let style = '';
+                    if (typeof o.columns[i].header === 'object') {
+                        if (typeof o.columns[i].header.style != 'undefined') {
+                            if (typeof o.columns[i].header.style.miw != 'undefined') {
+                                style += o.columns[i].header.style.miw;
+                                //th.style.minWidth = o.columns[i].header.style.miw;
+                            }
+                        }
+                    }
                     if ( typeof o.columns[i].header.c!= 'undefined') {
                         switch (o.columns[i].header.c) {
                             case 'text':

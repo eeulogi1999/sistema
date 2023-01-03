@@ -48,7 +48,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style='font-size: 13px;'>
         <div class="row">
           <div class="col">
             <h5 class="text-center">INGRESOS</h5>

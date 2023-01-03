@@ -197,10 +197,22 @@ class Liquidez extends Controllers{
         die();
     }
     public function getIng($age_id,$res=false){
-        $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>2,'mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
-        $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
-        $nd = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>6,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
-        $sl = $this->liquidez->searchRegistro(array('liq_age_id'=>$age_id,'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+        $str_caj = '';
+        $str_mov = '';
+        $str_liq = '';
+        if (!empty($_GET['f_start'])&&!empty($_GET['f_end'])) {
+            $str_mov = 'mov_fechaE BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+            $str_caj = 'caj_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+            $str_liq = 'liq_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+        } else {
+            $str_mov = 'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'];
+            $str_caj = 'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'];
+            $str_liq = 'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo'];
+        }
+        $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>2,'mov_age_id'=>$age_id,'custom'=>$str_mov));
+        $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>1,'custom'=>$str_caj));
+        $nd = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>6,'custom'=>$str_caj));
+        $sl = $this->liquidez->searchRegistro(array('liq_age_id'=>$age_id,'custom'=>$str_liq));
         $ing = array();
         if (!empty($sl)) {
             if ($sl['liq_monto']<=0) {
@@ -251,10 +263,22 @@ class Liquidez extends Controllers{
         die();
     }
     public function getEgr($age_id,$res=false){
-        $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>1,'mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
-        $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>2,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
-        $nc = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>7,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
-        $sl = $this->liquidez->searchRegistro(array('liq_age_id'=>$age_id,'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+        $str_caj = '';
+        $str_mov = '';
+        $str_liq = '';
+        if (!empty($_GET['f_start'])&&!empty($_GET['f_end'])) {
+            $str_mov = 'mov_fechaE BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+            $str_caj = 'caj_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+            $str_liq = 'liq_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+        } else {
+            $str_mov = 'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'];
+            $str_caj = 'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'];
+            $str_liq = 'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo'];
+        }
+        $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>1,'mov_age_id'=>$age_id,'custom'=>$str_mov));
+        $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>2,'custom'=>$str_caj));
+        $nc = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>7,'custom'=>$str_caj));
+        $sl = $this->liquidez->searchRegistro(array('liq_age_id'=>$age_id,'custom'=>$str_liq));
         $egr = array();
         if (!empty($sl)) {
             if ($sl['liq_monto']>0) {
@@ -289,7 +313,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['egr_fecha'] = $nc[$i]['caj_fecha'];
             $r['egr_tipo'] = CAJ[$nc[$i]['caj_tipo']];
-            $r['egr_cuenta'] = $nc[$i]['caj_cue_id']['cue_nombre'];
+            $r['egr_cuenta'] = (!empty($nc[$i]['caj_cue_id']))?$nc[$i]['caj_cue_id']['cue_nombre']:'';
             $r['egr_descripcion'] = '<a href="#" onclick="viewCaj('.$nc[$i]['caj_id'].','.$nc[$i]['caj_tipo'].')">'.$nc[$i]['caj_observaciones'].'</a>' ; 
             $r['egr_monto'] = abs($nc[$i]['caj_monto']);
             array_push($egr,$r);

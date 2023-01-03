@@ -84,6 +84,7 @@ function viewLiq(id,a) {
     $('#modalViewLiq').modal('show');
     $("#liq_pdf").attr("href",base_url+"/Liquidez/getPdf/"+id);
     $("#liq_xlsx").attr("href",base_url+"/Liquidez/getXlsx/"+id);
+    $('#fil_his').attr('onclick','buscarHistorico('+id+')')
     fetch(base_url + '/Main/get/age,'+id)
     .then(r => r.json())
     .then(r => {
@@ -111,4 +112,18 @@ function viewLiq(id,a) {
         }
     }, 600);
     
+}
+
+function buscarHistorico(id) {
+    $('#modal_filter').modal('hide')
+    let f_start =$('#f_start').val();
+    let f_end =  $('#f_end').val();
+    mvb_mov.reload(base_url+"/Liquidez/getIng/"+id+"&?f_start="+f_start+"&f_end="+f_end);
+    setTimeout(() => {
+        mvb_mov.rezise();
+    }, 400);
+    mvb_caj.reload(base_url+"/Liquidez/getEgr/"+id+"&?f_start="+f_start+"&f_end="+f_end);
+    setTimeout(() => {
+        mvb_caj.rezise();
+    }, 400);
 }

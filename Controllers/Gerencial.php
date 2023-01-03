@@ -157,8 +157,6 @@ class Gerencial extends Controllers{
             $res[$i]['mov_impuesto'] = $d['mov_sum']*0.025;
             $res[$i]['mov_det_liq'] = $res[$i]['mov_detraccion']-$res[$i]['mov_impuesto'];
         }
-        
-        
         if ($out) {
             return $res;
         } else {

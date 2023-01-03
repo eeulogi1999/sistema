@@ -15,7 +15,7 @@
                 <span class="app-menu__label">DASHBOARD</span>
             </a>
         </li>
-        <?php if(!empty($_SESSION['per'][0]['gtp_r']) && $_SESSION['per'][0]['gtp_r']>0){ ?>
+        <?php if(!empty($_SESSION['per'][0]['gtp_r'])){ ?>
         <li tree='1' class="treeview pl-1">
             <a class="app-menu__item" href="#" >
                 <i class="app-menu__icon fas fa-users-cog" ></i>
@@ -65,11 +65,11 @@
             </ul>
         </li>
         <?php } ?>
-        <?php if(!empty($_SESSION['per'][1]['gtp_r']) && $_SESSION['per'][1]['gtp_r']>0){ ?>
+        <?php if(!empty($_SESSION['per'][1]['gtp_r'])){ ?>
         <li tree='9' class="treeview pl-1">
             <a class="app-menu__item" href="#" >
                 <i class="app-menu__icon fas fa-database" ></i>
-                <span class="app-menu__label">RECURSOS</span>
+                <span class="app-menu__label">BASE DE DATOS</span>
             </a>
             <ul>
                 <?php if(!empty($_SESSION['per'][1]['gtp_r'])){ ?>
@@ -96,6 +96,14 @@
                     </a>
                 </li>
                 <?php } ?>
+                <?php if(!empty($_SESSION['per'][1]['gtp_r'])){ ?>
+                <li tree='2.3'>
+                    <a class="app-menu__item" href="<?= base_url(); ?>/bienes">
+                        <i class="app-menu__icon fas fa-clipboard-list"></i>
+                        <span class="app-menu__label">Bienes</span>
+                    </a>
+                </li>
+                <?php } ?>
             </ul>
         </li>
         <?php } ?>
@@ -106,14 +114,6 @@
                 <span class="app-menu__label">LOGISTICO</span>
             </a>
             <ul>
-                <?php if(!empty($_SESSION['per'][1]['gtp_r'])){ ?>
-                <li tree='2.3'>
-                    <a class="app-menu__item" href="<?= base_url(); ?>/bienes">
-                        <i class="app-menu__icon fas fa-clipboard-list"></i>
-                        <span class="app-menu__label">Bienes</span>
-                    </a>
-                </li>
-                <?php } ?>
                 <?php if(!empty($_SESSION['per'][1]['gtp_r'])){ ?>
                 <li tree='2.4'>
                     <a class="app-menu__item" href="#">
@@ -237,6 +237,14 @@
                 <?php } ?>
                 <?php if(!empty($_SESSION['per'][2]['gtp_r'])){ ?>
                 <li tree='3.6'>
+                    <a class="app-menu__item" href="<?= base_url(); ?>/Cajas/subgastos">
+                        <i class="app-menu__icon fas fa-stamp" ></i>
+                        <span class="app-menu__label">Sub Total Gastos</span>
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if(!empty($_SESSION['per'][2]['gtp_r'])){ ?>
+                <li tree='3.7'>
                     <a class="app-menu__item" href="<?= base_url(); ?>/Cajas/cinternos">
                         <i class="app-menu__icon fas fa-coins" ></i>
                         <span class="app-menu__label">Caja Internos</span>
@@ -244,7 +252,7 @@
                 </li>
                 <?php } ?>
                 <?php if(!empty($_SESSION['per'][2]['gtp_r'])){ ?>
-                <li tree='3.7'>
+                <li tree='3.8'>
                     <a class="app-menu__item" href="<?= base_url(); ?>/Cajas/iadicionales">
                         <i class="app-menu__icon fas fa-donate" ></i>
                         <span class="app-menu__label">Ingresos Otros</span>

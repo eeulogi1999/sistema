@@ -21,4 +21,17 @@ document.addEventListener('DOMContentLoaded',function () {
 window.addEventListener('load', async () => {
     gmo_table = await gmo_table;
     divLoading.style.display = "none";
+    gmo_table.select(true);
 });
+
+async function setGmo() {
+    var formData = new FormData(document.getElementById("form_gmo"));
+    if (!isUndefined(gmo_table.getSelectedId())) {
+        formData.append('gmo_gmo_id', gmo_table.getSelectedItem().gmo_id);
+    }
+    let json = Object.fromEntries(formData);
+    var gmo = await set('gmo',['gmo_titulo'],json,true);
+    if (gmo.status) {
+        resetModal('gmo');
+    }
+}

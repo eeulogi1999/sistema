@@ -2,7 +2,7 @@
 @ob_start();
 class Clientes extends Controllers{
     public function __construct(){
-        parent::__construct('gclientes');   
+        parent::__construct('clientes');   
         getPermisos(4);
     }
     public function Clientes(){
@@ -13,7 +13,7 @@ class Clientes extends Controllers{
         $data['page_title'] = "Clientes ";
         $data['page_name'] = "Clientes";
         $data['page_data'] = array();
-        $data['page_functions_js'] = array("functions_clientes.js");
+        $data['page_functions_js'] = array("functions_clientes.js","functions_empresas.js");
         $this->views->getView($this,"clientes",$data);
     }
 }

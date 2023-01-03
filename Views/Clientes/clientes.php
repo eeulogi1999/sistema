@@ -1,18 +1,14 @@
 <?php 
     headerAdmin($data); 
-    getModal('modalUsuarios',$data);
-    getModal('modalPersonas',$data);
-    getModal('modalTableGar',$data);
-    getModal('modalTableRol',$data);
-    getModal('modalRoles',$data);
-    getModal('modalAreas',$data);
+    getModal('modalClientes',$data);
+    getModal('modalEmpresas',$data);
 ?>
   <main class="app-content">    
       <div class="app-title">
         <div>
             <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
                 <?php if($_SESSION['perMod']['gtp_w']){ ?>
-                <button class="btn btn-primary" type="button" onclick="openModal('gus');" ><i class="fas fa-plus-circle"></i> Nuevo</button>
+                <button class="btn btn-primary" type="button" onclick="openModal('gcl');" ><i class="fas fa-plus-circle"></i> Nuevo</button>
               <?php } ?>
             </h1>
         </div>
@@ -26,7 +22,7 @@
               <div class="tile">
                 <div class="tile-body">
                   <div class="table-responsive">
-                    <table class="table table-hover table-bordered table-sm" id="gus_table" width="100%"></table>
+                    <table class="table table-hover table-bordered table-sm" id="gcl_table" width="100%"></table>
                   </div>
                 </div>
               </div>
