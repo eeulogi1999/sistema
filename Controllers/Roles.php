@@ -7,14 +7,10 @@ class Roles extends Controllers{
             header('Location: '.base_url().'/login');
             die();
         }
-        getPermisos(1);
         $this->newModel('tpermisos');
         $this->newModel('modulos');
     }
     public function Roles(){
-        if(empty($_SESSION['perMod']['gtp_r'])){
-            header("Location:".base_url().'/dashboard');
-        }
         $data['page_tag'] = "Roles";
         $data['page_title'] = "Roles ";
         $data['page_name'] = "Roles";
@@ -31,16 +27,13 @@ class Roles extends Controllers{
             $btnView = '';
             $btnEdit = '';
             $btnDelete = '';
+            $btn = '';
             if (isset($arrData[$i][$pre.'_status'])) {
                 $arrData[$i][$pre.'_status'] = '<span class="badge badge-'.STATUS[array_keys(STATUS)[$arrData[$i][$pre.'_status']]].'">'.array_keys(STATUS)[$arrData[$i][$pre.'_status']].'</span>';
             }
-            if($_SESSION['perMod']['gtp_u']){
                 $btnEdit = '<button class="btn btn-primary  btn-sm" onClick="edit('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Editar '.$tabla.'"><i class="fas fa-pencil-alt"></i></button>';
-            }
-            if($_SESSION['perMod']['gtp_d']){
                 $btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="far fa-trash-alt"></i></button>';
                 $btn = '<button class="btn btn-warning btn-sm" onClick="tpe('.$arrData[$i][$pre.'_id'].')" title="Conceder Permisos"><i class="fas fa-user-lock"></i></button>';
-            }
             $arrData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.' '.$btn.'</div>';
         }
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);

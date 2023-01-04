@@ -220,7 +220,7 @@
 				}
 			}
 			return $request;
-		} 		
+		} 	
 		public function deleteRegistro(int $id){
 			$x = array_search('PRI',array_column($this->columns,'Key'));
 			$this->{$this->columns[$x]['Field']} = $id;

@@ -9,8 +9,7 @@ class Bienes extends Controllers{
         $this->newModel('establecimientos'); 
         $this->newModel('bbienes');
         $this->newModel('valores');
-        $this->newModel('mdetalles');
-        getPermisos(4);    
+        $this->newModel('mdetalles'); 
     }
     public function Bienes(){
         if(empty($_SESSION['perMod']['gtp_r'])){

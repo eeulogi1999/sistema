@@ -3,7 +3,7 @@
 class Clientes extends Controllers{
     public function __construct(){
         parent::__construct('clientes');   
-        getPermisos(4);
+
     }
     public function Clientes(){
         if(empty($_SESSION['perMod']['gtp_r'])){

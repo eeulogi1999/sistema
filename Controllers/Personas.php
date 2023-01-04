@@ -4,7 +4,6 @@
 class Personas extends Controllers{
     public function __construct(){
         parent::__construct(strtolower(get_class($this)));
-        getPermisos(1);
     }
     public function Personas(){
         if(empty($_SESSION['perMod']['gtp_r'])){

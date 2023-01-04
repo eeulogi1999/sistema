@@ -4,7 +4,6 @@ class Cajas extends Controllers{
     public function __construct(){
         parent::__construct('cajas');   
         //$this->newModel('cuentas');
-        getPermisos(2); 
     }
     public function Ingresos(){
         if(empty($_SESSION['perMod']['gtp_r'])){

@@ -7,10 +7,10 @@
       <div class="app-title">
       <div>
       <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
-        <?php if($_SESSION['perMod']['gtp_w']){ ?>
           <button class="btn btn-primary" type="button" onclick="openModal('gmo');">
             <i class="fas fa-plus-circle" aria-hidden="true"></i> Nuevo</button>
-        <?php } ?>
+            <button class="btn btn-primary" type="button" onclick="migrarGmo();">
+            <i class="fas fa-plus-circle" aria-hidden="true"></i>MIGRAR JSON</button>
       </h1>
     </div>
       </div>

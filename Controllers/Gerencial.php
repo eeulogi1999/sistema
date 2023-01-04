@@ -13,7 +13,6 @@ class Gerencial extends Controllers{
         $this->newController('Reportes');
         $this->newController('Liquidez');
         $this->newController('Cuentas');
-        getPermisos(4);
     }
     public function Gerencial(){
         if(empty($_SESSION['perMod']['gtp_r'])){

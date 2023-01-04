@@ -21,7 +21,7 @@
             <input class="form-control" id="gmo_descripcion" name="gmo_descripcion" type="text"
               placeholder="Descripcion" required="">
           </div>
-          <div class="form-gmoup">
+          <div class="form-gmoup mb-3">
             <label for="gmo_status">Status</label>
             <select class="form-control selectpicker" id="gmo_status" name="gmo_status" required>
               <option value="1">Activo</option>

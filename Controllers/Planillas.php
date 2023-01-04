@@ -5,7 +5,6 @@ class Planillas extends Controllers{
         parent::__construct('asistencias');   
         $this->newModel('colaboradores'); 
         $this->newModel('ppagos'); 
-        getPermisos(4);
     }
     public function Planillas(){
         if(empty($_SESSION['perMod']['gtp_r'])){

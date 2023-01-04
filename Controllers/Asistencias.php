@@ -6,7 +6,6 @@ class Asistencias extends Controllers{
         parent::__construct('asistencias');   
         $this->newModel('colaboradores'); 
         $this->newModel('personas'); 
-        getPermisos(4);
     }
     public function Asistencias(){
         if(empty($_SESSION['perMod']['gtp_r'])){

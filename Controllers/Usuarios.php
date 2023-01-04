@@ -3,13 +3,8 @@
 	class Usuarios extends Controllers{
 		public function __construct(){
 			parent::__construct(strtolower(get_class($this)));
-			if(empty($_SESSION['login'])){
-				header('Location: '.base_url().'/login');
-				die();
-			}
 			$this->newModel('accesos');
 			$this->newModel('clientes');
-			getPermisos(1);
 		}
 		public function Usuarios(){
 			$data['page_tag'] = "Usuarios";
@@ -30,17 +25,11 @@
 				$tpe = '';
 				if (isset($arrData[$i][$pre.'_status'])) {
 					$arrData[$i][$pre.'_status'] = '<span class="badge badge-'.STATUS[array_keys(STATUS)[$arrData[$i][$pre.'_status']]].'">'.array_keys(STATUS)[$arrData[$i][$pre.'_status']].'</span>';
-				}
-				if($_SESSION['perMod']['gtp_r']){
 					$btnView = '<button class="btn btn-info btn-sm" onClick="view('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Ver '.$tabla.'"><i class="far fa-eye"></i></button>';
 				}
-				if($_SESSION['perMod']['gtp_u']){
-					$btnEdit = '<button class="btn btn-primary  btn-sm" onClick="edit('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Editar '.$tabla.'"><i class="fas fa-pencil-alt"></i></button>';
-				}
-				if($_SESSION['perMod']['gtp_d']){
-					$btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="far fa-trash-alt"></i></button>';
-					$btn = '<button class="btn btn-warning btn-sm" onClick="gac('.$arrData[$i][$pre.'_id'].')" title="Conceder Accesos"><i class="fas fa-user-lock"></i></button>';
-				}
+				$btnEdit = '<button class="btn btn-primary  btn-sm" onClick="edit('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Editar '.$tabla.'"><i class="fas fa-pencil-alt"></i></button>';
+				$btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="far fa-trash-alt"></i></button>';
+				$btn = '<button class="btn btn-warning btn-sm" onClick="gac('.$arrData[$i][$pre.'_id'].')" title="Conceder Accesos"><i class="fas fa-user-lock"></i></button>';
 				$arrData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.' '.$btn.'</div>';
 			}
 			unset($this->{$tabla});

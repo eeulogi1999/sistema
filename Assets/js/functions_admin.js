@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded',function () {
         document.querySelector("[tree='"+r.tree+"']").style.backgroundColor = 'black';
         document.querySelector("[tree='"+r.tree+"']").parentElement.parentElement.classList.add('open'); 
         document.querySelector("[tree='"+r.tree+"']").parentElement.style.paddingLeft = '10px';
-        if (r.tree.split('.').length>2) {
+        if (r.tree.toString().split('.').length>2) {
             document.querySelector("[tree='"+r.tree+"']").parentElement.parentElement.parentElement.parentElement.classList.add('open');
             document.querySelector("[tree='"+r.tree+"']").parentElement.parentElement.parentElement.style.paddingLeft = '10px';
             document.querySelector("[tree='"+r.tree+"']").parentElement.parentElement.style.backgroundColor = '#212529';

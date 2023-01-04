@@ -3,6 +3,7 @@
     getModal('modalAgentes',$data);
     getModal('modalPersonas',$data);
     getModal('modalEmpresas',$data);
+
 ?>
 <main class="app-content">
   <div class="app-title">

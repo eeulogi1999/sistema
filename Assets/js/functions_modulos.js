@@ -1,14 +1,14 @@
 var gmo_table;
-var url_gmo = base_url+"/Modulos/getModulos";
+var url_gmo = base_url+"/Modulos/getModulos"; ///Modulos/getModulos
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#gmo_table")) {
         gmo_table = $('#gmo_table').autoTable({
             "url": url_gmo,
-            "numerate": true,
             "thid": 'gmo_id',
             "tree":true,
             "columns":[
+                {"data":"gmo_nro",header:{t:"#"},tipo:'string'},
                 {"data":"gmo_titulo",header:{t:"NOMBRE"},tipo:'string'},
                 {"data":"gmo_descripcion",header:{t:"DESCRIPCION"},tipo:'string'},
                 {"data":"gmo_status",header:{t:"ESTADO"},tipo:'string'},
@@ -34,4 +34,16 @@ async function setGmo() {
     if (gmo.status) {
         resetModal('gmo');
     }
+}
+
+function migrarGmo(){
+    fetch(base_url+'/Modulos/migrarGmo')
+  .then(response => response.json())
+  .then(r => {
+    console.log(r);
+    if (r.status) {
+        swal('Exito','procesado Correctamente'+r.sum,'success');
+    }
+  })
+  .catch(error => swal("Atención","Error en el proceso: "+error, "error")) 
 }

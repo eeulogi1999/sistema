@@ -13,7 +13,6 @@ class Liquidez extends Controllers{
         if (empty($this->Reportes)) {
             $this->Reportes = new Reportes();
         }
-        getPermisos(4);
     }
     public function Liquidez(){
         if(empty($_SESSION['perMod']['gtp_r'])){

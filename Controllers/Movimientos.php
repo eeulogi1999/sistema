@@ -8,7 +8,6 @@ use Luecano\NumeroALetras\NumeroALetras;
 class Movimientos extends Controllers{
     public function __construct(){
         parent::__construct(strtolower(get_class($this)));   
-        getPermisos(1);
         $this->newModel('mdetalles');          
         $this->newModel('agentes');
         $this->newModel('empresas');
@@ -101,7 +100,7 @@ class Movimientos extends Controllers{
     }
     public function getNumMovimiento(){
         $_POST['mov_alm_id'] = $_SESSION['alm']['alm_id'];
-        $_POST['custom'] = 'DATE_FORMAT(mov_fechaE, "%Y") = '.date('Y',strtotime($_SESSION['periodo']));
+        $_POST['custom'] = 'DATE_FORMAT(mov_fechaE, "%Y") = 2023';  //$_SESSION['periodo']
         if ($_POST['mov_t10_id']==50 || $_POST['mov_t10_id']==2) {
             $_POST['mov_t10_id'] = 50;
             $mun_n = $this->movimientos->searchRegistro($_POST,"MAX(mov_numero) as 'next'")['next'];

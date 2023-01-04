@@ -5,9 +5,7 @@ class Agentes extends Controllers{
     public function __construct(){
         parent::__construct(strtolower(get_class($this)));
         $this->newModel('t2identidades');
-        getPermisos(1);
     }
-
     public function Clientes(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');

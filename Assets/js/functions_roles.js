@@ -18,12 +18,12 @@ document.addEventListener('DOMContentLoaded',function () {
     }
     if (document.querySelector("#tpe_table")) {
         tpe_table = $('#tpe_table').autoTable({
-            "url": url_tpe,
+            "url": url_tpe+'/1',
             "numerate": true,
             "thid": 'tpe_id',
             "columns":[
-                {"data":"gtp_gro_id.gro_descripcion",header:{t:"ROL"},tipo:'string'},
-                {"data":"gtp_gmo_id.gmo_descripcion",header:{t:"MODULO"},tipo:'string'},
+                {"data":"gtp_gro_id.gro_nombrerol",header:{t:"ROL"},tipo:'string'},
+                {"data":"gtp_gmo_id.gmo_titulo",header:{t:"MODULO"},tipo:'string'},
                 {"data":"gtp_r",header:{t:"LEER"    ,align:'center'},tipo:'string'},
                 {"data":"gtp_w",header:{t:"AGREGAR" ,align:'center'},tipo:'string'},
                 {"data":"gtp_u",header:{t:"EDITAR"  ,align:'center'},tipo:'string'},
