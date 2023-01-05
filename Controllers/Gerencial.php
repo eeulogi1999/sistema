@@ -107,6 +107,10 @@ class Gerencial extends Controllers{
         $res[4]['res_descripcion']='PAGAR';
         $res[4]['res_total'] = -$liq['liq_pagar'];
         $res[4]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resPagar()"><i class="far fa-eye"></i></button>';
+
+        $res[5]['res_descripcion']='INGRESOS ADICIONALES';
+        $res[5]['res_total'] = $this->cajas->searchRegistro(array('caj_tipo'=>4,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),'SUM(caj_monto) as total')['total'];
+        $res[5]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resAdd()"><i class="far fa-eye"></i></button>';
         if ($out) {
             return $res;
         } else {
@@ -127,21 +131,23 @@ class Gerencial extends Controllers{
         $res = array();
         $res[0]['sfi_des']='Ingreso por Ventas';
         $res[0]['sfi_sum']=$this->Reportes->getCventas(true,true);
-        $res[1]['sfi_des']='Merma de Materiales';
+        $res[1]['sfi_des']='Ingreso Adicionales';
+        $res[1]['sfi_sum']=$this->cajas->searchRegistro(array('caj_tipo'=>4,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),'SUM(caj_monto) as total')['total'];
+        $res[2]['sfi_des']='Merma de Materiales';
         $mer = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>13,'mov_tipo'=>1,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
-        $res[1]['sfi_sum']=-array_sum(array_column($mer,'mov_total'));
+        $res[2]['sfi_sum']=-array_sum(array_column($mer,'mov_total'));
         
-        $res[2]['sfi_des']='Nota de Creditos';
+        $res[3]['sfi_des']='Nota de Creditos';
         $cas = $this->cajas->selectRegistros(array('caj_tipo'=>6,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
-        $res[2]['sfi_sum']=array_sum(array_column($cas,'caj_monto'));
-        
-        $res[3]['sfi_des']='Nota de Debitos';
-        $cas = $this->cajas->selectRegistros(array('caj_tipo'=>7,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
         $res[3]['sfi_sum']=array_sum(array_column($cas,'caj_monto'));
         
-        $res[4]['sfi_des']='Gastos General';
+        $res[4]['sfi_des']='Nota de Debitos';
+        $cas = $this->cajas->selectRegistros(array('caj_tipo'=>7,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+        $res[4]['sfi_sum']=array_sum(array_column($cas,'caj_monto'));
+        
+        $res[5]['sfi_des']='Gastos General';
         $gas = $this->cajas->selectRegistros(array('caj_tipo'=>3,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
-        $res[4]['sfi_sum']=array_sum(array_column($gas,'caj_monto'));
+        $res[5]['sfi_sum']=array_sum(array_column($gas,'caj_monto'));
         if ($out) {
             return $res;
         } else {
