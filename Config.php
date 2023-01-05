@@ -1,5 +1,5 @@
 <?php 
-	define('BASE_URL',(($_SERVER['HTTP_HOST'])?'http://'.$_SERVER['HTTP_HOST']:'https://'.$_SERVER['HTTPS_HOST']).$_SERVER['REQUEST_URI']);
+	define('BASE_URL',(($_SERVER['HTTPS']=='on')?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 	
 	const PHPID = "erpcacel";  // erpregomsa, erpcacel ,erpegest
 	const CID = "cacel";  //regomsa,cacel, egest
