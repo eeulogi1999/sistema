@@ -1,6 +1,6 @@
-<?php 
-	define('BASE_URL',(($_SERVER['HTTPS']=='on')?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-	
+<?php
+	define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].((isset($_SERVER['HTTPS']))?'':'/'.basename(dirname(__FILE__))));
+
 	const PHPID = "erpcacel";  // erpregomsa, erpcacel ,erpegest
 	const CID = "cacel";  //regomsa,cacel, egest
 

@@ -5,8 +5,6 @@
 			parent::__construct("usuarios");
 			//session_regenerate_id(true);
 			$_SESSION['asi']['asi_week']=(new DateTime())->format("Y").'-W'.(new DateTime())->format("W");
-
-			//dep($_SESSION['per']); die();
 		}
 
 		public function dashboard(){
