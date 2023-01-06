@@ -347,6 +347,13 @@ function previewFiles(th,content) {
                 for (const i in o.data) {
                     const r = o.data[i];
                     var tr = tbody.insertRow(-1);
+                    if (typeof o.xfun != 'undefined') {
+                        if (typeof o.xfun.minzero != 'undefined') {
+                            if (r[o.xfun.minzero.col]<0.5) {
+                                continue;
+                            }
+                        }
+                    }
                     if (o.tree) {
                         table[0].classList.add('tree');
                         let wy = o.thid.split('_');

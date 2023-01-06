@@ -56,7 +56,8 @@ class Movimientos extends Controllers{
         }
         $data['estData'] = $this->establecimientos->selectRegistros();  
         $data['page_data']['periodo'] = $_SESSION['periodo'];
-        $data['page_data']['mov_tipo'] = $_SESSION['mov']['mov_tipo'];
+        $data['page_data']['mov_tipo'] = $_SESSION['mov']['mov_tipo']; //'xfun'=>
+        $data['page_data']['xfun'] = array();
         $data['page_functions_js'] = array("functions_movimientos.js","functions_sbienes.js","functions_agentes.js","functions_empresas.js","functions_personas.js");
         $this->views->getView($this,"movimientos",$data);
     }
@@ -276,6 +277,12 @@ class Movimientos extends Controllers{
     }
     public function delMovimiento(){
         if (!empty($_POST['mov_id'])) {
+            $m = $this->movimientos->selectRegistro($_POST['mov_id']);
+            if ($m['mov_t10_id']['t10_id']==1 && $m['mov_t12_id']['t12_id']==18) {
+                if (intval($m['mov_mov_id'])>0) {
+                    $del = $this->movimientos->deleteRegistro($m['mov_mov_id']);
+                }
+            }
             $mov = $this->movimientos->deleteRegistro($_POST['mov_id']);
             if ($mov) {
                 $arrResponse = array('status'=>true,'msg'=>'ok','data'=>$mov);
