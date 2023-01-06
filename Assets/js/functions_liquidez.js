@@ -118,6 +118,8 @@ function buscarHistorico(id) {
     $('#modal_filter').modal('hide')
     let f_start =$('#f_start').val();
     let f_end =  $('#f_end').val();
+    $("#liq_pdf").attr("href",base_url+"/Liquidez/getPdf/"+id+"&?f_start="+f_start+"&f_end="+f_end);
+    $("#liq_xlsx").attr("href",base_url+"/Liquidez/getXlsx/"+id+"&?f_start="+f_start+"&f_end="+f_end);
     mvb_mov.reload(base_url+"/Liquidez/getIng/"+id+"&?f_start="+f_start+"&f_end="+f_end);
     setTimeout(() => {
         mvb_mov.rezise();
