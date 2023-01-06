@@ -111,7 +111,9 @@ class Reportes extends Controllers{
                 $res['sbi_bie_id']= $bie;
                 $btnHis = '<button class="btn btn-warning btn-sm" onClick="openModalHis('.$bie['bie_id'].')" title="Registros"><i class="far fa-eye"></i></button>';
                 $res['sbi_options'] = '<div class="text-center">'.$btnHis.'</div>';
-                array_push($arrbi,$res);
+                if ($res['sbi_qs']>1) {
+                    array_push($arrbi,$res);
+                }
             }
             if ($out) {
                 return $arrbi;
