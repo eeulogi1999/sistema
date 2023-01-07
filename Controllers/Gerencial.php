@@ -108,9 +108,9 @@ class Gerencial extends Controllers{
         $res[4]['res_total'] = -$liq['liq_pagar'];
         $res[4]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resPagar()"><i class="far fa-eye"></i></button>';
 
-        $res[5]['res_descripcion']='INGRESOS ADICIONALES';
-        $res[5]['res_total'] = $this->cajas->searchRegistro(array('caj_tipo'=>4,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),'SUM(caj_monto) as total')['total'];
-        $res[5]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resAdd()"><i class="far fa-eye"></i></button>';
+        // $res[5]['res_descripcion']='INGRESOS ADICIONALES';
+        // $res[5]['res_total'] = $this->cajas->searchRegistro(array('caj_tipo'=>4,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),'SUM(caj_monto) as total')['total'];
+        // $res[5]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resAdd()"><i class="far fa-eye"></i></button>';
         if ($out) {
             return $res;
         } else {
