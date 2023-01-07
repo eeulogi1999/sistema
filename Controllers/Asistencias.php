@@ -23,7 +23,9 @@ class Asistencias extends Controllers{
         $rw = array();
         for ($i=0; $i < count($rwcol); $i++) { 
             $r['asi_col_id'] = $rwcol[$i];
-            $r['asi_ndias'] = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]['col_id'],'custom'=>'asi_ext IS NULL AND WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'),"COUNT(asi_id) as 'nd'")['nd'];
+            $r['asi_ndias'] = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]['col_id'],
+            'custom'=>'asi_ext IS NULL AND WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'),
+            "COUNT(asi_id) as 'nd'")['nd'];
             //$r['asi_ndias'] = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]['col_id'],'custom'=>'WEEKOFYEAR(asi_horaE) = WEEKOFYEAR(CURDATE())'),"COUNT(asi_id) as 'nd'")['nd'];
             $rwnh = $this->asistencias->selectRegistros(array('asi_col_id'=>$rwcol[$i]['col_id'],'asi_ext'=>1,'custom'=>'WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'));
             $nh = 0;
