@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded',function () {
         document.querySelector("[tree='"+r.tree+"']").style.backgroundColor = 'black';
         document.querySelector("[tree='"+r.tree+"']").parentElement.parentElement.classList.add('open'); 
         document.querySelector("[tree='"+r.tree+"']").parentElement.style.paddingLeft = '10px';
-        if (r.tree.split('.').length>2) {
+        if (r.tree.toString().split('.').length>2) {
             document.querySelector("[tree='"+r.tree+"']").parentElement.parentElement.parentElement.parentElement.classList.add('open');
             document.querySelector("[tree='"+r.tree+"']").parentElement.parentElement.parentElement.style.paddingLeft = '10px';
             document.querySelector("[tree='"+r.tree+"']").parentElement.parentElement.style.backgroundColor = '#212529';
@@ -298,6 +298,16 @@ function previewFiles(th,content) {
                 if (typeof o.columns[i].header === 'object') {
                     var ne = o.columns[i].data.split('.');
                     var ix = ne[ne.length-1];
+                    //let th = $(thead).children('tr').append('<th></th>');
+                    let style = '';
+                    if (typeof o.columns[i].header === 'object') {
+                        if (typeof o.columns[i].header.style != 'undefined') {
+                            if (typeof o.columns[i].header.style.miw != 'undefined') {
+                                style += o.columns[i].header.style.miw;
+                                //th.style.minWidth = o.columns[i].header.style.miw;
+                            }
+                        }
+                    }
                     if ( typeof o.columns[i].header.c!= 'undefined') {
                         switch (o.columns[i].header.c) {
                             case 'text':
@@ -337,6 +347,13 @@ function previewFiles(th,content) {
                 for (const i in o.data) {
                     const r = o.data[i];
                     var tr = tbody.insertRow(-1);
+                    if (typeof o.xfun != 'undefined') {
+                        if (typeof o.xfun.minzero != 'undefined') {
+                            if (r[o.xfun.minzero.col]<0.5) {
+                                continue;
+                            }
+                        }
+                    }
                     if (o.tree) {
                         table[0].classList.add('tree');
                         let wy = o.thid.split('_');
@@ -389,6 +406,9 @@ function previewFiles(th,content) {
                             
                         }
                         switch (o.columns[j].tipo) {
+                            case 'btn':
+                                cell.innerHTML = d +' '+btn;
+                                break;
                             case 'list':
                                 cell.innerHTML = data[o.columns[j].data][d];
                                 break;
@@ -679,4 +699,7 @@ function getTable(prefijo) {
     return table;
 }
 
+function btn(o={bg:'success',fn:'fn',id:1,title:'Registrar',icon:'fa-user-lock'}){
+    return `<button class="btn btn-${o.bg} btn-sm" onClick="${o.fn}(${o.id})" title="${o.title}"><i class="fas ${o.icon}"></i></button>`; 
+}
 

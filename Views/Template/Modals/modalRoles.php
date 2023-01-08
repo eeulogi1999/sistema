@@ -40,3 +40,22 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="modal_tpe" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title h4" >Asignar Permisos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered table-sm" id="tpe_table" width="100%"></table>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

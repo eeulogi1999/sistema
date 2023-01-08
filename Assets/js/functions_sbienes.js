@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "url":url_sbi ,
             "numerate": true,
             "thid": 'sbi_id',
+            "xfun": data.xfun,
             "columns":[
                 {"data":"sbi_bie_id.bie_codigo",header:{t:"CODIGO",c:'text'},tipo:'string',footer:"TOTALES"},
                 {"data":"sbi_bie_id.bie_nombre",header:{t:"MATERIAL",c:'text'},tipo:'string'},

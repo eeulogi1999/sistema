@@ -9,8 +9,7 @@ class Bienes extends Controllers{
         $this->newModel('establecimientos'); 
         $this->newModel('bbienes');
         $this->newModel('valores');
-        $this->newModel('mdetalles');
-        getPermisos(4);    
+        $this->newModel('mdetalles'); 
     }
     public function Bienes(){
         if(empty($_SESSION['perMod']['gtp_r'])){
@@ -32,7 +31,7 @@ class Bienes extends Controllers{
         $data['page_tag'] = "Saldos";
         $data['page_title'] = "Saldos ";
         $data['page_name'] = "Saldos";
-        $data['page_data'] = array('periodo'=>$_SESSION['periodo']);
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'xfun'=>array('minzero'=>array('col'=>'sbi_qs')));
         $data['page_functions_js'] = array("functions_sbienes.js","functions_reportes.js","functions_movimientos.js");
         $this->views->getView($this,"sbienes",$data);
     }

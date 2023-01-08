@@ -5,7 +5,6 @@ class Planillas extends Controllers{
         parent::__construct('asistencias');   
         $this->newModel('colaboradores'); 
         $this->newModel('ppagos'); 
-        getPermisos(4);
     }
     public function Planillas(){
         if(empty($_SESSION['perMod']['gtp_r'])){
@@ -24,7 +23,9 @@ class Planillas extends Controllers{
         for ($i=0; $i < count($rwcol); $i++) { 
             $r['pla_col_id'] = $rwcol[$i];
             $r['pla_ndias'] = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]['col_id'],
-            'custom'=>'WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'),"COUNT(asi_id) as 'nd'")['nd'];
+            'custom'=>'asi_ext IS NULL AND WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'),
+            "COUNT(asi_id) as 'nd'")['nd'];
+
             $rwnh = $this->asistencias->selectRegistros(array('asi_col_id'=>$rwcol[$i]['col_id'],'asi_ext'=>1,
             'custom'=>'WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'));
             $nh = 0;
@@ -47,7 +48,7 @@ class Planillas extends Controllers{
                 $pla_adelantos+=abs($d['ppa_caj_id']['caj_monto']);
             }
             $r['pla_adelantos'] = $pla_adelantos;
-            $r['pla_tpagar'] = $r['pla_sueldo']-$r['pla_adelantos'];
+            $r['pla_tpagar'] = $r['pla_sueldo']+$r['pla_mhxtras']-$r['pla_adelantos'];
             switch (true) {
                 case $r['pla_tpagar']<0:
                     $text = '<span class="badge badge-danger">POR COBRAR</span>';

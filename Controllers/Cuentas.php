@@ -4,7 +4,6 @@ class Cuentas extends Controllers{
     public function __construct(){
         parent::__construct('cuentas');   
         $this->newModel('cajas');
-        getPermisos(4); 
     }
     public function Cuentas(){
         if(empty($_SESSION['perMod']['gtp_r'])){
@@ -17,17 +16,15 @@ class Cuentas extends Controllers{
         $data['page_functions_js'] = array("functions_cuentas.js");
         $this->views->getView($this,"cuentas",$data);
     }
-   
-
     public function getCuentas($p=null,$res=false){
         if (!empty($p)) {
             if ($p=='1') {
-                $arrData = $this->cuentas->selectRegistros(array('cue_id'=>22));
+                $arrData = $this->cuentas->selectRegistros(array('cue_status'=>1,'cue_id'=>22));
             } else {
-                $arrData = $this->cuentas->selectRegistros(array('custom'=>'cue_id != 22'));
+                $arrData = $this->cuentas->selectRegistros(array('cue_status'=>1,'custom'=>'cue_id != 22'));
             }
         } else {
-            $arrData = $this->cuentas->selectRegistros();
+            $arrData = $this->cuentas->selectRegistros(array('cue_status'=>1));
         }
         $pre = 'cue'; $tabla = 'Cuentas';
         for ($i=0; $i < count($arrData); $i++) { 
@@ -57,7 +54,6 @@ class Cuentas extends Controllers{
         }
         die();
     }
-
     public function cierre(){
         $sal = $this->getCuentas(null,true);
         $r = array('status' => false,'msg' => "No procesado");
@@ -67,7 +63,7 @@ class Cuentas extends Controllers{
             $caj['caj_numero'] = $i;
             $caj['caj_cue_id'] = $sal[$i]['cue_id'];
             $caj['caj_monto'] = $sal[$i]['cue_saldo'];
-            $caj['caj_fecha'] = '2022-12-01';
+            $caj['caj_fecha'] = '2023-01-01';
             $d = $this->cajas->insertRegistro($caj);
             $r = array('status' => true,'msg' => "Procesado Correctamente");
         }

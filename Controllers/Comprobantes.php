@@ -22,8 +22,7 @@ class Comprobantes extends Controllers{
         $this->newModel('t10comprobantes');
         $this->newModel('t2identidades');
         $this->customModel('TcambiosModel');    //modelo perzonalizado!
-        $this->formatter = new NumeroALetras();
-        getPermisos(1);  
+        $this->formatter = new NumeroALetras(); 
     }
 
     public function Comprobantes(){

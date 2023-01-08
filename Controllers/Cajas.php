@@ -4,7 +4,6 @@ class Cajas extends Controllers{
     public function __construct(){
         parent::__construct('cajas');   
         //$this->newModel('cuentas');
-        getPermisos(2); 
     }
     public function Ingresos(){
         if(empty($_SESSION['perMod']['gtp_r'])){
@@ -58,6 +57,17 @@ class Cajas extends Controllers{
         $data['page_data'] = array('caj'=>array('caj_tipo'=>3,'caj_numero'=>$num,'caj_gus_id'=>$_SESSION['gus']['gus_id']),
         'periodo'=>$_SESSION['periodo']); 
         $data['page_functions_js'] = array("functions_cajas.js");
+        $this->views->getView($this,"cajas",$data);
+    }
+    public function Subgastos(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $data['page_tag'] = "Gastos";
+        $data['page_title'] = "Gastos";
+        $data['page_name'] = "Gastos";
+        $data['page_data'] = array(); 
+        $data['page_functions_js'] = array("functions_subgastos.js");
         $this->views->getView($this,"cajas",$data);
     }
     public function Cinternos(){
@@ -138,7 +148,7 @@ class Cajas extends Controllers{
         die();
     }
     public function getI($cue_id){
-        $arrData = $this->cajas->selectRegistros(array('caj_tipo'=>1,'caj_cue_id'=>$cue_id,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+        $arrData = $this->cajas->selectRegistros(array('caj_tipo'=>1,'caj_cue_id'=>$cue_id,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' ORDER BY caj_fecha ASC'));
         for ($i=0; $i < count($arrData); $i++) { 
             $arrData[$i]['caj_nro'] = $i+1;
             $arrData[$i]['caj_tipo'] = CAJ[$arrData[$i]['caj_tipo']];
@@ -156,7 +166,7 @@ class Cajas extends Controllers{
         die();
     }
     public function getE($cue_id){
-        $arrData = $this->cajas->selectRegistros(array('caj_tipo'=>2,'caj_cue_id'=>$cue_id,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+        $arrData = $this->cajas->selectRegistros(array('caj_tipo'=>2,'caj_cue_id'=>$cue_id,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' ORDER BY caj_fecha ASC'));
         for ($i=0; $i < count($arrData); $i++) { 
             $arrData[$i]['caj_nro'] = $i+1;
             $arrData[$i]['caj_tipo'] = CAJ[$arrData[$i]['caj_tipo']];
@@ -174,7 +184,7 @@ class Cajas extends Controllers{
         die();
     }
     public function getG($cue_id){
-        $arrData = $this->cajas->selectRegistros(array('caj_tipo'=>3,'caj_cue_id'=>$cue_id,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+        $arrData = $this->cajas->selectRegistros(array('caj_tipo'=>3,'caj_cue_id'=>$cue_id,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' ORDER BY caj_fecha ASC'));
         for ($i=0; $i < count($arrData); $i++) { 
             $arrData[$i]['caj_nro'] = $i+1;
             $arrData[$i]['caj_tipo'] = CAJ[$arrData[$i]['caj_tipo']];
@@ -191,8 +201,10 @@ class Cajas extends Controllers{
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function cierre(){
-        //dep($this->getCuentas(null,true));
+    public function getGastos(){
+        $arrData = $this->cajas->selectCustoms('caj_tga_id,ABS(SUM(caj_monto)) as caj_monto',array('caj_tipo'=>3,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' GROUP BY caj_tga_id'));
+        echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+        die();
     }
     
 

@@ -1,162 +1,128 @@
-<!-- Modal -->
-<div class="modal fade" id="modalFormUsuario" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg" >
+<div class="modal fade" id="modal_gus" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header headerRegister">
-        <h5 class="modal-title" id="titleModal">Nuevo Usuario</h5>
+        <h5 class="modal-title"><span id="titleModal_gus">Nuevo </span></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-            <form id="formUsuario" name="formUsuario" class="form-horizontal">
-              <input type="hidden" id="idUsuario" name="idUsuario" value="">
-              <p class="text-primary">Todos los campos son obligatorios.</p>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="txtIdentificacion">Identificación</label>
-                  <input type="text" class="form-control" id="txtIdentificacion" name="txtIdentificacion" required="">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="txtNombre">Nombres</label>
-                  <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre" required="">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="txtApellido">Apellidos</label>
-                  <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido" required="">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="txtTelefono">Teléfono</label>
-                  <input type="text" class="form-control valid validNumber" id="txtTelefono" name="txtTelefono" required="" onkeypress="return controlTag(event);">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="txtEmail">Email</label>
-                  <input type="email" class="form-control valid validEmail" id="txtEmail" name="txtEmail" required="">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="listRolid">Tipo usuario</label>
-                    <select class="form-control" data-live-search="true" id="listRolid" name="listRolid" required >
-                    </select>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="listStatus">Status</label>
-                    <select class="form-control selectpicker" id="listStatus" name="listStatus" required >
-                        <option value="1">Activo</option>
-                        <option value="2">Inactivo</option>
-                    </select>
-                </div>
-             </div>
-             <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="txtPassword">Password</label>
-                  <input type="password" class="form-control" id="txtPassword" name="txtPassword" >
-                </div>
-             </div>
-              <div class="tile-footer">
-                <button id="btnActionForm" class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i><span>Guardar</span></button>&nbsp;&nbsp;&nbsp;
-                <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
-              </div>
-            </form>
+        <p class="text-primary">Todos los campos son obligatorios.</p>
+        <form id="form_gus" name="form_gus" class="form-horizontal">
+          <input type="hidden" id="gus_id" name="gus_id" value="">
+          <div class="row mb-3">
+            <div class="form-group col mb-0">
+              <label for="gus_gpe_id">PERSONA<span class="required">*</span>
+                <a href="#" id="new_gpe">
+                  [<i class="fas fa-plus-circle">Nuevo</i>]
+                </a>
+                <a href="#" id="tab_gpe" class="text-success">
+                  [<i class="fas fa-plus-circle">Ver</i>]
+                </a>
+              </label>
+              <select class="form-control" data-live-search="true" id="gus_gpe_id" name="gus_gpe_id" required>
+              </select>
+            </div>
+            <div class="form-group col mb-0">
+              <label for="gus_user">USUARIO<span class="required">*</span></label>
+              <input type="text" class="form-control valid" id="gus_user" name="gus_user">
+            </div>
+            <div class="form-group col mb-0">
+              <label for="gus_password">CONTRASEÑA<span class="required">*</span></label>
+              <input type="password" class="form-control valid" id="gus_password" name="gus_password">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="form-group col mb-0">
+              <label for="gus_gar_id">AREA<span class="required">*</span>
+                <a href="#" id="new_gar">
+                  [<i class="fas fa-plus-circle">Nuevo</i>]
+                </a>
+                <a href="#" id="tab_gar" class="text-success">
+                  [<i class="fas fa-plus-circle">Ver</i>]
+                </a>
+              </label>
+              <select class="form-control" data-live-search="true" id="gus_gar_id" name="gus_gar_id" required>
+              </select>
+            </div>
+            <div class="form-group col mb-0">
+              <label for="gus_gro_id">ROL<span class="required">*</span>
+                <a href="#" id="new_gro">
+                  [<i class="fas fa-plus-circle">Nuevo</i>]
+                </a>
+                <a href="#" id="tab_gro" class="text-success">
+                  [<i class="fas fa-plus-circle">Ver</i>]
+                </a>
+              </label>
+              <select class="form-control" data-live-search="true" id="gus_gro_id" name="gus_gro_id" required>
+              </select>
+            </div>
+            <div class="form-group col mb-0">
+              <label for="gus_gcl_id">GCL<span class="required">*</span>
+                <a href="#" id="new_gcl">
+                  [<i class="fas fa-plus-circle">Nuevo</i>]
+                </a>
+                <a href="#" id="tab_gcl" class="text-success">
+                  [<i class="fas fa-plus-circle">Ver</i>]
+                </a>
+              </label>
+              <select class="form-control" data-live-search="true" id="gus_gcl_id" name="gus_gcl_id" required>
+              </select>
+            </div>
+            <div class="form-group col mb-1">
+              <label for="gus_status">Status<span class="required">*</span></label>
+              <select class="form-control" id="gus_status" name="gus_status" required>
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="form-group col ">
+              <label for="gus_gde_id">Departamento<span class="required">*</span></label>
+              <select class="form-control" data-live-search="true" id="gus_gde_id" name="gus_gde_id" required>
+              </select>
+            </div>
+            <div class="form-group col">
+              <label for="gus_gpr_id">Provincia<span class="required">*</span></label>
+              <select class="form-control" data-live-search="true" id="gus_gpr_id" name="gus_gpr_id" required>
+              </select>
+            </div>
+            <div class="form-group col">
+              <label for="gus_gdi_id">Distrito<span class="required">*</span></label>
+              <select class="form-control" data-live-search="true" id="gus_gdi_id" name="gus_gdi_id" required>
+              </select>
+            </div>
+          </div>
+        </form>
+        <div class="tile-footer">
+          <button id="set_gus" class="btn btn-primary" onclick="event.preventDefault();set('gus')"><i
+              class="fa fa-fw fa-lg fa-check-circle"></i><span>Guardar</span></button>&nbsp;&nbsp;&nbsp;
+          <button class="btn btn-danger" type="button" data-dismiss="modal"><i
+              class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalViewUser" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" >
-    <div class="modal-content">
-      <div class="modal-header header-primary">
-        <h5 class="modal-title" id="titleModal">Datos del usuario</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <td>Identificación:</td>
-              <td id="celIdentificacion">654654654</td>
-            </tr>
-            <tr>
-              <td>Nombres:</td>
-              <td id="celNombre">Jacob</td>
-            </tr>
-            <tr>
-              <td>Apellidos:</td>
-              <td id="celApellido">Jacob</td>
-            </tr>
-            <tr>
-              <td>Teléfono:</td>
-              <td id="celTelefono">Larry</td>
-            </tr>
-            <tr>
-              <td>Email (Usuario):</td>
-              <td id="celEmail">Larry</td>
-            </tr>
-            <tr>
-              <td>Tipo Usuario:</td>
-              <td id="celTipoUsuario">Larry</td>
-            </tr>
-            <tr>
-              <td>Estado:</td>
-              <td id="celEstado">Larry</td>
-            </tr>
-            <tr>
-              <td>Fecha registro:</td>
-              <td id="celFechaRegistro">Larry</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
 </div>
-<!-- Modal -->
 
-<div class="modal fade" id="modalAsignacionEmpresa" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
+
+<div class="modal fade" id="modal_gac" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title h4" >Asignar Empresa </h5>
+            <h5 class="modal-title h4" >Asignar Permisos</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
         </div>
         <div class="modal-body">
-            <div class="col-md-12">
-              <div class="tile">
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Empresas</th>
-                            <th>Asignar</th>
-                          </tr>
-                        </thead>
-                        <tbody id="bodyEmp_User">
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="text-center">
-                        <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="app-menu__icon fas fa-sign-out-alt" aria-hidden="true"></i> Salir</button>
-                    </div>
-              </div>
-            </div>
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered table-sm" id="gac_table" width="100%"></table>
+          </div>
         </div>
-
     </div>
   </div>
 </div>

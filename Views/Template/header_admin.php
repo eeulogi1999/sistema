@@ -33,6 +33,7 @@
       <!-- Navbar Right Menu-->
       <ul class="app-nav">
         <!-- User Menu-->
+        
         <?php if(!empty($_SESSION['per'][3]['r'])){ ?>
         <li>
           <div class="app-nav__item p-2">

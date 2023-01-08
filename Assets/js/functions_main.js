@@ -145,6 +145,7 @@ async function edit(prefijo,id,res=false) {
     document.querySelector('#titleModal_'+prefijo).innerHTML ="Actualizar "+capitalize(getTable(prefijo));
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#set_'+prefijo).classList.replace("btn-primary", "btn-info");
+    document.querySelector("#form_"+prefijo).reset();
     $('#set_'+prefijo+' span').html("Actualizar");
     var response = await fetch(base_url + '/Main/get/'+prefijo+','+id)
     .then(response => response.json())

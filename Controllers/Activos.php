@@ -3,8 +3,7 @@
 class Activos extends Controllers{
     public function __construct(){
         parent::__construct(strtolower(get_class($this)));
-        $this->newModel('aatributos'); 
-        getPermisos(1);    
+        $this->newModel('aatributos');   
     }
     public function Activos(){
         if(empty($_SESSION['perMod']['gtp_r'])){
