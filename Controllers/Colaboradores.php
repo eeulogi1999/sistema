@@ -2,8 +2,7 @@
 @ob_start();
 class Colaboradores extends Controllers{
     public function __construct(){
-        parent::__construct(strtolower(get_class($this)));
-        getPermisos(1);    
+        parent::__construct(strtolower(get_class($this))); 
     }
     public function Colaboradores(){
         if(empty($_SESSION['perMod']['gtp_r'])){

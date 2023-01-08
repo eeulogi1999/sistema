@@ -9,7 +9,6 @@ class Adscripciones extends Controllers{
         parent::__construct(strtolower(get_class($this))); 
         $this->newModel('ubicaciones'); 
         $this->newModel('adetalles');
-        getPermisos(1);
         $this->formatter = new NumeroALetras();
     }
     public function Adscripciones(){

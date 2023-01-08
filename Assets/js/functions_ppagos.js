@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded',function () {
     }
     $('#ppa_col_id').loadOptions('colaboradores',['col_gpe_id.gpe_nombre']);
     $('#caj_cue_id').loadOptions('cuentas',['cue_nombre']);
-    $('#caj_t1m_id').loadOptions('t1mediopagos',['t1m_descripcion']);
+    $('#caj_t1m_id').loadOptions('t1mediopagos',['t1m_descripcion'],{'t1m_status':1});
 });
 
 window.addEventListener('load', async () => {

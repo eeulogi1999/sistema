@@ -13,9 +13,7 @@ class Liquidez extends Controllers{
         if (empty($this->Reportes)) {
             $this->Reportes = new Reportes();
         }
-        getPermisos(4);
     }
-
     public function Liquidez(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
@@ -107,7 +105,7 @@ class Liquidez extends Controllers{
             $liqData[$i][$pre.'_mtv'] = 0;
             if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
                 $g_ds = 0;
-                $rpt = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_total) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+                $rpt = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
                 foreach ($rpt as $p => $d) {
                     $g_ds += $d['mov_sum']*0.177-$d['mov_sum']*0.025;
                 }  
@@ -197,11 +195,23 @@ class Liquidez extends Controllers{
         }
         die();
     }
-    function getIng($age_id,$res=false){
-        $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>2,'mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
-        $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
-        $nd = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>6,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
-        $sl = $this->liquidez->searchRegistro(array('liq_age_id'=>$age_id,'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+    public function getIng($age_id,$res=false){
+        $str_caj = '';
+        $str_mov = '';
+        $str_liq = '';
+        if (!empty($_GET['f_start'])&&!empty($_GET['f_end'])) {
+            $str_mov = 'mov_fechaE BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+            $str_caj = 'caj_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+            $str_liq = 'liq_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+        } else {
+            $str_mov = 'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'];
+            $str_caj = 'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'];
+            $str_liq = 'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo'];
+        }
+        $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>2,'mov_age_id'=>$age_id,'custom'=>$str_mov));
+        $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>1,'custom'=>$str_caj));
+        $nd = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>6,'custom'=>$str_caj));
+        $sl = $this->liquidez->searchRegistro(array('liq_age_id'=>$age_id,'custom'=>$str_liq));
         $ing = array();
         if (!empty($sl)) {
             if ($sl['liq_monto']<=0) {
@@ -218,7 +228,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['ing_fecha'] = $arrMov[$i]['mov_fechaE'];
             $r['ing_tipo'] = $arrMov[$i]['mov_t12_id']['t12_descripcion'];
-            $r['ing_cuenta'] = $arrMov[$i]['mov_observaciones']; 
+            $r['ing_cuenta'] = (!empty($arrMov[$i]['mov_cue_id']))?$arrMov[$i]['mov_cue_id']['cue_nombre']:''; 
             $r['ing_descripcion'] = '<a href="#" onclick="getViewMov('.$arrMov[$i]['mov_id'].')">'.$arrMov[$i]['mov_serie'].'-'.str_pad($arrMov[$i]['mov_numero'],8,0,STR_PAD_LEFT).'</a>' ; 
             $r['ing_monto'] = $arrMov[$i]['mov_total'];
             array_push($ing,$r);
@@ -251,11 +261,23 @@ class Liquidez extends Controllers{
         }
         die();
     }
-    function getEgr($age_id,$res=false){
-        $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>1,'mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
-        $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>2,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
-        $nc = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>7,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
-        $sl = $this->liquidez->searchRegistro(array('liq_age_id'=>$age_id,'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+    public function getEgr($age_id,$res=false){
+        $str_caj = '';
+        $str_mov = '';
+        $str_liq = '';
+        if (!empty($_GET['f_start'])&&!empty($_GET['f_end'])) {
+            $str_mov = 'mov_fechaE BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+            $str_caj = 'caj_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+            $str_liq = 'liq_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
+        } else {
+            $str_mov = 'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'];
+            $str_caj = 'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'];
+            $str_liq = 'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo'];
+        }
+        $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>1,'mov_age_id'=>$age_id,'custom'=>$str_mov));
+        $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>2,'custom'=>$str_caj));
+        $nc = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>7,'custom'=>$str_caj));
+        $sl = $this->liquidez->searchRegistro(array('liq_age_id'=>$age_id,'custom'=>$str_liq));
         $egr = array();
         if (!empty($sl)) {
             if ($sl['liq_monto']>0) {
@@ -272,7 +294,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['egr_fecha'] = $arrMov[$i]['mov_fechaE'];
             $r['egr_tipo'] = $arrMov[$i]['mov_t12_id']['t12_descripcion'];
-            $r['egr_cuenta'] = $arrMov[$i]['mov_observaciones']; 
+            $r['egr_cuenta'] = (!empty($arrMov[$i]['mov_cue_id']))?$arrMov[$i]['mov_cue_id']['cue_nombre']:''; 
             $r['egr_descripcion'] = '<a href="#" onclick="getViewMov('.$arrMov[$i]['mov_id'].')">'.$arrMov[$i]['mov_serie'].'-'.str_pad($arrMov[$i]['mov_numero'],8,0,STR_PAD_LEFT).'</a>' ; 
             $r['egr_monto'] =  floatval(json_decode($arrMov[$i]['mov_igv_id'],true)['mov_neto']);
             array_push($egr,$r);
@@ -290,7 +312,7 @@ class Liquidez extends Controllers{
             $r = array();
             $r['egr_fecha'] = $nc[$i]['caj_fecha'];
             $r['egr_tipo'] = CAJ[$nc[$i]['caj_tipo']];
-            $r['egr_cuenta'] = $nc[$i]['caj_cue_id']['cue_nombre'];
+            $r['egr_cuenta'] = (!empty($nc[$i]['caj_cue_id']))?$nc[$i]['caj_cue_id']['cue_nombre']:'';
             $r['egr_descripcion'] = '<a href="#" onclick="viewCaj('.$nc[$i]['caj_id'].','.$nc[$i]['caj_tipo'].')">'.$nc[$i]['caj_observaciones'].'</a>' ; 
             $r['egr_monto'] = abs($nc[$i]['caj_monto']);
             array_push($egr,$r);
@@ -312,7 +334,7 @@ class Liquidez extends Controllers{
             $liq = array();
             $liq['liq_age_id'] = $sal[$i]['liq_age_id']['age_id'];
             $liq['liq_monto'] = $sal[$i]['liq_actual'];
-            $liq['liq_fecha'] = '2022-12-01';
+            $liq['liq_fecha'] = '2023-01-01';
             $d = $this->liquidez->insertRegistro($liq);
             $r = array('status' => true,'msg' => "Procesado Correctamente");
         }

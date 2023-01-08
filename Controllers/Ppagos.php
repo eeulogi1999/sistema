@@ -5,7 +5,6 @@ class Ppagos extends Controllers{
         parent::__construct('ppagos');   
         $this->newModel('colaboradores'); 
         $this->newModel('personas'); 
-        getPermisos(4);
     }
     public function Ppagos(){
         if(empty($_SESSION['perMod']['gtp_r'])){

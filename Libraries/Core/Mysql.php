@@ -147,7 +147,7 @@
 				if (in_array($i, array_column($request,'Field'))) {
 					$k = array_search($i, array_column($request,'Field'));
 					$tdata = $this->setTypeDate(explode('(',$request[$k]['Type'])[0],$value);
-					if (($request[$k]['Key']=='PRI') || ($request[$k]['Key']=='MUL')) {
+					if (($request[$k]['Key']=='PRI') || ($request[$k]['Key']=='MUL')) {  //cuando sin indices
 						if ($tdata['value']>0) {
 							if ($tdata['status']) {
 								$data[$i] = $tdata['value'];
@@ -170,8 +170,8 @@
 								$status = false;
 							}
 						}
-					}else{
-						if (!is_null($tdata['value'])) {
+					}else{    
+						if (!is_null($tdata['value'])) {            //cuando tiene data
 							if ($tdata['status']) {
 								$data[$i] = $tdata['value'];
 								$arrRequiere[$i] = true;    
@@ -179,9 +179,9 @@
 								$data[$i] = 'Requiere type '.$request[$k]['Type'];
 								$status = false;
 							}
-						}else{                                           //falta default
-							if ($request[$k]['Null']=='NO' ) {
-								if (!empty($request[$k]['Default'])) {
+						}else{   //cuando no hay data
+							if ($request[$k]['Null']=='NO' ) {        
+								if (!empty($request[$k]['Default'])) { 
 									unset($data[$i]);
 								}else {
 									$data[$i] = "Data Vacia";
@@ -206,6 +206,7 @@
 			}
 			if ($insert) {
 				foreach ($arrRequiere as $n => $value) {
+					$status = true;
 					if (!$arrRequiere[$n]) {
 						if (!isset($data[$n])) {
 							$msg[$n] = "Campo no Definidos y Requeridos";

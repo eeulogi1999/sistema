@@ -4,8 +4,7 @@ class Cierremeses extends Controllers{
     public function __construct(){
         parent::__construct('cierremeses');   
         $this->customModel('ReportesModel');
-        $this->newModel('bienes');
-        getPermisos(4); 
+        $this->newModel('bienes'); 
     }
     public function Cierremeses(){
         if(empty($_SESSION['perMod']['gtp_r'])){

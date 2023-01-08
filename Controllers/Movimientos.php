@@ -8,7 +8,6 @@ use Luecano\NumeroALetras\NumeroALetras;
 class Movimientos extends Controllers{
     public function __construct(){
         parent::__construct(strtolower(get_class($this)));   
-        getPermisos(1);
         $this->newModel('mdetalles');          
         $this->newModel('agentes');
         $this->newModel('empresas');
@@ -57,7 +56,8 @@ class Movimientos extends Controllers{
         }
         $data['estData'] = $this->establecimientos->selectRegistros();  
         $data['page_data']['periodo'] = $_SESSION['periodo'];
-        $data['page_data']['mov_tipo'] = $_SESSION['mov']['mov_tipo'];
+        $data['page_data']['mov_tipo'] = $_SESSION['mov']['mov_tipo']; //'xfun'=>
+        $data['page_data']['xfun'] = array();
         $data['page_functions_js'] = array("functions_movimientos.js","functions_sbienes.js","functions_agentes.js","functions_empresas.js","functions_personas.js");
         $this->views->getView($this,"movimientos",$data);
     }
@@ -101,7 +101,7 @@ class Movimientos extends Controllers{
     }
     public function getNumMovimiento(){
         $_POST['mov_alm_id'] = $_SESSION['alm']['alm_id'];
-        $_POST['custom'] = 'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'];
+        $_POST['custom'] = 'DATE_FORMAT(mov_fechaE, "%Y") = 2023';  //$_SESSION['periodo']
         if ($_POST['mov_t10_id']==50 || $_POST['mov_t10_id']==2) {
             $_POST['mov_t10_id'] = 50;
             $mun_n = $this->movimientos->searchRegistro($_POST,"MAX(mov_numero) as 'next'")['next'];
@@ -222,7 +222,6 @@ class Movimientos extends Controllers{
         }
         die();
     }
-
     public function setMovimientoTI(){
         if ($_POST) {
             $base = $_POST;
@@ -278,6 +277,12 @@ class Movimientos extends Controllers{
     }
     public function delMovimiento(){
         if (!empty($_POST['mov_id'])) {
+            $m = $this->movimientos->selectRegistro($_POST['mov_id']);
+            if ($m['mov_t10_id']['t10_id']==1 && $m['mov_t12_id']['t12_id']==18) {
+                if (intval($m['mov_mov_id'])>0) {
+                    $del = $this->movimientos->deleteRegistro($m['mov_mov_id']);
+                }
+            }
             $mov = $this->movimientos->deleteRegistro($_POST['mov_id']);
             if ($mov) {
                 $arrResponse = array('status'=>true,'msg'=>'ok','data'=>$mov);
@@ -304,7 +309,7 @@ class Movimientos extends Controllers{
                 $mov['mov_age_id']['age_gt2_id'] =      $this->t2identidades->selectRegistro(4);
             } else {
                 $mov['mov_age_id']['age_ide'] =         $age['age_gpe_id']['gpe_identificacion'];
-                $mov['mov_age_id']['age_nombre'] =      $age['age_gpe_id']['gpe_nombre'];
+                $mov['mov_age_id']['age_nombre'] =      $age['age_gpe_id']['gpe_nombre'].' - '.$age['age_gpe_id']['gpe_apellidos'];
                 $mov['mov_age_id']['age_apellidos'] =   $age['age_gpe_id']['gpe_apellidos'];
                 $mov['mov_age_id']['age_direccion'] =   $age['age_gpe_id']['gpe_direccion'];
                 $mov['mov_age_id']['age_email'] =       $age['age_gpe_id']['gpe_email'];

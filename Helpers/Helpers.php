@@ -70,19 +70,20 @@
         return $send;
     }
 
-    function getPermisos(int $gus_gmo_id){
+    function getPermisos($gus_gmo_id){
         require_once ("Models/DatabaseModel.php");
         $x = new Mysql(DB_NAME);
         $tpermisos = new DatabaseModel($x,DB_NAME,'tpermisos');
-        $arrPer = $tpermisos->selectRegistros(array('gtp_gro_id'=>$_SESSION['gus']['gus_gro_id']['gro_id']));
-        $perMod = '';
-        if(count($arrPer) > 0 ){
-            $perMod = isset($arrPer[$gus_gmo_id]) ? $arrPer[$gus_gmo_id] : "";
-        }
-        $_SESSION['per'] = $arrPer;
-        $_SESSION['perMod'] = $perMod;
+        $arrData = $tpermisos->searchRegistro(array('gtp_gro_id'=>$_SESSION['gus']['gus_gro_id']['gro_id'],'gtp_gmo_id'=>$gus_gmo_id));
+        return  $arrData;
     }
-
+    function getModulos($parms){
+        require_once ("Models/DatabaseModel.php");
+        $x = new Mysql(DB_NAME);
+        $modulos = new DatabaseModel($x,DB_NAME,'modulos');
+        $arrData = $modulos->selectRegistros(array('custom'=>$parms));
+        return $arrData;
+    }
 
     function uploadImage(array $data, string $name){
         $url_temp = $data['tmp_name'];

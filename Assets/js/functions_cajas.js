@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded',function () {
         });
     }
     $('#caj_gt4_id').loadOptions('t4monedas',['gt4_descripcion']);
-    $('#caj_cue_id').loadOptions('cuentas',['cue_nombre']);
+    $('#caj_cue_id').loadOptions('cuentas',['cue_nombre'],{'cue_status':1});
     $('#caj_t1m_id').loadOptions('t1mediopagos',['t1m_descripcion'],{'t1m_status':1});
 
     if (document.querySelector("#caj_age_id")) {
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded',function () {
         $('#caj_tga_id').loadOptions('tgastos',['tga_nombre']);
     }
     if (data.caj.caj_tipo==5) {
-        $('#caj_d_cue_id').loadOptions('cuentas',['cue_nombre']);
+        $('#caj_d_cue_id').loadOptions('cuentas',['cue_nombre'],{'cue_status':1});
     }
     $('#caj_pdf').click(function(e) {
         var formData = new FormData()

@@ -1,9 +1,8 @@
-<?php 
-	//const BASE_URL = "https://sistema.companycacel.com"; 
-	//const BASE_URL = "https://logistica.regomsa.com.pe"; 
-	const PHPID = "erpplatanal";  // erpregomsa, erpcacel ,erpegest,erpplatanal
-	const CID = "platanal";  //regomsa,cacel, egest,platanal
-	const BASE_URL = "http://localhost/sistema"; 
+<?php
+	define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].((isset($_SERVER['HTTPS']))?'':'/'.basename(dirname(__FILE__))));
+	//define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']);
+	const PHPID = "erpcacel";  // erpregomsa, erpcacel ,erpegest
+	const CID = "cacel";  //regomsa,cacel, egest
 
 	//Zona horaria
 	date_default_timezone_set('America/Lima');
@@ -11,20 +10,12 @@
 	//Datos de conexión a Base de Datos
 	const DB_HOST = "localhost";
 
-	const DB_SUBNAME = "company5_bd_"; //20605347232
+	const DB_SUBNAME = "company5_bd_"; 
 	const DB_NAME = "company5_bd_cacel";
 
-	//const DB_SUBNAME = "overpvqw_lg_"; //20605347232
-	//const DB_NAME = "overpvqw_lg_regomsa";
+	const DB_USER = "company5_root";
+	const DB_PASSWORD = "1root-SOM";
 
-	//const DB_USER = "company5_root";
-	//const DB_PASSWORD = "1root-SOM";
-
-	//const DB_USER = "overpvqw_root";
-	//const DB_PASSWORD = "Regomsa$212020";
-
-	const DB_USER = "root";
-	const DB_PASSWORD = "";
 	const DB_CHARSET = "utf8";
 
 	//Deliminadores decimal y millar Ej. 24,1989.00

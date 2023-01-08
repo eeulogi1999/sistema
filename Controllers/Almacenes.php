@@ -3,7 +3,6 @@
 class Almacenes extends Controllers{
     public function __construct(){
         parent::__construct('almacenes');   
-        getPermisos(4);
     }
     public function Almacenes(){
         if(empty($_SESSION['perMod']['gtp_r'])){

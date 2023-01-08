@@ -57,10 +57,10 @@ document.addEventListener('DOMContentLoaded',function () {
             "numerate": true,
             "columns":[
                 {"data":"mov_cue_id.cue_nombre",header:"SOCIOS",tipo:'string',footer:"TOTALES"},
-                {"data":"mov_sum",header:{t:"TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_sum",header:{t:"SUB TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"mov_detraccion",header:{t:"DETRACCION",align:'right'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"mov_impuesto",header:{t:"IMPUESTO",align:'right'},tipo:'money',footer:{ c:"sum" }},
-                {"data":"mov_det_liq",header:{t:"DETRACCION LIQUIDA",align:'right'},tipo:'money',footer:{ c:"sum" }}
+                {"data":"mov_det_liq",header:{t:"RETORNO",align:'right'},tipo:'money',footer:{ c:"sum" }}
             ]
         });
     }

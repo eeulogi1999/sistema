@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "url":url_g ,
             "numerate": true,
             "columns":[
-                {"data":"caj_fecha",header:{t:"FECHA",c:'text'},tipo:'string'},
+                {"data":"caj_fecha",header:{t:"FECHA",c:'text',style:{miw:80}},tipo:'string'},
                 {"data":"caj_tga_id.tga_nombre",header:{t:"T. GASTO",c:'text'},tipo:'string'},
                 {"data":"caj_responsable",header:{t:"RESPONSABLE",c:'text'},tipo:'string'},
                 {"data":"caj_monto",header:{t:"MONTO",align:'right'},tipo:'money',footer:{ c:"sum" }}

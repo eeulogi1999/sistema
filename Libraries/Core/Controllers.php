@@ -19,7 +19,7 @@
 					$_SESSION['login'] = true;
 					$_SESSION['gcl'] = $this->clientes->selectRegistro($h['gcl_id']);
 					$_SESSION['periodo'] = (isset($h['periodo']))?'"'.$h['periodo'].'"':'"'.date("Y-m").'"';
-					$_SESSION['tree'] = '0';
+					$_SESSION['tree'] = 1;
 				}
 			}
 			if (isset($_GET['gcl_id'])) {
@@ -32,7 +32,7 @@
 					$_SESSION['login'] = true;
 					$_SESSION['gcl'] = $this->clientes->selectRegistro(intval($_GET['gcl_id']));
 					$_SESSION['periodo'] = (isset($h['periodo']))?'"'.$h['periodo'].'"':'"'.date("Y-m").'"';
-					$_SESSION['tree'] = '0';
+					$_SESSION['tree'] = 1;
 				}
 			}
 			if (!empty($_SESSION['gcl'])) {
@@ -53,6 +53,11 @@
 				die();
 			}
 			$this->loadModel($name_table);
+			if (!empty($_SESSION['tree'])) {
+				$g = explode('.',strval($_SESSION['tree']));
+				$_SESSION['perMod'] = getPermisos(intVal($g[array_key_last($g)]));
+			}
+			
 		}
 		public function newController(string $controller){    //para agregar controladores 
 			$routClass = "Controllers/".$controller.".php";
