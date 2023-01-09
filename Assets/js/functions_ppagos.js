@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
-    $('#ppa_col_id').loadOptions('colaboradores',['col_gpe_id.gpe_nombre']);
+    $('#ppa_col_id').loadOptions('colaboradores',['col_gpe_id.gpe_nombre']);    
     $('#caj_cue_id').loadOptions('cuentas',['cue_nombre']);
     $('#caj_t1m_id').loadOptions('t1mediopagos',['t1m_descripcion'],{'t1m_status':1});
 });
@@ -34,9 +34,9 @@ async function setPpa() {
     var formCaj = Object.fromEntries(new FormData(document.getElementById("form_caj")));
     formCaj.caj_fecha = formData.ppa_fecha;
     formCaj.caj_monto = -formCaj.caj_monto;
-    console.log(formCaj);
+    formCaj.caj_responsable = $('#ppa_col_id').find('option:selected').text();
+    formCaj.caj_gus_id = data.ppa.ppa_gus_id;
     var caj = await set('caj',null,formCaj,true);
-    console.log(caj);
     formData.ppa_caj_id = caj.caj_id;
     set('ppa',null,formData);
 }
