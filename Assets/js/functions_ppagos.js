@@ -1,5 +1,5 @@
 var ppa_table;
-var url_ppa = base_url+"/Main/getAll/ppa";
+var url_ppa = base_url+"/Ppagos/getPpagos";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#ppa_table")) {
@@ -39,4 +39,17 @@ async function setPpa() {
     var caj = await set('caj',null,formCaj,true);
     formData.ppa_caj_id = caj.caj_id;
     set('ppa',null,formData);
+}
+
+function delPpa(id) {
+    fetch(base_url + '/Ppagos/delPpa/'+id)
+    .then(response => response.json())
+    .then(response => {
+        if(response.status){
+            swal("Exito", response.msg , "success");
+        }else{
+            swal("Error", response.msg , "error");
+        }
+    })
+    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
 }
