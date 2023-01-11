@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"sbi_mtc",header:{t:"MONTO COMPRA",align:'right'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"sbi_qv",header:{t:"PESO VENTA",align:'right'},tipo:'float',style:{bg:'success'},footer:{ c:"sum" }},
                 {"data":"sbi_pv",header:{t:"P.U",align:'right'},tipo:'float'},
-                {"data":"sbi_mtcv",header:{t:"MONTO VENTA",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"sbi_mtv",header:{t:"MONTO VENTA",align:'right'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"sbi_qs",header:{t:"PESO SALDO",align:'right'},tipo:'float',style:{bg:'success'},footer:{ c:"sum" }},
                 {"data":"sbi_p",header:{t:"VALOR PROMEDIO",align:'right'},tipo:'float'},
                 {"data":"sbi_mts",header:{t:"VALORIZADO TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }},
