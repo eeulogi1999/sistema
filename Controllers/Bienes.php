@@ -44,7 +44,7 @@ class Bienes extends Controllers{
         $data['page_title'] = "Saldos ";
         $data['page_name'] = "Saldos";
         $data['page_data'] = array('periodo'=>$_SESSION['periodo']);
-        $data['page_functions_js'] = array("functions_smateriales.js","functions_reportes.js");
+        $data['page_functions_js'] = array("functions_smateriales.js","functions_reportes.js","functions_movimientos.js");
         $this->views->getView($this,"sbienes",$data);
     }
     public function Cventas(){
