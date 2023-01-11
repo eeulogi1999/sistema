@@ -47,6 +47,17 @@ class Gerencial extends Controllers{
         $data['page_functions_js'] = array("functions_gerencial.js","functions_reportes.js");
         $this->views->getView($this,"exportaciones",$data);
     }
+    public function Volumen(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $data['page_tag'] = "Volumen de Ventas";
+        $data['page_title'] = "Volumen de Ventas";
+        $data['page_name'] = "Volumen de Ventas";
+        $data['page_data'] = array('age_tipo'=>0,'periodo'=>$_SESSION['periodo']);
+        $data['page_functions_js'] = array("functions_volumen.js");
+        $this->views->getView($this,"detracciones",$data);
+    }
     public function Detracciones(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
