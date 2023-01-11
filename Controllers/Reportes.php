@@ -78,7 +78,7 @@ class Reportes extends Controllers{
                 'sbi_mtc'=>$mtc,
                 'sbi_pv'=>($qv!=0) ? $mtv/$qv : 0,
                 'sbi_qv'=>$qv,
-                'sbi_mtv'=>$mtcv,
+                'sbi_mtv'=>$mtv,
                 'sbi_mtcv'=>$mtcv,
                 'sbi_qs'=>$qs,
                 'sbi_p'=>($qs!=0) ? $mts/$qs : 0,
