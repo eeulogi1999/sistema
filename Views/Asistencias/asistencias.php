@@ -5,6 +5,10 @@
   <main class="app-content">    
       <div class="app-title">
         <h4><i class="fas fa-user-tag"></i> <?= $data['page_title']; ?>
+        <?php if($_SESSION['perMod']['gtp_w']){ ?>
+        <button class="btn btn-primary" type="button" onclick="openAsi();"><i class="fas fa-plus-circle"></i>
+          Nuevo</button>
+        <?php } ?>
         </h4>
         <div class="d-flex">
           <div class="custom-file w-50">

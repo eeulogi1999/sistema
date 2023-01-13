@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
+
     if (document.querySelector("#week")) {
         document.querySelector("#week").value  = data.asi.asi_week;
         $('#week').change(function (e) {
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded',function () {
             .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
         })
     }
+    $('#asi_col_id').loadOptions('colaboradores',['col_gpe_id.gpe_nombre','col_gpe_id.gpe_apellidos']); 
 });
 window.addEventListener('load', async () => {
     asi_table = await asi_table;
@@ -191,4 +193,25 @@ function viewHex(asi_col_id) {
           });
           calendar.render();  
     }, 220);
+}
+
+function openAsi() {
+    $('#modal_asi2').modal('show');
+}
+
+function setAsi(e) {
+    e.preventDefault()
+    const formData = new FormData(event.target)
+    fetch(base_url + '/Asistencias/setAsistencias',{method: "POST",body: formData})
+            .then(r => r.json())
+            .then(r => {
+                if (r.status) {
+                    asi_table.reload();
+                    swal('Atencion',r.msg,'success')
+                } else {
+                    swal("Atencion","Error en el Proceso","error");
+                }
+                $('#modal_asi2').modal('hide');
+            })
+            .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
 }
