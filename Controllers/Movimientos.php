@@ -58,7 +58,7 @@ class Movimientos extends Controllers{
         $data['page_data']['periodo'] = $_SESSION['periodo'];
         $data['page_data']['mov_tipo'] = $_SESSION['mov']['mov_tipo']; //'xfun'=>
         $data['page_data']['xfun'] = array();
-        $data['page_functions_js'] = array("functions_movimientos.js","functions_sbienes.js","functions_agentes.js","functions_empresas.js","functions_personas.js");
+        $data['page_functions_js'] = array("functions_movimientos.js","functions_bienes.js","functions_agentes.js","functions_empresas.js","functions_personas.js");
         $this->views->getView($this,"movimientos",$data);
     }
     public function getMovimientos($mov_t12_id){

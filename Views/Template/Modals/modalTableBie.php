@@ -12,7 +12,7 @@
       </div>
       <div class="modal-body">
           <div class="table-responsive" style="height: 400px;">
-            <table class="table table-hover table-bordered table-sm " id="sbi_table" width="100%"></table>
+            <table class="table table-hover table-bordered table-sm " id="bie_table" width="100%"></table>
           </div>
       </div>
       <div class="modal-footer">

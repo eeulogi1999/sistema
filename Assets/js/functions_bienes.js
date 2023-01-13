@@ -12,14 +12,12 @@ document.addEventListener('DOMContentLoaded',function () {
             "thid": 'bie_id',
             "columns":[
                 {"data":"bie_nro",header:{t:"#"},tipo:'string'},
-                //{"data":"bie_id",header:{t:"CLAVE",c:'text'},tipo:'string'},
                 {"data":"bie_codigo",header:{t:"CODIGO",c:'text'},tipo:'string',footer:"TOTALES"},
                 {"data":"bie_nombre",header:{t:"BIEN",c:'text'},tipo:'string'},
                 {"data":"bie_t6m_id.t6m_descripcion",header:{t:"U.M.",c:'text'},tipo:'string'},
                 {"data":"bie_bat_id",header:{t:"DESCRIPCION",c:'text'},tipo:'string'},
                 {"data":"bie_p",header:{t:"PRECIO",align:'right'},tipo:'money'},
                 {"data":"bie_status",header:{t:"ESTADO"},tipo:'string'},
-               // {"data":"bie_bie_id",header:{t:"CAT",c:'text'},tipo:'string'},
                 {"data":"bie_options",header:"ACCIONES",tipo:'string'}
                 
             ]

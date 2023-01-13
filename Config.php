@@ -1,7 +1,7 @@
 <?php
 	define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].((isset($_SERVER['HTTPS']))?'':'/'.basename(dirname(__FILE__))));
 	//define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']);
-	const PHPID = "erpcacel";  // erpregomsa, erpcacel ,erpegest
+	const PHPID = "erpsocios";  // erpregomsa, erpcacel ,erpegest ,erpsocios
 	const CID = "cacel";  //regomsa,cacel, egest
 
 	//Zona horaria
@@ -10,8 +10,8 @@
 	//Datos de conexión a Base de Datos
 	const DB_HOST = "localhost";
 
-	const DB_SUBNAME = "company5_bd_"; 
-	const DB_NAME = "company5_bd_cacel";
+	const DB_SUBNAME = "company5_se_"; 
+	const DB_NAME = "company5_se_socios";
 
 	const DB_USER = "company5_root";
 	const DB_PASSWORD = "1root-SOM";

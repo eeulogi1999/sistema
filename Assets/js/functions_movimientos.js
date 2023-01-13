@@ -167,22 +167,22 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#select_bie').click(function (e) {
         e.preventDefault();
         openMde();
-        $('#mde_bie_id').children().attr('value',sbi_table.getSelectedItem().sbi_bie_id.bie_id);
-        $('#mde_bie_id').children().text(sbi_table.getSelectedItem().sbi_bie_id.bie_codigo+' - '+sbi_table.getSelectedItem().sbi_bie_id.bie_nombre);
-        if (sbi_table.getSelectedItem().sbi_bie_id.bie_t6m_id != null) {
-            $('#mde_t6m_id').val(sbi_table.getSelectedItem().sbi_bie_id.bie_t6m_id.t6m_id);
+        $('#mde_bie_id').children().attr('value',bie_table.getSelectedItem().bie_id);
+        $('#mde_bie_id').children().text(bie_table.getSelectedItem().bie_codigo+' - '+bie_table.getSelectedItem().bie_nombre);
+        if (bie_table.getSelectedItem().bie_t6m_id != null) {
+            $('#mde_t6m_id').val(bie_table.getSelectedItem().bie_t6m_id.t6m_id);
         }
-        $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p).toFixed(2));
+        $('#mde_vu').val(parseFloat(bie_table.getSelectedItem().bie_p).toFixed(2));
         $('#mde_q').val(1.00);
-        $('#mde_igv').prop('checked',parseInt(sbi_table.getSelectedItem().sbi_bie_id.bie_igv))
+        $('#mde_igv').prop('checked',parseInt(bie_table.getSelectedItem().bie_igv))
         $('#mde_gta_id').val(9);
         mdeProducto()
     });
     $("#new_bien").click(function(e) {
         $("#modalTableBie").modal('show');
         setTimeout(() => {
-            sbi_table.rezise();
-            sbi_table.select(true);
+            bie_table.rezise();
+            bie_table.select(true);
         }, 220);
     })
     $("#new_age").click(function(e) {
@@ -329,11 +329,13 @@ function mdeProducto() {
     if ($('#mde_q').val() < 0.000000000001 || isNaN($('#mde_importe').val()) || $('#mde_vu').val() < 0.000000000001  || isNaN(parseInt($('#mde_gta_id').val()))) {
         $('#set_mde').slideUp();
     } else {
-        if (data.mov_tipo == '01' && $('#mde_q').val() > sbi_table.getSelectedItem().sbi_qs) {
-            swal("Atención","No cuenta con stock, Saldo: "+sbi_table.getSelectedItem().sbi_qs, "warning");
-        } else {
-            $('#set_mde').slideDown();
-        }
+        $('#set_mde').slideDown();
+
+        // if (data.mov_tipo == '01' && $('#mde_q').val() > sbi_table.getSelectedItem().sbi_qs) {
+        //     swal("Atención","No cuenta con stock, Saldo: "+sbi_table.getSelectedItem().sbi_qs, "warning");
+        // } else {
+        //     $('#set_mde').slideDown();
+        // }
         
     }
 }
