@@ -25,7 +25,12 @@ class Planillas extends Controllers{
             $r1 = $this->getPlaCol($rwcol[$i],$week-1);
             $r = $this->getPlaCol($rwcol[$i],$week);
             $r['pla_saldo'] = $r1['pla_tpagar'];
-            $r['pla_tpagar'] = $r['pla_saldo']+$r['pla_sueldo']+$r['pla_mhxtras']-$r['pla_adelantos'];
+            if (intval($week)-1==0) {
+                $r['pla_saldo'] = 0;
+                $r['pla_tpagar'] = $r['pla_sueldo']+$r['pla_mhxtras']-$r['pla_adelantos'];
+            } else {
+                $r['pla_tpagar'] = $r['pla_saldo']+$r['pla_sueldo']+$r['pla_mhxtras']-$r['pla_adelantos'];
+            }
             switch (true) {
                 case $r['pla_tpagar']<0:
                     $text = '<span class="badge badge-danger">POR COBRAR</span>';
@@ -83,7 +88,6 @@ class Planillas extends Controllers{
             $pla_adelantos+=abs($d['ppa_caj_id']['caj_monto']);
         }
         $r['pla_adelantos'] = $pla_adelantos;
-        //$r['pla_tpagar'] = $r['pla_sueldo']+$r['pla_mhxtras']-$r['pla_adelantos'];
         $r['pla_tpagar'] = $r['pla_sweek']+$r['pla_mhxtras']-abs($r['pla_adelantos']);
         switch (true) {
             case $r['pla_tpagar']<0:
