@@ -83,7 +83,8 @@ class Planillas extends Controllers{
             $pla_adelantos+=abs($d['ppa_caj_id']['caj_monto']);
         }
         $r['pla_adelantos'] = $pla_adelantos;
-        $r['pla_tpagar'] = $r['pla_sueldo']+$r['pla_mhxtras']-$r['pla_adelantos'];
+        //$r['pla_tpagar'] = $r['pla_sueldo']+$r['pla_mhxtras']-$r['pla_adelantos'];
+        $r['pla_tpagar'] = $r['pla_sweek']+$r['pla_mhxtras']-$r['pla_adelantos'];
         switch (true) {
             case $r['pla_tpagar']<0:
                 $text = '<span class="badge badge-danger">POR COBRAR</span>';
