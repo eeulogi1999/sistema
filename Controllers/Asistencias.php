@@ -44,8 +44,9 @@ class Asistencias extends Controllers{
             $nh += $nm;
             $view = '<button class="btn btn-success btn-sm" onClick="viewAsi('.$r['asi_col_id']['col_id'].')" title="Asistencias"><i class="far fa-eye"></i></button>'; 
             $hex = '<button class="btn btn-warning btn-sm" onClick="viewHex('.$r['asi_col_id']['col_id'].')" title="Horas Extras"><i class="far fa-eye"></i></button>'; 
+            $r['nh'] = $nh;
             $r['asi_nhoras'] = ($nh>51)?$nh-51:0;
-            $r['asi_options'] = '<div class="text-center">'.$view.'</div>';
+            $r['asi_options'] = '<div class="text-center">'.$view.' '.$hex.'</div>';
             array_push($rw,$r); 
         }
         echo json_encode($rw,JSON_UNESCAPED_UNICODE);
