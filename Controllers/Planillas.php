@@ -17,22 +17,19 @@ class Planillas extends Controllers{
         $data['page_functions_js'] = array("functions_planillas.js");
         $this->views->getView($this,"planillas",$data);
     }
-    public function getPlanillas(){
+    public function getPlanillas($res = false){
         $rwcol = $this->colaboradores->selectRegistros();
         $rw = array();
         for ($i=0; $i < count($rwcol); $i++) { 
             $week = intval(explode('W',$_SESSION['asi']['asi_week'])[1]);
-            $r1 = $this->getPlaCol($rwcol[$i],$week-1);
             $r = $this->getPlaCol($rwcol[$i],$week);
-            $r['pla_saldo'] = $r1['pla_tpagar'];
+            $r['pla_saldo'] = 0;
+            if (!empty($rwcol[$i]['col_ppagos'])) {
+                $r['pla_saldo'] = floatval(json_decode($rwcol[$i]['col_ppagos'],true)['saldo']);
+            }
             $r['pla_tpagar'] = 0;
             if ($r['pla_ndias']>0) {
-                if (intval($week)-1==0) {
-                    $r['pla_saldo'] = 0;
-                    $r['pla_tpagar'] = $r['pla_sweek']+$r['pla_mhxtras']-abs($r['pla_adelantos']);
-                } else {
-                    $r['pla_tpagar'] = $r['pla_sweek']+$r['pla_saldo']+$r['pla_mhxtras']-abs($r['pla_adelantos']);
-                }
+                $r['pla_tpagar'] = $r['pla_sweek']+$r['pla_saldo']+$r['pla_mhxtras']-abs($r['pla_adelantos']);
             }
             switch (true) {
                 case $r['pla_tpagar']<0:
@@ -49,8 +46,12 @@ class Planillas extends Controllers{
 
             array_push($rw,$r); 
         }
-        echo json_encode($rw,JSON_UNESCAPED_UNICODE);
-        die();
+        if ($res) {
+            return $rw;
+        } else {
+            echo json_encode($rw,JSON_UNESCAPED_UNICODE);
+            die();
+        }
     }
     public function getPlaCol($col,$week){
         $r['pla_ndias'] = $this->asistencias->searchRegistro(array('asi_col_id'=>$col["col_id"],
@@ -108,28 +109,14 @@ class Planillas extends Controllers{
         return $r;
     }
     public function saveColSaldos(){
-        $rwcol = $this->colaboradores->selectRegistros();
-        for ($i=0; $i < count($rwcol); $i++) { 
-            $week = intval(explode('W',$_SESSION['asi']['asi_week'])[1]);
-            $r1 = $this->getPlaCol($rwcol[$i],$week-1);
-            $r = $this->getPlaCol($rwcol[$i],$week);
-            $r['pla_saldo'] = $r1['pla_tpagar'];
-            $r['pla_tpagar'] = $r['pla_saldo']+$r['pla_sueldo']+$r['pla_mhxtras']-$r['pla_adelantos'];
-            switch (true) {
-                case $r['pla_tpagar']<0:
-                    $text = '<span class="badge badge-danger">POR COBRAR</span>';
-                    break;
-                case $r['pla_tpagar']>0:
-                    $text = '<span class="badge badge-warning">POR PAGAR</span>';
-                    break;
-                default:
-                    $text = '<span class="badge badge-success">OK</span>';
-                    break;
-            }
-            $r['pla_status'] = $text;
-            $this->colaboradores->undateRegistro(array('pla_col_id'=>$rwcol[$i]['col_id'],'pla_ppagos'=>json_encode(array(),JSON_UNESCAPED_UNICODE)));
-            array_push($rw,$r); 
+        $pla = $this->getPlanillas(true);
+        for ($i=0; $i < count($pla); $i++) { 
+            $this->colaboradores->updateRegistro(array('col_id'=>$pla[$i]['pla_col_id']['col_id'],
+            'col_ppagos'=>json_encode(array('week'=>intval(explode('W',$_SESSION['asi']['asi_week'])[1]),
+            'saldo'=>$pla[$i]['pla_tpagar']),JSON_UNESCAPED_UNICODE)));
         }
+        echo json_encode(array('status'=>true,'msg'=>'registrado '.$i.' Colaboradores','data'=>$i),JSON_UNESCAPED_UNICODE);
+        die();
     }
 
     

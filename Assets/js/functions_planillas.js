@@ -54,7 +54,7 @@ function saveColSaldos() {
             .then(r => r.json())
             .then(r => {
                 if (r.status) {
-                    swal("Atencion","Error en el Proceso","success");
+                    swal("Atencion",r.msg,"success");
                 } else {
                     swal("Atencion","Error en el Proceso","error");
                 }
