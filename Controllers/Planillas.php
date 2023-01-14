@@ -25,11 +25,14 @@ class Planillas extends Controllers{
             $r1 = $this->getPlaCol($rwcol[$i],$week-1);
             $r = $this->getPlaCol($rwcol[$i],$week);
             $r['pla_saldo'] = $r1['pla_tpagar'];
-            if (intval($week)-1==0) {
-                $r['pla_saldo'] = 0;
-                $r['pla_tpagar'] = $r['pla_sweek']+$r['pla_mhxtras']-abs($r['pla_adelantos']);
-            } else {
-                $r['pla_tpagar'] = $r['pla_sweek']+$r['pla_saldo']+$r['pla_mhxtras']-abs($r['pla_adelantos']);
+            $r['pla_tpagar'] = 0;
+            if ($r['pla_ndias']>0) {
+                if (intval($week)-1==0) {
+                    $r['pla_saldo'] = 0;
+                    $r['pla_tpagar'] = $r['pla_sweek']+$r['pla_mhxtras']-abs($r['pla_adelantos']);
+                } else {
+                    $r['pla_tpagar'] = $r['pla_sweek']+$r['pla_saldo']+$r['pla_mhxtras']-abs($r['pla_adelantos']);
+                }
             }
             switch (true) {
                 case $r['pla_tpagar']<0:
