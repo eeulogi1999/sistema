@@ -47,3 +47,17 @@ window.addEventListener('load', async () => {
     pla_table = await pla_table;
     divLoading.style.display = "none";
 });
+
+
+function saveColSaldos() {
+    fetch(base_url + '/Planillas/saveColSaldos')
+            .then(r => r.json())
+            .then(r => {
+                if (r.status) {
+                    swal("Atencion","Error en el Proceso","success");
+                } else {
+                    swal("Atencion","Error en el Proceso","error");
+                }
+            })
+            .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
+}
