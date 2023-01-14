@@ -196,17 +196,19 @@ function viewHex(asi_col_id) {
 }
 
 function openAsi() {
+    document.querySelector("form").reset();
     $('#modal_asi2').modal('show');
 }
 
 function setAsi(e) {
     e.preventDefault()
-    const formData = new FormData(event.target)
+    const formData = new FormData(e.target)
     fetch(base_url + '/Asistencias/setAsistencias',{method: "POST",body: formData})
             .then(r => r.json())
             .then(r => {
                 if (r.status) {
                     asi_table.reload();
+                    e.target.reset();
                     swal('Atencion',r.msg,'success')
                 } else {
                     swal("Atencion","Error en el Proceso","error");
