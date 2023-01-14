@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"pla_col_id.col_gpe_id.gpe_nombre",header:{t:"NOMBRE",c:'text'},tipo:'string'},
                 {"data":"pla_col_id.col_gpe_id.gpe_apellidos",header:{t:"APELLIDOS",c:'text'},tipo:'string'},
                 {"data":"pla_sweek",header:{t:"BASE SEMANAL"},tipo:'money'},
+                {"data":"pla_saldo",header:{t:"SALDO SEMANA"},tipo:'money'},
                 {"data":"pla_ndias",header:{t:"#DIAS"},tipo:'string'},
                 {"data":"pla_hextras",header:{t:"H. E."},tipo:'string'},
                 {"data":"pla_mhxtras",header:{t:"S/ H.E."},tipo:'money'},
