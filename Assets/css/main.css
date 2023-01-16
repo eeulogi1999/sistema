@@ -7024,6 +7024,9 @@ button.bg-secondary:focus {
 .bg-egest {
   background-color: #00aa8d !important;
 }
+.bg-platanal {
+  background-color: #fd7e14 !important;
+}
 
 a.bg-success:hover, a.bg-success:focus,
 button.bg-success:hover,

@@ -1,4 +1,6 @@
 var mov_table;
+var des_json = {};
+var des;
 var mde;
 var gtc;
 var mde_json = {};
@@ -72,6 +74,21 @@ document.addEventListener('DOMContentLoaded', function () {
             ]
         });
     }
+    if (document.querySelector("#des_table")) {
+        des = $('#des_table').autoTable({
+            "src": "des_json",
+            "numerate": true,
+            "rezise": false,
+            "export": false,
+            "columns":[
+                {"data":"des_tipo_id.tipo_des",header:"TIPO",tipo:'string',footer:"TOTALES"},
+                {"data":"des_q",header:'CANTIDAD',tipo:'float',footer:{ c:"sum" }},
+                {"data":"des_p",header:'MONTO',tipo:'money'},
+                {"data":"des_mt",header:'SUBTOTAL',tipo:'money',footer:{ c:"sum" }},
+                {"data":"des_options",header:{t:"OPCIONES",align:'center'},tipo:'string'}
+            ]
+        });
+    }
     $('#mov_t12_id').loadOptions('t12operaciones',['t12_descripcion'],{'t12_status':1});
     $('#mov_t10_id').loadOptions('t10comprobantes',['t10_descripcion'],{'t10_status':1});
     $('#mov_cue_id').loadOptions('cuentas',['cue_nombre'],{'cue_status':1});
@@ -95,6 +112,17 @@ document.addEventListener('DOMContentLoaded', function () {
 		e.preventDefault();
         mdeProducto()
 	});
+
+    $('#des_q').keyup(function (e) {
+		e.preventDefault();
+        desProducto()
+	});
+	$('#des_p').keyup(function (e) {
+		e.preventDefault();
+        desProducto()
+	});
+
+
     $('#mde_det').change(function (e) {
         var gtc = $(this).prop('checked');
         if (gtc) {
@@ -266,6 +294,7 @@ document.addEventListener('DOMContentLoaded', function () {
 window.addEventListener('load', async () => {
     mov_table = await mov_table;
     mde = await mde;
+    des = await des;
     divLoading.style.display = "none";
 });
 
@@ -337,6 +366,14 @@ function mdeProducto() {
         
     }
 }
+
+function desProducto() {
+    var des_mt = $('#des_p').val() * $('#des_q').val();
+    $('#des_mt').val(des_mt.toFixed(2));
+    if ($('#des_q').val() < 0.000000000001 || isNaN($('#des_mt').val()) || $('#des_p').val() < 0.000000000001 ) {
+        $('#set_mde').slideUp();
+    }
+}
 function ftnSetMov_numero(serie,t12_id,t10_id) {
     var formData = new FormData()
     formData.append('mov_t10_id',t10_id);
@@ -400,6 +437,10 @@ function setMde(id=-1) {
         mde_q: parseFloat($('#mde_q').val()), 
         mde_vu: mde_igv ? parseFloat($('#mde_vu').val())/1.18 : parseFloat($('#mde_vu').val()),
         mde_igv: +mde_igv,
+        mde_des: {
+            des_subtotal:parseFloat($('#mde_des').val()),
+            des_json:des_json
+        },
         mde_f_bie_id:{
             bie_id: parseInt($('#mde_f_bie_id').val()),
             bie_nombre: $('#mde_f_bie_id').find('option:selected').text()
@@ -416,6 +457,39 @@ function setMde(id=-1) {
     $('#set_mde').children('i').removeClass('fa-refresh').addClass('fa-plus');
     $('#set_mde').attr('onclick','event.preventDefault();setMde();')                 
 }
+
+function setDes(id=-1) {
+    if (id>=0) {
+        var pin = id;
+    } else {
+        var pin = 0;
+        for (const i in des_json) {
+            if (Object.hasOwnProperty.call(des_json, i)) {
+                if (pin<=parseInt(i)) {
+                    pin = parseInt(i)+1;
+                }
+            }
+        }
+    }
+    des_json[pin] = {
+        des_tipo_id: {
+            tipo_id: $('#des_tipo_id').val(),
+            tipo_des: $('#des_tipo_id').find('option:selected').text()
+        },
+        des_q: parseFloat($('#des_q').val()), 
+        des_p: parseFloat($('#des_p').val()),
+        des_mt: parseFloat($('#des_mt').val()),
+        des_options: '<div class="text-center"><button class="btn btn-primary btn-sm" onClick="event.preventDefault();editDes(' + pin + ');" title="Editar"><i class="fas fa-pencil-alt"></i></button>'+
+        '<button class="btn btn-danger btn-sm" onClick="event.preventDefault();deleteDes(' + pin + ');" title="Eliminar"><i class="far fa-trash-alt"></i></button></div>'
+    };
+    des.reload();
+    // subtotalMde();
+    // cleanMde();
+    $('#set_des').removeClass('btn-info').addClass('btn-primary');
+    $('#set_des').children('i').removeClass('fa-refresh').addClass('fa-plus');
+    $('#set_des').attr('onclick','event.preventDefault();setDes();')                 
+}
+
 function deleteMde(id) {
     swal({
         title: "Eliminar detalle",
@@ -432,6 +506,31 @@ function deleteMde(id) {
             //delete mde_json[id];
             mde.reload();
             subtotalMde();
+        }
+    });
+}
+
+function deleteDes(id) {
+    swal({
+        title: "Eliminar detalle",
+        text: "¿Realmente quiere eliminar el detalle?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, eliminar!",
+        cancelButtonText: "No, cancelar!",
+        closeOnConfirm: true,
+        closeOnCancel: true
+    }, function (isConfirm) {
+        if (isConfirm) {
+            if (Object.keys(des_json).length==1) {
+                des_json = {};
+            }else{
+                des_json.splice(id, 1)
+            }
+            
+            //delete mde_json[id];
+            des.reload();
+            // subtotalMde();
         }
     });
 }
@@ -491,11 +590,13 @@ function subtotalMde() {
     var subInafecta = 0;
     var subGravada = 0;
     var subNeta = 0;
+    var mde_des = 0;
     var arrGravadas = [1,2,3,4,5,6,7,8];
     var arrExonerado = [9,10,18];
     var arrInafecto = [11,12,13,14,15,16,17,18];
     for (const i in mde_json) {
         if (Object.hasOwnProperty.call(mde_json, i)) {
+            mde_des+=mde_json[i].mde_des.des_subtotal;
 			switch (true) {
 				case arrExonerado.includes(parseInt(mde_json[i].mde_gta_id.gta_id)):
 					subExonerada += parseFloat(mde_json[i].mde_importe);
@@ -517,13 +618,15 @@ function subtotalMde() {
         }
     }
     $('#mov_exonerada').val(Math.ceil10(subExonerada,-2).toFixed(2));
+    
     $('#mov_inafecta').val(Math.ceil10(subInafecta,-2).toFixed(2));
     $('#mov_gravada').val(Math.ceil10(subGravada,-2).toFixed(2));
     var subtotal = Math.ceil10(subExonerada + subInafecta + subGravada,-2);
+    $('#cde_des').val(mde_des.toFixed(2));
     $('#mov_subtotal').val(subtotal.toFixed(2));
     $('#mov_igv').val(Math.round10((subGravada * 0.18),-2).toFixed(2));
-    $('#mov_total').val(Math.round10((subtotal + (subGravada * 0.18)),-2).toFixed(2));
-    $('#mov_neto').val(Math.round10((subNeta+subExonerada+subInafecta),-2).toFixed(2));
+    $('#mov_total').val(Math.round10((subtotal -mde_des+ (subGravada * 0.18)),-2).toFixed(2));
+    $('#mov_neto').val(Math.round10((subNeta+subExonerada+subInafecta-mde_des),-2).toFixed(2));
 }
 function fntDelMov(mov_id) {
     swal({
@@ -666,4 +769,16 @@ function editMov(id) {
 function changelabelinput(){
     $('#extradocdata').css('display','none');
     $('#extradoc').css('display','block');
+}
+
+function setDescuentos(e) {
+    e.preventDefault();
+    $('#des_q').val($('#mde_q').val());
+    $('#modal_des').modal('show');
+    
+}
+
+function setDescuen() {
+    $('#modal_des').modal('hide');
+    $('#mde_des').val(parseFloat(des.getTotales().des_mt));
 }

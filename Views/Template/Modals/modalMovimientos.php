@@ -145,7 +145,7 @@
             <div class="tile">
               <div class="tile-body">
                 <div class="table-responsive-sm">
-                  <table class="table table-hover table-bordered">
+                  <table class="table table-hover table-bordered mb-0">
                     <thead>
                       <tr>
                         <th class="w-auto" id="tipoDetalle">Bien <a class="text-success" href="#" id="new_bien">
@@ -166,11 +166,12 @@
                         </th>
                         <th style="display:none"  >Tipo de IGV</th>
                         <th>Importe</th>
-                        <th  width="100">  
-                          <span>Exp.</span>
+                        <th  width="100px">  
+                          <!-- <span>Exp.</span>
                           <input type="checkbox" id="mde_exp" name="mde_exp">&nbsp;&nbsp;                        
                           <span>Det.</span>
-                          <input type="checkbox" id="mde_det" name="mde_det">&nbsp;%
+                          <input type="checkbox" id="mde_det" name="mde_det">&nbsp;% -->
+                          <a href="#" onclick="setDescuentos(event)">Descuentos</a>
                         </th>
                         <th>Acciones</th>
                       </tr>
@@ -193,7 +194,8 @@
                             value="0.00" disabled>
                         </td>
                         <td>
-                          <input type="text" class="form-control valid" id="mde_detraccion" name="mde_detraccion" disabled value="15">
+                          <input type="text" class="form-control valid" name="mde_des" id="mde_des" value="0.00">
+                          <!-- <input type="text" class="form-control valid" id="mde_detraccion" name="mde_detraccion" disabled value="15"> -->
                         </td>
                         <td>
                           <div class="text-center">
@@ -269,6 +271,17 @@
                   <div class="col-md-8">
                     <input type="text" class="form-control valid validText text-right" id="mov_subtotal"
                       name="mov_subtotal" value="0.00" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="datosform">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="cde_des">Descuentos</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" class="form-control valid validText text-right" id="cde_des"
+                      name="cde_des" value="0.00" readonly>
                   </div>
                 </div>
               </div>

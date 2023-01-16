@@ -1,8 +1,8 @@
 <?php
 	define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].((isset($_SERVER['HTTPS']))?'':'/'.basename(dirname(__FILE__))));
 	//define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']);
-	const PHPID = "erpcacel";  // erpregomsa, erpcacel ,erpegest
-	const CID = "cacel";  //regomsa,cacel, egest
+	const PHPID = "erpplatanal";  // erpregomsa, erpcacel ,erpegest, erpplatanal
+	const CID = "platanal";  //regomsa,cacel, egest,platanal
 
 	//Zona horaria
 	date_default_timezone_set('America/Lima');
@@ -10,10 +10,10 @@
 	//Datos de conexión a Base de Datos
 	const DB_HOST = "localhost";
 
-	const DB_SUBNAME = "company5_bd_"; 
-	const DB_NAME = "company5_bd_cacel";
+	const DB_SUBNAME = "u125097058_bd_"; 
+	const DB_NAME = "u125097058_bd_platanal";
 
-	const DB_USER = "company5_root";
+	const DB_USER = "u125097058_root";
 	const DB_PASSWORD = "1root-SOM";
 
 	const DB_CHARSET = "utf8";
@@ -26,7 +26,7 @@
 	const SMONEY = "S/";
 	const CURRENCY = "SOLES";
 
-	const BG = array('cacel'=>'"#711529 !important"','regomsa'=>'"#009688 !important"','egest'=>'"##00aa8d !important"');
+	const BG = array('cacel'=>'"#711529 !important"','regomsa'=>'"#009688 !important"','egest'=>'"#00aa8d !important"','platanal'=>'"#fd7e14 !important"');
 	const PPA_TIPO = array('Planilla','Adelanto');
 	//Api PayPal
 	//SANDBOX PAYPAL
