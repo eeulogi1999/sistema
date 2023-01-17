@@ -375,7 +375,7 @@ class Movimientos extends Controllers{
         $web = Endroid\QrCode\Builder\Builder::create()
             ->writer(new Endroid\QrCode\Writer\PngWriter())
             ->writerOptions([])
-            ->data('http://localhost/sistema/Assets/pdf/brochure.pdf')
+            ->data(BASE_URL.'/Assets/pdf/brochure.pdf')
             ->encoding(new Endroid\QrCode\Encoding\Encoding('UTF-8'))
             ->errorCorrectionLevel(new Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh())
             ->size(100)
