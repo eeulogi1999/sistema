@@ -74,3 +74,9 @@ function openModalCol() {
     //col_gar_id
     $("#col_puesto").val(''); 
 }
+
+async function setPreCol(where,json,res) {
+    let hsbase = data.colId.col_hsbase??{}
+    json.col_hsbase = JSON.stringify({...hsbase,col_sbase:json.col_sbase,col_fecha:new Date().toISOString().slice(0, 10)})
+    return {json}; 
+}

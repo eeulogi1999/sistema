@@ -92,6 +92,12 @@ async function off(node,prefijo,id,res=false) {
 }
 async function set(prefijo,where= null,json = null,res = false) {
     var table = capitalize(getTable(prefijo));
+    if (typeof window['setPre'+capitalize(prefijo)]==='function') {
+        var arr = await window['setPre'+capitalize(prefijo)](where,Object.fromEntries(new FormData(document.querySelector('#form_'+prefijo))),res);
+        where = arr.where??where;
+        json = arr.json??json;
+        res = arr.res??res;
+    }
     if (json != null) {
         var formData = new FormData();
         for (const i in json) {
@@ -152,6 +158,7 @@ async function edit(prefijo,id,res=false) {
     .then(response => {
         if(response.status){
             for (const i in response.data) {
+                data[prefijo+'Id'] = response.data;
                 if (document.querySelector('#'+i) && response.data[i] != null) {
                     let pin = i.split('_');
                     if (pin.length>2) {
@@ -173,7 +180,7 @@ async function edit(prefijo,id,res=false) {
             swal("Error", response.msg , "error");
         }
     })
-    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+    .catch(e => console.error(e))
     if (res) {
         return response.data;
     }
@@ -183,6 +190,7 @@ async function view(prefijo,id,res=false) {
     .then(response => response.json())
     .then(response => {
         if(response.status){
+            window.data[prefijo+'Id'] = response.data 
             for (const i in response.data) {
                 $('#v_'+i).text(response.data[i]); 
             }

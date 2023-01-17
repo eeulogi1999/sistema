@@ -304,8 +304,9 @@
                 <td colspan="2" class="tblfoot"><strong>OP. INAFECTA</strong></td>
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_inafecta']) ?></td>
             </tr>
+            <!-- <img src="<?= $mov['mov_qr'] ?>" width="100" alt="" srcset=""> -->
             <tr>
-                <td colspan="4" rowspan="8"><img src="<?= $mov['mov_qr'] ?>" width="100" alt="" srcset=""><img src="<?= $mov['mov_qr_web'] ?>" width="83"  style="margin-top: 9px;" alt="" srcset=""></td>
+                <td colspan="4" rowspan="8"><img src="<?= $mov['mov_qr_web'] ?>" alt="" srcset=""></td>
                 <td colspan="2" class="tblfoot"><strong>OP. EXONERADA</strong></td>
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_exonerada']) ?></td>
             </tr>
