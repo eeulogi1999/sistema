@@ -56,7 +56,12 @@ function saveColSaldos() {
                 if (r.status) {
                     swal("Atencion",r.msg,"success");
                 } else {
-                    swal("Atencion","Error en el Proceso","error");
+                    swal({
+                        title: "Error", 
+                        text: r.msg+"</br><pre class='text-left'>"+ JSON.stringify(r.data, null, 2) + "</pre>",
+                        type: "error",
+                        html: true
+                    });
                 }
             })
             .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
