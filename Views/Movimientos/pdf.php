@@ -305,7 +305,7 @@
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_inafecta']) ?></td>
             </tr>
             <tr>
-                <td colspan="4" rowspan="8"><img src="<?= $mov['mov_qr'] ?>" alt="" srcset=""></td>
+                <td colspan="4" rowspan="8"><img src="<?= $mov['mov_qr'] ?>" alt="" srcset=""><img src="<?= $mov['mov_qr_web'] ?>" alt="" srcset=""></td>
                 <td colspan="2" class="tblfoot"><strong>OP. EXONERADA</strong></td>
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_exonerada']) ?></td>
             </tr>
@@ -326,9 +326,6 @@
     <div class="tbl-cliente">
         SON: <span><?= $mov['mov_letras_pen'] ?></span>
     </div><br>
-    <div class="text-center">
-        <img src="<?= $mov['mov_qr_web'] ?>" alt="" srcset="">
-    </div>
     <p class="text-center">Gracias por la confianza, el apoyo y ante todo por la preferencia !<br>
     Dios lo bendiga hoy, mañana y siempre!</p>
 </body>
