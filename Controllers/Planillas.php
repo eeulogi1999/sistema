@@ -50,7 +50,7 @@ class Planillas extends Controllers{
             $hsbase = json_decode($r['pla_col_id']['col_hsbase'],true);
             if (!empty($hsbase)) {
                 foreach ($hsbase as $k => $hsb) {
-                    if (intval((new DateTime($hsb['col_fecha']))->format('w'))>$week) {
+                    if (intval((new DateTime($hsb['col_fecha']))->format('W'))>$week) {
                         $r['pla_sweek'] = floatval($hsb['col_sbase'])/4;
                     }
                 }
