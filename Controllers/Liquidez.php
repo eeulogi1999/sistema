@@ -410,6 +410,7 @@ class Liquidez extends Controllers{
             $res[$i]['mov_det_liq'] = $res[$i]['mov_detraccion']-$res[$i]['mov_impuesto'];
             $res[$i]['mov_porc'] = '<input type="text" value="'.$res[$i]['mov_cue_id']['cue_porcentaje'].'" size="4" onChange="setPorcentaje('.$res[$i]['mov_cue_id']['cue_id'].',event)">'; 
             $res[$i]['mov_dscg'] = $res[$i]['mov_det_liq']*($res[$i]['mov_cue_id']['cue_porcentaje']/100);
+            $res[$i]['mov_sald'] = $res[$i]['mov_det_liq']-$res[$i]['mov_dscg'];
         }
         if ($out) {
             return $res;

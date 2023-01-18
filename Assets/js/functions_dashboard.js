@@ -1,3 +1,18 @@
+document.addEventListener('DOMContentLoaded',function () {
+
+});
+
+
+window.addEventListener('load', async () => {
+    let base = await fetch(base_url+'/Dashboard/CumpleañosMes').then(r=>r.json()).then(r=>{return r})
+    if (base.status) {
+        base.data.forEach(e => {
+            swal('Alerta','Cumpleaños del Mes con: '+e.gpe_nombre+', '+e.gpe_apellidos,'warning')
+        });
+    }
+});
+
+
 $('.date-picker').datepicker( {
     closeText: 'Cerrar',
 	prevText: '<Ant',
@@ -66,31 +81,5 @@ function fntSearchVMes(){
         }
     }
 }
-// Cambio de color Procesos
-
-// document.getElementById("fase1").addEventListener("click", cambios1);
-// document.getElementById("fase2").addEventListener("click", cambios2);
-// document.getElementById("fase3").addEventListener("click", cambios3);
 
 
-// function cambios1() {
-
-//     document.getElementById("fase1").className="selected";
-//     document.getElementById("fase3").className="done";
-//     document.getElementById("fase2").className="done";
-// }
-// function cambios2() {
-
-//  document.getElementById("fase2").className="selected";
-//  document.getElementById("fase3").className="done";
-// document.getElementById("fase1").className="done";  
-
-
-// }
-// function cambios3() {
-  
-    
-//     document.getElementById("fase3").className="selected";
-//     document.getElementById("fase1").className="done";
-//     document.getElementById("fase2").className="done";
-// }

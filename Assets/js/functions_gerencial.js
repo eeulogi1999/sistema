@@ -62,7 +62,8 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"mov_impuesto",header:{t:"IMPUESTO",align:'right'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"mov_det_liq",header:{t:"RETORNO",align:'right'},tipo:'money',footer:{ c:"sum" }}, 
                 {"data":"mov_porc",header:{t:"PORCENTAJE",align:'center'},tipo:'string'},
-                {"data":"mov_dscg",header:{t:"DSCG",align:'center'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_dscg",header:{t:"DSCG",align:'center'},tipo:'money',footer:{ c:"sum" }}, 
+                {"data":"mov_sald",header:{t:"SALDO",align:'center'},tipo:'money',footer:{ c:"sum" }},
 
             ]
         });
