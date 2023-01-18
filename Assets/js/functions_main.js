@@ -190,7 +190,7 @@ async function view(prefijo,id,res=false) {
     .then(response => response.json())
     .then(response => {
         if(response.status){
-            window.data[prefijo+'Id'] = response.data 
+            data[prefijo+'Id'] = response.data 
             for (const i in response.data) {
                 $('#v_'+i).text(response.data[i]); 
             }

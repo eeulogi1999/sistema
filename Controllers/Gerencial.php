@@ -164,20 +164,6 @@ class Gerencial extends Controllers{
             die();
         }
     }
-    public function getDetracciones($out=false){
-        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
-        foreach ($res as $i => $d) {
-            $res[$i]['mov_detraccion'] = $d['mov_sum']*0.177;
-            $res[$i]['mov_impuesto'] = $d['mov_sum']*0.025;
-            $res[$i]['mov_det_liq'] = $res[$i]['mov_detraccion']-$res[$i]['mov_impuesto'];
-        }
-        if ($out) {
-            return $res;
-        } else {
-            echo json_encode($res,JSON_UNESCAPED_UNICODE);
-            die();
-        }
-    }
 
     public function getPdf(){
         if(empty($_SESSION['perMod']['gtp_r'])){

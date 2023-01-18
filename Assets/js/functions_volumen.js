@@ -1,5 +1,5 @@
 var det_table;
-var url_det = base_url+"/Gerencial/getDetracciones";
+var url_det = base_url+"/Liquidez/getDetracciones";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#det_table")) {

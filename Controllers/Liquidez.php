@@ -2,7 +2,6 @@
 
 @ob_start();
 require_once 'Libraries/phpspreadsheet/vendor/autoload.php';
-require_once 'Controllers/Reportes.php';
 class Liquidez extends Controllers{
     public function __construct(){
         parent::__construct(strtolower(get_class($this)));
@@ -10,9 +9,7 @@ class Liquidez extends Controllers{
         $this->newModel('t2identidades');
         $this->newModel('movimientos');
         $this->newModel('cajas');
-        if (empty($this->Reportes)) {
-            $this->Reportes = new Reportes();
-        }
+        $this->newController('Reportes');
     }
     public function Liquidez(){
         if(empty($_SESSION['perMod']['gtp_r'])){
@@ -104,19 +101,13 @@ class Liquidez extends Controllers{
 
             $liqData[$i][$pre.'_mtv'] = 0;
             if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
-                $g_ds = 0;
-                $rpt = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
-                foreach ($rpt as $p => $d) {
-                    $g_ds += $d['mov_sum']*0.177-$d['mov_sum']*0.025;
-                }  
-                $liqData[$i][$pre.'_mtv'] = $g_ds*0.25;
+                $rpt = $this->getDetracciones(true);
+                $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt,'mov_dscg'));
             } else {
                 for ($j=0; $j < count($detr) ; $j++) { 
                     $liqData[$i][$pre.'_mtv'] = $liqData[$i][$pre.'_mtv']+floatval(json_decode($detr[$j]['mov_igv_id'],true)['mov_neto']);
                 }
             }
-            
-            
             $liqData[$i][$pre.'_mti']=$this->cajas->searchRegistro(
                 array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
                 'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
@@ -410,6 +401,22 @@ class Liquidez extends Controllers{
         header('Pragma: public');
         $writer->save('php://output');
         die();
+    }
+    public function getDetracciones($out=false){
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+        foreach ($res as $i => $d) {
+            $res[$i]['mov_detraccion'] = $d['mov_sum']*0.177;
+            $res[$i]['mov_impuesto'] = $d['mov_sum']*0.025; //($res[$i]['mov_cue_id']['cue_porcentaje']/100)
+            $res[$i]['mov_det_liq'] = $res[$i]['mov_detraccion']-$res[$i]['mov_impuesto'];
+            $res[$i]['mov_porc'] = '<input type="text" value="'.$res[$i]['mov_cue_id']['cue_porcentaje'].'" size="4" onChange="setPorcentaje('.$res[$i]['mov_cue_id']['cue_id'].',event)">'; 
+            $res[$i]['mov_dscg'] = $res[$i]['mov_det_liq']*($res[$i]['mov_cue_id']['cue_porcentaje']/100);
+        }
+        if ($out) {
+            return $res;
+        } else {
+            echo json_encode($res,JSON_UNESCAPED_UNICODE);
+            die();
+        }
     }
 }
 

@@ -3,7 +3,7 @@ var url_res = base_url+"/Gerencial/getGerencial";
 var url_cve = base_url+"/Reportes/getCventas";
 var url_sfi = base_url+"/Gerencial/getResultados";
 var url_exp = base_url+"/Gerencial/getExportaciones";
-var url_det = base_url+"/Gerencial/getDetracciones";
+var url_det = base_url+"/Liquidez/getDetracciones";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#res_table")) {
@@ -60,7 +60,10 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"mov_sum",header:{t:"SUB TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"mov_detraccion",header:{t:"DETRACCION",align:'right'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"mov_impuesto",header:{t:"IMPUESTO",align:'right'},tipo:'money',footer:{ c:"sum" }},
-                {"data":"mov_det_liq",header:{t:"RETORNO",align:'right'},tipo:'money',footer:{ c:"sum" }}
+                {"data":"mov_det_liq",header:{t:"RETORNO",align:'right'},tipo:'money',footer:{ c:"sum" }}, 
+                {"data":"mov_porc",header:{t:"PORCENTAJE",align:'center'},tipo:'string'},
+                {"data":"mov_dscg",header:{t:"DSCG",align:'center'},tipo:'money',footer:{ c:"sum" }},
+
             ]
         });
     }
@@ -169,4 +172,9 @@ async function resumenPdf(){
         window.open(base_url+'/Assets/pdf/'+r.name, '_blank');
     })
     .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+}
+
+async function setPorcentaje(id,e) {
+    await set(`cue`,null,{cue_id:id,cue_porcentaje:e.target.value},true); 
+    det_table.reload()
 }

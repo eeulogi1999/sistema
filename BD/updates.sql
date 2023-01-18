@@ -14,3 +14,7 @@ CREATE TABLE `company5_bd_20602849172`.
 
 
     ALTER TABLE `colaboradores` CHANGE `col_ppagos` `col_hsbase` JSON NULL DEFAULT NULL;
+
+
+
+    ALTER TABLE `cuentas` ADD `cue_porcentaje` INT NULL AFTER `cue_gt4_id`;
