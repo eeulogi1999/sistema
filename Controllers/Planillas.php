@@ -45,7 +45,16 @@ class Planillas extends Controllers{
             $nh += $nm;
             $view = '<button class="btn btn-warning btn-sm" onClick="viewAsi('.$rwcol[$i]["col_id"].')" title="Ver Planilla"><i class="far fa-eye"></i></button>'; 
             $r['pla_hweek'] = $nh;
+
             $r['pla_sweek'] = $r['pla_col_id']['col_sbase']/4;
+            $hsbase = json_decode($r['pla_col_id']['col_hsbase'],true);
+            if (!empty($hsbase)) {
+                foreach ($hsbase as $k => $hsb) {
+                    if (intval((new DateTime($hsb['col_fecha']))->format('w'))>$week) {
+                        $r['pla_sweek'] = floatval($hsb['col_sbase'])/4;
+                    }
+                }
+            }
             $r['pla_hextras'] =  ($r['pla_ndias']>4)?$nh-51:0; // pla_estado
             $r['pla_mhxtras'] =  0;
             if ($r['pla_hextras']>0) {

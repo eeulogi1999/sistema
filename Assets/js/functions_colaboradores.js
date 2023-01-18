@@ -76,7 +76,9 @@ function openModalCol() {
 }
 
 async function setPreCol(where,json,res) {
-    let hsbase = data.colId.col_hsbase??{}
-    json.col_hsbase = JSON.stringify({...hsbase,col_sbase:json.col_sbase,col_fecha:new Date().toISOString().slice(0, 10)})
+    let hsbase = JSON.parse(data.colId.col_hsbase)??[];
+    console.log(hsbase)
+    hsbase.push({col_sbase:data.colId.col_sbase,col_fecha:new Date().toISOString().slice(0, 10)})
+    json.col_hsbase = JSON.stringify(hsbase)
     return {json}; 
 }
