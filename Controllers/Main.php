@@ -143,6 +143,12 @@ class Main extends Controllers{
         unset($_POST['prefijo']);
         unset($_POST['where']);
         $tabla = $this->getTable($prefijo);
+        if (isset($where['php'])) {
+            unset($where['php']);
+            $this->newController(ucfirst($tabla));
+            $_POST = $this->{ucfirst($tabla)}->{'set'.ucfirst($tabla)}($_POST,true);
+            unset($this->{ucfirst($tabla)});
+        }
         $this->newModel($tabla);
         if ($_POST) {
             if (intval($_POST[$prefijo.'_id'])==0) {
