@@ -12,7 +12,7 @@
 		$controller = "comprobantes";
 		$method = "comprobantes";
 	}
-	if($arrUrl[0] == "sbienes" || $arrUrl[0] == "entradas"|| $arrUrl[0] == "salidas"|| $arrUrl[0] == "mermas"|| $arrUrl[0] == "transferencias"){
+	if($arrUrl[0] == "sbienes" || $arrUrl[0] == "entradas"|| $arrUrl[0] == "salidas"|| $arrUrl[0] == "mermas"|| $arrUrl[0] == "transferencias"||$arrUrl[0] == "ordencompra"){
 		$controller = "movimientos";
 		$method = "movimientos";
 	}

@@ -337,6 +337,7 @@ function previewFiles(th,content) {
             }
             draw();
             zise();
+            listenTree();
             window.addEventListener('resize',function(){zise()});
         };
         var draw = async function(){

@@ -105,6 +105,17 @@
                   </div>
                 </div>
               </div>
+              <div class="datosform pb-1">
+                <div class="row">
+                  <div class="col-md-4 text-right">
+                    <label for="mov_fechaV">Fecha de Venc.<span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="date" class="form-control valid" id="mov_fechaV" name="mov_fechaV" required=""
+                      onkeypress="return controlTag(event);">
+                  </div>
+                </div>
+              </div>
               <div class="datosform pb-1" id="tcambio">
                 <div class="row">
                   <div class="col-md-4 text-right">

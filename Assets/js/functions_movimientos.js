@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#mov_gt4_id').loadOptions('t4monedas',['gt4_descripcion']);
     $('#mde_t6m_id').loadOptions('t6medidas',['t6m_sunat']);
     if (parseInt(data.mov_t12_id)==2) {
-        $('#mde_gta_id').loadOptions('tafectaciones',['gta_descripcion'],{'gta_id':9});
+        $('#mde_gta_id').loadOptions('tafectaciones',['gta_descripcion'],{'gta_status':1});
     } else {
         $('#mde_gta_id').loadOptions('tafectaciones',['gta_descripcion'],{'gta_status':1});
     }
@@ -99,12 +99,13 @@ document.addEventListener('DOMContentLoaded', function () {
         var gtc = $(this).prop('checked');
         if (gtc) {
             $('#mde_detraccion').removeAttr("disabled");
-            $('#mov_cue_id').parent().parent().show();
+            
+            $('#mov_cue_id').parent().parent().parent().show();
             $('#mov_t10_id').val(2);
             document.querySelector('#mov_cue_id').focus();
             //$('#mov_cue_id').attr('size',$('#mov_cue_id option').length);
         } else {
-            $('#mov_cue_id').parent().parent().hide();
+            $('#mov_cue_id').parent().parent().parent().hide();
             $('#mde_detraccion').attr('disabled', 'disabled');
             $('#mov_t10_id').val(50);
         }
@@ -113,11 +114,11 @@ document.addEventListener('DOMContentLoaded', function () {
         var gtc = $(this).prop('checked');
         if (gtc) {
             $('#mde_detraccion').removeAttr("disabled");
-            $('#mov_cue_id').parent().parent().show();
+            $('#mov_cue_id').parent().parent().parent().show();
             $('#mov_t10_id').val(51);
             document.querySelector('#mov_cue_id').focus();
         } else {
-            $('#mov_cue_id').parent().parent().hide();
+            $('#mov_cue_id').parent().parent().parent().hide();
             $('#mde_detraccion').attr('disabled', 'disabled');
             $('#mov_t10_id').val(50);
         }
@@ -367,10 +368,12 @@ function ftnTcambio(nodefecha) {
 function setMde(id=-1) {
     var mde_igv = $('#mde_igv').prop('checked')
     var mde_det = $('#mde_det').prop('checked')
-    if (mde_det) {
-        $('#mde_gta_id').val(1);
-    }else{
-        $('#mde_gta_id').val(9);
+    if (parseInt($('#mov_t10_id').val())!= 52) {
+        if (mde_det) {
+            $('#mde_gta_id').val(1);
+        }else{
+            $('#mde_gta_id').val(9);
+        }
     }
     if (id>=0) {
         var pin = id;
@@ -428,8 +431,7 @@ function deleteMde(id) {
         closeOnCancel: true
     }, function (isConfirm) {
         if (isConfirm) {
-            mde_json.splice(id, 1)
-            //delete mde_json[id];
+            delete mde_json[id];
             mde.reload();
             subtotalMde();
         }
@@ -578,9 +580,13 @@ function openModalMov() {
             break;
         case 2:
             $('#mov_t12_id').val(2);
-            $('#mov_t10_id').val(49);
+            $('#mov_t10_id').val(data.mov_t10_id??49);
             $('#mde_gta_id').val(9);
-            ftnSetMov_numero('NE01',2,49);
+            ftnSetMov_numero(data.mov_t10_id?'OC01':'NE01',2,$('#mov_t10_id').val());
+            if (data.mov_t10_id) {
+                $('#mde_gta_id').parent().show();
+                $('thead tr th:nth-child('+($('#mde_gta_id').parent().index()+1)+')',$('#mde_gta_id').parent().parent().parent().parent()[0]).show()
+            }
             break;
         case 1:
             $('#mov_t12_id').val(1);
@@ -611,6 +617,7 @@ function openModalMov() {
     changet10t12()
     mde.clear();
     document.querySelector("#mov_fechaE").valueAsDate = new Date();
+    document.querySelector("#mov_fechaV").valueAsDate = new Date();
     ftnTcambio(document.querySelector("#mov_fechaE"));
     $('#modal_mov').modal('show');
 }
@@ -636,6 +643,16 @@ function editMov(id) {
             $('#mov_serie').val(mov.mov_serie); 
             $('#mov_numero').val(mov.mov_numero); 
             $('#mov_gt4_id').val(mov.mov_gt4_id.gt4_id);
+            if (mov.mov_fechaV) {
+                $('#mov_fechaV').val(mov.mov_fechaV); 
+            }else{
+                $('#mov_fechaV').parent().parent().parent().hide();
+            }
+            if (mov.mov_cue_id) {
+                $('#mov_cue_id').val(mov.mov_cue_id.cue_id); 
+            }else{
+                $('#mov_cue_id').parent().parent().parent().hide();
+            }
             $('#mde_t6m_id').val(58);
             $('#mde_gta_id').val(1);
             document.querySelector("#mov_fechaE").valueAsDate = new Date(mov.mov_fechaE);

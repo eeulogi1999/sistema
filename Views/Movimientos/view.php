@@ -78,7 +78,8 @@
                     </div>
                     <div class="col-4 border rounded border-secondary h-115 justify-content-center align-items-center">
                         <div class=" p-3" style="height: 118px;">
-                            <b class="text-right">Fecha :</b> <?= $mov['mov_fechaE']; ?><br>
+                            <b class="text-right">Fecha Emisión:</b> <?= $mov['mov_fechaE']; ?><br>
+                            <b class="text-right">Fecha Venc.:</b> <?= $mov['mov_fechaV']; ?><br>
                             <b>Moneda: </b><?= $mov['mov_gt4_id']['gt4_descripcion']; ?><br>
                             <b>Monto:</b> <?= formatMoney($mov['mov_total']); ?><br>
                             <b>Cuenta:</b> <?= (!empty($mov['mov_cue_id']))?$mov['mov_cue_id']['cue_nombre']:''; ?>

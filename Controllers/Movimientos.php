@@ -38,6 +38,12 @@ class Movimientos extends Controllers{
                 $_SESSION['mov']['mov_tipo'] = '02';
                 $data['page_data']['mov_t12_id'] = 2;
                 break; 
+            case 'ordencompra':
+                $_SESSION['mov']['mov_tipo'] = '03';
+                $data['page_data']['mov_t12_id'] = 2;
+                $data['page_data']['mov_t10_id'] = 52;
+                $data['page_title'] = 'Orden de Compra';
+                break;
             case 'salidas':
                 $_SESSION['mov']['mov_tipo'] = '01';
                 $data['page_data']['mov_t12_id'] = 1;
@@ -146,7 +152,7 @@ class Movimientos extends Controllers{
                 $mov['mov_alm_id'] =  (isset($mov['mov_alm_id']))?$mov['mov_alm_id']:$_SESSION['alm']['alm_id'];
                 $mov['mov_tipo'] = (isset($mov['mov_tipo']))?$mov['mov_tipo']:$_SESSION['mov']['mov_tipo'];
                 $mov['mov_fechaR'] = $_POST['mov_fechaE'];
-                $mov['mov_fechaV'] = $_POST['mov_fechaE'];
+                $mov['mov_fechaV'] = (isset($_POST['mov_fechaV']))?$_POST['mov_fechaV']:$_POST['mov_fechaE'];
                 $mov['mov_gus_id'] = $_SESSION['gus']['gus_id'];
                 $mov_id = $this->movimientos->insertRegistro($mov,array('mov_serie','mov_numero','mov_alm_id','mov_tipo','mov_fechaE')); 
                 if (isset($mov_id['exist'])) {
@@ -177,7 +183,7 @@ class Movimientos extends Controllers{
                 $mov['mov_alm_id'] = $_SESSION['alm']['alm_id'];
                 $mov['mov_tipo'] = (isset($mov['mov_tipo']))?$mov['mov_tipo']:$_SESSION['mov']['mov_tipo'];
                 $mov['mov_fechaR'] = $_POST['mov_fechaE'];
-                $mov['mov_fechaV'] = $_POST['mov_fechaE'];
+                $mov['mov_fechaV'] = (isset($_POST['mov_fechaV']))?$_POST['mov_fechaV']:$_POST['mov_fechaE'];
                 $mov['mov_gus_id'] = $_SESSION['gus']['gus_id'];
                 $mov_id = $this->movimientos->updateRegistro($mov,array('mov_serie','mov_numero','mov_alm_id','mov_tipo')); 
 
@@ -351,6 +357,9 @@ class Movimientos extends Controllers{
         }
         if ($data['mov']['mov_tipo']=='01') {
             $title = 'DOC. SALIDA     -      '.$data['mov']['mov_t12_id']['t12_descripcion'].'     -       '.strtoupper($data['mov']['mov_t10_id']['t10_descripcion']);
+        }
+        if ($data['mov']['mov_tipo']=='03') {
+            $title = 'DOC. ORDEN DE COMPRA     -      '.$data['mov']['mov_t12_id']['t12_descripcion'].'     -       '.strtoupper($data['mov']['mov_t10_id']['t10_descripcion']);
         }
         $arrResponse = array("status" => true, "title"=>$title ,"data" => $html);
         echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
