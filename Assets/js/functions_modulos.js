@@ -1,5 +1,5 @@
 var gmo_table;
-var url_gmo = base_url+"/Modulos/getModulos"; ///Modulos/getModulos
+var url_gmo = base_url+"/Modulos/getModulos";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#gmo_table")) {

@@ -1,70 +1,40 @@
-var ads_table;
 let ade;
 var ade_json = {};
+
+var ads_table;
+var url_ads = base_url+"/Adscripciones/getAdscripciones"; 
 document.addEventListener('DOMContentLoaded', async function () {
-    ads_table = $('#ads_table').dataTable({
-        "aProcessing":true,
-        "aServerSide":true,
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-        },
-        "ajax":{
-            "url": " "+base_url+"/Adscripciones/getAdscripciones",
-            "dataSrc":""
-        },
-        "columns":[
-            {"data":"ads_nro"},
-            {"data":"ads_cunico"},
-            {"data":"ads_fecha"},
-            {"data":"ads_col_id.col_gpe_id.gpe_identificacion"},
-            {"data":"ads_col_id.col_gpe_id.gpe_nombre"},
-            {"data":"ads_ubi_id.ubi_gar_id.gar_nombre"},
-            {"data":"ads_ubi_id.ubi_gdi_id.gdi_distrito"},
-            {"data":"ads_motivo"},
-            {"data":"ads_status"},
-            {"data":"ads_options"}
-        ],
-        'dom': 'lBfrtip',
-        'buttons': [
-            {
-                "extend": "copyHtml5",
-                "text": "<i class='far fa-copy'></i> Copiar",
-                "titleAttr":"Copiar",
-                "className": "btn btn-secondary"
-            },{
-                "extend": "excelHtml5",
-                "text": "<i class='fas fa-file-excel'></i> Excel",
-                "titleAttr":"Esportar a Excel",
-                "className": "btn btn-success"
-            },{
-                "extend": "pdfHtml5",
-                "text": "<i class='fas fa-file-pdf'></i> PDF",
-                "titleAttr":"Esportar a PDF",
-                "className": "btn btn-danger"
-            },{
-                "extend": "csvHtml5",
-                "text": "<i class='fas fa-file-csv'></i> CSV",
-                "titleAttr":"Esportar a CSV",
-                "className": "btn btn-info"
-            }
-        ],
-        "resonsieve":true,
-        "bDestroy": true,
-        "iDisplayLength": 10,
-        "order":[[0,"asc"]]  
-    });
-    ade = $('#ade').jsonTables({
+    if (document.querySelector("#ads_table")) {
+        ads_table = $('#ads_table').autoTable({
+            "url": url_ads,
+            "numerate": true,
+            "columns":[
+                {"data":"ads_cunico",header:{t:"CODIGO"},tipo:'string'},
+                {"data":"ads_fecha",header:{t:"NOMBRE"},tipo:'string'},
+                {"data":"ads_col_id.col_gpe_id.gpe_identificacion",header:{t:"COD. PERSONAl"},tipo:'string'},
+                {"data":"ads_col_id.col_gpe_id.gpe_nombre",header:{t:"NOMBRE"},tipo:'string'},
+                {"data":"ads_ubi_id.ubi_gar_id.gar_nombre",header:{t:"AREA"},tipo:'string'},
+                {"data":"ads_ubi_id.ubi_gdi_id.gdi_distrito",header:{t:"CIUDAD"},tipo:'string'},
+                {"data":"ads_motivo",header:{t:"MOTIVO"},tipo:'string'},
+                {"data":"ads_status",header:{t:"ESTADO"},tipo:'string'},
+                {"data":"ads_options",header:"ACCIONES",tipo:'string'}
+            ]
+        });
+    }
+
+    ade = $('#ade').autoTable({
         "src": "ade_json",
         "numerate": true,
+        "export": false,
         "columns":[
-            {"data":"ade_q"},
-            {"data":"ade_act_id.act_nombre"},
-            {"data":"ade_serie"},
-            {"data":"ade_fechaA"},
-            {"data":"ade_vutil"},
-            {"data":"ade_vu"},
-            {"data":"ade_mt"},
-            {"data":"ade_options"}
+            {"data":"ade_q",header:"CANTIDAD"},
+            {"data":"ade_act_id.act_nombre",header:"NOMBRE"},
+            {"data":"ade_serie",header:"SERIE"},
+            {"data":"ade_fechaA",header:"FECHA"},
+            {"data":"ade_vutil",header:"VIDA UTIL"},
+            {"data":"ade_vu",header:"V.U."},
+            {"data":"ade_mt",header:"SUBTOTAL"},
+            {"data":"ade_options",header:"OPCIONES"}
         ]
     });
     $('#ubi_est_id').loadOptions('establecimientos',['est_nombre']);
@@ -170,6 +140,14 @@ document.addEventListener('DOMContentLoaded', async function () {
         return false;
     })
 });
+
+window.addEventListener('load', async () => {
+    ads_table = await ads_table;
+    ade = await ade;
+    divLoading.style.display = "none";
+    ads_table.select(true);
+});
+
 async function setCol(){
     var res = await set('col',null,null,true);
     if (res.status) {

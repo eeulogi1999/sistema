@@ -173,22 +173,7 @@
                                     <div class="tile mb-0">
                                         <div class="tile-body">
                                             <div class="table-responsive">
-                                                <table class="table table-hover table-bordered" id="ade" width="100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Cantidad</th>
-                                                            <th>Activo</th>
-                                                            <th>Serie</th>
-                                                            <th>Fecha Ad.</th>
-                                                            <th>Vida util</th>
-                                                            <th>Valor Unitario</th>
-                                                            <th>Monto Total</th>
-                                                            <th>Acciones</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="text-center">
-                                                    </tbody>
-                                                </table>
+                                                <table class="table table-hover table-bordered" id="ade" width="100%"></table>
                                             </div>
                                         </div>
                                     </div>
@@ -221,7 +206,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <div id="act_table"></div>
+      <div class="table-responsive">
+            <table class="table table-hover table-bordered table-sm " id="act_table" width="100%"></table>
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" id="select_act" class="btn btn-warning" data-dismiss="modal">Seleccionar</button>

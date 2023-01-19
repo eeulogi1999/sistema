@@ -27,7 +27,11 @@ class Activos extends Controllers{
                 $btnEdit = '';
                 $btnDelete = '';
                 $arrData[$i]['act_nro'] = (is_null($nro)) ? $i+1 : $nro.'.'.($i+1) ;
-                $arrData[$i]['act_aat_id'] = $this->aatributos->selectRegistros(array("aat_act_id"=>$arrData[$i]['act_id']),array('aat_act_id'));
+                $aat = $this->aatributos->selectRegistros(array("aat_act_id"=>$arrData[$i]['act_id']),array('aat_act_id'));
+                $arrData[$i]['act_aat_id'] = '';
+                foreach ($aat as $j => $v) {
+                    $arrData[$i]['act_aat_id'] .= "{ ".$v['aat_val_id']['val_pro_id']['pro_nombre'].": ".$v['aat_val_id']['val_valor']." }, ";
+                }
                 $arrData[$i]['act_status'] = '<span class="badge badge-'.STATUS[array_keys(STATUS)[$arrData[$i]['act_status']]].'">'.array_keys(STATUS)[$arrData[$i]['act_status']].'</span>';
                 if($_SESSION['perMod']['gtp_r']){
                     $btnView = '<button class="btn btn-info btn-sm" onClick="ftnViewAct('.$arrData[$i]['act_id'].')" title="Ver Activo"><i class="far fa-eye"></i></button>';

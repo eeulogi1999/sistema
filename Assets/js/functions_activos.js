@@ -1,48 +1,23 @@
 var aat;
 var aat_json = {};
 var i = 1;
+var act_table;
+var url_act = base_url+"/Activos/getActivos"; 
 document.addEventListener('DOMContentLoaded',function () {
     if (document.querySelector("#act_table")) {
-        webix.ui({
-            container: "act_table",
-            rows:[
-                {align:"left",body:{view:"select",width:"110",label:"Mostrar",labelWidth: "auto",labelRight:"Registros",options:["10", "50", "100","200"]}},
-                {align:"left",body:{cols:[
-                    {view:"button",type:"icon", icon:"fas fa-file-pdf",label:"PDF",width:80},
-                    {view:"button",type:"icon", icon:"fas fa-file-excel",label:"EXCEL",width:80},
-                    {view:"button",type:"icon", icon:"fas fa-file-csv",label:"CSV",width:80},
-                    {view:"button",type:"icon", icon:"far fa-copy",label:"COPY",width:80}]}}, 
-                {align:"right",body:{view:"text", label:"Buscar",width:270}},
-                {view: "treetable",
-                id:"act_table",
-                resizeColumn: { headerOnly:true },
-                resizeRow: { headerOnly:true },
-                columns: [
-                    {id: "act_nro",header: "#",sort:"int"},
-                    {id: "act_codigo",header:["CODIGO", {content:"textFilter"}],sort:"string",width:200,template:"{common.treetable()} <span>#act_codigo#</span>"},  //content:"selectFilter"
-                    {id: "act_nombre",header:["NOMBRE", {content:"textFilter"}],width:200,sort:"string"},
-                    {id: "act_aat_id",header:["ATRIBUTOS", {content:"textFilter"}],fillspace:true,sort:"string",template:function(d,e,f){
-                        response='';
-                        for (const i in f) {
-                            response+= `{ ${f[i].aat_val_id.val_pro_id.pro_nombre}: ${f[i].aat_val_id.val_valor} },`;
-                        }
-                        return  response;   
-                    }},
-                    {id: "act_p",header: "PRECIO",sort:"int"},
-                    {id: "act_status",header: "ESTADO"},
-                    {id: "act_options",header: "ACCION",width:150}
-                ],
-                scroll:false,   
-                autoheight: true,
-                pager:"pager",
-                select: true,
-                url: base_url+"/Activos/getActivos",
-                sort:"multi"},
-                {align:"right",body:{view:"pager",
-                id:"pager",width:36*3,
-                template:"{common.prev()}{common.pages()}{common.next()}",
-                size:10,group:5}}
-              ]
+        act_table = $('#act_table').autoTable({
+            "url": url_act,
+            "thid": 'act_id',
+            "tree":true,
+            "columns":[
+                {"data":"act_nro",header:{t:"#"},tipo:'string'},
+                {"data":"act_codigo",header:{t:"CODIGO"},tipo:'string'},
+                {"data":"act_nombre",header:{t:"NOMBRE"},tipo:'string'},
+                {"data":"act_aat_id",header:{t:"PROPIEDADES"},tipo:'string'},
+                {"data":"act_valor",header:{t:"VALOR"},tipo:'string'},
+                {"data":"act_status",header:{t:"ESTADO"},tipo:'string'},
+                {"data":"act_options",header:"ACCIONES",tipo:'string'}
+            ]
         });
         webix.ui({
             container: "act_t9p_id",
@@ -53,9 +28,6 @@ document.addEventListener('DOMContentLoaded',function () {
             height: 300,
             width: 350,
             url: base_url + '/Main/getT9pSelect/33'
-        });
-        $$("act_table").attachEvent("onItemDblClick", function(id, e, node){
-            $$("act_table").unselectAll();
         });
     }
     aat = $('#aat').jsonTables({
@@ -167,8 +139,8 @@ document.addEventListener('DOMContentLoaded',function () {
     $('#set_act').click(  async function (e) {
         e.preventDefault();
         var formData = new FormData(document.getElementById("formAct"));
-        if (!isUndefined($$("act_table").getSelectedId())) {
-            formData.append('act_act_id', $$("act_table").getSelectedItem().act_id);
+        if (!isUndefined(act_table.getSelectedId())) {
+            formData.append('act_act_id', act_table.getSelectedItem().act_id);
         }
         var aatrib = aat_json;
         for (const i in aatrib) {
@@ -216,6 +188,13 @@ document.addEventListener('DOMContentLoaded',function () {
 
     })
 });
+
+window.addEventListener('load', async () => {
+    act_table = await act_table;
+    divLoading.style.display = "none";
+    act_table.select(true);
+});
+
 function setAat(id = -1) {
     if (id >= 0) {
         var pin = id;
@@ -288,7 +267,7 @@ function ftnViewAct(id) {
                         var image = new Image();
                         image.height = 100;
                         image.className = "rounded border m-1";
-                        image.src = base_images+'/uploads/'+images[i];
+                        image.src = base_url+'/.uploads/'+images[i];
                         $('#view_act_img').append(image);
                     }
                     $('#modalViewAct').modal('show');
@@ -321,7 +300,7 @@ function fntEditAct(id) {
                 var image = new Image();
                 image.height = 100;
                 image.className = "rounded border m-1";
-                image.src = base_images+'/uploads/'+images[i];
+                image.src = base_url+'/.uploads/'+images[i];
                 image.draggable="true";
                 image.setAttribute('data',images[i]);
                 image.setAttribute('ondragstart',"dragstart(event)");
