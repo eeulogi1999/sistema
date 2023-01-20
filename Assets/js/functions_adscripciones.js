@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 {"data":"ads_col_id.col_gpe_id.gpe_nombre",header:{t:"NOMBRE"},tipo:'string'},
                 {"data":"ads_ubi_id.ubi_gar_id.gar_nombre",header:{t:"AREA"},tipo:'string'},
                 {"data":"ads_ubi_id.ubi_gdi_id.gdi_distrito",header:{t:"CIUDAD"},tipo:'string'},
-                {"data":"ads_motivo",header:{t:"MOTIVO"},tipo:'string'},
+                {"data":"ads_desc",header:{t:"MOTIVO"},tipo:'string'},
                 {"data":"ads_status",header:{t:"ESTADO"},tipo:'string'},
                 {"data":"ads_options",header:"ACCIONES",tipo:'string'}
             ]
@@ -102,19 +102,19 @@ document.addEventListener('DOMContentLoaded', async function () {
     $('#set_ads').click(function(e) {
         e.preventDefault();
         divLoading.style.display = "flex";
-        var formAsi = new FormData(document.getElementById("formAsi"));                
+        var form_ads = new FormData(document.getElementById("form_ads"));                
         var json = ade_json;
         for (const i in json) {
             delete json[i].ade_options;
         }
-        formAsi.append('ads_ade_id', JSON.stringify(json)); 
-        fetch(base_url + '/Adscripciones/setAdscripciones', {method: "POST",body: formAsi})
+        form_ads.append('ads_ade_id', JSON.stringify(json)); 
+        fetch(base_url + '/Adscripciones/setAdscripciones', {method: "POST",body: form_ads})
             .then(response => response.json())
             .then(response => {
                 var objData = response;
                 if (objData.status) {
                     $('#modal_ads').modal("hide");
-                    document.getElementById("formAsi").reset();   
+                    document.getElementById("form_ads").reset();   
                     swal("Adscripciones", 'N° OPERACION: ', "success");
                     ade.clear();
                     ade.reload();
@@ -220,32 +220,29 @@ function editAde(id) {
     $("#ade_q").removeAttr("disabled");
     $("#ade_vu").removeAttr("disabled");
 }
-function editAds(params) {
-    
-}
-
 function openAde() {
     $("#ade_mt").removeAttr("disabled");
     $("#ade_q").removeAttr("disabled");
     $("#ade_vu").removeAttr("disabled");
 }
 
-function getViewAsi(mov_id){
-    fetch(base_url+'/Adscripciones/getAsignacion/'+mov_id)
-        .then(response => response.json())
-        .then(response => {
-            console.log(response);
-         })
-         .catch(error => console.error('Error:', error));
+async function getPosAds(data) {
+    ade_json = data.ads_ade_id
+    for (const i in ade_json) {
+        ade_json[i]['ade_q'] = parseFloat(ade_json[i]['ade_q']).toFixed(2);
+        ade_json[i]['ade_vu'] = parseFloat(ade_json[i]['ade_vu']).toFixed(2);
+        ade_json[i]['ade_mt'] =  parseFloat(ade_json[i]['ade_mt']).toFixed(2);
+        ade_json[i]['ade_options'] = '<div class="text-center"><button class="btn btn-primary btn-sm" onClick="event.preventDefault();editAde(' + i + ');" title="Editar"><i class="fas fa-pencil-alt"></i></button>'+
+        '<button class="btn btn-danger btn-sm" onClick="event.preventDefault();deleteAde(' + i + ');" title="Eliminar"><i class="far fa-trash-alt"></i></button></div>';
+    }
+    ade.reload();
 }
 
-function openmodal_ads() {
-    document.querySelector('#ads_id').value = "";
-    document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
-    document.querySelector('#set_ads').classList.replace("btn-info","btn-primary");
-    $('#set_ads span').html("Guardar");
-    document.querySelector("#formAsi").reset();
-    ade.clear();
-    document.querySelector("#ads_fecha").valueAsDate = new Date();
-    $('#modal_ads').modal('show');
+function getViewAsi(id){
+
+}
+
+function openModalAds() {
+    ade_json = {};
+    ade.reload();
 }

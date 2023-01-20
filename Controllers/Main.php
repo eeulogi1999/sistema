@@ -173,13 +173,18 @@ class Main extends Controllers{
         if (is_numeric($id)) {
             $arrData = $this->{$tabla}->selectRegistro($id);
             if (!empty($arrData)) {
-                $arrResponse = array('status' => true, 'msg' => 'OK','data'=>$arrData);
+                $res = array('status' => true, 'msg' => 'OK','data'=>$arrData);
+                if (isset($data[2])) {
+                    $this->newController(ucfirst($tabla));
+                    $res['data'] = $this->{ucfirst($tabla)}->{'get'.ucfirst($prefijo)}($arrData,true);
+                    unset($this->{ucfirst($tabla)});
+                }
             } else {
-                $arrResponse = array('status' => false, 'msg' => 'Error al recuperar los datos de '.$tabla);
+                $res = array('status' => false, 'msg' => 'Error al recuperar los datos de '.$tabla);
             }
         }
         unset($this->{$tabla});
-        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+        echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
     }
     public function setPeriodo(){

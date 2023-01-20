@@ -147,13 +147,13 @@ async function set(prefijo,where= null,json = null,res = false) {
         return response;
     }
 }
-async function edit(prefijo,id,res=false) {
+async function edit(prefijo,id,php=false,res=false) {
     document.querySelector('#titleModal_'+prefijo).innerHTML ="Actualizar "+capitalize(getTable(prefijo));
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#set_'+prefijo).classList.replace("btn-primary", "btn-info");
     document.querySelector("#form_"+prefijo).reset();
     $('#set_'+prefijo+' span').html("Actualizar");
-    var response = await fetch(base_url + '/Main/get/'+prefijo+','+id)
+    var response = await fetch(base_url + '/Main/get/'+prefijo+','+id+(php?','+php:''))
     .then(response => response.json())
     .then(response => {
         if(response.status){
@@ -174,6 +174,10 @@ async function edit(prefijo,id,res=false) {
                     }
                 }
             }
+            if (typeof window['getPos'+capitalize(prefijo)]==='function') {
+                window['getPos'+capitalize(prefijo)](response.data);
+            }
+
             $('#modal_'+prefijo).modal('show');
             return response;
         }else{
@@ -216,6 +220,9 @@ function openModal(prefijo) {
     $('#set_'+prefijo+' span').html("Guardar");
     document.querySelector('#titleModal_'+prefijo).innerHTML = "Nuevo";  //+ capitalize( getTable(prefijo))
     document.querySelector("#form_"+prefijo).reset();
+    if (typeof window['openModal'+capitalize(prefijo)]==='function') {
+        window['openModal'+capitalize(prefijo)]();
+    }
     $('#modal_'+prefijo).modal('show');
 }
 

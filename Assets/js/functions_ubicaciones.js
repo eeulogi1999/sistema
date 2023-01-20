@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded',function () {
         ubi_table = $('#ubi_table').autoTable({
             "url": url_ubi,
             "numerate": true,
+            "tree": true,
             "thid": 'ubi_id',
             "columns":[
                 {"data":"ubi_clave",header:{t:"PROP."},tipo:'string'},

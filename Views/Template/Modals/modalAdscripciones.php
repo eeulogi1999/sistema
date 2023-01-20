@@ -3,13 +3,13 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header headerUpdate">
-                <h5 class="modal-title" id="titleModal">Actualizar Datos</h5>
+                <h5 class="modal-title" id="titleModal_ads">Actualizar Datos</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formAsi" name="formAsi" class="form-horizontal  border rounded p-3">
+                <form id="form_ads" name="form_ads" class="form-horizontal  border rounded p-3">
                     <input type="hidden" id="ads_id" name="ads_id" value="">
                     <p class="text-primary">Datos Generales</p>
                     <div class="form-row">

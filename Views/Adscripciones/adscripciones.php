@@ -16,7 +16,7 @@
     <div>
       <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
         <?php if($_SESSION['perMod']['gtp_w']){ ?>
-        <button class="btn btn-primary" type="button" onclick="openmodal_ads();"><i class="fas fa-plus-circle"></i>
+        <button class="btn btn-primary" type="button" onclick="openModal('ads');"><i class="fas fa-plus-circle"></i>
           Nuevo</button>
         <?php } ?>
       </h1>
