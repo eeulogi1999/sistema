@@ -5,6 +5,11 @@
     getModal('modalActivos',$data);
     getModal('modalAreas',$data);
     getModal('modalColaboradores',$data);
+    getModal('modalUbicaciones',$data);
+    $data['pre']='col';
+    getModal('modalTable',$data);
+    $data['pre']='ubi';
+    getModal('modalTable',$data);
 ?>
 <main class="app-content">
   <div class="app-title">

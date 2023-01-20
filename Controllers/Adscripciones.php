@@ -30,7 +30,7 @@ class Adscripciones extends Controllers{
         $data['page_title'] = ucfirst($_GET['url']).' de Activos';
         $data['page_name'] = $_GET['url'];
         $data['page_data'] = array();
-        $data['page_functions_js'] = array("functions_adscripciones.js","functions_activos.js","functions_colaboradores.js");
+        $data['page_functions_js'] = array("functions_adscripciones.js","functions_activos.js","functions_colaboradores.js","functions_ubicaciones.js");
         $this->views->getView($this,"adscripciones",$data);
     }
     public function getAdscripciones(){
@@ -65,12 +65,8 @@ class Adscripciones extends Controllers{
                 }
             }
             $arrAde = $_POST['ads_ade_id'];
-            $arrUbi = $_POST['ads_ubi_id'];
             unset($_POST['ads_ade_id']);
-            unset($_POST['ads_ubi_id']);
             $_POST['ads_cunico'] =  $this->adscripciones->searchRegistro(array('ads_tipo'=>$_SESSION['ads']['ads_tipo']),"MAX(ads_cunico) as 'next'")['next']+1;
-            $_POST['ads_ubi_id'] = $this->ubicaciones->insertRegistro($arrUbi)['ubi_id'];
-            $_POST['ads_tipo'] = $_SESSION['ads']['ads_tipo'];
             $asi = $this->adscripciones->insertRegistro($_POST);
             foreach ($arrAde as $i => $ade){ 
                 $ade['ade_ads_id'] = $asi['ads_id'];

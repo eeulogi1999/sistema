@@ -88,7 +88,10 @@ class Main extends Controllers{
     }
     public function getTcambio($fecha){
         $gt = $this->tcambios->searchRegistro(array('gtc_fecha'=>$fecha));
-        $arrData = $this->tcespeciales->searchRegistro(array('tce_gtc_id'=>$gt['gtc_id']));
+        $arrData = null;
+        if (!empty($gt)) {
+            $arrData = $this->tcespeciales->searchRegistro(array('tce_gtc_id'=>$gt['gtc_id']));
+        }
         if (empty($arrData)) {
             $tc = CurlConnectionGet('https://api.apis.net.pe/v1/tipo-cambio-sunat?fecha='.$fecha,null,'apis-token-1.aTSI1U7KEuT-6bbbCguH-4Y8TI6KS73N');
             $itc = $this->tcambios->insertRegistro(array('gtc_fecha'=>$tc['fecha'],'gtc_gt4_id'=>2,'gtc_tcompra'=>$tc['compra'],'gtc_tventa'=>$tc['venta']));

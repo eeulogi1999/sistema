@@ -42,7 +42,7 @@
     }
     function getModal(string $nameModal, $data){
         $view_modal = "Views/Template/Modals/{$nameModal}.php";
-        require_once $view_modal;        
+        require $view_modal;        
     }
     function getFile(string $url, $data){
         ob_start();
