@@ -36,7 +36,10 @@ document.addEventListener('DOMContentLoaded',function () {
             .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
         })
     }
-    $('#asi_col_id').loadOptions('colaboradores',['col_gpe_id.gpe_nombre','col_gpe_id.gpe_apellidos']); 
+    if (document.querySelector('#asi_col_id')) {
+        $('#asi_col_id').loadOptions('colaboradores',['col_gpe_id.gpe_nombre','col_gpe_id.gpe_apellidos']);   
+    }
+    
 });
 window.addEventListener('load', async () => {
     asi_table = await asi_table;

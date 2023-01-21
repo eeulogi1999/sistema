@@ -138,10 +138,10 @@ class Asistencias extends Controllers{
         $res = array('status'=>false,'msg'=>'Datos no Recibidos','data'=>$_POST);
         if ($_POST) {
             for ($i=1; $i < 7; $i++) { 
-                if (!empty($_POST['ms_'.$i]) && !empty($_POST['me_'.$i])) {
+                if ($_POST['ms_'.$i]!= '' && $_POST['me_'.$i]!= '') {
                     $this->asistencias->insertRegistro(array('asi_col_id'=>$_POST['asi_col_id'],'asi_horaE'=>$_POST['d_'.$i].' '.$_POST['ms_'.$i],'asi_horaS'=>$_POST['d_'.$i].' '.$_POST['me_'.$i]),array('asi_col_id','asi_horaE'));
                 }
-                if (!empty($_POST['ts_'.$i]) && !empty($_POST['te_'.$i])) {
+                if ($_POST['ts_'.$i]!= '' && $_POST['te_'.$i]!= '') {
                     $this->asistencias->insertRegistro(array('asi_col_id'=>$_POST['asi_col_id'],'asi_horaE'=>$_POST['d_'.$i].' '.$_POST['ts_'.$i],'asi_horaS'=>$_POST['d_'.$i].' '.$_POST['te_'.$i]),array('asi_col_id','asi_horaE'));
                 }
             }

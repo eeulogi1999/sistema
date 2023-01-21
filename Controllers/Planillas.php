@@ -15,7 +15,7 @@ class Planillas extends Controllers{
         $data['page_title'] = "Planillas ";
         $data['page_name'] = "Planillas";
         $data['page_data'] = array('asi'=>array('asi_week'=>$_SESSION['asi']['asi_week']));
-        $data['page_functions_js'] = array("functions_planillas.js");
+        $data['page_functions_js'] = array("functions_planillas.js","functions_asistencias.js");
         $this->views->getView($this,"planillas",$data);
     }
     public function getPlanillas($res = false){
@@ -43,7 +43,6 @@ class Planillas extends Controllers{
             $nh += (intval($nm->format('h'))<12)?intval($nm->format('h')):0;
             $nm = (intval($nm->format('i'))>0)?intval($nm->format('i'))/60:0;
             $nh += $nm;
-            $view = '<button class="btn btn-warning btn-sm" onClick="viewAsi('.$rwcol[$i]["col_id"].')" title="Ver Planilla"><i class="far fa-eye"></i></button>'; 
             $r['pla_hweek'] = $nh;
 
             $r['pla_sweek'] = $r['pla_col_id']['col_sbase']/4;
@@ -55,7 +54,7 @@ class Planillas extends Controllers{
                     }
                 }
             }
-            $r['pla_hextras'] =  ($r['pla_ndias']>4)?$nh-51:0; // pla_estado
+            $r['pla_hextras'] =  ($r['pla_ndias']>3)?$nh-51:0; // pla_estado
             $r['pla_mhxtras'] =  0;
             if ($r['pla_hextras']>0) {
                 $r['pla_mhxtras'] =  $r['pla_hextras']*(($r['pla_sweek']/6)/8);
@@ -80,6 +79,7 @@ class Planillas extends Controllers{
                 $r['pla_saldo'] = floatval($swe['swe_saldo']);
             }
             $r['pla_tpagar'] = $r['pla_saldo']-abs($r['pla_adelantos']);
+            
             if ($r['pla_ndias']>0) {
                 $r['pla_tpagar'] += $r['pla_sweek']+$r['pla_mhxtras'];
             }
@@ -95,6 +95,7 @@ class Planillas extends Controllers{
                     break;
             }
             $r['pla_status'] = $text;
+            $view = '<button class="btn btn-success btn-sm" onClick="viewAsi('.$rwcol[$i]["col_id"].')" title="Asistencias"><i class="far fa-eye"></i></button>'; 
             $r['pla_options'] = '<div class="text-center">'.$view.'</div>';
 
             array_push($rw,$r); 
