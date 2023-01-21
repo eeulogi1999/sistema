@@ -213,16 +213,16 @@ function resetModal(prefijo) {
     document.querySelector("#form_"+prefijo).reset();
     $('#modal_'+prefijo).modal('hide');
 }
-function openModal(prefijo) {
-    document.querySelector('#'+prefijo+'_id').value = "";
+function openModal(pre) {
+    document.querySelector('#'+pre+'_id').value = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
-    document.querySelector('#set_'+prefijo).classList.replace("btn-info", "btn-primary");
-    $('#set_'+prefijo+' span').html("Guardar");
-    document.querySelector('#titleModal_'+prefijo).innerHTML = "Nuevo";  //+ capitalize( getTable(prefijo))
-    document.querySelector("#form_"+prefijo).reset();
-    if (typeof window['openModal'+capitalize(prefijo)]==='function') {
-        window['openModal'+capitalize(prefijo)]();
+    document.querySelector('#set_'+pre).classList.replace("btn-info", "btn-primary");
+    $('#set_'+pre+' span').html("Guardar");
+    document.querySelector('#titleModal_'+pre).innerHTML = "Nuevo";  //+ capitalize( getTable(prefijo))
+    document.querySelector("#form_"+pre).reset();
+    if (typeof window['openModal'+capitalize(pre)]==='function') {
+        window['openModal'+capitalize(pre)]();
     }
-    $('#modal_'+prefijo).modal('show');
+    $('#modal_'+pre).modal('show');
 }
 

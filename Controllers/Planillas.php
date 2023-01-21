@@ -54,7 +54,19 @@ class Planillas extends Controllers{
                     }
                 }
             }
-            $r['pla_hextras'] =  ($r['pla_ndias']>3)?$nh-51:0; // pla_estado
+            $sat = date('Y-m-d',strtotime('saturday this week',strtotime($_SESSION['asi']['asi_week'])));
+            $sab = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]["col_id"],'custom'=>'DATE_FORMAT(asi_horaE, "%Y-%m-%d") = '.$sat));
+            $ht = 0;
+            if ($r['pla_ndias']<6) {
+                if (!empty($sab)) {
+                    $ht = ($r['pla_ndias']*9);
+                } else {
+                    $ht = ($r['pla_ndias']*9)-3;
+                }
+            } else {
+                $ht = 51;
+            }
+            $r['pla_hextras'] =  ($r['pla_ndias']>0)?$r['pla_hweek']-$ht:0; // pla_estado
             $r['pla_mhxtras'] =  0;
             if ($r['pla_hextras']>0) {
                 $r['pla_mhxtras'] =  $r['pla_hextras']*(($r['pla_sweek']/6)/8);
@@ -79,9 +91,9 @@ class Planillas extends Controllers{
                 $r['pla_saldo'] = floatval($swe['swe_saldo']);
             }
             $r['pla_tpagar'] = $r['pla_saldo']-abs($r['pla_adelantos']);
-            
+
             if ($r['pla_ndias']>0) {
-                $r['pla_tpagar'] += $r['pla_sweek']+$r['pla_mhxtras'];
+                $r['pla_tpagar'] += $r['pla_sueldo']+$r['pla_mhxtras'];
             }
             switch (true) {
                 case $r['pla_tpagar']<0:

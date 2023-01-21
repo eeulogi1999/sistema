@@ -298,7 +298,7 @@ async function viewCaj(id,tipo=null){
     }   
 }
 
-function openModalCaj(pre) {
+function openModalCajP(pre) {
     var formData = new FormData()
     formData.append('caj_tipo',data.caj.caj_tipo)
     fetch(base_url + '/Cajas/getNumCajas', {method: "POST",body: formData})

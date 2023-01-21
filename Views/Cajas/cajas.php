@@ -9,7 +9,7 @@
     <h4>
       <i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
       <?php if($_SESSION['perMod']['gtp_w']){ ?>
-        <button class="btn btn-primary" type="button" onclick="openModalCaj('caj');"><i class="fas fa-plus-circle" aria-hidden="true"></i> Nuevo</button>
+        <button class="btn btn-primary" type="button" onclick="openModalCajP('caj');"><i class="fas fa-plus-circle" aria-hidden="true"></i> Nuevo</button>
       <?php } ?>
     </h4>
     <div class="d-flex">
