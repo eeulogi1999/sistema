@@ -1,5 +1,8 @@
 <?php 
     headerAdmin($data); 
+    $data['pre']='mov';
+    getModal('modalTable',$data);
+    getModal('modalMovimientos',$data);
 ?>
 <main class="app-content">
   <div class="app-title">

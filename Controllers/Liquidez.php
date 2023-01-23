@@ -415,7 +415,27 @@ class Liquidez extends Controllers{
             $res[$i]['mov_porc'] = '<input type="text" value="'.$res[$i]['mov_cue_id']['cue_porcentaje'].'" size="4" onChange="setPorcentaje('.$res[$i]['mov_cue_id']['cue_id'].',event)">'; 
             $res[$i]['mov_dscg'] = $res[$i]['mov_det_liq']*($res[$i]['mov_cue_id']['cue_porcentaje']/100);
             $res[$i]['mov_sald'] = $res[$i]['mov_det_liq']-$res[$i]['mov_dscg'];
+            $btnView = '<button class="btn btn-info btn-sm" onclick="getDetView('.$d['mov_cue_id']['cue_id'].')" title="Ver Registro" > <i class="far fa-eye"></i> </button>';
+            $res[$i]['mov_options'] = '<div class="text-center">'.$btnView.'</div>';
         }
+        if ($out) {
+            return $res;
+        } else {
+            echo json_encode($res,JSON_UNESCAPED_UNICODE);
+            die();
+        }
+    }
+    public function getExportaciones($out=false){
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+        foreach ($res as $i => $r) {
+            $res[$i]['mov_porc'] = '<input type="text" value="'.$r['mov_cue_id']['cue_por_exp'].'" size="4" onChange="setPorExp('.$r['mov_cue_id']['cue_id'].',event)">'; 
+            $res[$i]['mov_base'] = $r['mov_sum']*($r['mov_cue_id']['cue_por_exp']/100);
+            $res[$i]['mov_cigv'] = $res[$i]['mov_base']*0.18;
+            $res[$i]['mov_impuesto'] =  $res[$i]['mov_base']*0.025;
+            $res[$i]['mov_retorno'] = $res[$i]['mov_cigv']-$res[$i]['mov_impuesto'];
+            $btnView = '<button class="btn btn-info btn-sm" onclick="getExpDet('.$r['mov_cue_id']['cue_id'].')" title="Ver Registro" > <i class="far fa-eye"></i> </button>';
+            $res[$i]['mov_options'] = '<div class="text-center">'.$btnView.'</div>';
+        }  
         if ($out) {
             return $res;
         } else {

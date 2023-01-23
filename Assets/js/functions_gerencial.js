@@ -2,7 +2,7 @@ var res_table,cve_table,sfi_table,exp_table,det_table;
 var url_res = base_url+"/Gerencial/getGerencial";
 var url_cve = base_url+"/Reportes/getCventas";
 var url_sfi = base_url+"/Gerencial/getResultados";
-var url_exp = base_url+"/Gerencial/getExportaciones";
+var url_exp = base_url+"/Liquidez/getExportaciones";
 var url_det = base_url+"/Liquidez/getDetracciones";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
@@ -47,7 +47,12 @@ document.addEventListener('DOMContentLoaded',function () {
             "numerate": true,
             "columns":[
                 {"data":"mov_cue_id.cue_nombre",header:"CUENTAS",tipo:'string',footer:"TOTALES"},
-                {"data":"mov_sum",header:{t:"TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }}, //mov_options
+                {"data":"mov_sum",header:{t:"TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }}, 
+                {"data":"mov_porc",header:{t:"PORCENTAJE",align:'center'},tipo:'string'},
+                {"data":"mov_base",header:{t:"COMPRA",align:'center'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_cigv",header:{t:"IGV",align:'center'},tipo:'money'},
+                {"data":"mov_impuesto",header:{t:"IMPUESTO",align:'center'},tipo:'money'},
+                {"data":"mov_retorno",header:{t:"RETORNO",align:'center'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"mov_options",header:{t:"OPCIONES",align:'center'},tipo:'string'} 
             ]
         });
@@ -65,6 +70,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"mov_porc",header:{t:"PORCENTAJE",align:'center'},tipo:'string'},
                 {"data":"mov_dscg",header:{t:"DSCG",align:'center'},tipo:'money',footer:{ c:"sum" }}, 
                 {"data":"mov_sald",header:{t:"SALDO",align:'center'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_options",header:{t:"OPCIONES",align:'center'},tipo:'string'} 
 
             ]
         });
@@ -156,11 +162,23 @@ async function cierre() {
 async function setPorcentaje(id,e) {
     await set(`cue`,null,{cue_id:id,cue_porcentaje:e.target.value},true); 
     det_table.reload()
+} 
+async function setPorExp(id,e) {
+    await set(`cue`,null,{cue_id:id,cue_por_exp:e.target.value},true); 
+    exp_table.reload()
 }
 
 function getExpDet(id) {
     $('#modalTable_mov').modal('show');
     mov_table.reload(base_url+"/Gerencial/getExpDet/"+id);
+    setTimeout(() => {
+        mov_table.rezise();
+    }, 400);
+}
+
+function getDetView(id) {
+    $('#modalTable_mov').modal('show');
+    mov_table.reload(base_url+"/Gerencial/getDetView/"+id);
     setTimeout(() => {
         mov_table.rezise();
     }, 400);
