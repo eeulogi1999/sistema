@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded',function () {
             "numerate": true,
             "columns":[
                 {"data":"mov_cue_id.cue_nombre",header:"CUENTAS",tipo:'string',footer:"TOTALES"},
-                {"data":"mov_sum",header:{t:"TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }}
+                {"data":"mov_sum",header:{t:"TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }}, //mov_options
+                {"data":"mov_options",header:{t:"OPCIONES",align:'center'},tipo:'string'} 
             ]
         });
     }
@@ -68,7 +69,6 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
-
 });
 
 window.addEventListener('load', async () => {
@@ -153,29 +153,15 @@ async function cierre() {
     divLoading.style.display = "none";
 }
 
-async function resumenPdf(){
-    var formData = new FormData()
-    let res_table = new Blob([$('#res_table').parent().html()], {type: "text/html"});
-    formData.append('res_table',new File([res_table],'res_table.html')); 
-    let cue_table = new Blob([$('#cue_table').parent().html()], {type: "text/html"});
-    formData.append('cue_table',new File([cue_table],'cue_table.html')); 
-    let sbi_table = new Blob([$('#sbi_table').parent().html()], {type: "text/html"});
-    formData.append('sbi_table',new File([sbi_table],'sbi_table.html')); 
-    liq_table.reload(base_url+"/Liquidez/getLiquidez/cobrar");
-    let liq_pagar = new Blob([$('#liq_table').parent().html()], {type: "text/html"});
-    formData.append('liq_pagar',new File([liq_pagar],'liq_pagar.html'));
-    liq_table.reload(base_url+"/Liquidez/getLiquidez/pagar");
-    let liq_cobrar = new Blob([$('#liq_table').parent().html()], {type: "text/html"});
-    formData.append('liq_cobrar',new File([liq_cobrar],'liq_cobrar.html')); 
-    fetch(base_url + '/Reportes/resumenPDF', {method: "POST",body: formData})
-    .then(response => response.json())
-    .then(r => {
-        window.open(base_url+'/Assets/pdf/'+r.name, '_blank');
-    })
-    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
-}
-
 async function setPorcentaje(id,e) {
     await set(`cue`,null,{cue_id:id,cue_porcentaje:e.target.value},true); 
     det_table.reload()
+}
+
+function getExpDet(id) {
+    $('#modalTable_mov').modal('show');
+    mov_table.reload(base_url+"/Gerencial/getExpDet/"+id);
+    setTimeout(() => {
+        mov_table.rezise();
+    }, 400);
 }
