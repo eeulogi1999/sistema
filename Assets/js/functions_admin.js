@@ -404,6 +404,9 @@ function previewFiles(th,content) {
                             if (typeof o.columns[j].style.bg != 'undefined') {
                                 cell.classList.add('bg-'+o.columns[j].style.bg);
                             }
+                            if (typeof o.columns[j].style.color != 'undefined') {
+                                cell.classList.add('text-'+o.columns[j].style.color);
+                            }
                             
                         }
                         switch (o.columns[j].tipo) {
