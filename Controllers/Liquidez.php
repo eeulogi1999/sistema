@@ -429,7 +429,7 @@ class Liquidez extends Controllers{
         $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
         foreach ($res as $i => $r) {
             $res[$i]['mov_porc'] = '<input type="text" value="'.$r['mov_cue_id']['cue_por_exp'].'" size="4" onChange="setPorExp('.$r['mov_cue_id']['cue_id'].',event)">'; 
-            $res[$i]['mov_base'] = $r['mov_sum']*($r['mov_cue_id']['cue_por_exp']/100);
+            $res[$i]['mov_base'] = $r['mov_sum']*$r['mov_cue_id']['cue_por_exp'];
             $res[$i]['mov_cigv'] = $res[$i]['mov_base']*0.18;
             $res[$i]['mov_impuesto'] =  $res[$i]['mov_base']*0.025;
             $res[$i]['mov_retorno'] = $res[$i]['mov_cigv']-$res[$i]['mov_impuesto'];
