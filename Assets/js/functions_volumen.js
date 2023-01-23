@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "numerate": true,
             "columns":[
                 {"data":"mov_cue_id.cue_nombre",header:"CUENTAS",tipo:'string',footer:"TOTALES"},
-                {"data":"mov_sum",header:{t:"TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }}, //mov_options
+                {"data":"mov_sum",header:{t:"TOTAL VENTAS",align:'right'},tipo:'money',footer:{ c:"sum" }}, //mov_options
                 {"data":"mov_options",header:{t:"OPCIONES",align:'center'},tipo:'string'} 
             ]
         });

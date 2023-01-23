@@ -431,7 +431,7 @@ class Liquidez extends Controllers{
             $res[$i]['mov_porc'] = '<input type="text" value="'.$r['mov_cue_id']['cue_por_exp'].'" size="4" onChange="setPorExp('.$r['mov_cue_id']['cue_id'].',event)">'; 
             $res[$i]['mov_base'] = $r['mov_sum']*$r['mov_cue_id']['cue_por_exp'];
             $res[$i]['mov_cigv'] = $res[$i]['mov_base']*0.18;
-            $res[$i]['mov_impuesto'] =  $res[$i]['mov_base']*0.025;
+            $res[$i]['mov_impuesto'] =  $r['mov_sum']*0.025;
             $res[$i]['mov_retorno'] = $res[$i]['mov_cigv']-$res[$i]['mov_impuesto'];
             $btnView = '<button class="btn btn-info btn-sm" onclick="getExpDet('.$r['mov_cue_id']['cue_id'].')" title="Ver Registro" > <i class="far fa-eye"></i> </button>';
             $res[$i]['mov_options'] = '<div class="text-center">'.$btnView.'</div>';
