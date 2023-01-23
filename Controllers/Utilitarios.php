@@ -17,6 +17,17 @@ class Utilitarios extends Controllers{
         $data['page_functions_js'] = array("functions_utilitarios.js");
         $this->views->getView($this,"utilitarios",$data);
     }
+    public function Tendencias(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $data['page_tag'] = "Tendencias";
+        $data['page_title'] = "Tendencias";
+        $data['page_name'] = "Tendencias";
+        $data['page_data'] = array();
+        $data['page_functions_js'] = array("functions_utilitarios.js");
+        $this->views->getView($this,"tendencias",$data);
+    }
 
 }
 ?>

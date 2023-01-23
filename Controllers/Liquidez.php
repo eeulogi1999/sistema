@@ -105,9 +105,16 @@ class Liquidez extends Controllers{
                     array('mov_age_id','mov_alm_id','mov_tce_id'));
     
                 $liqData[$i][$pre.'_mtv'] = 0;
-                if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
-                    $rpt = $this->getDetracciones(true);
-                    $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt,'mov_dscg'));
+                if ($liqData[$i][$pre.'_age_id']['age_id'] == 2 || $liqData[$i][$pre.'_age_id']['age_id'] == 5) {
+                    if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
+                        $rpt1 = $this->getDetracciones(true);
+                        $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt1,'mov_dscg'));
+                    }
+                    if ($liqData[$i][$pre.'_age_id']['age_id'] == 5) {
+                        $rpt2 = $this->getExportaciones(true);
+                        $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt2,'mov_dscg'));
+                    }
+
                 } else {
                     for ($j=0; $j < count($detr) ; $j++) { 
                         $liqData[$i][$pre.'_mtv'] = $liqData[$i][$pre.'_mtv']+floatval(json_decode($detr[$j]['mov_igv_id'],true)['mov_neto']);
@@ -433,6 +440,9 @@ class Liquidez extends Controllers{
             $res[$i]['mov_cigv'] = $res[$i]['mov_base']*0.18;
             $res[$i]['mov_impuesto'] =  $r['mov_sum']*0.025;
             $res[$i]['mov_retorno'] = $res[$i]['mov_cigv']-$res[$i]['mov_impuesto'];
+            $res[$i]['mov_porc'] = '<input type="text" value="'.$r['mov_cue_id']['cue_porcentaje'].'" size="4" onChange="setPorcentaje('.$r['mov_cue_id']['cue_id'].',event)">';
+            $res[$i]['mov_dscg'] = $res[$i]['mov_retorno']*($res[$i]['mov_cue_id']['cue_porcentaje']/100);
+            $res[$i]['mov_sald'] = $res[$i]['mov_retorno']-$res[$i]['mov_dscg']; 
             $btnView = '<button class="btn btn-info btn-sm" onclick="getExpDet('.$r['mov_cue_id']['cue_id'].')" title="Ver Registro" > <i class="far fa-eye"></i> </button>';
             $res[$i]['mov_options'] = '<div class="text-center">'.$btnView.'</div>';
         }  

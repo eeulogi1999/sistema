@@ -2,7 +2,7 @@ var mov_table;
 var mde;
 var gtc;
 var mde_json = {};
-var url_mov= base_url+"/Movimientos/getMovimientos/"+data.mov_t12_id;
+var url_mov= base_url+"/Movimientos/getMovimientos/"+data.mov_t12_id??1;
 document.addEventListener('DOMContentLoaded', function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#mov_table")) {

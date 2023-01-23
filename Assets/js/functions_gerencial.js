@@ -53,7 +53,10 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"mov_base",header:{t:"COMPRAS",align:'center'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"mov_cigv",header:{t:"IGV",align:'center'},tipo:'money'},
                 {"data":"mov_impuesto",header:{t:"IMPUESTO",align:'center'},style:{color:'info'},tipo:'money'},
-                {"data":"mov_retorno",header:{t:"RETORNO",align:'center'},tipo:'money',footer:{ c:"sum" }}
+                {"data":"mov_retorno",header:{t:"RETORNO",align:'center'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_porc",header:{t:"PORCENTAJE",align:'center'},tipo:'string'},
+                {"data":"mov_dscg",header:{t:"DSCG",align:'center'},tipo:'money',footer:{ c:"sum" }}, 
+                {"data":"mov_sald",header:{t:"SALDO",align:'center'},tipo:'money',footer:{ c:"sum" }}
             ]
         });
     }

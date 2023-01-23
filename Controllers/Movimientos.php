@@ -68,6 +68,9 @@ class Movimientos extends Controllers{
         $this->views->getView($this,"movimientos",$data);
     }
     public function getMovimientos($mov_t12_id){
+        if (!isset($_SESSION['mov'])) {
+            $_SESSION['mov']['mov_tipo'] = 1;
+        }
         $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>$mov_t12_id,'mov_tipo'=>$_SESSION['mov']['mov_tipo'],'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
         for ($i=0; $i < count($arrData); $i++) {
             $btnEdit = '';
