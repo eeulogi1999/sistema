@@ -419,7 +419,7 @@ class Liquidez extends Controllers{
             $res[$i]['mov_detraccion'] = $d['mov_sum']*0.177;
             $res[$i]['mov_impuesto'] = $d['mov_sum']*0.025; //($res[$i]['mov_cue_id']['cue_porcentaje']/100)
             $res[$i]['mov_det_liq'] = $res[$i]['mov_detraccion']-$res[$i]['mov_impuesto'];
-            $res[$i]['mov_porc'] = '<input type="text" value="'.$res[$i]['mov_cue_id']['cue_porcentaje'].'" size="4" onChange="setPorcentaje('.$res[$i]['mov_cue_id']['cue_id'].',event)">'; 
+            $res[$i]['mov_porc'] = '<input type="text" value="'.$res[$i]['mov_cue_id']['cue_porcentaje'].'" name="det" size="4" onChange="setPorcentaje('.$res[$i]['mov_cue_id']['cue_id'].',event)">'; 
             $res[$i]['mov_dscg'] = $res[$i]['mov_det_liq']*($res[$i]['mov_cue_id']['cue_porcentaje']/100);
             $res[$i]['mov_sald'] = $res[$i]['mov_det_liq']-$res[$i]['mov_dscg'];
             $btnView = '<button class="btn btn-info btn-sm" onclick="getDetView('.$d['mov_cue_id']['cue_id'].')" title="Ver Registro" > <i class="far fa-eye"></i> </button>';
@@ -440,7 +440,7 @@ class Liquidez extends Controllers{
             $res[$i]['mov_cigv'] = $res[$i]['mov_base']*0.18;
             $res[$i]['mov_impuesto'] =  $r['mov_sum']*0.025;
             $res[$i]['mov_retorno'] = $res[$i]['mov_cigv']-$res[$i]['mov_impuesto'];
-            $res[$i]['mov_porc'] = '<input type="text" value="'.$r['mov_cue_id']['cue_porcentaje'].'" size="4" onChange="setPorcentaje('.$r['mov_cue_id']['cue_id'].',event)">';
+            $res[$i]['mov_porc_ret'] = '<input type="text" value="'.$r['mov_cue_id']['cue_porcentaje'].'" size="4" name="exp" onChange="setPorcentaje('.$r['mov_cue_id']['cue_id'].',event)">';
             $res[$i]['mov_dscg'] = $res[$i]['mov_retorno']*($res[$i]['mov_cue_id']['cue_porcentaje']/100);
             $res[$i]['mov_sald'] = $res[$i]['mov_retorno']-$res[$i]['mov_dscg']; 
             $btnView = '<button class="btn btn-info btn-sm" onclick="getExpDet('.$r['mov_cue_id']['cue_id'].')" title="Ver Registro" > <i class="far fa-eye"></i> </button>';

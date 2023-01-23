@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"mov_cigv",header:{t:"IGV",align:'center'},tipo:'money'},
                 {"data":"mov_impuesto",header:{t:"IMPUESTO",align:'center'},style:{color:'info'},tipo:'money'},
                 {"data":"mov_retorno",header:{t:"RETORNO",align:'center'},tipo:'money',footer:{ c:"sum" }},
-                {"data":"mov_porc",header:{t:"PORCENTAJE",align:'center'},tipo:'string'},
+                {"data":"mov_porc_ret",header:{t:"PORCENTAJE",align:'center'},tipo:'string'},
                 {"data":"mov_dscg",header:{t:"DSCG",align:'center'},tipo:'money',footer:{ c:"sum" }}, 
                 {"data":"mov_sald",header:{t:"SALDO",align:'center'},tipo:'money',footer:{ c:"sum" }}
             ]
@@ -165,7 +165,7 @@ async function cierre() {
 
 async function setPorcentaje(id,e) {
     await set(`cue`,null,{cue_id:id,cue_porcentaje:e.target.value},true); 
-    det_table.reload()
+    window[e.target.name+'_table'].reload()
 } 
 async function setPorExp(id,e) {
     await set(`cue`,null,{cue_id:id,cue_por_exp:e.target.value},true); 
