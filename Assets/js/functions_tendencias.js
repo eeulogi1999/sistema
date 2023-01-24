@@ -8,10 +8,10 @@ document.addEventListener('DOMContentLoaded',function () {
             "numerate": true,
             "columns":[
                 {"data":"ten_bie",header:"MATERIAL",tipo:'string'},
-                {"data":"ten_inv",header:{t:"INVESTING",align:'right'},tipo:'money'},
-                {"data":"ten_lme",header:{t:"LME",align:'right'},tipo:'money'},
-                {"data":"ten_exp",header:{t:"EXPANCION",align:'right'},tipo:'money'},
-                {"data":"ten_options",header:{t:"OPCIONES",align:'center'},tipo:'string'} 
+                {"data":"ten_inv",header:{t:"INVESTING",align:'right'},tipo:'float'},
+                {"data":"ten_lme",header:{t:"LME",align:'right'},tipo:'float'},
+                {"data":"ten_exp",header:{t:"EXPANCION",align:'right'},tipo:'float'},
+                {"data":"ten_opt",header:{t:"OPCIONES",align:'center'},tipo:'string'} 
             ]
         });
     }

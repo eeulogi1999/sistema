@@ -47,20 +47,34 @@ class Utilitarios extends Controllers{
         return $response;
     }
     public function getTendencias(){
-        $inv = $this->curlGet('https://es.investing.com/commodities/copper?cid=959211');
+        $bie_ = array('CO'=>'COBRE','PB'=>'PLOMO','AL'=>'ALUMINIO');
         libxml_use_internal_errors(true);
-        $cu1 = $this->Html2array->getElemetByQuery($inv,'instrument-price-last');
+        $inv_ = array('PRE'=>'https://es.investing.com/commodities/','CO'=>'copper?cid=959211','PB'=>'lead?cid=959207','AL'=>'aluminum');
+        $lme_ = array('PRE'=>'https://www.lme.com/api/trading-data/metal-block?datasourceIds=','CO'=>'fc09fcde-6438-4834-9221-98da9ed54eea','PB'=>null,'AL'=>'fc09fcde-6438-4834-9221-98da9ed54eea');
+        $exp_ = array('PRE'=>'https://www.expansion.com/mercados/cotizaciones/materias/','CO'=>'cobre(londres)_MCU.html','PB'=>'plomo(londres)_MPB.html','AL'=>'aluminio(londres)_MAL.html');
+        $response = array();
+        foreach ($bie_ as $i => $d) {
+            $res['ten_bie'] = $d;
+            $inv = $this->curlGet($inv_['PRE'].$inv_[$i]);
+            $cu1 = $this->Html2array->getElemetByQuery($inv,'instrument-price-last');
+            $res['ten_inv'] = floatval(str_replace(',', '.', str_replace('.', '', $cu1)));
+            if (!empty($lme_[$i])) {
+                $lme = $this->curlGet($lme_['PRE'].$lme_[$i]);
+                $lme = json_decode($lme,true);
+                $res['ten_lme'] =  $lme[0]['Value'];
+            }else {
+                $res['ten_lme'] = 0;
+            }
 
-        $lme = $this->curlGet('https://www.lme.com/api/trading-data/fifteen-minutes-metal-block?datasourceIds=48b1eb21-2c1c-4606-a031-2e0e48804557');
-        $lme = json_decode($lme,true);
-        $cu2 = $lme[0]['Data'][array_key_last($lme[0]['Data'])]['Value'];
+            $exp = $this->curlGet($exp_['PRE'].$exp_[$i]);
+            $cu3 = $this->Html2array->getElemetByQueryExp($exp);
+            $res['ten_exp'] = floatval(str_replace(',', '.', str_replace('.', '', $cu3)));
 
-        $exp = $this->curlGet('https://www.expansion.com/mercados/cotizaciones/materias/cobre(londres)_MCU.html');
-        libxml_use_internal_errors(true);
-        $cu3 = $this->Html2array->getElemetByQueryExp($exp);
-        $bie = array('CO'=>'COBRE','BR'=>'BRONCE','PB'=>'PLOMO','AL'=>'ALUMINIO');
-        $res[0] = array('ten_bie'=>'COBRE','ten_inv'=>$cu1 ,'ten_lme'=>$cu2,'ten_exp'=>$cu3,'ten_options'=>'');
-        echo json_encode($res,JSON_UNESCAPED_UNICODE);
+            $res['ten_opt'] = '';
+            array_push($response,$res);
+            
+        }
+        echo json_encode($response,JSON_UNESCAPED_UNICODE);
         die();
     }
 
