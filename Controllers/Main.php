@@ -174,7 +174,7 @@ class Main extends Controllers{
             $arrData = $this->{$tabla}->selectRegistro($id);
             if (!empty($arrData)) {
                 $res = array('status' => true, 'msg' => 'OK','data'=>$arrData);
-                if (isset($data[2])) {
+                if (isset($data[2]) && $data[2]=='php' ) {
                     $this->newController(ucfirst($tabla));
                     $res['data'] = $this->{ucfirst($tabla)}->{'get'.ucfirst($prefijo)}($arrData,true);
                     unset($this->{ucfirst($tabla)});

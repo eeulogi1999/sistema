@@ -147,7 +147,7 @@ async function set(prefijo,where= null,json = null,res = false) {
         return response;
     }
 }
-async function edit(prefijo,id,php=false,res=false) {
+async function edit(prefijo,id,res=false,php=false) {
     document.querySelector('#titleModal_'+prefijo).innerHTML ="Actualizar "+capitalize(getTable(prefijo));
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#set_'+prefijo).classList.replace("btn-primary", "btn-info");

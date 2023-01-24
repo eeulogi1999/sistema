@@ -38,6 +38,7 @@
         $format  = print_r('<pre>');
         $format .= print_r($data);
         $format .= print_r('</pre>');
+        die();
         return $format;
     }
     function getModal(string $nameModal, $data){
@@ -437,7 +438,7 @@
         CURLOPT_URL => 'http://localhost/sistema/Main/get/gcl/1',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_HTTPAUTH=>CURLAUTH_BASIC,
-        CURLOPT_USERPWD=>'administrador@regomsa.com.pe:1sistemas-SOM',
+        CURLOPT_USERPWD=>'admin@companycacel.com:qwert',
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 0,
