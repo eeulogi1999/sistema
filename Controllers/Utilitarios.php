@@ -50,7 +50,7 @@ class Utilitarios extends Controllers{
         $bie_ = array('CO'=>'COBRE','PB'=>'PLOMO','AL'=>'ALUMINIO');
         libxml_use_internal_errors(true);
         $inv_ = array('PRE'=>'https://es.investing.com/commodities/','CO'=>'copper?cid=959211','PB'=>'lead?cid=959207','AL'=>'aluminum');
-        $lme_ = array('PRE'=>'https://www.lme.com/api/trading-data/metal-block?datasourceIds=','CO'=>'fc09fcde-6438-4834-9221-98da9ed54eea','PB'=>null,'AL'=>'fc09fcde-6438-4834-9221-98da9ed54eea');
+        $lme_ = array('PRE'=>'https://www.lme.com/api/trading-data/metal-block?datasourceIds=','CO'=>'fc09fcde-6438-4834-9221-98da9ed54eea','PB'=>null,'AL'=>'1b72897c-6a30-480c-a74a-cfc2faaaff16');
         $exp_ = array('PRE'=>'https://www.expansion.com/mercados/cotizaciones/materias/','CO'=>'cobre(londres)_MCU.html','PB'=>'plomo(londres)_MPB.html','AL'=>'aluminio(londres)_MAL.html');
         $response = array();
         foreach ($bie_ as $i => $d) {
