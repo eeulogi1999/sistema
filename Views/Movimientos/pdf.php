@@ -66,12 +66,21 @@
         .wd20 {
             width: 20%;
         }
+
         .wd25 {
             width: 25%;
         }
+
         .wd30 {
-            width: 30%;
-        }
+			width: 30%;
+			border: 1px solid #CCC;
+			border-radius: 10px;
+			padding: 0 0 0 20px;
+		}
+		.wd30 h3 {
+			margin-bottom: 0px;
+
+		}
 
         .wd35 {
             width: 35%;
@@ -88,6 +97,7 @@
         .wd55 {
             width: 55%;
         }
+
         .wd60 {
             width: 60%;
         }
@@ -106,7 +116,7 @@
 
         .tbl-detalle thead th {
             padding: 5px;
-            background-color: #711529;
+            background-color: #28a745;
             color: #FFF;
         }
 
@@ -128,19 +138,20 @@
         }
 
         .tblfoot {
-            background-color: #711529;
+            background-color: #28a745;
             /* #009688 */
             border-radius: 7px;
             padding: 5px;
             color: #FFF;
             text-align: left;
         }
-        .det-mov{
+
+        .det-mov {
             font-size: 20px;
         }
 
         .tblfoot_Final {
-            background-color: #bf0811;
+            background-color: #28a745;
             border-radius: 7px;
             border-top: black;
             border-bottom: black;
@@ -169,9 +180,39 @@
             height: 100%;
             display: flex;
         }
-        .det-con{
+
+        .det-con {
             font-size: 22px !important;
         }
+        .color_general{
+			color: #28a745 ;
+		}
+		.color_second{
+			color: #009688;
+		}
+
+        .bord {
+			border: 1px solid #CCC;
+			border-radius: 10px;
+		}
+
+		.bord h4 {
+			text-decoration: none;
+		}
+        .titulotd {
+			background-color: #fff;
+		}
+		.titulotd .peque{
+			font-size:35px;
+		}
+        .titulo {
+			font-size: 40px;
+			color: #28a745;
+
+		}
+        .color_danger {
+			color: red;
+		}
     </style>
 </head>
 
@@ -179,32 +220,40 @@
     <table class="tbl-hader">
         <tbody>
             <tr>
-                <td class="wd10">
-                    <img src="<?= base_url() ?>/.uploads/<?= $alm['alm_est_id']['est_logo'] ?>" alt="Logo"
-                        width="150">
+                <td class="text-center bord wd30">
+
+                    <h3><strong class="color_general">PUESTO</strong></h3>
+                    <h1 class="color_general">384</h1>
                 </td>
-                <td class="text-center wd50 ">
-                    <h4><strong><?= strtoupper($gcl['gcl_gem_id']['gem_razonsocial']) ?></strong></h4>
-                    <p><?= $gcl['gcl_gem_id']['gem_direccion'] ?> <br>
-                        <?= $gcl['gcl_gem_id']['gem_gdi_id']['gdi_gpr_id']['gpr_gde_id']['gde_departamento'].' - '.
-                        $gcl['gcl_gem_id']['gem_gdi_id']['gdi_gpr_id']['gpr_provincia'].' - '.
-                        $gcl['gcl_gem_id']['gem_gdi_id']['gdi_distrito'] ?>
-                        <br>
-                        SUCURSAL:<?=  $alm['alm_est_id']['est_direccion']?> <br>
-                        <?= $alm['alm_est_id']['est_gdi_id']['gdi_distrito'] ?>
-                        <br><br>
-                        <strong>Contactos</strong><br>
-                        <span>https://companycacel.com/</span> <br>
-                        <span>companycacelsac@gmail.com</span><br>
-                        <span>+51 922 012 611    +51 922 532 641</span>
-                    </p>
+                <td class="text-center wd20">
+                    <img src="<?= media() ?>/images/logo_platanal.png" alt="Logo" width="100">
 
                 </td>
-                <td class="text-center wd30 tbl-cliente det-mov" >
-                    <p><span>RUC: <?= $gcl['gcl_gem_id']['gem_ruc'] ?></span><br>
-                        <strong class="text-uppercase"><?= $mov['mov_t10_id']['t10_descripcion']?></strong><br>
-                        <span><?= $mov['mov_serie'].'-'.str_pad($mov['mov_numero'],8,0,STR_PAD_LEFT) ?></span><br>
-                    </p>
+                <td class="text-center wd50 bord titulotd">
+                    <h1 class="titulo"><strong>EL PLATANAL <span class="peque"> DE GRACIELA</span> </strong></h1>
+
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="tbl-hader">
+        <tbody>
+            <tr>
+                <td class="text-center bord wd50 ">
+
+                    <p class="color_general"><strong>Fecha Ingreso:</strong><?= $mov['mov_fechaE'] ?> <br><br>
+                        <strong>Fecha &nbsp;&nbsp; Pago:</strong> <?= $mov['mov_fechaV'] ?> <br></p>
+                </td>
+                <td class="text-center bord wd20 telf">
+
+                    <h4 class="color_general">988 770 506</h4>
+                    <h4 class="color_general">936 585 176</h4>
+                    <h4 class="color_general">957 755 341</h4>
+                </td>
+                <td class="text-center bord wd30">
+                    <h3><strong class="color_general">NUM. LIQUIDACIÓN</strong></h3>
+                    <h1 class="color_danger"> <span>N°.</span> <?= $mov['mov_numero'] ?></h1>
                 </td>
             </tr>
         </tbody>
@@ -213,50 +262,14 @@
     <table class="tbl-cliente">
         <tbody>
             <tr>
-                <td class="wd10"><?= !empty($mov['mov_age_id']['age_gem_id'])?'Razón Social ':'Nombre:' ?></td>
-                <td class="wd50"><?= $mov['mov_age_id']['age_nombre'] ?></td>
-                <td class="wd10">MONEDA:</td>
-                <td class="wd10"><?= $mov['mov_gt4_id']['gt4_descripcion'] ?></td>
-                <td class="wd10">IGV:</td>
-                <td class="wd10"><?= "18.00%" ?></td>
+                <td class="wd15 color_general">PRODUCTOR:</td>
+                <td class="wd55 color_general"><strong><?= !empty($mov['mov_age_id'])?$mov['mov_age_id']['age_nombre']:''?></strong>
+                </td>
+                <td class="color_general">MARCA:</td>
+                <td class="wd20 color_general"><strong><?= '' ?></strong></td>
+
             </tr>
-            <?php if ($mov['mov_t12_id']['t12_id']<3) { ?>
-                <tr>
-                    <td class="wd10"><?= !empty($mov['mov_age_id']['age_gem_id'])?'RUC ':'Identificacion:' ?></td>
-                    <td class="wd50"><?= $mov['mov_age_id']['age_ide'] ?></td>
-                    <td class="wd10">FECHA</td>
-                    <td class="wd10"><?= $mov['mov_fechaE'] ?></td>
-                    <td class="wd10">PAGO</td>
-                    <td class="wd10"><?= (empty($mov['mov_cre_id'])) ? 'Contado' : 'Credito' ; ?></td>
-                </tr>
-                <tr>
-                    <td class="wd10">DIRECCION:</td>
-                    <td class="wd50"><?= !isset($mov['mov_age_id'])? '': $mov['mov_age_id']['age_direccion'] ?></td>
-                </tr>
-                <tr>
-                    <td class="wd10">CIUDAD:</td>
-                    <td class="wd50"><?= !isset($mov['mov_age_id'])? '': $mov['mov_age_id']['age_gdi_id']['gdi_gpr_id']['gpr_gde_id']['gde_departamento'].'-'.
-                                $mov['mov_age_id']['age_gdi_id']['gdi_gpr_id']['gpr_provincia'].'-'.
-                                $mov['mov_age_id']['age_gdi_id']['gdi_distrito']?></td>
-                </tr>
-                <tr>
-                    <td class="wd10">EMISOR:</td>
-                    <td class="wd50"><?= !isset($mov['mov_gus_id'])? '': $mov['mov_gus_id']['gus_gpe_id']['gpe_nombre']?></td>
-                </tr>
-            <?php } else {?>
-                <tr>
-                    <td class="wd10">RUC/Identificacion:</td>
-                    <td class="wd50"></td>
-                </tr>
-                <tr>
-                    <td class="wd10">DIRECCION:</td>
-                    <td class="wd50"></td>
-                </tr>
-                <tr>
-                    <td class="wd10">CIUDAD:</td>
-                    <td class="wd50"></td>
-                </tr>
-            <?php }?>
+
         </tbody>
     </table>
     <br>
@@ -287,9 +300,43 @@
                 <td class="text-right"><?= formatMoney($mde['mde_importe']) ?></td>
             </tr>
             <?php }
+            // $mov['mov_igv_id'] = json_decode($mov['mov_igv_id'],true);
+            ?>
+        </tbody>
+    </table><br><br>
+    <div class="text-center">
+    SECCION DE GASTOS
+    </div>
+    <table class="tbl-detalle">
+        <thead>
+            <tr>
+                <th class="wd10 text-center">CODIGO</th>
+                <th class="wd10 text-center">CANT</th>
+                <th class="wd15 text-center">UNID.</th>
+                <th class="wd25">DESCRIPCIÓN</th>
+                <th class="wd10 text-right">V. UNT.</th>
+                <th class="wd10 text-center">DSCTO</th>
+                <th class="wd20 text-right">V. VENTA</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php 
+			for ($i = 0; $i < count($mov['mov_mde_id']);$i++) {
+					$mde = $mov['mov_mde_id'][$i];
+			 ?>
+            <tr>
+                <td class="text-center"><?= $mde['mde_bie_id']['bie_codigo'] ?></td>
+                <td class="text-center"><?= number_format($mde['mde_q'], 2,'.','') ?></td>
+                <td class="text-center"><?= $mde['mde_t6m_id']['t6m_descripcion'] ?></td>
+                <td><?= $mde['mde_bie_id']['bie_nombre'] ?></td>
+                <td class="text-right"><?= formatMoney($mde['mde_vu']) ?></td>
+                <td class="text-center"><?= "0.00" ?></td>
+                <td class="text-right"><?= formatMoney($mde['mde_importe']) ?></td>
+            </tr>
+            <?php }
             $mov['mov_igv_id'] = json_decode($mov['mov_igv_id'],true);
             ?>
-        </tbody><br><br>
+        </tbody>
         <tfoot>
             <tr>
                 <td colspan="7"></td>
@@ -297,24 +344,13 @@
             <tr>
                 <td colspan="4"> <strong>OBSERVACIONES: </strong></td>
                 <td colspan="2" class="tblfoot "><strong>OP. GRAVADA</strong></td>
-                <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_gravada']) ?></td>
-            </tr>
-            <tr>
-                <td colspan="4" rowspan="1"><p><?= $mov['mov_observaciones'] ?></p></td>
-                <td colspan="2" class="tblfoot"><strong>OP. INAFECTA</strong></td>
-                <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_inafecta']) ?></td>
-            </tr>
-            <tr>
-                <td colspan="4" rowspan="8"><img src="<?= $mov['mov_qr'] ?>" alt="" srcset=""></td>
-                <td colspan="2" class="tblfoot"><strong>OP. EXONERADA</strong></td>
-                <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_exonerada']) ?></td>
-            </tr>
-            <tr>
-                <td colspan="2" class="tblfoot"><strong>SUB TOTAL</strong></td>
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_subtotal']) ?></td>
             </tr>
             <tr>
-                <td colspan="2" class="tblfoot"><strong>IGV</strong></td>
+                <td colspan="4" rowspan="2">
+                    <p><?= $mov['mov_observaciones'] ?></p>
+                </td>
+                <td colspan="2" class="tblfoot"><strong>DESCUENTOS</strong></td>
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_igv']) ?></td>
             </tr>
             <tr>
@@ -322,14 +358,13 @@
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_total']) ?></td>
             </tr>
         </tfoot>
-    </table><br><br>
+    </table>
+
     <div class="tbl-cliente">
         SON: <span><?= $mov['mov_letras_pen'] ?></span>
     </div><br>
-    <div class="text-center">
-        <img src="<?= $mov['mov_qr_web'] ?>" alt="" srcset="">
-    </div>
     <p class="text-center">Gracias por la confianza, el apoyo y ante todo por la preferencia !<br>
-    Dios lo bendiga hoy, mañana y siempre!</p>
+        Dios lo bendiga hoy, mañana y siempre!</p>
 </body>
+
 </html>

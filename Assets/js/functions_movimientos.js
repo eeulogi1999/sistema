@@ -235,6 +235,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (Object.hasOwnProperty.call(mde_json, i)) {
                 delete mde_json[i].mde_options;
             }
+            for (const e in mde_json[i].mde_des.des_json) {
+                if (Object.hasOwnProperty.call(mde_json[i].mde_des, e)) {
+                    delete mde_json[i].mde_des[e].des_options;
+                }
+            }
         }
         formData.set('mov_gtc_id',$('#gtc_compra').attr('data'));
         formData.set('mov_ncr_id',$('#mov_ncr_id').attr('data'));
@@ -437,10 +442,8 @@ function setMde(id=-1) {
         mde_q: parseFloat($('#mde_q').val()), 
         mde_vu: mde_igv ? parseFloat($('#mde_vu').val())/1.18 : parseFloat($('#mde_vu').val()),
         mde_igv: +mde_igv,
-        mde_des: {
-            des_subtotal:parseFloat($('#mde_des').val()),
-            des_json:des_json
-        },
+        mde_des: {...des_json},
+        mde_desm:parseFloat($('#mde_des').val()),
         mde_f_bie_id:{
             bie_id: parseInt($('#mde_f_bie_id').val()),
             bie_nombre: $('#mde_f_bie_id').find('option:selected').text()
@@ -596,7 +599,7 @@ function subtotalMde() {
     var arrInafecto = [11,12,13,14,15,16,17,18];
     for (const i in mde_json) {
         if (Object.hasOwnProperty.call(mde_json, i)) {
-            mde_des+=mde_json[i].mde_des.des_subtotal;
+            mde_des+=mde_json[i].des_desm;
 			switch (true) {
 				case arrExonerado.includes(parseInt(mde_json[i].mde_gta_id.gta_id)):
 					subExonerada += parseFloat(mde_json[i].mde_importe);

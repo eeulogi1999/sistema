@@ -38,7 +38,7 @@
         $format  = print_r('<pre>');
         $format .= print_r($data);
         $format .= print_r('</pre>');
-        return $format;
+        die();
     }
     function getModal(string $nameModal, $data){
         $view_modal = "Views/Template/Modals/{$nameModal}.php";
