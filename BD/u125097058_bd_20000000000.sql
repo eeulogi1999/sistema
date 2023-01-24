@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 16-01-2023 a las 18:37:32
+-- Tiempo de generación: 24-01-2023 a las 00:09:45
 -- Versión del servidor: 8.0.30
--- Versión de PHP: 7.4.9
+-- Versión de PHP: 7.4.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -124,7 +124,8 @@ CREATE TABLE `agentes` (
 
 INSERT INTO `agentes` (`age_id`, `age_gpe_id`, `age_gem_id`, `age_tipo`, `age_arrbienes`, `age_monto`, `age_status`, `age_created`, `age_updated`) VALUES
 (1, 1, NULL, 1, NULL, NULL, 1, '2022-07-25 13:41:19', '2022-07-25 13:41:19'),
-(2, NULL, 12, 2, NULL, NULL, 1, '2022-12-23 16:49:00', '2022-12-23 16:49:00');
+(2, NULL, 12, 2, NULL, NULL, 1, '2022-12-23 16:49:00', '2022-12-23 16:49:00'),
+(3, NULL, 3, 1, NULL, NULL, 1, '2023-01-23 09:31:13', '2023-01-23 09:31:13');
 
 -- --------------------------------------------------------
 
@@ -555,6 +556,7 @@ CREATE TABLE `mdetalles` (
   `mde_q` decimal(12,6) NOT NULL,
   `mde_vu` decimal(12,6) NOT NULL,
   `mde_igv` tinyint(1) NOT NULL,
+  `mde_des` json DEFAULT NULL,
   `mde_importe` decimal(24,12) NOT NULL,
   `mde_detraccion` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -3801,7 +3803,8 @@ INSERT INTO `tcespeciales` (`tce_id`, `tce_gtc_id`, `tce_compra`, `tce_venta`) V
 (871, 338, NULL, NULL),
 (872, 339, NULL, NULL),
 (873, 340, NULL, NULL),
-(874, 341, NULL, NULL);
+(874, 341, NULL, NULL),
+(875, 342, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -4301,7 +4304,7 @@ ALTER TABLE `adscripciones`
 -- AUTO_INCREMENT de la tabla `agentes`
 --
 ALTER TABLE `agentes`
-  MODIFY `age_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `age_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `almacenes`
@@ -4397,13 +4400,13 @@ ALTER TABLE `liquidez`
 -- AUTO_INCREMENT de la tabla `mdetalles`
 --
 ALTER TABLE `mdetalles`
-  MODIFY `mde_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `mde_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `movimientos`
 --
 ALTER TABLE `movimientos`
-  MODIFY `mov_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `mov_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ppagos`
@@ -4523,7 +4526,7 @@ ALTER TABLE `tareas`
 -- AUTO_INCREMENT de la tabla `tcespeciales`
 --
 ALTER TABLE `tcespeciales`
-  MODIFY `tce_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=875;
+  MODIFY `tce_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=876;
 
 --
 -- AUTO_INCREMENT de la tabla `tgastos`
