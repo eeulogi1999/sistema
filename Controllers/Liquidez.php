@@ -106,6 +106,7 @@ class Liquidez extends Controllers{
     
                 $liqData[$i][$pre.'_mtv'] = 0;
                 if ($liqData[$i][$pre.'_age_id']['age_id'] == 2 || $liqData[$i][$pre.'_age_id']['age_id'] == 5) {
+                    $liqData[$i][$pre.'_age_id']['age_nombre'] = '<span class="badge badge-success">'.$liqData[$i][$pre.'_age_id']['age_nombre'].'</span>';
                     if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
                         $rpt1 = $this->getDetracciones(true);
                         $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt1,'mov_dscg'));
