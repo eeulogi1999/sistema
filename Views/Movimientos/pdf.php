@@ -310,30 +310,29 @@
     <table class="tbl-detalle">
         <thead>
             <tr>
-                <th class="wd10 text-center">CODIGO</th>
-                <th class="wd10 text-center">CANT</th>
-                <th class="wd15 text-center">UNID.</th>
-                <th class="wd25">DESCRIPCIÓN</th>
-                <th class="wd10 text-right">V. UNT.</th>
-                <th class="wd10 text-center">DSCTO</th>
-                <th class="wd20 text-right">V. VENTA</th>
+                <th class="wd10 text-center">TIPO</th>
+                <th class="wd10 text-center">CANTIDAD</th>
+                <th class="wd10 text-center">CALIDAD</th>
+                <th class="wd15 text-center">MONTO</th>
+                <th class="wd10 text-right">SUBTOTAL</th>
             </tr>
         </thead>
         <tbody>
         <?php 
 			for ($i = 0; $i < count($mov['mov_mde_id']);$i++) {
 					$mde = $mov['mov_mde_id'][$i];
-			 ?>
-            <tr>
-                <td class="text-center"><?= $mde['mde_bie_id']['bie_codigo'] ?></td>
-                <td class="text-center"><?= number_format($mde['mde_q'], 2,'.','') ?></td>
-                <td class="text-center"><?= $mde['mde_t6m_id']['t6m_descripcion'] ?></td>
-                <td><?= $mde['mde_bie_id']['bie_nombre'] ?></td>
-                <td class="text-right"><?= formatMoney($mde['mde_vu']) ?></td>
-                <td class="text-center"><?= "0.00" ?></td>
-                <td class="text-right"><?= formatMoney($mde['mde_importe']) ?></td>
-            </tr>
-            <?php }
+                    $mde['mde_des'] = json_decode($mde['mde_des'],true);
+                    foreach ($mde['mde_des'] as $j => $r) {    
+                    ?>
+                    <!-- <tr>
+                        <td class="text-center"><?= $r['des_tipo_id']['tipo_des'] ?></td>
+                        <td class="text-right"><?= number_format($r['des_q'], 2,'.','') ?></td>
+                        <td class="text-center"><?= $mde['mde_t6m_id']['t6m_descripcion'] ?></td>
+                        <td class="text-right"><?= number_format($r['des_p'], 2,'.','') ?></td>
+                        <td class="text-right"><?= formatMoney($r['des_mt']) ?></td>
+                    </tr> -->
+                    <?php } 
+            }
             $mov['mov_igv_id'] = json_decode($mov['mov_igv_id'],true);
             ?>
         </tbody>

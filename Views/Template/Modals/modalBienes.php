@@ -35,7 +35,7 @@
                                             required="">
                                     </div>
                                     <div class="form-group mb-0">
-                                        <label for="bie_t6m_id">Unidad de Medida<span class="required">*</span></label>
+                                        <label for="bie_t6m_id">CALIDAD<span class="required">*</span></label>
                                         <select class="form-control " id="bie_t6m_id" name="bie_t6m_id" required>
                                         </select>
                                     </div>

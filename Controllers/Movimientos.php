@@ -162,6 +162,7 @@ class Movimientos extends Controllers{
                     $mde['mde_t6m_id'] = $mde['mde_t6m_id']['t6m_id'];
                     $mde['mde_gta_id'] = $mde['mde_gta_id']['gta_id'];
                     $mde['mde_mov_id'] = $mov_id['mov_id'];
+                    $mde['mde_des'] = (!empty($mde['mde_des']))?json_encode($mde['mde_des'],true):null;
                     $mde['mde_igv'] = (isset($mde['mde_igv'])) ? $mde['mde_igv'] : 0 ;
                     unset($mde['mov_conigv']);
                     $mde = $this->mdetalles->insertRegistro($mde); 

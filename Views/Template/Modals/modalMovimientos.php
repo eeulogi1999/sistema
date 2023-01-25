@@ -152,7 +152,7 @@
                             [<i class="fas fa-plus-circle">Seleccionar</i>]</a></th>
                         <th class="w-auto" id="new_f_bien" style="display:none" >Bien Destino</th>
                         <th>Cantidad</th>
-                        <th>U. M.</th>
+                        <th>CALIDAD</th>
                         <th width="100">
                           <div class="form-row h-100 justify-content-center ">
                             <div class="col">P.U.

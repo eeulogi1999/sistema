@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
             "columns":[
                 {"data":"mde_q",header:"Cantidad",tipo:'float'},
                 {"data":"mde_bie_id.bie_nombre",header:"Articulo",tipo:'string'},
-                {"data":"mde_t6m_id.t6m_sunat",header:"Unidad de Medida",tipo:'string'},
+                {"data":"mde_t6m_id.t6m_sunat",header:"CALIDAD",tipo:'string'},
                 {"data":"mde_vu",header:"P.U.",tipo:'float'},
                 {"data":"mde_gta_id.gta_descripcion",header:"Tipo Igv",tipo:'string'},
                 {"data":"mde_importe",header:"Importe",tipo:'float'},
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#mov_t10_id').loadOptions('t10comprobantes',['t10_descripcion'],{'t10_status':1});
     $('#mov_cue_id').loadOptions('cuentas',['cue_nombre'],{'cue_status':1});
     $('#mov_gt4_id').loadOptions('t4monedas',['gt4_descripcion']);
-    $('#mde_t6m_id').loadOptions('t6medidas',['t6m_sunat']);
+    $('#mde_t6m_id').loadOptions('t6medidas',['t6m_descripcion'],{'t6m_status':1});
     if (parseInt(data.mov_t12_id)==2) {
         $('#mde_gta_id').loadOptions('tafectaciones',['gta_descripcion'],{'gta_id':9});
     } else {
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (Object.hasOwnProperty.call(mde_json, i)) {
                 delete mde_json[i].mde_options;
             }
-            for (const e in mde_json[i].mde_des.des_json) {
+            for (const e in mde_json[i].mde_des) {
                 if (Object.hasOwnProperty.call(mde_json[i].mde_des, e)) {
                     delete mde_json[i].mde_des[e].des_options;
                 }
@@ -505,8 +505,7 @@ function deleteMde(id) {
         closeOnCancel: true
     }, function (isConfirm) {
         if (isConfirm) {
-            mde_json.splice(id, 1)
-            //delete mde_json[id];
+            delete mde_json[id];
             mde.reload();
             subtotalMde();
         }
@@ -525,15 +524,8 @@ function deleteDes(id) {
         closeOnCancel: true
     }, function (isConfirm) {
         if (isConfirm) {
-            if (Object.keys(des_json).length==1) {
-                des_json = {};
-            }else{
-                des_json.splice(id, 1)
-            }
-            
-            //delete mde_json[id];
+            delete des_json[id];
             des.reload();
-            // subtotalMde();
         }
     });
 }
@@ -599,7 +591,7 @@ function subtotalMde() {
     var arrInafecto = [11,12,13,14,15,16,17,18];
     for (const i in mde_json) {
         if (Object.hasOwnProperty.call(mde_json, i)) {
-            mde_des+=mde_json[i].des_desm;
+            mde_des+=mde_json[i].mde_desm;
 			switch (true) {
 				case arrExonerado.includes(parseInt(mde_json[i].mde_gta_id.gta_id)):
 					subExonerada += parseFloat(mde_json[i].mde_importe);

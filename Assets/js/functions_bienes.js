@@ -12,14 +12,12 @@ document.addEventListener('DOMContentLoaded',function () {
             "thid": 'bie_id',
             "columns":[
                 {"data":"bie_nro",header:{t:"#"},tipo:'string'},
-                //{"data":"bie_id",header:{t:"CLAVE",c:'text'},tipo:'string'},
                 {"data":"bie_codigo",header:{t:"CODIGO",c:'text'},tipo:'string',footer:"TOTALES"},
                 {"data":"bie_nombre",header:{t:"BIEN",c:'text'},tipo:'string'},
-                {"data":"bie_t6m_id.t6m_descripcion",header:{t:"U.M.",c:'text'},tipo:'string'},
+                {"data":"bie_t6m_id.t6m_descripcion",header:{t:"CALIDAD",c:'text'},tipo:'string'},
                 {"data":"bie_bat_id",header:{t:"DESCRIPCION",c:'text'},tipo:'string'},
                 {"data":"bie_p",header:{t:"PRECIO",align:'right'},tipo:'money'},
                 {"data":"bie_status",header:{t:"ESTADO"},tipo:'string'},
-               // {"data":"bie_bie_id",header:{t:"CAT",c:'text'},tipo:'string'},
                 {"data":"bie_options",header:"ACCIONES",tipo:'string'}
                 
             ]
@@ -64,7 +62,7 @@ document.addEventListener('DOMContentLoaded',function () {
     });
     $('#bbi_t5e_id').loadOptions('t5existencias', ['t5e_descripcion']);
     $('#pro_id').loadOptions('propiedades', ['pro_nombre']);
-    $('#bie_t6m_id').loadOptions('t6medidas', ['t6m_descripcion']);
+    $('#bie_t6m_id').loadOptions('t6medidas', ['t6m_descripcion'],{'t6m_status':1});
     //$('#bie_alm_id').loadOptions('almacenes', ['alm_nombre'],{alm_est_id:['$_SESSION','est','est_id']});
     $('#nuevo_pro').click(function (e) {
         e.preventDefault();
