@@ -16,4 +16,3 @@
 
 
 
-ALTER TABLE `t4monedas` ADD `gt4_locale` VARCHAR(10) NOT NULL AFTER `gt4_simbolo`;
