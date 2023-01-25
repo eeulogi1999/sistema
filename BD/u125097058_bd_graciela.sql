@@ -31,7 +31,7 @@ CREATE TABLE `aatributos` (
   `aat_id` bigint NOT NULL,
   `aat_act_id` bigint NOT NULL,
   `aat_val_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -44,7 +44,7 @@ CREATE TABLE `accesos` (
   `gac_gus_id` bigint NOT NULL,
   `gac_gcl_id` bigint NOT NULL,
   `gac_use` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `accesos`
@@ -65,7 +65,7 @@ CREATE TABLE `acreditos` (
   `acr_ncuota` int NOT NULL,
   `acr_interes` decimal(6,4) NOT NULL,
   `acr_fechapago` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -81,7 +81,7 @@ CREATE TABLE `activos` (
   `act_act_id` bigint DEFAULT NULL,
   `act_img` varchar(200) DEFAULT NULL,
   `act_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -99,7 +99,7 @@ CREATE TABLE `adetalles` (
   `ade_vu` decimal(12,6) NOT NULL,
   `ade_mt` decimal(12,6) NOT NULL,
   `ade_ads_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -118,7 +118,7 @@ CREATE TABLE `adscripciones` (
   `ads_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ads_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ads_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,7 @@ CREATE TABLE `agentes` (
   `age_status` int NOT NULL DEFAULT '1',
   `age_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `age_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `agentes`
@@ -161,7 +161,7 @@ CREATE TABLE `almacenes` (
   `alm_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `alm_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `alm_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `almacenes`
@@ -181,7 +181,7 @@ CREATE TABLE `areas` (
   `gar_nombre` varchar(60) NOT NULL,
   `gar_descripcion` varchar(150) NOT NULL,
   `gar_gar_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `areas`
@@ -205,7 +205,7 @@ CREATE TABLE `asistencias` (
   `asi_horaE` datetime NOT NULL,
   `asi_horaS` datetime DEFAULT NULL,
   `asi_obs` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -217,7 +217,7 @@ CREATE TABLE `batributos` (
   `bat_id` bigint NOT NULL,
   `bat_bie_id` bigint DEFAULT NULL,
   `bat_val_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -231,7 +231,7 @@ CREATE TABLE `bbienes` (
   `bbi_c70_id` bigint NOT NULL,
   `bbi_c60_id` bigint NOT NULL,
   `bbi_c61_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `bbienes`
@@ -322,7 +322,7 @@ CREATE TABLE `bienes` (
   `bie_igv` tinyint(1) NOT NULL DEFAULT '0',
   `bie_img` text,
   `bie_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `bienes`
@@ -368,7 +368,7 @@ CREATE TABLE `cajas` (
   `caj_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `caj_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `caj_status` int DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -387,7 +387,7 @@ CREATE TABLE `cdetalles` (
   `cde_vu` decimal(12,6) NOT NULL,
   `cde_igv` tinyint(1) NOT NULL,
   `cde_importe` decimal(24,12) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -407,7 +407,7 @@ CREATE TABLE `cierremeses` (
   `cie_qv` decimal(24,12) NOT NULL DEFAULT '0.000000000000',
   `cie_mtv` decimal(24,12) NOT NULL DEFAULT '0.000000000000',
   `cie_start` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -423,7 +423,7 @@ CREATE TABLE `clientes` (
   `gcl_pweb` varchar(200) NOT NULL,
   `gcl_telefono` varchar(10) DEFAULT NULL,
   `gcl_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `clientes`
@@ -453,7 +453,7 @@ CREATE TABLE `colaboradores` (
   `col_sbase` decimal(12,2) DEFAULT NULL,
   `col_fechaIT` date DEFAULT NULL,
   `col_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -484,7 +484,7 @@ CREATE TABLE `componentes` (
   `ico_bie_tarjetav` bigint DEFAULT NULL,
   `ico_bie_tarjetar` bigint DEFAULT NULL,
   `ico_bie_otroc` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -516,7 +516,7 @@ CREATE TABLE `comprobantes` (
   `com_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `com_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `com_cstatus` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -528,7 +528,7 @@ CREATE TABLE `configuraciones` (
   `con_id` bigint NOT NULL,
   `con_clave` varchar(15) NOT NULL,
   `con_valor` varchar(80) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -543,7 +543,7 @@ CREATE TABLE `cuentas` (
   `cue_numero` int DEFAULT NULL,
   `cue_gt4_id` bigint DEFAULT '1',
   `cue_status` int DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -554,7 +554,7 @@ CREATE TABLE `cuentas` (
 CREATE TABLE `departamentos` (
   `gde_id` bigint NOT NULL,
   `gde_departamento` varchar(60) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `departamentos`
@@ -597,7 +597,7 @@ CREATE TABLE `distritos` (
   `gdi_id` bigint NOT NULL,
   `gdi_distrito` varchar(60) DEFAULT NULL,
   `gdi_gpr_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `distritos`
@@ -2453,7 +2453,7 @@ CREATE TABLE `empresas` (
   `gem_gdi_id` bigint NOT NULL DEFAULT '0',
   `gem_email` varchar(150) DEFAULT NULL,
   `gem_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `empresas`
@@ -2478,7 +2478,7 @@ CREATE TABLE `establecimientos` (
   `est_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `est_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `est_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `establecimientos`
@@ -2499,7 +2499,7 @@ CREATE TABLE `liquidez` (
   `liq_age_id` bigint DEFAULT NULL,
   `liq_monto` decimal(24,4) DEFAULT NULL,
   `liq_status` int DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2520,7 +2520,7 @@ CREATE TABLE `mdetalles` (
   `mde_desm` decimal(12,6) DEFAULT NULL,
   `mde_importe` decimal(24,12) NOT NULL,
   `mde_detraccion` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2537,7 +2537,7 @@ CREATE TABLE `mermas` (
   `mer_q` decimal(12,6) NOT NULL,
   `mer_vu` decimal(12,6) NOT NULL,
   `mer_mt` decimal(12,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2555,7 +2555,7 @@ CREATE TABLE `mkinternos` (
   `mki_q` decimal(12,6) NOT NULL,
   `mki_vu` decimal(12,6) NOT NULL,
   `mki_mt` decimal(12,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2571,7 +2571,7 @@ CREATE TABLE `modulos` (
   `gmo_path` varchar(200) NOT NULL DEFAULT '#',
   `gmo_icon` varchar(100) DEFAULT NULL,
   `gmo_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `modulos`
@@ -2663,7 +2663,7 @@ CREATE TABLE `movimientos` (
   `mov_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `mov_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `mov_mstatus` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2687,7 +2687,7 @@ CREATE TABLE `personas` (
   `gpe_gdi_id` bigint NOT NULL DEFAULT '150101',
   `gpe_email` varchar(150) DEFAULT NULL,
   `gpe_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `personas`
@@ -2710,7 +2710,7 @@ CREATE TABLE `ppagos` (
   `ppa_caj_id` bigint NOT NULL,
   `ppa_fecha` date NOT NULL,
   `ppa_gus_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2723,7 +2723,7 @@ CREATE TABLE `preliminares` (
   `pre_transaccion` int NOT NULL,
   `pre_exportacion` int NOT NULL,
   `pre_anticipo` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2736,7 +2736,7 @@ CREATE TABLE `propiedades` (
   `pro_nombre` varchar(100) NOT NULL,
   `pro_type` varchar(20) NOT NULL DEFAULT 'varchar',
   `pro_revalue` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `propiedades`
@@ -2755,7 +2755,7 @@ CREATE TABLE `provincias` (
   `gpr_id` bigint NOT NULL,
   `gpr_provincia` varchar(60) DEFAULT NULL,
   `gpr_gde_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `provincias`
@@ -2969,7 +2969,7 @@ CREATE TABLE `responsables` (
   `res_tar_id` bigint NOT NULL,
   `res_gus_gpe_id` bigint NOT NULL,
   `res_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2980,7 +2980,7 @@ CREATE TABLE `responsables` (
 CREATE TABLE `rlegal` (
   `rle_id` bigint NOT NULL,
   `rle_ruc` varchar(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2993,7 +2993,7 @@ CREATE TABLE `roles` (
   `gro_nombrerol` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `gro_descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `gro_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `roles`
@@ -3021,7 +3021,7 @@ CREATE TABLE `saldobienes` (
   `sal_stockminimo` decimal(12,6) NOT NULL,
   `sal_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `sal_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3033,7 +3033,7 @@ CREATE TABLE `satributos` (
   `sat_id` bigint NOT NULL,
   `sat_ser_id` bigint DEFAULT NULL,
   `sat_val_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3051,7 +3051,7 @@ CREATE TABLE `servicios` (
   `ser_p` decimal(12,6) NOT NULL,
   `ser_igv` tinyint(1) NOT NULL,
   `ser_img` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3064,7 +3064,7 @@ CREATE TABLE `t1mediopagos` (
   `t1m_codigo` varchar(4) NOT NULL,
   `t1m_descripcion` text NOT NULL,
   `t1m_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `t1mediopagos`
@@ -3103,7 +3103,7 @@ CREATE TABLE `t2identidades` (
   `gt2_codigo` varchar(4) NOT NULL,
   `gt2_descripcion` text NOT NULL,
   `gt2_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `t2identidades`
@@ -3127,7 +3127,7 @@ CREATE TABLE `t3financieras` (
   `t3f_codigo` varchar(4) NOT NULL,
   `t3f_descripcion` text NOT NULL,
   `t3f_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3142,7 +3142,7 @@ CREATE TABLE `t4monedas` (
   `gt4_simbolo` varchar(6) NOT NULL,
   `gt4_descripcion` text NOT NULL,
   `gt4_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `t4monedas`
@@ -3165,7 +3165,7 @@ CREATE TABLE `t5existencias` (
   `t5e_codigo` varchar(4) NOT NULL,
   `t5e_descripcion` text NOT NULL,
   `t5e_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `t5existencias`
@@ -3191,7 +3191,7 @@ CREATE TABLE `t6medidas` (
   `t6m_sunat` varchar(4) NOT NULL,
   `t6m_descripcion` text NOT NULL,
   `t6m_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `t6medidas`
@@ -3278,7 +3278,7 @@ CREATE TABLE `t7intangibles` (
   `t7i_codigo` varchar(4) NOT NULL,
   `t7i_descripcion` text NOT NULL,
   `t7i_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3291,7 +3291,7 @@ CREATE TABLE `t8libroregistros` (
   `t8l_codigo` varchar(4) NOT NULL,
   `t8l_descripcion` text NOT NULL,
   `t8l_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `t8libroregistros`
@@ -3342,7 +3342,7 @@ CREATE TABLE `t9plancontables` (
   `t9p_codigo` bigint NOT NULL,
   `t9p_descripcion` text NOT NULL,
   `t9p_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `t9plancontables`
@@ -5139,7 +5139,7 @@ CREATE TABLE `t10comprobantes` (
   `t10_codigo` varchar(4) NOT NULL,
   `t10_descripcion` text NOT NULL,
   `t10_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `t10comprobantes`
@@ -5209,7 +5209,7 @@ CREATE TABLE `t11aduanas` (
   `t11_codigo` varchar(4) NOT NULL,
   `t11_descripcion` text NOT NULL,
   `t11_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -5222,7 +5222,7 @@ CREATE TABLE `t12operaciones` (
   `t12_codigo` varchar(4) NOT NULL,
   `t12_descripcion` text NOT NULL,
   `t12_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `t12operaciones`
@@ -5259,7 +5259,7 @@ CREATE TABLE `tafectaciones` (
   `gta_codigo` varchar(10) NOT NULL,
   `gta_descripcion` varchar(200) NOT NULL,
   `gta_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `tafectaciones`
@@ -5305,7 +5305,7 @@ CREATE TABLE `tareas` (
   `tar_pri_id` bigint NOT NULL,
   `tar_baground` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `tar_colorText` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -5319,7 +5319,7 @@ CREATE TABLE `tcambios` (
   `gtc_fecha` date NOT NULL,
   `gtc_tcompra` decimal(10,4) NOT NULL,
   `gtc_tventa` decimal(10,4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `tcambios`
@@ -5339,7 +5339,7 @@ CREATE TABLE `tcespeciales` (
   `tce_gtc_id` bigint DEFAULT NULL,
   `tce_compra` decimal(6,4) DEFAULT NULL,
   `tce_venta` decimal(6,4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `tcespeciales`
@@ -5358,7 +5358,7 @@ CREATE TABLE `tgastos` (
   `tga_id` bigint NOT NULL,
   `tga_nombre` varchar(200) DEFAULT NULL,
   `tga_status` int DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -5376,7 +5376,7 @@ CREATE TABLE `titulares` (
   `iti_bie_id` bigint DEFAULT NULL,
   `iti_ico_id` bigint DEFAULT NULL,
   `iti_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -5392,7 +5392,7 @@ CREATE TABLE `tpermisos` (
   `gtp_d` int NOT NULL DEFAULT '1',
   `gtp_gro_id` bigint NOT NULL,
   `gtp_gmo_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `tpermisos`
@@ -5671,7 +5671,7 @@ CREATE TABLE `ubicaciones` (
   `ubi_est_id` bigint DEFAULT NULL,
   `ubi_piso` int NOT NULL,
   `ubi_etrabajo` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -5693,7 +5693,7 @@ CREATE TABLE `usuarios` (
   `gus_gcl_id` bigint NOT NULL,
   `gus_gar_id` bigint NOT NULL,
   `gus_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -5713,7 +5713,7 @@ CREATE TABLE `valores` (
   `val_id` bigint NOT NULL,
   `val_pro_id` bigint NOT NULL,
   `val_valor` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `valores`
