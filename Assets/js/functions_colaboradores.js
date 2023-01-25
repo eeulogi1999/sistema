@@ -68,7 +68,7 @@ async function setGar() {
     }
 }
 
-function openModalCol() {
+function openModalColC() {
     openModal('col');
     $("#col_est_id").val(1);
     //col_gar_id
