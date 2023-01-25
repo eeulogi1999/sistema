@@ -107,11 +107,11 @@ class Utilitarios extends Controllers{
             $exp = $this->curlGet($exp_['PRE'].$exp_[$i]);
             $cu3 = $this->Html2array->getElemetByQueryExp($exp);
             $cu3 = floatval(str_replace(',', '.', str_replace('.', '', $cu3)));
-            $this->tendencias->insertRegistro(array('ten_cbien'=>$i,'ten_fecha'=>date('Y-m-d'),'ten_origen'=>1,'ten_valor'=>$cu1));
+            $this->tendencias->insertRegistro(array('ten_cbien'=>$i,'ten_fecha'=>date('Y-m-d H:i:s'),'ten_origen'=>1,'ten_valor'=>$cu1));
             if (!empty($lme_[$i])) {
-                $this->tendencias->insertRegistro(array('ten_cbien'=>$i,'ten_fecha'=>date('Y-m-d'),'ten_origen'=>2,'ten_valor'=>$cu2));
+                $this->tendencias->insertRegistro(array('ten_cbien'=>$i,'ten_fecha'=>date('Y-m-d H:i:s'),'ten_origen'=>2,'ten_valor'=>$cu2));
             }
-            $this->tendencias->insertRegistro(array('ten_cbien'=>$i,'ten_fecha'=>date('Y-m-d'),'ten_origen'=>3,'ten_valor'=>$cu3));
+            $this->tendencias->insertRegistro(array('ten_cbien'=>$i,'ten_fecha'=>date('Y-m-d H:i:s'),'ten_origen'=>3,'ten_valor'=>$cu3));
         }
         return true;
     }
