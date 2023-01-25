@@ -417,10 +417,18 @@ function previewFiles(th,content) {
                                 cell.innerHTML = data[o.columns[j].data][d];
                                 break;
                             case 'money':
-                                if (d == '' || d == null) {
-                                    cell.innerHTML = Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(0);
+                                if (o.columns[j].chr) {
+                                    if (d == '' || d == null) {
+                                        cell.innerHTML = Intl.NumberFormat(r[o.columns[j].chr].gt4_locale, { style: 'currency', currency: r[o.columns[j].chr].gt4_sunat }).format(0);
+                                    } else {
+                                        cell.innerHTML = Intl.NumberFormat(r[o.columns[j].chr].gt4_locale, { style: 'currency', currency: r[o.columns[j].chr].gt4_sunat }).format(Math.ceil10(parseFloat(d),-2).toFixed(2));
+                                    }
                                 } else {
-                                    cell.innerHTML = Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(parseFloat(d),-2).toFixed(2));
+                                    if (d == '' || d == null) {
+                                        cell.innerHTML = Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(0);
+                                    } else {
+                                        cell.innerHTML = Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(parseFloat(d),-2).toFixed(2));
+                                    }
                                 }
                                 break;
                             case 'int':
@@ -446,7 +454,17 @@ function previewFiles(th,content) {
                     var ix = ne[ne.length-1];
                     var align = (typeof o.columns[k].header.align != 'undefined')?'text-'+o.columns[k].header.align:'';
                     if (typeof o.columns[k].footer === 'object') {
-                        let mt = (o.columns[k].tipo=='money')?Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(o.tf[ix],-2).toFixed(2)):Math.ceil10(o.tf[ix],-2).toFixed(2);
+                        var mt = 0;
+                        if (o.columns[k].tipo=='money') {
+                            if (o.columns[k].chr) {
+                                mt = Intl.NumberFormat(o.data[0][o.columns[k].chr].gt4_locale, { style: 'currency', currency: o.data[0][o.columns[k].chr].gt4_sunat }).format(Math.ceil10(o.tf[ix],-2).toFixed(2));
+                            } else {
+                                mt = Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(o.tf[ix],-2).toFixed(2));
+                            }
+                        } else {
+                            mt = Math.ceil10(o.tf[ix],-2).toFixed(2);
+                            
+                        }
                         $(tfoot).children('tr').append('<td class="'+align+'">'+mt+'</td>'); 
                     } else {
                         var su = (typeof o.columns[k].footer === 'undefined')?'':o.columns[k].footer;

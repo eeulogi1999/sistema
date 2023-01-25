@@ -86,7 +86,7 @@ class Main extends Controllers{
         echo $data;
         die();
     }
-    public function getTcambio($fecha){
+    public function getTcambio($fecha,$res=false){
         $gt = $this->tcambios->searchRegistro(array('gtc_fecha'=>$fecha));
         $arrData = null;
         if (!empty($gt)) {
@@ -98,7 +98,11 @@ class Main extends Controllers{
             $tce = $this->tcespeciales->insertRegistro(array('tce_gtc_id'=>$itc['gtc_id']));
             $arrData = $this->tcespeciales->selectRegistro($tce['tce_id']);
         }
-        echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+        if ($res) {
+            return $arrData;
+        } else {
+            echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+        }        
         die();
     }
     public function getAll($pre){

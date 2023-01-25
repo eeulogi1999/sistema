@@ -194,8 +194,8 @@
         $token = $r1.'-'.$r2.'-'.$r3.'-'.$r4;
         return $token;
     }
-    function formatMoney($cantidad){
-        $cantidad = SMONEY.' '.number_format($cantidad,2,SPD,SPM);
+    function formatMoney($cantidad,$t4m=null){
+        $cantidad = ((!empty($t4m))?$t4m['gt4_simbolo']:SMONEY).' '.number_format($cantidad,2,SPD,SPM);
         return $cantidad;
     }
     

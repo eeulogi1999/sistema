@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"bie_codigo",header:"CODIGO",tipo:'string'},
                 {"data":"bie_nombre",header:{t:"MATERIAL",align:'right'},tipo:'string'},
                 {"data":"bie_ten",header:{t:"BASE PROMEDIO",align:'right'},tipo:'float'},
+                {"data":"bie_tga",header:{t:"TIPO DE CAMBIO",align:'right'},tipo:'float'},
                 {"data":"bie_porc",header:{t:"PORCENTAJE",align:'center'},tipo:'string'},
                 {"data":"bie_base",header:{t:"PRECIO",align:'right'},tipo:'float'} 
             ]

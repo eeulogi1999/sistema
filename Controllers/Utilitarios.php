@@ -143,12 +143,15 @@ class Utilitarios extends Controllers{
 
         }
         $arrData = $this->bienes->selectRegistros();
+        $this->newController('Main');
+        $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
         foreach ($arrData as $i => $d) {
             $arrData[$i]['bie_ten'] =  isset($ten[substr($d['bie_codigo'],0,2)])?$ten[substr($d['bie_codigo'],0,2)]:0;
-            // $arrData[$i]['bie_ten'] =  isset($ten[substr($d['bie_codigo'],0,2)])?$ten[substr($d['bie_codigo'],0,2)]:0;
-            $arrData[$i]['bie_porc'] =  '<input type="text" value="'.$d['bie_porc'].'" size="4" onChange="setPor('.$d['bie_porc'].',event)">';
-            $arrData[$i]['bie_base'] =  ($arrData[$i]['bie_ten']>0)?$arrData[$i]['bie_ten']*($d['bie_porc']/100):0;
+            $arrData[$i]['bie_tga'] =  floatval($tga);
+            $arrData[$i]['bie_porc'] =  '<input type="text" value="'.$d['bie_porc'].'" size="4" onChange="setPor('.$d['bie_id'].',event)">';
+            $arrData[$i]['bie_base'] =  ($arrData[$i]['bie_ten']>0)?$arrData[$i]['bie_ten']*$arrData[$i]['bie_tga']*($d['bie_porc']/100):0;
         }
+        unset($this->Main);
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();
     }

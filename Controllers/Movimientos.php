@@ -38,6 +38,12 @@ class Movimientos extends Controllers{
                 $_SESSION['mov']['mov_tipo'] = '02';
                 $data['page_data']['mov_t12_id'] = 2;
                 break; 
+            case 'ordenventa':
+                $_SESSION['mov']['mov_tipo'] = '04';
+                $data['page_data']['mov_t12_id'] = 1;
+                $data['page_data']['mov_t10_id'] = 53;
+                $data['page_title'] = 'Orden de Venta';
+                break;
             case 'ordencompra':
                 $_SESSION['mov']['mov_tipo'] = '03';
                 $data['page_data']['mov_t12_id'] = 2;
@@ -363,6 +369,9 @@ class Movimientos extends Controllers{
         }
         if ($data['mov']['mov_tipo']=='03') {
             $title = 'DOC. ORDEN DE COMPRA     -      '.$data['mov']['mov_t12_id']['t12_descripcion'].'     -       '.strtoupper($data['mov']['mov_t10_id']['t10_descripcion']);
+        }
+        if ($data['mov']['mov_tipo']=='04') {
+            $title = 'DOC. ORDEN DE VENTA    -      '.$data['mov']['mov_t12_id']['t12_descripcion'].'     -       '.strtoupper($data['mov']['mov_t10_id']['t10_descripcion']);
         }
         $arrResponse = array("status" => true, "title"=>$title ,"data" => $html);
         echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);

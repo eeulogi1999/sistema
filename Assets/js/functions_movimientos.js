@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     {"data":"mov_serie2",header:{t:"DOC-DESTINO",c:'text'},tipo:'string'},
                     {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
                     {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
-                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }},
+                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',chr:'mov_gt4_id',footer:{ c:"sum" }},
                     {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
                     {"data":"mov_options",header:"ACCIONES",tipo:'string'}
                 ]
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     {"data":"mov_age_ide",header:{t:"AGENTE",c:'text'},tipo:'string'},
                     {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
                     {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
-                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }},
+                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',chr:'mov_gt4_id',footer:{ c:"sum" }},
                     {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
                     {"data":"mov_options",header:"ACCIONES",tipo:'string'}
                 ]
@@ -590,9 +590,13 @@ function openModalMov() {
             break;
         case 1:
             $('#mov_t12_id').val(1);
-            $('#mov_t10_id').val(50);
+            $('#mov_t10_id').val(data.mov_t10_id??50);
             $('#mde_gta_id').val(9);
-            ftnSetMov_numero('NS01',1,50);
+            ftnSetMov_numero(data.mov_t10_id?'OV01':'NE01',1,$('#mov_t10_id').val());
+            if (data.mov_t10_id) {
+                $('#mde_gta_id').parent().show();
+                $('thead tr th:nth-child('+($('#mde_gta_id').parent().index()+1)+')',$('#mde_gta_id').parent().parent().parent().parent()[0]).show()
+            }
             break;
         case 13:
             $('#mov_t12_id').val(13);
