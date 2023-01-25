@@ -76,9 +76,10 @@ function openModalColC() {
 }
 
 async function setPreCol(where,json,res) {
-    let hsbase = JSON.parse(data.colId.col_hsbase)??[];
-    console.log(hsbase)
-    hsbase.push({col_sbase:data.colId.col_sbase,col_fecha:new Date().toISOString().slice(0, 10)})
-    json.col_hsbase = JSON.stringify(hsbase)
+    if (data.colId) {
+        let hsbase = JSON.parse(data.colId.col_hsbase)??[];
+        hsbase.push({col_sbase:data.colId.col_sbase,col_fecha:new Date().toISOString().slice(0, 10)})
+        json.col_hsbase = JSON.stringify(hsbase)
+    }
     return {json}; 
 }
