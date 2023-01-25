@@ -310,27 +310,27 @@
     <table class="tbl-detalle">
         <thead>
             <tr>
-                <th class="wd10 text-center">TIPO</th>
-                <th class="wd10 text-center">CANTIDAD</th>
-                <th class="wd10 text-center">CALIDAD</th>
-                <th class="wd15 text-center">MONTO</th>
-                <th class="wd10 text-right">SUBTOTAL</th>
+                <th class="wd20 text-center">TIPO</th>
+                <th class="wd20 text-center">CANTIDAD</th>
+                <th class="wd20 text-center">CALIDAD</th>
+                <th class="wd20 text-center">MONTO</th>
+                <th class="wd20 text-right">SUBTOTAL</th>
             </tr>
         </thead>
         <tbody>
-        <?php 
+            <?php 
 			for ($i = 0; $i < count($mov['mov_mde_id']);$i++) {
 					$mde = $mov['mov_mde_id'][$i];
                     $mde['mde_des'] = json_decode($mde['mde_des'],true);
                     foreach ($mde['mde_des'] as $j => $r) {    
                     ?>
-                    <!-- <tr>
+                    <tr>
                         <td class="text-center"><?= $r['des_tipo_id']['tipo_des'] ?></td>
                         <td class="text-right"><?= number_format($r['des_q'], 2,'.','') ?></td>
                         <td class="text-center"><?= $mde['mde_t6m_id']['t6m_descripcion'] ?></td>
                         <td class="text-right"><?= number_format($r['des_p'], 2,'.','') ?></td>
                         <td class="text-right"><?= formatMoney($r['des_mt']) ?></td>
-                    </tr> -->
+                    </tr>
                     <?php } 
             }
             $mov['mov_igv_id'] = json_decode($mov['mov_igv_id'],true);
@@ -338,15 +338,15 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="7"></td>
+                <td colspan="5"></td>
             </tr>
             <tr>
-                <td colspan="4"> <strong>OBSERVACIONES: </strong></td>
+                <td colspan="2"> <strong>OBSERVACIONES: </strong></td>
                 <td colspan="2" class="tblfoot "><strong>OP. GRAVADA</strong></td>
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_subtotal']) ?></td>
             </tr>
             <tr>
-                <td colspan="4" rowspan="2">
+                <td colspan="2" rowspan="2">
                     <p><?= $mov['mov_observaciones'] ?></p>
                 </td>
                 <td colspan="2" class="tblfoot"><strong>DESCUENTOS</strong></td>

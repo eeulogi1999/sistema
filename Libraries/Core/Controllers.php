@@ -1,7 +1,6 @@
 <?php 
 	class Controllers{
 		protected $xp;
-		protected $xd;
 		public function __construct($name_table){
 			if (session_status()==1) {
 				session_name(PHPID);
@@ -36,7 +35,6 @@
 				}
 			}
 			if (!empty($_SESSION['gcl'])) {
-				$this->xd = new Mysql(DB_SUBNAME.$_SESSION['gcl']['gcl_gem_id']['gem_ruc']);
 				if (!empty($_SERVER['PHP_AUTH_USER'])) {
 					$this->newModel("almacenes");
 					$h = apache_request_headers();
@@ -69,79 +67,41 @@
 			}
 		}
 		public function newModel(string $name_table){    //para agregar modelos de tablas que enxistan en la BD 
-			//$routClass = "Models/".$model.".php";
 			$model = "DatabaseModel";
 			$routClass = "Models/".$model.".php";
 			require_once $routClass;
-			if (!empty($_SESSION['gcl'])&& empty($this->xd)) {
-				$this->xd = new Mysql(DB_SUBNAME.$_SESSION['gcl']['gcl_gem_id']['gem_ruc']);
-			}
-			$name_schema = $this->searchSchema($name_table);
-			if (!empty($name_schema)) {
-				$x = ($name_schema==DB_NAME)? $this->xp : $this->xd ;
-				$this->{$name_table} = new $model($x,$name_schema,$name_table);
-			}
+			$this->{$name_table} = new $model($this->xp,DB_NAME,$name_table);
 		}
 		public function customModel(string $model, $bd = 'xd'){        //para agreagr modelos perzonalizados clasicos
 			$routClass = "Models/".$model.".php";
 			if(file_exists($routClass)){
 				require_once $routClass;
-				$x = ($bd=='xd')? $this->xd : $this->xp ;
-				$this->{$model} = new $model($x);
+				$this->{$model} = new $model($this->xp);
 			}
 		}
 		public function loadModel($name_table){            //funcion que inicia el cargado del modelo del CRUD deficido desde el contructor
-			//$model = get_class($this)."Model";
 			$model = "DatabaseModel";
 			$routClass = "Models/".$model.".php";
 			if(file_exists($routClass)){
 				require_once($routClass);
-				$name_schema = $this->searchSchema($name_table);
-				$x = ($name_schema==DB_NAME)? $this->xp : $this->xd ;
-				$this->{$name_table} = new $model($x,$name_schema,$name_table);
-				if ($name_schema==DB_NAME) {
-					$this->{$name_table} = new $model($this->xp,$name_schema,$name_table);
-					if (empty($_SESSION['data_schemas'][$name_schema])) {
-						$pri = $this->xp->select_all("SHOW TABLES in ".$name_schema);
-						$_SESSION['data_schemas'][$name_schema] = array();
-						foreach ($pri as $i => $d) {   //substr($d['Tables_in_'.$name_schema], 0, 2);
-							$_SESSION['data_schemas'][$name_schema]['g'.substr($d['Tables_in_'.$name_schema], 0, 2)]=$d['Tables_in_'.$name_schema];
-						}
+				$this->{$name_table} = new $model($this->xp,DB_NAME,$name_table);
+				$pri = $this->xp->select_all("SELECT TABLE_NAME,TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES  WHERE table_schema = '".DB_NAME."'");
+				$_SESSION['data_schemas'][DB_NAME] = array();
+				foreach ($pri as $i => $d) {  
+					if ($d['TABLE_COMMENT']=='g') {
+						$_SESSION['data_schemas'][DB_NAME][$d['TABLE_COMMENT'].substr($d['TABLE_NAME'], 0, 2)]=$d['TABLE_NAME'];
+					} else {
+						$_SESSION['data_schemas'][DB_NAME][substr($d['TABLE_NAME'], 0, 3)]=$d['TABLE_NAME'];
 					}
 				}
+				
 			}
-		}
-		public function searchSchema($name_table){      //funcion para verificar si existe la tabla en las BDs
-			if (isset($_SESSION['gcl']['gcl_gem_id']['gem_ruc'])) {
-				$prox_schema = DB_SUBNAME.$_SESSION['gcl']['gcl_gem_id']['gem_ruc'];
-				if (empty($_SESSION['data_schemas'][$prox_schema])) {
-					$pri = $this->xp->select_all("SHOW TABLES in ".$prox_schema);
-					$_SESSION['data_schemas'][$prox_schema] = array();
-					foreach ($pri as $i => $d) {
-						$_SESSION['data_schemas'][$prox_schema][substr($d['Tables_in_'.$prox_schema], 0, 3)]=$d['Tables_in_'.$prox_schema];
-					}
-				}
-			}
-			$newschema=DB_NAME;
-			if (!empty($_SESSION['data_schemas'])) {
-				foreach($_SESSION['data_schemas'] as $i => $arr) {
-					if (in_array($name_table,$arr)) {
-						$newschema = $i;
-					}
-				}
-			}
-			return $newschema ;
-
 		}
 		public function getTable($prefijo) {
 			$table = null;
-			// dep($_SESSION['data_schemas']);
-        	// die();
-			foreach ($_SESSION['data_schemas'] as $i => $bd) {
-				foreach ($bd as $j => $tab) {
-					if ($j==$prefijo){
-						$table = $tab;
-					}
+			foreach ($_SESSION['data_schemas'][DB_NAME] as $j => $tab) {
+				if ($j==$prefijo){
+					$table = $tab;
 				}
 			}
 			return $table;

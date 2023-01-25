@@ -17,6 +17,9 @@ class Utilitarios extends Controllers{
         $data['page_functions_js'] = array("functions_utilitarios.js");
         $this->views->getView($this,"utilitarios",$data);
     }
+    public function hashSha256($string){
+        dep(hash("SHA256",$string));
+    }
 
 }
 ?>

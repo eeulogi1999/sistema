@@ -10,8 +10,8 @@
 	//Datos de conexión a Base de Datos
 	const DB_HOST = "localhost";
 
-	const DB_SUBNAME = "u125097058_bd_"; 
-	const DB_NAME = "u125097058_bd_platanal";
+	// const DB_SUBNAME = "u125097058_bd_"; 
+	const DB_NAME = "u125097058_bd_graciela";
 
 	const DB_USER = "u125097058_root";
 	const DB_PASSWORD = "1root-SOM";

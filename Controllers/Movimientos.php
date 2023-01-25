@@ -363,6 +363,7 @@ class Movimientos extends Controllers{
         $data['alm'] = $_SESSION['alm'];
         $data['mov'] = $this->getMovimiento($mov_id,true)['data'];
         $data['mov']['mov_letras_pen'] = $this->formatter->toInvoice($data['mov']['mov_total'], 2, "SOLES");
+        // dep(json_decode($data['mov']['mov_mde_id'][0]['mde_des'],true) );
         $html = getFile("Movimientos/pdf",$data);
         $html2pdf = new Spipu\Html2Pdf\Html2Pdf('p','A4','es','true','UTF-8');
         $html2pdf->pdf->setTitle($data['mov']['mov_serie'].'-'.str_pad($data['mov']['mov_numero'],8,0,STR_PAD_LEFT));

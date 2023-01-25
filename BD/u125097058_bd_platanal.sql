@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 25-01-2023 a las 14:27:04
+-- Tiempo de generación: 25-01-2023 a las 16:13:58
 -- Versión del servidor: 8.0.30
--- Versión de PHP: 7.4.33
+-- Versión de PHP: 7.4.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,7 +32,7 @@ CREATE TABLE `accesos` (
   `gac_gus_id` bigint NOT NULL,
   `gac_gcl_id` bigint NOT NULL,
   `gac_use` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `accesos`
@@ -52,7 +52,7 @@ CREATE TABLE `areas` (
   `gar_nombre` varchar(60) NOT NULL,
   `gar_descripcion` varchar(150) NOT NULL,
   `gar_gar_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `areas`
@@ -77,7 +77,7 @@ CREATE TABLE `clientes` (
   `gcl_pweb` varchar(200) NOT NULL,
   `gcl_telefono` varchar(10) DEFAULT NULL,
   `gcl_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `clientes`
@@ -95,7 +95,7 @@ INSERT INTO `clientes` (`gcl_id`, `gcl_gem_id`, `gcl_imagen`, `gcl_correo`, `gcl
 CREATE TABLE `departamentos` (
   `gde_id` bigint NOT NULL,
   `gde_departamento` varchar(60) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `departamentos`
@@ -138,7 +138,7 @@ CREATE TABLE `distritos` (
   `gdi_id` bigint NOT NULL,
   `gdi_distrito` varchar(60) DEFAULT NULL,
   `gdi_gpr_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `distritos`
@@ -1994,25 +1994,14 @@ CREATE TABLE `empresas` (
   `gem_gdi_id` bigint NOT NULL DEFAULT '0',
   `gem_email` varchar(150) DEFAULT NULL,
   `gem_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `empresas`
 --
 
 INSERT INTO `empresas` (`gem_id`, `gem_ruc`, `gem_razonsocial`, `gem_direccion`, `gem_gdi_id`, `gem_email`, `gem_status`) VALUES
-(1, '20000000000', 'Company Cacel S.A.C.', 'Mza. o Lote. 17 Asc. Villa Universitaria (Grifo Repsol)', 150117, 'informes@grrepresentaciones.com', 1),
-(2, '20100015014', 'ZINSA', 'AV. NESTOR GAMBETTA 9053', 70101, NULL, 1),
-(3, '20100103223', 'TECNOFIL SA', 'ISIDRO BONIFAZ 471 INDEPENDENCIA ', 150112, NULL, 1),
-(4, '20100725658', 'CERRADURAS NACIONALES SAC', 'MZ 6 LT3 AH LAS PRADERAS DEL SUR', 150142, NULL, 1),
-(5, '20100165687', 'ETNA SA', 'AV. REVOLUCION 1046 ', 70106, NULL, 1),
-(6, '20524277973', 'FZG METALES SAC', 'CALLAO', 70101, NULL, 1),
-(7, '20544320972', 'SYNERGYA SA', 'CHILCA', 150505, NULL, 1),
-(8, '10000000', 'PANAMERICAN ZINC', 'LIMA', 150101, NULL, 1),
-(9, '20602497785', 'THICAA PLASTIC', 'CALLAO', 70106, NULL, 1),
-(10, '20602849178', 'BLOSSDREY', 'LOS OLIVOS', 150101, NULL, 1),
-(11, '20109551148', 'METALEXACTO', 'AV REVOLUCION 401', 70106, NULL, 1),
-(12, '00000000001', 'AGENTE DSCG', 'LOS OLIVOS', 150117, NULL, 1);
+(1, '20000000000', 'EL PLATANAL S.A.C.', '***', 140106, 'sergiochavez.384@elplatanaldegraciela384.com', 1);
 
 -- --------------------------------------------------------
 
@@ -2028,7 +2017,7 @@ CREATE TABLE `modulos` (
   `gmo_path` varchar(200) NOT NULL DEFAULT '#',
   `gmo_icon` varchar(100) DEFAULT NULL,
   `gmo_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `modulos`
@@ -2050,7 +2039,7 @@ INSERT INTO `modulos` (`gmo_id`, `gmo_titulo`, `gmo_descripcion`, `gmo_gmo_id`, 
 (13, 'LOGISTICO', NULL, NULL, '#', 'fas fa-boxes', 1),
 (14, 'Entradas', NULL, 13, '#', 'fa fa-database', 1),
 (15, 'Saldos Iniciales', NULL, 14, '/sbienes', 'fas fa-warehouse', 1),
-(16, 'Notas de Entrada', NULL, 14, '/entradas', 'far fa-file-alt', 1),
+(16, 'COMPRAS Y CUADRE', NULL, 13, '/entradas', 'far fa-file-alt', 1),
 (17, 'Salidas', NULL, 13, '#', 'fas fa-user-check', 1),
 (18, 'Notas de Salidas', NULL, 17, '/salidas', 'far fa-file-alt', 1),
 (19, 'Mermas', NULL, 17, '/mermas', 'fas fa-pallet', 1),
@@ -2110,14 +2099,15 @@ CREATE TABLE `personas` (
   `gpe_gdi_id` bigint NOT NULL DEFAULT '150101',
   `gpe_email` varchar(150) DEFAULT NULL,
   `gpe_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `personas`
 --
 
 INSERT INTO `personas` (`gpe_id`, `gpe_identificacion`, `gpe_nombre`, `gpe_apellidos`, `gpe_direccion`, `gpe_telefono`, `gpe_celular`, `gpe_ecivil`, `gpe_nacionalidad`, `gpe_capacidad`, `gpe_fechan`, `gpe_gt2_id`, `gpe_gdi_id`, `gpe_email`, `gpe_status`) VALUES
-(1, '24091989', 'Eduardo', 'Eulogio Anquipa', 'Direccion Fiscal de persona', NULL, NULL, NULL, NULL, NULL, NULL, 1, 150142, NULL, 1);
+(1, '24091989', 'Eduardo', 'Eulogio Anquipa', 'Direccion Fiscal de persona', NULL, NULL, NULL, NULL, NULL, NULL, 1, 150142, NULL, 1),
+(2, '24091990', 'Mery', '***', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 150101, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -2129,7 +2119,7 @@ CREATE TABLE `provincias` (
   `gpr_id` bigint NOT NULL,
   `gpr_provincia` varchar(60) DEFAULT NULL,
   `gpr_gde_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `provincias`
@@ -2343,7 +2333,7 @@ CREATE TABLE `roles` (
   `gro_nombrerol` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `gro_descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `gro_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `roles`
@@ -2367,7 +2357,7 @@ CREATE TABLE `t2identidades` (
   `gt2_codigo` varchar(4) NOT NULL,
   `gt2_descripcion` text NOT NULL,
   `gt2_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `t2identidades`
@@ -2393,7 +2383,7 @@ CREATE TABLE `t4monedas` (
   `gt4_simbolo` varchar(6) NOT NULL,
   `gt4_descripcion` text NOT NULL,
   `gt4_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `t4monedas`
@@ -2416,7 +2406,7 @@ CREATE TABLE `tafectaciones` (
   `gta_codigo` varchar(10) NOT NULL,
   `gta_descripcion` varchar(200) NOT NULL,
   `gta_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `tafectaciones`
@@ -2454,7 +2444,7 @@ CREATE TABLE `tcambios` (
   `gtc_fecha` date NOT NULL,
   `gtc_tcompra` decimal(10,4) NOT NULL,
   `gtc_tventa` decimal(10,4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `tcambios`
@@ -2477,7 +2467,7 @@ CREATE TABLE `tpermisos` (
   `gtp_d` int NOT NULL DEFAULT '1',
   `gtp_gro_id` bigint NOT NULL,
   `gtp_gmo_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `tpermisos`
@@ -2545,19 +2535,19 @@ INSERT INTO `tpermisos` (`gtp_id`, `gtp_r`, `gtp_w`, `gtp_u`, `gtp_d`, `gtp_gro_
 (59, 1, 1, 1, 1, 2, 8),
 (60, 1, 1, 1, 1, 2, 9),
 (61, 1, 1, 1, 1, 2, 10),
-(62, 1, 1, 1, 1, 2, 11),
+(62, 0, 0, 0, 0, 2, 11),
 (63, 1, 1, 1, 1, 2, 12),
 (64, 1, 1, 1, 1, 2, 13),
-(65, 1, 1, 1, 1, 2, 14),
-(66, 1, 1, 1, 1, 2, 15),
+(65, 0, 0, 0, 0, 2, 14),
+(66, 0, 0, 0, 0, 2, 15),
 (67, 1, 1, 1, 1, 2, 16),
-(68, 1, 1, 1, 1, 2, 17),
-(69, 1, 1, 1, 1, 2, 18),
-(70, 1, 1, 1, 1, 2, 19),
-(71, 1, 1, 1, 1, 2, 20),
-(72, 1, 1, 1, 1, 2, 21),
-(73, 1, 1, 1, 1, 2, 22),
-(74, 1, 1, 1, 1, 2, 23),
+(68, 0, 0, 0, 0, 2, 17),
+(69, 0, 0, 0, 0, 2, 18),
+(70, 0, 0, 0, 0, 2, 19),
+(71, 0, 0, 0, 0, 2, 20),
+(72, 0, 0, 0, 0, 2, 21),
+(73, 0, 0, 0, 0, 2, 22),
+(74, 0, 0, 0, 0, 2, 23),
 (75, 1, 1, 1, 1, 2, 24),
 (76, 1, 1, 1, 1, 2, 25),
 (77, 1, 1, 1, 1, 2, 26),
@@ -2566,25 +2556,25 @@ INSERT INTO `tpermisos` (`gtp_id`, `gtp_r`, `gtp_w`, `gtp_u`, `gtp_d`, `gtp_gro_
 (80, 1, 1, 1, 1, 2, 29),
 (81, 1, 1, 1, 1, 2, 30),
 (82, 1, 1, 1, 1, 2, 31),
-(83, 1, 1, 1, 1, 2, 32),
+(83, 0, 0, 0, 0, 2, 32),
 (84, 1, 1, 1, 1, 2, 33),
 (85, 1, 1, 1, 1, 2, 34),
 (86, 1, 1, 1, 1, 2, 35),
 (87, 0, 0, 0, 0, 2, 36),
-(88, 1, 1, 1, 1, 2, 37),
+(88, 0, 0, 0, 0, 2, 37),
 (89, 0, 0, 0, 0, 2, 38),
 (90, 0, 0, 0, 0, 2, 39),
 (91, 0, 0, 0, 0, 2, 40),
 (92, 0, 0, 0, 0, 2, 41),
 (93, 1, 1, 1, 1, 2, 42),
 (94, 1, 1, 1, 1, 2, 43),
-(95, 1, 1, 1, 1, 2, 44),
+(95, 0, 0, 0, 0, 2, 44),
 (96, 1, 1, 1, 1, 2, 45),
 (97, 1, 1, 1, 1, 2, 46),
 (98, 1, 1, 1, 1, 2, 47),
 (99, 1, 1, 1, 1, 2, 48),
 (100, 0, 0, 0, 0, 2, 49),
-(101, 1, 1, 1, 1, 2, 50),
+(101, 0, 0, 0, 0, 2, 50),
 (102, 1, 1, 1, 1, 2, 51),
 (103, 1, 1, 1, 1, 3, 1),
 (104, 0, 0, 0, 0, 3, 2),
@@ -2740,7 +2730,7 @@ INSERT INTO `tpermisos` (`gtp_id`, `gtp_r`, `gtp_w`, `gtp_u`, `gtp_d`, `gtp_gro_
 (254, 1, 1, 1, 1, 5, 50),
 (255, 1, 1, 1, 1, 5, 51),
 (256, 1, 1, 1, 1, 1, 52),
-(257, 1, 1, 1, 1, 2, 52),
+(257, 0, 0, 0, 0, 2, 52),
 (258, 1, 1, 1, 1, 3, 52);
 
 -- --------------------------------------------------------
@@ -2763,14 +2753,15 @@ CREATE TABLE `usuarios` (
   `gus_gcl_id` bigint NOT NULL,
   `gus_gar_id` bigint NOT NULL,
   `gus_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`gus_id`, `gus_gpe_id`, `gus_imagen`, `gus_gro_id`, `gus_user`, `gus_password`, `gus_token`, `gus_create`, `gus_update`, `gus_telefono`, `gus_gcl_id`, `gus_gar_id`, `gus_status`) VALUES
-(1, 1, NULL, 1, 'admin@companycacel.com', '9e69e7e29351ad837503c44a5971edebc9b7e6d8601c89c284b1b59bf37afa80', '055e0be16265233e1f48-5153e62e7464c471bae0-e91b70804d3a84189850-83ff46c1c5a1ab0c670e', '2022-07-25 12:30:39', '2022-07-25 12:30:39', NULL, 1, 1, 1);
+(1, 1, NULL, 1, 'admin@companycacel.com', '9e69e7e29351ad837503c44a5971edebc9b7e6d8601c89c284b1b59bf37afa80', '055e0be16265233e1f48-5153e62e7464c471bae0-e91b70804d3a84189850-83ff46c1c5a1ab0c670e', '2022-07-25 12:30:39', '2022-07-25 12:30:39', NULL, 1, 1, 1),
+(2, 2, NULL, 2, 'mery.384@elplatanaldegraciela384.com', '6fcb6b16558579e3c5b98483266dae5775d3bf35010c9326c7297a4c8d08bda2', NULL, '2023-01-25 10:33:09', '2023-01-25 10:33:09', NULL, 1, 3, 1);
 
 --
 -- Índices para tablas volcadas
@@ -2937,7 +2928,7 @@ ALTER TABLE `modulos`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `gpe_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `gpe_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `provincias`
@@ -2985,7 +2976,7 @@ ALTER TABLE `tpermisos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `gus_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `gus_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
