@@ -64,6 +64,23 @@
                   </div>
                 </div>
               </div>
+              <div>
+                Doc. Ref. <input type="checkbox" id="mov_ref">
+              </div>
+              <div class="datosform pb-1" style="display:none">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="mov_mov_id">Documento
+                      <!-- <a class="text-success" href="#" id="new_mov">[<i class="fas fa-plus-circle">Selec.</i>]</a> -->
+                      <span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-8 px-0">
+                    <select class="form-control" data-live-search="true" id="mov_mov_id" name="mov_mov_id" required>
+                      <option value="0">Seleccione</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="form-group col-md-1">
             </div>

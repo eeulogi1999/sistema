@@ -12,6 +12,9 @@
         <?php  
         $nav_file = getModulos('gmo_gmo_id IS NULL');
         function nav_admin($nav,$n = null){
+            usort($nav, function($a, $b) {
+                return $a['gmo_order'] <=> $b['gmo_order'];
+            });
             foreach ($nav as $i => $v) {
                 $tree = ''; 
                 $path = BASE_URL.$v['gmo_path'];

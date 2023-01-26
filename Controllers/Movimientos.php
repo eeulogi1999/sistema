@@ -81,7 +81,7 @@ class Movimientos extends Controllers{
         $data['page_tag'] = "Estado de Ordenes de Ventas";
         $data['page_title'] = "Estado de Ordenes de Ventas";
         $data['page_name'] = "Estado de Ordenes de Ventas";
-        $data['page_data'] = array(); 
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo']); 
         $data['page_functions_js'] = array("functions_eventas.js","functions_movimientos.js");
         $this->views->getView($this,"eventas",$data);
     }
@@ -99,13 +99,14 @@ class Movimientos extends Controllers{
                 foreach ($mov_e as $i => $re) {
                     $qe += $re['mde_q'];
                 }
-                $ref += '<li><a onClick="getViewMov('.$o['mov_id'].')">'.$o['mov_serie'].'-'.str_pad($o['mov_numero'],8,0,STR_PAD_LEFT).'</a></li>';
+                $ref .= '<a class="dropdown-item" href="#" onClick="getViewMov('.$o['mov_id'].')">'.$o['mov_serie'].'-'.str_pad($o['mov_numero'],8,0,STR_PAD_LEFT).'</a>';
             }
  
             $eve[$i]['mov_qe'] = $qe; 
-            $eve[$i]['mov_qeref'] = '<a data-toggle="tooltip" data-placement="DOC. REF"><ul>'.$ref.'</ul></a>';
-            $eve[$i]['mov_mstatus'] = '<span class="badge badge-'.MSTATUS[$r['mov_mstatus']][1].'">'.MSTATUS[$r['mov_mstatus']][0].'</span>';
-            
+            $eve[$i]['mov_qs'] = $eve[$i]['mov_mde_id'][0]['mde_q']-$qe; 
+            $eve[$i]['mov_qeref'] = '<div class="dropdown"><button class="btn btn-info dropdown-toggle" type="button" id="drop_'.$i.'" data-toggle="dropdown" 
+            aria-haspopup="true" aria-expanded="false">DOC. REF.</button><div class="dropdown-menu" aria-labelledby="drop_'.$i.'">'.$ref.'</div></div>';
+            $eve[$i]['mov_mstatus'] = '<span class="badge badge-'.OV_STATUS[$r['mov_mstatus']][1].'">'.OV_STATUS[$r['mov_mstatus']][0].'</span>';
         }
         echo json_encode($eve,JSON_UNESCAPED_UNICODE);
         die();

@@ -114,6 +114,11 @@
 					array('CONFORME','success'),
 					array('OBSERVADO','warning')
 					);
+	const OV_STATUS = array(
+		array('CANCELADO','danger'),
+		array('PENDIENTE','warning'),
+		array('CERRADO','success')
+		);
 	//const MSTATUS = array('CONFORME','OBSERVADO','ANULADO');
 	const T9P = array('Cuentas de orden Acreedoras,Cuentas de orden Deudoras',
 	'Activo','Activo','Activo','Pasivo','Patrimonio','Gastos por Naturaleza',

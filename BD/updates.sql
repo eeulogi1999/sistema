@@ -15,3 +15,14 @@
     ALTER TABLE `adscripciones` CHANGE `ads_motivo` `ads_desc` VARCHAR(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 
 -- now 2023-01-26
+SET global general_log = 1;
+SET global log_output = 'table';
+
+
+SET GLOBAL general_log = 'OFF';
+RENAME TABLE general_log TO general_log_temp;
+DELETE FROM `general_log_temp` WHERE `event_time` < '2023-01-27';
+RENAME TABLE general_log_temp TO general_log;
+SET GLOBAL general_log = 'ON';
+select * from mysql.general_log
+--jdsiuf

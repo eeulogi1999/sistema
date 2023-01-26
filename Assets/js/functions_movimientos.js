@@ -95,6 +95,18 @@ document.addEventListener('DOMContentLoaded', function () {
 		e.preventDefault();
         mdeProducto()
 	});
+    $('#mov_ref').change(async function (e) {
+        if ($('#mov_age_id').val()!='0') {
+            var ref = $(this).prop('checked');
+            if (ref) {
+                await $('#mov_mov_id').loadOptions('movimientos',['mov_serie','mov_numero'],{'mov_age_id':$('#mov_age_id').val(),'mov_tipo':4});
+                $('#mov_mov_id').parent().parent().parent().show();
+            } else {
+                $('#mov_mov_id').val('');
+                $('#mov_mov_id').parent().parent().parent().hide();
+            }
+        }
+    })
     $('#mde_det').change(function (e) {
         var gtc = $(this).prop('checked');
         if (gtc) {
@@ -571,6 +583,7 @@ function openModalMov() {
     document.querySelector("#formMov").reset();
     $('#mov_ncr_id').attr('data','0');
     $('#mov_cue_id').parent().parent().parent().hide();
+    $('#mov_mov_id').parent().parent().parent().hide();
     switch (data.mov_t12_id) {
         case 16:
             $('#mov_t12_id').val(16);
