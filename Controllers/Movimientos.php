@@ -19,6 +19,7 @@ class Movimientos extends Controllers{
         $this->newModel('t2identidades');
         $this->newModel('tcespeciales');
         $this->newModel('tafectaciones');
+        $this->newModel('bienes');
         $this->formatter = new NumeroALetras();
     }
     public function Movimientos(){
@@ -72,6 +73,42 @@ class Movimientos extends Controllers{
         $data['page_data']['xfun'] = array();
         $data['page_functions_js'] = array("functions_movimientos.js","functions_sbienes.js","functions_agentes.js","functions_empresas.js","functions_personas.js");
         $this->views->getView($this,"movimientos",$data);
+    }
+    public function Eventas(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $data['page_tag'] = "Estado de Ordenes de Ventas";
+        $data['page_title'] = "Estado de Ordenes de Ventas";
+        $data['page_name'] = "Estado de Ordenes de Ventas";
+        $data['page_data'] = array(); 
+        $data['page_functions_js'] = array("functions_eventas.js","functions_movimientos.js");
+        $this->views->getView($this,"eventas",$data);
+    }
+    public function getEventas(){
+        $eve = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>1,'mov_tipo'=>4,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
+        foreach ($eve as $i => $r) {
+            $eve[$i]['mov_doc'] = '<a href="#" onclick="getViewMov('.$r['mov_id'].')">'.$r['mov_serie'].'-'.str_pad($r['mov_numero'],8,0,STR_PAD_LEFT).'</a>' ;
+            $eve[$i]['mov_mde_id'] = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$r['mov_id']),array('mde_mov_id')); 
+            $eve[$i]['mov_bie_id'] = $eve[$i]['mov_mde_id'][0]['mde_bie_id'];
+            $mov_e = $this->movimientos->selectRegistros(array('mov_mov_id'=>$r['mov_id'],'mov_tipo'=>1));
+            $qe = 0;
+            $ref = '';
+            foreach ($mov_e as $j => $o) {
+                $mov_e = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$o['mov_id']));
+                foreach ($mov_e as $i => $re) {
+                    $qe += $re['mde_q'];
+                }
+                $ref += '<li><a onClick="getViewMov('.$o['mov_id'].')">'.$o['mov_serie'].'-'.str_pad($o['mov_numero'],8,0,STR_PAD_LEFT).'</a></li>';
+            }
+ 
+            $eve[$i]['mov_qe'] = $qe; 
+            $eve[$i]['mov_qeref'] = '<a data-toggle="tooltip" data-placement="DOC. REF"><ul>'.$ref.'</ul></a>';
+            $eve[$i]['mov_mstatus'] = '<span class="badge badge-'.MSTATUS[$r['mov_mstatus']][1].'">'.MSTATUS[$r['mov_mstatus']][0].'</span>';
+            
+        }
+        echo json_encode($eve,JSON_UNESCAPED_UNICODE);
+        die();
     }
     public function getMovimientos($mov_t12_id){
         if (!isset($_SESSION['mov'])) {
