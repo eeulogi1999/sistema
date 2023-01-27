@@ -171,7 +171,7 @@
                           <input type="checkbox" id="mde_exp" name="mde_exp">&nbsp;&nbsp;                        
                           <span>Det.</span>
                           <input type="checkbox" id="mde_det" name="mde_det">&nbsp;% -->
-                          <a href="#" onclick="setDescuentos(event)">Descuentos</a>
+                          <a href="#" id="set_open_mde" onclick="setDescuentos(null,event)">Descuentos</a>
                         </th>
                         <th>Acciones</th>
                       </tr>

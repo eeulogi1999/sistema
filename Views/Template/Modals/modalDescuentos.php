@@ -22,6 +22,7 @@
                 <option value="5">BOLSA 1</option>
                 <option value="6">BOLSA 2</option>
                 <option value="7">BOLSA 3</option>
+                <option value="8">FLETE</option>
               </select>
             </div>
             <div class="form-group col mb-0">
@@ -48,7 +49,7 @@
                   <table class="table table-hover table-bordered table-sm " id="des_table" width="100%"></table>
                   </div>
         <div class="tile-footer">
-          <button id="set_des" class="btn btn-primary" onclick="event.preventDefault();setDescuen()"><i
+          <button id="set_desf" class="btn btn-primary" onclick="event.preventDefault();setDescuen()"><i
               class="fa fa-fw fa-lg fa-check-circle"></i><span>Guardar</span></button>&nbsp;&nbsp;&nbsp;
           <button class="btn btn-danger" type="button" data-dismiss="modal"><i
               class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>

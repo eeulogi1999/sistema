@@ -8,72 +8,37 @@ var url_mov= base_url+"/Movimientos/getMovimientos/"+data.mov_t12_id;
 document.addEventListener('DOMContentLoaded', function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#mov_table")) {
-        if (data.mov_t12_id==18) {
-            mov_table = $('#mov_table').autoTable({
-                "url":url_mov ,
-                "numerate": true,
-                "columns":[
-                    {"data":"mov_t12_id.t12_descripcion",header:{t:"OPERACION",c:'text'},tipo:'string',footer:"TOTALES"},
-                    {"data":"mov_serie",header:{t:"DOC-ORIGEN",c:'text'},tipo:'string'},
-                    {"data":"mov_serie2",header:{t:"DOC-DESTINO",c:'text'},tipo:'string'},
-                    {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
-                    {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
-                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }},
-                    {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
-                    {"data":"mov_options",header:"ACCIONES",tipo:'string'}
-                ]
-            });
-        } else {
-            mov_table = $('#mov_table').autoTable({
-                "url":url_mov ,
-                "numerate": true,
-                "columns":[
-                    {"data":"mov_t12_id.t12_descripcion",header:{t:"OPERACION",c:'text'},tipo:'string',footer:"TOTALES"},
-                    {"data":"mov_serie",header:{t:"SERIE Y NUMERO",c:'text'},tipo:'string'},
-                    {"data":"mov_age_ide",header:{t:"AGENTE",c:'text'},tipo:'string'},
-                    {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
-                    {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
-                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }},
-                    {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
-                    {"data":"mov_options",header:"ACCIONES",tipo:'string'}
-                ]
-            });
-        }
-    }
-    if (data.mov_t12_id==18) {
-        mde = $('#mde').autoTable({
-            "src": "mde_json",
+        mov_table = $('#mov_table').autoTable({
+            "url":url_mov ,
             "numerate": true,
-            "rezise": false,
-            "export": false,
             "columns":[
-                {"data":"mde_q",header:"Cantidad",tipo:'float'},
-                {"data":"mde_bie_id.bie_nombre",header:"Material Origen",tipo:'string'},
-                {"data":"mde_f_bie_id.bie_nombre",header:"Material Destino",tipo:'string'},
-                {"data":"mde_t6m_id.t6m_sunat",header:"Unidad de Medida",tipo:'string'},
-                {"data":"mde_vu",header:"P.U.",tipo:'float'},
-                {"data":"mde_gta_id.gta_descripcion",header:"Tipo Igv",tipo:'string'},
-                {"data":"mde_importe",header:"Importe",tipo:'float'},
-                {"data":"mde_options",header:"Acciones",tipo:'string'}
-            ]
-        });
-    }else{
-        mde = $('#mde').autoTable({
-            "src": "mde_json",
-            "numerate": true,
-            "rezise": false,
-            "export": false,
-            "columns":[
-                {"data":"mde_q",header:"Cantidad",tipo:'float'},
-                {"data":"mde_bie_id.bie_nombre",header:"Articulo",tipo:'string'},
-                {"data":"mde_t6m_id.t6m_sunat",header:"CALIDAD",tipo:'string'},
-                {"data":"mde_vu",header:"P.U.",tipo:'float'},
-                {"data":"mde_gta_id.gta_descripcion",header:"Tipo Igv",tipo:'string'},
-                {"data":"mde_importe",header:"Importe",tipo:'float'},
-                {"data":"mde_options",header:"Acciones",tipo:'string'}
+                {"data":"mov_t12_id.t12_descripcion",header:{t:"OPERACION",c:'text'},tipo:'string',footer:"TOTALES"},
+                {"data":"mov_serie",header:{t:"SERIE Y NUMERO",c:'text'},tipo:'string'},
+                {"data":"mov_age_ide",header:{t:"AGENTE",c:'text'},tipo:'string'},
+                {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
+                {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
+                {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
+                {"data":"mov_options",header:"ACCIONES",tipo:'string'}
             ]
         });
     }
+    mde = $('#mde').autoTable({
+        "src": "mde_json",
+        "numerate": true,
+        "rezise": false,
+        "export": false,
+        "columns":[
+            {"data":"mde_q",header:"Cantidad",tipo:'float'},
+            {"data":"mde_bie_id.bie_nombre",header:"Articulo",tipo:'string'},
+            {"data":"mde_t6m_id.t6m_sunat",header:"CALIDAD",tipo:'string'},
+            {"data":"mde_vu",header:"P.U.",tipo:'float'},
+            {"data":"mde_gta_id.gta_descripcion",header:"Tipo Igv",tipo:'string'},
+            {"data":"mde_desm",header:"Descuentos",tipo:'float'},
+            {"data":"mde_importe",header:"Importe",tipo:'float'},
+            {"data":"mde_options",header:"Acciones",tipo:'string'}
+        ]
+    });
     if (document.querySelector("#des_table")) {
         des = $('#des_table').autoTable({
             "src": "des_json",
@@ -542,12 +507,13 @@ function editMde(id) {
     $('#mde_igv').prop('checked',mde_json[id].mde_igv>0?1:0);
     $('#mde_det').prop('checked',mde_json[id].mde_detraccion>0?1:0);
     $('#mde_detraccion').val(mde_json[id].mde_detraccion>0?mde_json[id].mde_detraccion:15);
-
+    $('#mde_des').val(mde_json[id].mde_desm);
     $('#mde_vu').val(mde_json[id].mde_vu);
     $('#mde_importe').val(mde_json[id].mde_importe);
     $('#set_mde').removeClass('btn-primary').addClass('btn-info');
     $('#set_mde').children('i').removeClass('fa-plus').addClass('fa-refresh');
     $('#set_mde').attr('onclick','event.preventDefault();setMde('+id+');')
+    $('#set_open_mde').attr('onclick','setDescuentos('+id+',event)')
     $('#set_mde').slideDown();
     if (parseInt(data.mov_t12_id)==18) {
         $('#mde_f_bie_id').parent().show() 
@@ -591,7 +557,7 @@ function subtotalMde() {
     var arrInafecto = [11,12,13,14,15,16,17,18];
     for (const i in mde_json) {
         if (Object.hasOwnProperty.call(mde_json, i)) {
-            mde_des+=mde_json[i].mde_desm;
+            mde_des+=parseFloat(mde_json[i].mde_desm);
 			switch (true) {
 				case arrExonerado.includes(parseInt(mde_json[i].mde_gta_id.gta_id)):
 					subExonerada += parseFloat(mde_json[i].mde_importe);
@@ -617,7 +583,7 @@ function subtotalMde() {
     $('#mov_inafecta').val(Math.ceil10(subInafecta,-2).toFixed(2));
     $('#mov_gravada').val(Math.ceil10(subGravada,-2).toFixed(2));
     var subtotal = Math.ceil10(subExonerada + subInafecta + subGravada,-2);
-    $('#cde_des').val(mde_des.toFixed(2));
+    $('#cde_des').val(Math.ceil10(mde_des,-2).toFixed(2));
     $('#mov_subtotal').val(subtotal.toFixed(2));
     $('#mov_igv').val(Math.round10((subGravada * 0.18),-2).toFixed(2));
     $('#mov_total').val(Math.round10((subtotal -mde_des+ (subGravada * 0.18)),-2).toFixed(2));
@@ -766,10 +732,17 @@ function changelabelinput(){
     $('#extradoc').css('display','block');
 }
 
-function setDescuentos(e) {
+function setDescuentos(id,e) {
     e.preventDefault();
-    $('#des_q').val($('#mde_q').val());
+    if (id) {
+        des_json = mde_json[id]['mde_des']
+        des.reload()
+        $('#set_desf').attr('onclick','event.preventDefault();setDes('+id+');')
+    } else {
+        $('#des_q').val($('#mde_q').val());
+    }
     $('#modal_des').modal('show');
+    
     
 }
 

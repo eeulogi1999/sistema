@@ -319,6 +319,11 @@ class Movimientos extends Controllers{
             }
         }
         if (!empty($mov)) {
+            foreach ($mov['mov_mde_id'] as $i => $r) {
+                if (!empty($r['mde_des'])) {
+                    $mov['mov_mde_id'][$i]['mde_des'] = json_decode($r['mde_des'],true);
+                }
+            }
             if ($mov['mov_t12_id']['t12_id'] == 18 && $mov['mov_tipo'] == 1) { 
                 $mov_mov_id = $this->getMovimiento(intval($mov['mov_mov_id']),true);
                 foreach ($mov_mov_id['data']['mov_mde_id'] as $i => $mde) {
