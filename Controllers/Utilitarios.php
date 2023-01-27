@@ -58,33 +58,8 @@ class Utilitarios extends Controllers{
         return $response;
     }
     public function getTendencias(){
-        $bie_ = array('CO'=>'COBRE','PB'=>'PLOMO','AL'=>'ALUMINIO');
-        libxml_use_internal_errors(true);
-        $inv_ = array('PRE'=>'https://es.investing.com/commodities/','CO'=>'copper?cid=959211','PB'=>'lead?cid=959207','AL'=>'aluminum');
-        $lme_ = array('PRE'=>'https://www.lme.com/api/trading-data/metal-block?datasourceIds=','CO'=>'fc09fcde-6438-4834-9221-98da9ed54eea','PB'=>null,'AL'=>'1b72897c-6a30-480c-a74a-cfc2faaaff16');
-        $exp_ = array('PRE'=>'https://www.expansion.com/mercados/cotizaciones/materias/','CO'=>'cobre(londres)_MCU.html','PB'=>'plomo(londres)_MPB.html','AL'=>'aluminio(londres)_MAL.html');
-        $response = array();
-        foreach ($bie_ as $i => $d) {
-            $res['ten_bie'] = $d;
-            $inv = $this->curlGet($inv_['PRE'].$inv_[$i]);
-            $cu1 = $this->Html2array->getElemetByQuery($inv,'instrument-price-last');
-            $res['ten_inv'] = floatval(str_replace(',', '.', str_replace('.', '', $cu1)));
-            if (!empty($lme_[$i])) {
-                $lme = $this->curlGet($lme_['PRE'].$lme_[$i]);
-                $lme = json_decode($lme,true);
-                $res['ten_lme'] =  $lme[0]['Value'];
-            }else {
-                $res['ten_lme'] = 0;
-            }
-
-            $exp = $this->curlGet($exp_['PRE'].$exp_[$i]);
-            $cu3 = $this->Html2array->getElemetByQueryExp($exp);
-            $res['ten_exp'] = floatval(str_replace(',', '.', str_replace('.', '', $cu3)));
-
-            $res['ten_opt'] = '';
-            array_push($response,$res);
-            
-        }
+        $ten = $this->tendencias->selectRegistros(array('custom'=>'ten_fecha = (SELECT MAX(ten_fecha) FROM tendencias)'));
+        dep($ten);
         echo json_encode($response,JSON_UNESCAPED_UNICODE);
         die();
     }

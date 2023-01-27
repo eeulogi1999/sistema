@@ -98,16 +98,6 @@ class Movimientos extends Controllers{
                 $qe += $o['mde_q'];
                 $ref .= '<a class="dropdown-item" href="#" onClick="getViewMov('.$o['mde_mov_id']['mov_id'].')">'.$o['mde_mov_id']['mov_serie'].'-'.str_pad($o['mde_mov_id']['mov_numero'],8,0,STR_PAD_LEFT).'</a>';
             }
-            // $mov_e = $this->movimientos->selectRegistros(array('mov_mov_id'=>$r['mov_id'],'mov_tipo'=>1));
-            // $qe = 0;
-            // $ref = '';
-            // foreach ($mov_e as $j => $o) {
-            //     $mov_e = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$o['mov_id']));
-            //     foreach ($mov_e as $i => $re) {
-            //         $qe += $re['mde_q'];
-            //     }
-            //     $ref .= '<a class="dropdown-item" href="#" onClick="getViewMov('.$o['mov_id'].')">'.$o['mov_serie'].'-'.str_pad($o['mov_numero'],8,0,STR_PAD_LEFT).'</a>';
-            // }
             $eve[$i]['mov_qe'] = $qe; 
             $eve[$i]['mov_qs'] = $eve[$i]['mov_mde_id'][0]['mde_q']-$qe; 
             if ($eve[$i]['mov_qs'] < 10 && $r['mov_mstatus'] == 1) {
@@ -143,6 +133,9 @@ class Movimientos extends Controllers{
             }
             $arrData[$i]['mov_subtotal'] = formatMoney($arrData[$i]['mov_subtotal']);
             $arrData[$i]['mov_igv'] = formatMoney(json_decode($arrData[$i]['mov_igv_id'],true)['mov_igv']);
+            if ($arrData[$i]['mov_gt4_id']['gt4_id'] == 2) {
+                $arrData[$i]['mov_total'] = $arrData[$i]['mov_total']*$arrData[$i]['mov_tce_id']['tce_gtc_id']['gtc_tcompra'];
+            }
             $arrData[$i]['mov_total'] = $arrData[$i]['mov_total'];
             $arrData[$i]['mov_t12num'] = $arrData[$i]['mov_tipo'].'-'.date( "m", strtotime($arrData[$i]['mov_fechaE'])).str_pad($arrData[$i]['mov_t12num'],6,'0',STR_PAD_LEFT);
             $arrData[$i]['mov_mstatus'] = '<span class="badge badge-'.MSTATUS[$arrData[$i]['mov_mstatus']][1].'">'.MSTATUS[$arrData[$i]['mov_mstatus']][0].'</span>';

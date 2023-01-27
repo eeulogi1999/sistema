@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     {"data":"mov_serie2",header:{t:"DOC-DESTINO",c:'text'},tipo:'string'},
                     {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
                     {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
-                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',chr:'mov_gt4_id',footer:{ c:"sum" }},
+                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }}, //$arrData[$i]['mov_total']
                     {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
                     {"data":"mov_options",header:"ACCIONES",tipo:'string'}
                 ]
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     {"data":"mov_age_ide",header:{t:"AGENTE",c:'text'},tipo:'string'},
                     {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
                     {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
-                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',chr:'mov_gt4_id',footer:{ c:"sum" }},
+                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }},
                     {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
                     {"data":"mov_options",header:"ACCIONES",tipo:'string'}
                 ]
@@ -186,7 +186,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (sbi_table.getSelectedItem().sbi_bie_id.bie_t6m_id != null) {
             $('#mde_t6m_id').val(sbi_table.getSelectedItem().sbi_bie_id.bie_t6m_id.t6m_id);
         }
-        $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p).toFixed(2));
+        if ($('#mov_gt4_id').val() == 2 && $('#gtc_compra').val()>0) {
+            $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p/$('#gtc_compra').val()).toFixed(2));
+        }else{
+            $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p).toFixed(2));
+        }
         $('#mde_q').val(1.00);
         $('#mde_igv').prop('checked',parseInt(sbi_table.getSelectedItem().sbi_bie_id.bie_igv))
         $('#mde_gta_id').val(9);
@@ -220,6 +224,10 @@ document.addEventListener('DOMContentLoaded', function () {
         for (const i in mde_json) {
             if (Object.hasOwnProperty.call(mde_json, i)) {
                 delete mde_json[i].mde_options;
+                console.log(mde_json[i].mde_ref_mov_id)
+                if (parseInt(mde_json[i].mde_ref_mov_id) == 0 || $('#mov_ref').prop('checked')) {
+                    delete mde_json[i].mde_ref_mov_id;
+                }
             }
         }
         formData.set('mov_gtc_id',$('#gtc_compra').attr('data'));
