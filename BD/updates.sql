@@ -17,4 +17,12 @@
 
 
 
-CREATE TABLE `company5_bd_cacel`.`logs` (`log_id` BIGINT NOT NULL AUTO_INCREMENT , `log_table` VARCHAR(100) NOT NULL , `log_sql` TEXT NOT NULL , `log_restore` TEXT NOT NULL , `log_datetime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`log_id`)) ENGINE = InnoDB;
+CREATE TABLE `company5_bd_cacel`.`logs` (
+    `log_id` BIGINT NOT NULL AUTO_INCREMENT , 
+    `log_table` VARCHAR(100) NOT NULL , 
+    `log_sql` TEXT NOT NULL , 
+    `log_restore` TEXT NOT NULL , 
+    `log_datetime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+    PRIMARY KEY (`log_id`)) ENGINE = InnoDB;
+
+ALTER TABLE `mdetalles` ADD `mde_ref_mov_id` BIGINT NULL AFTER `mde_des`;

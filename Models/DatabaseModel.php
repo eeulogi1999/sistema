@@ -229,7 +229,7 @@
 		} 	
 		public function deleteRegistro(int $id){
 			$x = array_search('PRI',array_column($this->columns,'Key'));
-			// $this->{$this->columns[$x]['Field']} = $id;
+			$this->{$this->columns[$x]['Field']} = $id;
 			// $this->x->insert("INSERT INTO'".BB_NAME."'.'logs' (`log_table`, `log_sql`, `log_restore`) VALUES (?,?,?) ",
 			// array('log_table'=>$this->name_table,'log_sql'=>$sql,'log_restore'=>json_encode($this->selectRegistro($id),JSON_UNESCAPED_UNICODE)));
 			$sql = "DELETE FROM {$this->name_table} WHERE ".$this->columns[$x]['Field']."  = ".$this->{$this->columns[$x]['Field']};

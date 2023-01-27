@@ -99,11 +99,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if ($('#mov_age_id').val()!='0') {
             var ref = $(this).prop('checked');
             if (ref) {
-                await $('#mov_mov_id').loadOptions('movimientos',['mov_serie','mov_numero'],{'mov_age_id':$('#mov_age_id').val(),'mov_tipo':4});
-                $('#mov_mov_id').parent().parent().parent().show();
+                await $('#mde_ref_mov_id').loadOptions('movimientos',['mov_serie','mov_numero'],{'mov_age_id':$('#mov_age_id').val(),'mov_tipo':4});
+                $('#mde_ref_mov_id').parent().show();
+                $('thead tr th:nth-child('+($('#mde_ref_mov_id').parent().index()+1)+')',$('#mde_ref_mov_id').parent().parent().parent().parent()[0]).show()
             } else {
-                $('#mov_mov_id').val('');
-                $('#mov_mov_id').parent().parent().parent().hide();
+                $('#mde_ref_mov_id').parent().hide();
+                $('thead tr th:nth-child('+($('#mde_ref_mov_id').parent().index()+1)+')',$('#mde_ref_mov_id').parent().parent().parent().parent()[0]).hide()
             }
         }
     })
@@ -189,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#mde_q').val(1.00);
         $('#mde_igv').prop('checked',parseInt(sbi_table.getSelectedItem().sbi_bie_id.bie_igv))
         $('#mde_gta_id').val(9);
-        mdeProducto()
+        mdeProducto();
     });
     $("#new_bien").click(function(e) {
         $("#modalTableBie").modal('show');
@@ -387,6 +388,12 @@ function setMde(id=-1) {
             $('#mde_gta_id').val(9);
         }
     }
+    if ($('#mov_ref').prop('checked')) {
+        if ($('#mde_ref_mov_id').val()==null) {
+            swal("Atención","Seleccione una Orden de Venta", "warning");
+            return false;
+        }
+    }
     if (id>=0) {
         var pin = id;
     } else {
@@ -419,6 +426,7 @@ function setMde(id=-1) {
             bie_id: parseInt($('#mde_f_bie_id').val()),
             bie_nombre: $('#mde_f_bie_id').find('option:selected').text()
         },
+        mde_ref_mov_id:parseInt($('#mde_ref_mov_id').val()),
         mde_detraccion: mde_det ? parseInt($('#mde_detraccion').val()):0,
         mde_importe: mde_igv ? parseFloat($('#mde_importe').val())/1.18 : parseFloat($('#mde_importe').val()),
         mde_options: '<div class="text-center"><button class="btn btn-primary btn-sm" onClick="event.preventDefault();editMde(' + pin + ');" title="Editar"><i class="fas fa-pencil-alt"></i></button>'+
@@ -469,6 +477,9 @@ function editMde(id) {
     $('#set_mde').children('i').removeClass('fa-plus').addClass('fa-refresh');
     $('#set_mde').attr('onclick','event.preventDefault();setMde('+id+');')
     $('#set_mde').slideDown();
+    if (mde_json[id].mde_ref_mov_id) {
+        $('#mde_ref_mov_id').val(mde_json[id].mde_ref_mov_id);
+    }
     if (parseInt(data.mov_t12_id)==18) {
         $('#mde_f_bie_id').parent().show() 
         $('#new_f_bien').show();
@@ -489,6 +500,7 @@ function cleanMde() {
     $('#mde_igv').prop('checked',0);
     $('#mde_det').prop('checked',0);
     $('#mde_detraccion').attr('disabled', 'disabled');
+    $('#mde_ref_mov_id').val('')
     if (parseInt(data.mov_t12_id)!=18) {
         $('#mde_f_bie_id').parent().hide() 
         $('#new_f_bien').hide();
@@ -584,6 +596,8 @@ function openModalMov() {
     $('#mov_ncr_id').attr('data','0');
     $('#mov_cue_id').parent().parent().parent().hide();
     $('#mov_mov_id').parent().parent().parent().hide();
+    $('#mde_ref_mov_id').parent().hide();
+    $('thead tr th:nth-child('+($('#mde_ref_mov_id').parent().index()+1)+')',$('#mde_ref_mov_id').parent().parent().parent().parent()[0]).hide()
     switch (data.mov_t12_id) {
         case 16:
             $('#mov_t12_id').val(16);
@@ -606,10 +620,6 @@ function openModalMov() {
             $('#mov_t10_id').val(data.mov_t10_id??50);
             $('#mde_gta_id').val(9);
             ftnSetMov_numero(data.mov_t10_id?'OV01':'NE01',1,$('#mov_t10_id').val());
-            if (data.mov_t10_id) {
-                $('#mde_gta_id').parent().show();
-                $('thead tr th:nth-child('+($('#mde_gta_id').parent().index()+1)+')',$('#mde_gta_id').parent().parent().parent().parent()[0]).show()
-            }
             break;
         case 13:
             $('#mov_t12_id').val(13);
@@ -649,6 +659,9 @@ function editMov(id) {
     .then(response => response.json())
     .then(response => {
         if(response.status){
+            if ($('#mov_ref').prop('checked')) {
+                $('#mov_ref').click()
+            }
             var mov = response.data;
             $('#mov_id').val(mov.mov_id);
             if (mov.mov_age_id != null) {
@@ -675,6 +688,11 @@ function editMov(id) {
             document.querySelector("#mov_fechaE").valueAsDate = new Date(mov.mov_fechaE);
             ftnTcambio(document.querySelector("#mov_fechaE"));
             mde_json = mov.mov_mde_id;
+            if (mde_json[0]['mde_ref_mov_id']) {
+                if (!$('#mov_ref').prop('checked')) {
+                    $('#mov_ref').click()
+                }
+            }
             for (const i in mde_json) {
                 mde_json[i]['mde_q'] = parseFloat(mde_json[i]['mde_q']).toFixed(2);
                 mde_json[i]['mde_vu'] = parseFloat(mde_json[i]['mde_vu']).toFixed(2);

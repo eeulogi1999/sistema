@@ -91,19 +91,28 @@ class Movimientos extends Controllers{
             $eve[$i]['mov_doc'] = '<a href="#" onclick="getViewMov('.$r['mov_id'].')">'.$r['mov_serie'].'-'.str_pad($r['mov_numero'],8,0,STR_PAD_LEFT).'</a>' ;
             $eve[$i]['mov_mde_id'] = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$r['mov_id']),array('mde_mov_id')); 
             $eve[$i]['mov_bie_id'] = $eve[$i]['mov_mde_id'][0]['mde_bie_id'];
-            $mov_e = $this->movimientos->selectRegistros(array('mov_mov_id'=>$r['mov_id'],'mov_tipo'=>1));
             $qe = 0;
             $ref = '';
-            foreach ($mov_e as $j => $o) {
-                $mov_e = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$o['mov_id']));
-                foreach ($mov_e as $i => $re) {
-                    $qe += $re['mde_q'];
-                }
-                $ref .= '<a class="dropdown-item" href="#" onClick="getViewMov('.$o['mov_id'].')">'.$o['mov_serie'].'-'.str_pad($o['mov_numero'],8,0,STR_PAD_LEFT).'</a>';
+            $mde = $this->mdetalles->selectRegistros(array('mde_ref_mov_id'=>$r['mov_id']));
+            foreach ($mde as $j => $o) {
+                $qe += $o['mde_q'];
+                $ref .= '<a class="dropdown-item" href="#" onClick="getViewMov('.$o['mde_mov_id']['mov_id'].')">'.$o['mde_mov_id']['mov_serie'].'-'.str_pad($o['mde_mov_id']['mov_numero'],8,0,STR_PAD_LEFT).'</a>';
             }
- 
+            // $mov_e = $this->movimientos->selectRegistros(array('mov_mov_id'=>$r['mov_id'],'mov_tipo'=>1));
+            // $qe = 0;
+            // $ref = '';
+            // foreach ($mov_e as $j => $o) {
+            //     $mov_e = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$o['mov_id']));
+            //     foreach ($mov_e as $i => $re) {
+            //         $qe += $re['mde_q'];
+            //     }
+            //     $ref .= '<a class="dropdown-item" href="#" onClick="getViewMov('.$o['mov_id'].')">'.$o['mov_serie'].'-'.str_pad($o['mov_numero'],8,0,STR_PAD_LEFT).'</a>';
+            // }
             $eve[$i]['mov_qe'] = $qe; 
             $eve[$i]['mov_qs'] = $eve[$i]['mov_mde_id'][0]['mde_q']-$qe; 
+            if ($eve[$i]['mov_qs'] < 10 && $r['mov_mstatus'] == 1) {
+                $r['mov_mstatus'] = 2;
+            }
             $eve[$i]['mov_qeref'] = '<div class="dropdown"><button class="btn btn-info dropdown-toggle" type="button" id="drop_'.$i.'" data-toggle="dropdown" 
             aria-haspopup="true" aria-expanded="false">DOC. REF.</button><div class="dropdown-menu" aria-labelledby="drop_'.$i.'">'.$ref.'</div></div>';
             $eve[$i]['mov_mstatus'] = '<span class="badge badge-'.OV_STATUS[$r['mov_mstatus']][1].'">'.OV_STATUS[$r['mov_mstatus']][0].'</span>';
