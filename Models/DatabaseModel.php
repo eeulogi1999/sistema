@@ -119,6 +119,9 @@
 					}
 					$id = $this->x->insert($sql,$arrData);
 					if ($id>0) {
+						// $query = substr($this->strquery,0,strpos($this->strquery,'(')).' ('.implode(', ',$arrData).');\r\n';
+						// $this->x->insert("INSERT INTO'".BB_NAME."'.'logs' (`log_table`, `log_sql`, `log_restore`) VALUES (?,?,?) ",
+						// array('log_table'=>$this->name_table,'log_sql'=>$query,'log_restore'=>'DELETE {$this->name_table} WHERE '.$this->columns[$x]['Field'].' = '.$id));
 						$response = array('status'=>true,'msg'=>'Guardado Correctamente',$this->columns[$x]['Field']=>$id);
 					}else{
 						$response = array('status'=>false,'msg'=>$this->name_table.' Error en Coneccion Sql');
@@ -160,6 +163,9 @@
 						array_push($arrData,$this->{$i});
 					}
 					$update = $this->x->update($sql,$arrData);
+					// $query = substr($this->strquery,0,strpos($this->strquery,'(')).' ('.implode(', ',$arrData).');\r\n';
+					// 	$this->x->insert("INSERT INTO'".BB_NAME."'.'logs' (`log_table`, `log_sql`, `log_restore`) VALUES (?,?,?) ",
+					// 	array('log_table'=>$this->name_table,'log_sql'=>$query,'log_restore'=>''));
 					if ($update>0) {
 						$response = array('status'=>true,'msg'=>'Actualizado Correctamente');
 					}else{
@@ -223,7 +229,9 @@
 		} 	
 		public function deleteRegistro(int $id){
 			$x = array_search('PRI',array_column($this->columns,'Key'));
-			$this->{$this->columns[$x]['Field']} = $id;
+			// $this->{$this->columns[$x]['Field']} = $id;
+			// $this->x->insert("INSERT INTO'".BB_NAME."'.'logs' (`log_table`, `log_sql`, `log_restore`) VALUES (?,?,?) ",
+			// array('log_table'=>$this->name_table,'log_sql'=>$sql,'log_restore'=>json_encode($this->selectRegistro($id),JSON_UNESCAPED_UNICODE)));
 			$sql = "DELETE FROM {$this->name_table} WHERE ".$this->columns[$x]['Field']."  = ".$this->{$this->columns[$x]['Field']};
 			$request = $this->x->delete($sql);
 			return $request;

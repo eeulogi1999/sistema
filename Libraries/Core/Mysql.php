@@ -42,11 +42,6 @@
 		public function insert(string $query, array $arrValues){
 			$this->strquery = $query;
 			$this->arrValues = $arrValues;
-			// $fp = fopen('his.sql', 'a');
-			// fwrite ($fp, '\n');
-			// fwrite($fp, $this->strquery);
-			// fwrite($fp, '('.implode(', ',$this->arrValues).');');
-			// fclose($fp);
         	$insert = $this->conexion->prepare($this->strquery);
         	$resInsert = $insert->execute($this->arrValues);
         	if($resInsert){
@@ -76,11 +71,6 @@
 		public function update(string $query, array $arrValues){
 			$this->strquery = $query;
 			$this->arrValues = $arrValues;
-			// $fp = fopen('his.sql', 'a');
-			// fwrite ($fp, '\n');
-			// fwrite($fp, $this->strquery);
-			// fwrite($fp, '('.implode(', ',$this->arrValues).');');
-			// fclose($fp);
 			$update = $this->conexion->prepare($this->strquery);
 			$resExecute = $update->execute($this->arrValues);
 	        return $resExecute;     // true if res > 0
@@ -88,10 +78,6 @@
 		//Eliminar un registros
 		public function delete(string $query){
 			$this->strquery = $query;
-			// $fp = fopen('his.sql', 'a');
-			// fwrite ($fp, '\n');
-			// fwrite($fp, $this->strquery.';');
-			// fclose($fp);
         	$result = $this->conexion->prepare($this->strquery);
 			$del = $result->execute();
         	return $del;
