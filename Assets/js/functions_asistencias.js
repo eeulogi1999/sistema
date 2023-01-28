@@ -17,25 +17,6 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
-
-    if (document.querySelector("#week")) {
-        document.querySelector("#week").value  = data.asi.asi_week;
-        $('#week').change(function (e) {
-            e.preventDefault();
-            var formData = new FormData();
-            formData.append('asi_week',$('#week').val()); 
-            fetch(base_url + '/Asistencias/changeWeek',{method: "POST",body: formData})
-            .then(r => r.json())
-            .then(r => {
-                if (r.status) {
-                    asi_table.reload();
-                } else {
-                    swal("Atencion","Error en el Proceso","error");
-                }
-            })
-            .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
-        })
-    }
     if (document.querySelector('#asi_col_id')) {
         $('#asi_col_id').loadOptions('colaboradores',['col_gpe_id.gpe_nombre','col_gpe_id.gpe_apellidos']);   
     }

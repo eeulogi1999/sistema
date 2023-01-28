@@ -269,6 +269,7 @@ function previewFiles(th,content) {
         var thead = null;
         var tbody = null;
         var tfoot = null;
+        var o = o;
         o.tf = {};
         var numerate = o.numerate;
         if (o.src != undefined) {
@@ -648,7 +649,6 @@ function previewFiles(th,content) {
             } else {
                 $(tbody).html('<tr><td colspan="'+(numerate?objects.columns.length+1:objects.columns.length)+'" class="text-center">Ningún dato disponible en esta tabla =(</td></tr>');
             }
-            
         }
         constructor.prototype = {
             clear: function(){

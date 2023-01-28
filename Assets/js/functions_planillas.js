@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded',function () {
         pla_table = $('#pla_table').autoTable({
             "url": url_pla,
             "numerate": true,
-            "thid": 'pla_id',
             "columns":[
                 {"data":"pla_col_id.col_gpe_id.gpe_nombre",header:{t:"NOMBRE",c:'text'},tipo:'string'},
                 {"data":"pla_col_id.col_gpe_id.gpe_apellidos",header:{t:"APELLIDOS",c:'text'},tipo:'string'},
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded',function () {
                     swal("Atencion","Error en el Proceso","error");
                 }
             })
-            .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
+            .catch(e => console.error(e))
         })
     }
 });

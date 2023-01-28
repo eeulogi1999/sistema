@@ -66,7 +66,7 @@ class Planillas extends Controllers{
             } else {
                 $ht = 51;
             }
-            $r['sab'] = $sab;
+            // $r['sab'] = $sab;
             $r['pla_hextras'] =  ($r['pla_ndias']>0)?$r['pla_hweek']-$ht:0; // pla_estado
             $r['pla_mhxtras'] =  0;
             if ($r['pla_hextras']>0) {
