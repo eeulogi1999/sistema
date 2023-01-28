@@ -34,11 +34,13 @@
         require_once ($view_footer);        
     }
 	//Muestra información formateada
-	function dep($data){
+	function dep($data,$die = true){
         $format  = print_r('<pre>');
         $format .= print_r($data);
         $format .= print_r('</pre>');
-        die();
+        if ($die) {
+            die();
+        }
         return $format;
     }
     function getModal(string $nameModal, $data){

@@ -53,7 +53,7 @@ class Liquidez extends Controllers{
         $this->views->getView($this,"cajas",$data);
     }
     public function getLiquidez($res=null){
-        $ageData = $this->agentes->selectRegistros();
+        $ageData = $this->agentes->selectRegistros(null,array('gpe_gdi_id','gem_gdi_id'));
         $pre = 'liq'; $tabla = 'Liquidez';
         $liqData = array();
         $liqCobrar = array();
@@ -75,16 +75,14 @@ class Liquidez extends Controllers{
                     $age['age_nombre'] =      $ageData[$i]['age_gem_id']['gem_razonsocial'];
                     $age['age_direccion'] =   $ageData[$i]['age_gem_id']['gem_direccion'];
                     $age['age_email'] =       $ageData[$i]['age_gem_id']['gem_email'];
-                    $age['age_gdi_id'] =      $ageData[$i]['age_gem_id']['gem_gdi_id'];
-                    $age['age_gt2_id'] =      $this->t2identidades->selectRegistro(4);
+                    $age['age_gt4_id'] =      $ageData[$i]['age_gt4_id'];
                 } else {
                     $age['age_id'] = $ageData[$i]['age_id'];
                     $age['age_ide'] =         $ageData[$i]['age_gpe_id']['gpe_identificacion'];
                     $age['age_nombre'] =      $ageData[$i]['age_gpe_id']['gpe_nombre'].', '.$ageData[$i]['age_gpe_id']['gpe_apellidos'];
                     $age['age_direccion'] =   $ageData[$i]['age_gpe_id']['gpe_direccion'];
                     $age['age_email'] =       $ageData[$i]['age_gpe_id']['gpe_email'];
-                    $age['age_gdi_id'] =      $ageData[$i]['age_gpe_id']['gpe_gdi_id'];
-                    $age['age_gt2_id'] =      $ageData[$i]['age_gpe_id']['gpe_gt2_id'];
+                    $age['age_gt4_id'] =       $ageData[$i]['age_gt4_id'];
                 }
                 $id = $this->liquidez->searchRegistro(array('liq_age_id'=>$ageData[$i]['age_id'],'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']));
                 $id = (!empty($id)) ? $id['liq_id'] : 0 ;
@@ -94,17 +92,26 @@ class Liquidez extends Controllers{
                     array('liq_age_id'=>$ageData[$i]['age_id'],'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']),
                     'liq_age_id,IFNULL(SUM(liq_monto), 0) AS liq_total_sum',
                     array('liq_age_id'))['liq_total_sum'];
-    
+
                 $liqData[$i][$pre.'_mtc']=$this->movimientos->searchRegistro(
                     array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_tipo'=>2,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']),
                     'mov_age_id,IFNULL(SUM(mov_total), 0) AS mov_total_sum',
                     array('mov_age_id'))['mov_total_sum'];
     
-                $detr =  $this->movimientos->selectRegistros(
-                    array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_tipo'=>1,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']),
-                    array('mov_age_id','mov_alm_id','mov_tce_id'));
-    
-                $liqData[$i][$pre.'_mtv'] = 0;
+                $v_s =  $this->movimientos->searchRegistro(
+                    array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_gt4_id'=>1,'mov_tipo'=>1,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']),
+                    'mov_age_id,IFNULL(SUM(CAST(JSON_EXTRACT(mov_igv_id, "$.mov_neto")  AS DECIMAL(12,3))), 0) AS mov_total_sum')['mov_total_sum'];
+
+                $v_d =  $this->movimientos->searchRegistro(
+                    array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_gt4_id'=>2,'mov_tipo'=>1,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']),
+                    'mov_age_id,IFNULL(SUM(CAST(JSON_EXTRACT(mov_igv_id, "$.mov_neto")  AS DECIMAL(12,3))), 0) AS mov_total_sum')['mov_total_sum'];
+                
+                $liqData[$i][$pre.'_mtv'] = floatval($v_s)+(floatval($v_d)*3.87);
+                // dep($liqData[$i][$pre.'_age_id']);
+                    // if ($liqData[$i][$pre.'_age_id']['age_id'] == 67) {
+                    //     die();
+                    // }
+
                 if ($liqData[$i][$pre.'_age_id']['age_id'] == 2 || $liqData[$i][$pre.'_age_id']['age_id'] == 5) {
                     $liqData[$i][$pre.'_age_id']['age_nombre'] = '<span class="badge badge-success">'.$liqData[$i][$pre.'_age_id']['age_nombre'].'</span>';
                     if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
@@ -116,10 +123,6 @@ class Liquidez extends Controllers{
                         $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt2,'mov_dscg'));
                     }
 
-                } else {
-                    for ($j=0; $j < count($detr) ; $j++) { 
-                        $liqData[$i][$pre.'_mtv'] = $liqData[$i][$pre.'_mtv']+floatval(json_decode($detr[$j]['mov_igv_id'],true)['mov_neto']);
-                    }
                 }
                 $liqData[$i][$pre.'_mti']=$this->cajas->searchRegistro(
                     array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),

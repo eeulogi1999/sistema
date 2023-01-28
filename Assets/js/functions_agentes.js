@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded',function () {
     }
     $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial']);
     $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos']);
+    $('#age_gt4_id').loadOptions('t4monedas',['gt4_sunat']);
     
     $('input:radio[name=age_t]').change(function() {
         if ($(this).val()=='gem_v') {
@@ -78,7 +79,6 @@ async function setGem() {
 }
 async function setGpe() {
     var gpe = await set('gpe',['gpe_identificacion'],null,true);
-    console.log(gpe);
     if (gpe.status) {
         resetModal('gpe');
         await $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos']);
