@@ -18,9 +18,9 @@
 			$_SESSION['bas'] = array('CO'=>0,'PB'=>0,'AL'=>0);
 
 			$data['page_id'] = 2;
-			$data['page_tag'] = "Dashboard";
-			$data['page_title'] = "Dashboard";
-			$data['page_name'] = "dashboard";
+			$data['page_tag'] = "Tendencias del Mercado";
+			$data['page_title'] = "Tendencias del Mercado";
+			$data['page_name'] = "Tendencias del Mercado";
 			$data['page_data'] = array();
 			$data['page_functions_js'] = array("functions_dashboard.js");
 			$anio = date('Y');
