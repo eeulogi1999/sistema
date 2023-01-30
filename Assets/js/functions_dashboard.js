@@ -67,7 +67,7 @@ Highcharts.getJSON(
             xAxis: {type: 'datetime'},
             yAxis: {title: {text: 'KG/USD'}},
             legend: {enabled: false},
-            series: [{name: 'KG/USD',data: data.co},{name: 'KG/USD',data: data.pr},{name: 'KG/USD',data: data.al}]
+            series: [{name: 'KG/USD',data: data.co}]
         });
     }
 );
