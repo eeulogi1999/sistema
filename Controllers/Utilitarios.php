@@ -6,6 +6,7 @@ class Utilitarios extends Controllers{
         $this->newModel('departamentos');
         $this->newModel('tendencias');
         $this->newModel('bienes');
+        $this->newModel('tcambios');
         $this->customModel('Html2array');
     }
     public function Utilitarios(){
@@ -64,16 +65,24 @@ class Utilitarios extends Controllers{
             $ten_bd = $this->tendencias->selectRegistros(array('ten_cbien'=>$i,
             'custom'=>'DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i") = DATE_FORMAT((SELECT MAX(ten_fecha) FROM tendencias), "%Y-%m-%d %H:%i")'));
             $ten = array_column($ten_bd, 'ten_valor', 'ten_origen');
-            array_push($response,
-            array(
-                'ten_bie'=>$r,
-                'ten_fecha'=>$ten_bd[0]['ten_fecha'],
-                'ten_inv'=>$ten[1]??'',
-                'ten_lme'=>$ten[2]??'',
-                'ten_exp'=>$ten[3]??'',
-                'ten_avg'=>(isset($ten[2]))?($ten[1]+$ten[2]+$ten[3])/3:($ten[1]+$ten[3])/2,
-                'ten_opt'=>''
-            ));
+            $rw = array();
+            $rw['ten_bie']=$r;
+            $rw['ten_fecha']=$ten_bd[0]['ten_fecha'];
+            $rw['ten_inv']=$ten[1]??'';
+            $rw['ten_lme']=$ten[2]??'';
+            $rw['ten_exp']=$ten[3]??'';
+            if ($_SESSION['bas'][$i]>0) {
+                $rw['ten_avg']= $_SESSION['bas'][$i];
+            } else {
+                $rw['ten_avg']= (isset($ten[2]))?($ten[1]+$ten[2]+$ten[3])/3:($ten[1]+$ten[3])/2;
+            }
+            //$rw['ten_avg']= (isset($ten[2]))?($ten[1]+$ten[2]+$ten[3])/3:($ten[1]+$ten[3])/2;
+            $rw['ten_por']='<input type="text" value="'.$_SESSION['por'][$i].'" size="4" onChange="setTenTgaBas(`por`,`'.$i.'`,event)">';
+            $rw['ten_sal']=$_SESSION['por'][$i]*$rw['ten_avg']/100;
+            $rw['ten_tga']='<input type="text" value="'.$_SESSION['tga'][$i].'" size="6" onChange="setTenTgaBas(`tga`,`'.$i.'`,event)">';
+            $rw['ten_bas']='<input type="text" value="'.$_SESSION['bas'][$i].'" size="10" onChange="setTenTgaBas(`bas`,`'.$i.'`,event)">';
+            $rw['ten_sol']=$_SESSION['por'][$i]*$rw['ten_avg']/100*$_SESSION['tga'][$i];
+            array_push($response,$rw);
         }
         echo json_encode($response,JSON_UNESCAPED_UNICODE);
         die();
@@ -129,21 +138,21 @@ class Utilitarios extends Controllers{
             'custom'=>'ten_cbien = "CO" GROUP BY DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i")'));
         $res['co'] = array();
         foreach ($a as $i => $r) {
-            $v = array(floatval(strtotime($r['ten_fecha'])),floatval($r['ten_valor']));
+            $v = array(strtotime($r['ten_fecha'])*1000,floatval($r['ten_valor']));
             array_push($res['co'],$v);
         }
         $b = $this->tendencias->selectCustoms('DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i") AS ten_fecha,AVG(ten_valor) AS ten_valor',array(
             'custom'=>'ten_cbien = "PB" GROUP BY DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i")'));
         $res['pr'] = array();
         foreach ($b as $i => $r) {
-            $v = array(floatval(strtotime($r['ten_fecha'])),floatval($r['ten_valor']));
+            $v = array(strtotime($r['ten_fecha'])*1000,floatval($r['ten_valor']));
             array_push($res['pr'],$v);
         }
         $c = $this->tendencias->selectCustoms('DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i") AS ten_fecha,AVG(ten_valor) AS ten_valor',array(
             'custom'=>'ten_cbien = "AL" GROUP BY DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i")'));
         $res['al'] = array();
         foreach ($c as $i => $r) {
-            $v = array(floatval(strtotime($r['ten_fecha'])),floatval($r['ten_valor']));
+            $v = array(strtotime($r['ten_fecha'])*1000,floatval($r['ten_valor']));
             array_push($res['al'],$v);
         }
         echo json_encode($res,JSON_UNESCAPED_UNICODE);
@@ -151,27 +160,11 @@ class Utilitarios extends Controllers{
     }
 
     public function getChartUSD(){
+        $a = $this->tcambios->selectRegistros(array('custom'=>'DATE_FORMAT(gtc_fecha,"%Y") = "'.date('Y').'" ORDER BY gtc_fecha ASC'),array('gtc_gt4_id'));
         $res = array();
-        $a = $this->tendencias->selectCustoms('DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i") AS ten_fecha ,AVG(ten_valor) AS ten_valor',array(
-            'custom'=>'ten_cbien = "CO" GROUP BY DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i")'));
-        $res['co'] = array();
         foreach ($a as $i => $r) {
-            $v = array(floatval(strtotime($r['ten_fecha'])),floatval($r['ten_valor']));
-            array_push($res['co'],$v);
-        }
-        $b = $this->tendencias->selectCustoms('DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i") AS ten_fecha,AVG(ten_valor) AS ten_valor',array(
-            'custom'=>'ten_cbien = "PB" GROUP BY DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i")'));
-        $res['pr'] = array();
-        foreach ($b as $i => $r) {
-            $v = array(floatval(strtotime($r['ten_fecha'])),floatval($r['ten_valor']));
-            array_push($res['pr'],$v);
-        }
-        $c = $this->tendencias->selectCustoms('DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i") AS ten_fecha,AVG(ten_valor) AS ten_valor',array(
-            'custom'=>'ten_cbien = "AL" GROUP BY DATE_FORMAT(ten_fecha, "%Y-%m-%d %H:%i")'));
-        $res['al'] = array();
-        foreach ($c as $i => $r) {
-            $v = array(floatval(strtotime($r['ten_fecha'])),floatval($r['ten_valor']));
-            array_push($res['al'],$v);
+            $v = array(strtotime($r['gtc_fecha'])*1000,floatval($r['gtc_tventa']));
+            array_push($res,$v);
         }
         echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();

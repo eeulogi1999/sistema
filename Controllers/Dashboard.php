@@ -9,6 +9,14 @@
 		}
 
 		public function dashboard(){
+
+			$this->newController('Main');
+			$tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
+			unset($this->Main);
+			$_SESSION['por'] = array('CO'=>80,'PB'=>80,'AL'=>80);
+			$_SESSION['tga'] = array('CO'=>$tga,'PB'=>$tga,'AL'=>$tga);
+			$_SESSION['bas'] = array('CO'=>0,'PB'=>0,'AL'=>0);
+
 			$data['page_id'] = 2;
 			$data['page_tag'] = "Dashboard";
 			$data['page_title'] = "Dashboard";
@@ -31,6 +39,11 @@
 				}
 			}
 			echo json_encode($res,JSON_UNESCAPED_UNICODE);
+            die();
+		}
+		public function setTenTgaBas(){
+			$_SESSION[$_POST['a']][$_POST['b']] = $_POST['e'];
+			echo json_encode(array('status'=>true),JSON_UNESCAPED_UNICODE);
             die();
 		}
 
