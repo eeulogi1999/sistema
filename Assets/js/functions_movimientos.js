@@ -627,6 +627,9 @@ function openModalMov() {
             $('#mov_t10_id').val(data.mov_t10_id??50);
             $('#mde_gta_id').val(9);
             ftnSetMov_numero(data.mov_t10_id?'OV01':'NE01',1,$('#mov_t10_id').val());
+            if (data.mov_t10_id) {
+                $('#mov_cue_id').parent().parent().parent().show();
+            }
             break;
         case 13:
             $('#mov_t12_id').val(13);
@@ -662,6 +665,7 @@ function editMov(id) {
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#set_'+prefijo).classList.replace("btn-primary", "btn-info");
     $('#set_'+prefijo+' span').html("Actualizar");
+    $('#mov_cue_id').parent().parent().parent().hide();
     fetch(base_url + '/Movimientos/getMovimiento/'+id)
     .then(response => response.json())
     .then(response => {
@@ -670,6 +674,9 @@ function editMov(id) {
                 $('#mov_ref').click()
             }
             var mov = response.data;
+            if (mov.mov_t10_id.t10_id == 53) {
+                $('#mov_cue_id').parent().parent().parent().show();
+            }
             $('#mov_id').val(mov.mov_id);
             if (mov.mov_age_id != null) {
                 $('#mov_age_id').children().attr('value',mov.mov_age_id.age_id);
@@ -692,8 +699,6 @@ function editMov(id) {
             }
             if (mov.mov_cue_id) {
                 $('#mov_cue_id').val(mov.mov_cue_id.cue_id); 
-            }else{
-                $('#mov_cue_id').parent().parent().parent().hide();
             }
             $('#mde_t6m_id').val(58);
             $('#mde_gta_id').val(1);
