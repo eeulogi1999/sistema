@@ -3,12 +3,23 @@
 ?>
 <main class="app-content">
   <div class="app-title">
-      <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
-      </h1>
-      <div class="d-flex align-items-end">
-          <input type="text" name="gtc_pen" id="gtc_pen">
-          <input type="text" name="gtc_usd" id="gtc_usd">
+    <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
+    </h1>
+    <div class="d-flex">
+      <span class="d-flex align-items-center mr-2">SUNAT</span>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="sol">S/</span>
+        </div>
+        <input type="text" class="form-control" id="gtc_sol" placeholder="SOLES" aria-describedby="sol" size="10">
       </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="dol">$ </span>
+        </div>
+        <input type="text" class="form-control" id="gtc_dol" placeholder="DOLARES" aria-describedby="dol" size="10">
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-12">

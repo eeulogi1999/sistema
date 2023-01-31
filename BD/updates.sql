@@ -35,3 +35,6 @@ ALTER TABLE `cajas` ADD CONSTRAINT `cajas_tcespeciales` FOREIGN KEY (`caj_tce_id
 
 
 ALTER TABLE `movimientos` CHANGE `mov_serie` `mov_serie` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
+
+
+ALTER TABLE `tcambios` ADD `gtc_origen` INT NOT NULL DEFAULT '1' AFTER `gtc_gt4_id`;

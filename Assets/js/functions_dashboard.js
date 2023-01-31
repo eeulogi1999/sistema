@@ -38,6 +38,16 @@ document.addEventListener('DOMContentLoaded',function () {
         });
     }
     document.querySelector("body").style.overflowY = 'auto';
+    $('#gtc_sol').change(function (e){
+        e.preventDefault();
+        $('#gtc_sol').val(parseFloat(this.value))
+        $('#gtc_dol').val((parseFloat(this.value)/data.gtc).toFixed(2))
+    })
+    $('#gtc_dol').change(function (e){
+        e.preventDefault();
+        $('#gtc_dol').val(parseFloat(this.value))
+        $('#gtc_sol').val((parseFloat(this.value)*data.gtc).toFixed(2))
+    })
 });
 
 window.addEventListener('load', async () => {
@@ -81,7 +91,7 @@ Highcharts.getJSON(
             xAxis: {type: 'datetime'},
             yAxis: {title: {text: 'KG/USD'}},
             legend: {enabled: false},
-            series: [{name: 'SOL/USD',data: data}]
+            series: [{name: 'SOL/USD',data: data.mer},{name: 'SOL/USD',data: data.sun}]
         });
     }
 );

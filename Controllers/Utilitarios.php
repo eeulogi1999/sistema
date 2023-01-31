@@ -160,14 +160,29 @@ class Utilitarios extends Controllers{
     }
 
     public function getChartUSD(){
-        $a = $this->tcambios->selectRegistros(array('custom'=>'DATE_FORMAT(gtc_fecha,"%Y") = "'.date('Y').'" ORDER BY gtc_fecha ASC'),array('gtc_gt4_id'));
-        $res = array();
+        $res = array('mer'=>array(),'sun'=>array());
+        $a = $this->tcambios->selectRegistros(array('gtc_origen'=>2,'custom'=>'DATE_FORMAT(gtc_fecha,"%Y") = "'.date('Y').'" ORDER BY gtc_fecha ASC'),array('gtc_gt4_id'));
         foreach ($a as $i => $r) {
             $v = array(strtotime($r['gtc_fecha'])*1000,floatval($r['gtc_tventa']));
-            array_push($res,$v);
+            array_push($res['mer'],$v);
+        }
+        $b = $this->tcambios->selectRegistros(array('gtc_origen'=>1,'custom'=>'DATE_FORMAT(gtc_fecha,"%Y") = "'.date('Y').'" ORDER BY gtc_fecha ASC'),array('gtc_gt4_id'));
+        foreach ($b as $i => $r) {
+            $v = array(strtotime($r['gtc_fecha'])*1000,floatval($r['gtc_tventa']));
+            array_push($res['sun'],$v);
         }
         echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
+    }
+    public function setUSDMer(){
+        $mer = $this->curlGet('https://cuantoestaeldolar.pe/_next/data/JUpxiTk0qkF-9HxfScXZb/cambio-de-dolar-online.json');
+        $mer = json_decode($mer,true)['pageProps']['exchangeDolar'];
+        $gtc = $this->tcambios->insertRegistro(array('gtc_gt4_id'=>2,'gtc_fecha'=>date('Y-m-d'),'gtc_tcompra'=>$mer['buy']['cost'],
+        'gtc_tventa'=>$mer['sale']['cost'],'gtc_origen'=>2),array('gtc_fecha','gtc_gt4_id','gtc_origen'));
+        if ($gtc>0) {
+            return true;
+        }
+        return false;
     }
 
 }
