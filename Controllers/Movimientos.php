@@ -93,6 +93,9 @@ class Movimientos extends Controllers{
             $eve[$i]['mov_bie_id'] = $eve[$i]['mov_mde_id'][0]['mde_bie_id'];
             $eve[$i]['mov_tonq'] = $eve[$i]['mov_mde_id'][0]['mde_q']/1000;
             $eve[$i]['mov_tonvu'] = $eve[$i]['mov_total']/$eve[$i]['mov_tonq'];
+            // if ($eve[$i]['mov_gt4_id']['gt4_id'] == 2) {
+            //     $eve[$i]['mov_total'] = $eve[$i]['mov_total']*$eve[$i]['mov_tce_id']['tce_gtc_id']['gtc_tcompra'];
+            // }
             $qe = 0;
             $ref = '';
             $mde = $this->mdetalles->selectRegistros(array('mde_ref_mov_id'=>$r['mov_id']));
