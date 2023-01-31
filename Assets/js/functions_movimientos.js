@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
         for (const i in mde_json) {
             if (Object.hasOwnProperty.call(mde_json, i)) {
                 delete mde_json[i].mde_options;
-                if (isNaN(mde_json[i].mde_ref_mov_id) || mde_json[i].mde_ref_mov_id == null || parseInt(mde_json[i].mde_ref_mov_id) == 0 || $('#mov_ref').prop('checked')) {
+                if (isNaN(mde_json[i].mde_ref_mov_id) || mde_json[i].mde_ref_mov_id == null || parseInt(mde_json[i].mde_ref_mov_id) == 0 || !$('#mov_ref').prop('checked')) {
                     delete mde_json[i].mde_ref_mov_id;
                 }
             }
@@ -699,6 +699,7 @@ function editMov(id) {
             }
             if (mov.mov_cue_id) {
                 $('#mov_cue_id').val(mov.mov_cue_id.cue_id); 
+                $('#mov_cue_id').parent().parent().parent().show();
             }
             $('#mde_t6m_id').val(58);
             $('#mde_gta_id').val(1);
