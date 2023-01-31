@@ -62,7 +62,7 @@ Highcharts.getJSON(
     function (data) {
         Highcharts.chart('ten_copper', {
             chart: {zoomType: 'x'},
-            title: {text: 'COBRE, BRONCE Y ALUMINIO',align: 'center'},
+            title: {text: 'COBRE',align: 'center'},
             subtitle: {text: document.ontouchstart === undefined ?'Seleccione el area para hacer Zoom' : 'Seleccione para hacer Zoom',align: 'left'},
             xAxis: {type: 'datetime'},
             yAxis: {title: {text: 'KG/USD'}},
@@ -82,6 +82,21 @@ Highcharts.getJSON(
             yAxis: {title: {text: 'KG/USD'}},
             legend: {enabled: false},
             series: [{name: 'SOL/USD',data: data}]
+        });
+    }
+);
+
+Highcharts.getJSON(
+    base_url+'/Utilitarios/getChart',
+    function (data) {
+        Highcharts.chart('ten_plomo', {
+            chart: {zoomType: 'x'},
+            title: {text: 'PLOMO',align: 'center'},
+            subtitle: {text: document.ontouchstart === undefined ?'Seleccione el area para hacer Zoom' : 'Seleccione para hacer Zoom',align: 'left'},
+            xAxis: {type: 'datetime'},
+            yAxis: {title: {text: 'KG/USD'}},
+            legend: {enabled: false},
+            series: [{name: 'KG/USD',data: data.pr}]
         });
     }
 );

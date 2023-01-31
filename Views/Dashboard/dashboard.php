@@ -23,8 +23,8 @@
   <div class="col-md-4">
       <div class="tile">
         <div class="tile-body">
-          <h5 class="text-center">NOTAS</h5>
-          PRECIOS ACTUALIZADOS 
+          <!-- <h5 class="text-center">NOTAS</h5> -->
+          <!-- PRECIOS ACTUALIZADOS 
 Brillo 31.50
 Grueso 30
 Delgado 29
@@ -48,7 +48,11 @@ Cable grasa 6
 Cable sulfatado 5.5
 Carrocería 4.50
 Antimonio 8
-Chapa 2
+Chapa 2 -->
+            <figure class="highcharts-figure">
+            <div id="ten_copper"></div>
+            <p class="highcharts-description"></p>
+          </figure>
         </div>
       </div>
     </div>
@@ -56,7 +60,7 @@ Chapa 2
       <div class="tile">
         <div class="tile-body">
           <figure class="highcharts-figure">
-            <div id="ten_copper"></div>
+            <div id="ten_plomo"></div>
             <p class="highcharts-description"></p>
           </figure>
         </div>
