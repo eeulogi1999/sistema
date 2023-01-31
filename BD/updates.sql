@@ -32,3 +32,6 @@ ALTER TABLE `agentes` ADD `age_gt4_id` BIGINT NOT NULL DEFAULT '1' AFTER `age_mo
 ALTER TABLE `agentes` ADD CONSTRAINT `agentes_t4monedas` FOREIGN KEY (`age_gt4_id`) REFERENCES `company5_bd_cacel`.`t4monedas`(`gt4_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `cajas` ADD `caj_tce_id` BIGINT NULL AFTER `caj_caj_id`;
 ALTER TABLE `cajas` ADD CONSTRAINT `cajas_tcespeciales` FOREIGN KEY (`caj_tce_id`) REFERENCES `tcespeciales`(`tce_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+ALTER TABLE `movimientos` CHANGE `mov_serie` `mov_serie` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;

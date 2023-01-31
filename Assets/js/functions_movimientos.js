@@ -224,8 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
         for (const i in mde_json) {
             if (Object.hasOwnProperty.call(mde_json, i)) {
                 delete mde_json[i].mde_options;
-                console.log(mde_json[i].mde_ref_mov_id)
-                if (parseInt(mde_json[i].mde_ref_mov_id) == 0 || $('#mov_ref').prop('checked')) {
+                if (isNaN(mde_json[i].mde_ref_mov_id) || mde_json[i].mde_ref_mov_id == null || parseInt(mde_json[i].mde_ref_mov_id) == 0 || $('#mov_ref').prop('checked')) {
                     delete mde_json[i].mde_ref_mov_id;
                 }
             }
@@ -678,8 +677,13 @@ function editMov(id) {
             }
             $('#mov_t12_id').val(mov.mov_t12_id.t12_id);
             $('#mov_t10_id').val(mov.mov_t10_id.t10_id); 
-            $('#mov_serie').val(mov.mov_serie); 
-            $('#mov_numero').val(mov.mov_numero); 
+            if (data.mov_t10_id == 53) {
+                $('#mov_serie').val(mov.mov_serie.split('-')[0]); 
+                $('#mov_numero').val(mov.mov_serie.split('-')[1]);
+            }else{
+                $('#mov_serie').val(mov.mov_serie); 
+                $('#mov_numero').val(mov.mov_numero); 
+            }
             $('#mov_gt4_id').val(mov.mov_gt4_id.gt4_id);
             if (mov.mov_fechaV) {
                 $('#mov_fechaV').val(mov.mov_fechaV); 

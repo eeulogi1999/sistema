@@ -196,6 +196,9 @@ class Movimientos extends Controllers{
                                         'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = "'.date( "Y-m", strtotime($_POST['mov_fechaE'])).'"',
                                         'mov_t12_id'=>$_POST['mov_t12_id']),' MAX(mov_t12num) AS num ');
                 $mov = $_POST;
+                if (intval($mov['mov_t10_id']) == 53) {
+                    $mov['mov_serie'] = $mov['mov_serie'].'-'.$mov['mov_numero'];
+                }
                 $mov['mov_tce_id'] = $tce['tce_id'];
                 $mov['mov_t12num'] = intval($t12num['num'])+1;
                 $mov['mov_alm_id'] =  (isset($mov['mov_alm_id']))?$mov['mov_alm_id']:$_SESSION['alm']['alm_id'];
@@ -226,6 +229,9 @@ class Movimientos extends Controllers{
             } else {
                 $b_mov =  $this->movimientos->selectRegistro($_POST['mov_id']);
                 $mov = $_POST;
+                if (intval($mov['mov_t10_id']) == 53) {
+                    $mov['mov_serie'] = $mov['mov_serie'].'-'.$mov['mov_numero'];
+                }
                 $mov['mov_tce_id'] = $tce;
                 $mov['mov_t12num'] = $b_mov['mov_t12num'];
                 $mov['mov_id'] = $b_mov['mov_id'];

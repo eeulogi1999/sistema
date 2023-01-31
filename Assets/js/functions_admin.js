@@ -515,6 +515,13 @@ function previewFiles(th,content) {
         };
         constructor.prototype = {
             clear: function(){
+                if (typeof o.src != 'undefined') {
+                    window[o.src] = {};
+                    o.data = window[o.src];
+                }
+                if (typeof o.url != 'undefined') {
+                    o.data = {};
+                }
                 $(tbody).html('<tr><td colspan="'+(numerate?o.columns.length+1:o.columns.length)+'" class="text-center">Ningún dato disponible en esta tabla =(</td></tr>');
                 return true;
             },
