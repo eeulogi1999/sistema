@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if ($('#mov_age_id').val()!='0') {
             var ref = $(this).prop('checked');
             if (ref) {
-                await $('#mde_ref_mov_id').loadOptions('movimientos',['mov_serie','mov_numero'],{'mov_age_id':$('#mov_age_id').val(),'mov_tipo':4});
+                await $('#mde_ref_mov_id').loadOptions('movimientos',['mov_serie'],{'mov_age_id':$('#mov_age_id').val(),'mov_tipo':4});
                 $('#mde_ref_mov_id').parent().show();
                 $('thead tr th:nth-child('+($('#mde_ref_mov_id').parent().index()+1)+')',$('#mde_ref_mov_id').parent().parent().parent().parent()[0]).show()
             } else {

@@ -88,9 +88,11 @@ class Movimientos extends Controllers{
     public function getEventas(){
         $eve = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>1,'mov_tipo'=>4,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
         foreach ($eve as $i => $r) {
-            $eve[$i]['mov_doc'] = '<a href="#" onclick="getViewMov('.$r['mov_id'].')">'.$r['mov_serie'].'-'.str_pad($r['mov_numero'],8,0,STR_PAD_LEFT).'</a>' ;
+            $eve[$i]['mov_doc'] = '<a href="#" onclick="getViewMov('.$r['mov_id'].')">'.$r['mov_serie'].'</a>' ;
             $eve[$i]['mov_mde_id'] = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$r['mov_id']),array('mde_mov_id')); 
             $eve[$i]['mov_bie_id'] = $eve[$i]['mov_mde_id'][0]['mde_bie_id'];
+            $eve[$i]['mov_tonq'] = $eve[$i]['mov_mde_id'][0]['mde_q']/1000;
+            $eve[$i]['mov_tonvu'] = $eve[$i]['mov_total']/$eve[$i]['mov_tonq'];
             $qe = 0;
             $ref = '';
             $mde = $this->mdetalles->selectRegistros(array('mde_ref_mov_id'=>$r['mov_id']));
@@ -126,7 +128,12 @@ class Movimientos extends Controllers{
             }else{
                 $arrData[$i]['mov_age_ide'] = '<span class="badge badge-warning">nulo</span>';
             }
-            $arrData[$i]['mov_serie'] = $arrData[$i]['mov_serie'].'-'.str_pad($arrData[$i]['mov_numero'],8,0,STR_PAD_LEFT);
+            
+            if ($arrData[$i]['mov_t10_id']['t10_id'] == 53) {
+                $arrData[$i]['mov_serie'] = $arrData[$i]['mov_serie'];
+            }else{
+                $arrData[$i]['mov_serie'] = $arrData[$i]['mov_serie'].'-'.str_pad($arrData[$i]['mov_numero'],8,0,STR_PAD_LEFT);
+            }
             if ($mov_t12_id == 18) {
                 $mov_mov_id = $this->movimientos->selectRegistro($arrData[$i]['mov_id']);
                 $arrData[$i]['mov_serie2'] = $mov_mov_id['mov_serie'].'-'.str_pad($mov_mov_id['mov_numero'],8,0,STR_PAD_LEFT);
