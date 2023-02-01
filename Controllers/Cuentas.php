@@ -63,7 +63,7 @@ class Cuentas extends Controllers{
             $caj['caj_numero'] = $i;
             $caj['caj_cue_id'] = $sal[$i]['cue_id'];
             $caj['caj_monto'] = $sal[$i]['cue_saldo'];
-            $nm = date('Y-m-d',strtotime('next month '.str_replace('"','',$_SESSION['periodo'])."-01"));
+            $nm = date('Y-m-d',strtotime('next month '.strClean($_SESSION['periodo']).'-01'));
             $caj['caj_fecha'] = $nm;
             $d = $this->cajas->insertRegistro($caj);
             $r = array('status' => true,'msg' => "Procesado Correctamente");

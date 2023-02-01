@@ -20,6 +20,7 @@ class Movimientos extends Controllers{
         $this->newModel('tcespeciales');
         $this->newModel('tafectaciones');
         $this->newModel('bienes');
+        $this->newModel('simulaciones');
         $this->formatter = new NumeroALetras();
     }
     public function Movimientos(){
@@ -485,6 +486,11 @@ class Movimientos extends Controllers{
         // $dompdf->setPaper('A4');
         // $dompdf->render();
         // $dompdf->stream('my.pdf',array('Attachment'=>0));
+        die();
+    }
+    public function getSimulaciones(){
+        $res = $this->simulaciones->selectRegistros();
+        echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
     }
 

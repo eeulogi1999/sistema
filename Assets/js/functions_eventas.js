@@ -1,5 +1,6 @@
-var eve_table;
+var eve_table,sim_table;
 var url_eve = base_url+"/Movimientos/getEventas";
+var url_sim = base_url+"/Movimientos/getSimulaciones";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#eve_table")) {
@@ -24,12 +25,33 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
+    if (document.querySelector("#sim_table")) {
+        sim_table = $('#sim_table').autoTable({
+            "url": url_sim,
+            "numerate": true,
+            "columns":[
+                {"data":"sim_bie_id.bie_nombre",header:{t:"MATERIAL",align:'center'},tipo:'string'},
+                {"data":"sim_created",header:"FECHA",tipo:'string'},
+                {"data":"sim_q",header:{t:"CANTIDAD KG.",align:'right'},tipo:'float'},
+                {"data":"sim_p",header:{t:"PRECIO/KG",align:'right'},tipo:'money'},
+                {"data":"sim_m",header:{t:"VENTA BRUTA",align:'right'},tipo:'money'},
+                {"data":"sim_g",header:{t:"GASTO",align:'right'},tipo:'float'},
+                {"data":"sim_n",header:{t:"VENTA NETA",align:'right'},tipo:'money'},
+                {"data":"sim_pp",header:{t:"P/KG MERCADO",align:'right'},tipo:'money'},
+                {"data":"sim_pc",header:{t:"P/KG COMPANY",align:'right'},tipo:'money'},
+                {"data":"sim_qm",header:{t:"P/KG MAXIMO",align:'right'},tipo:'money',style:{color:'danger'}}
+            ]
+        });
+    }
 
 });
 
 window.addEventListener('load', async () => {
     if (document.querySelector("#eve_table")) {
         eve_table = await eve_table;
+    }
+    if (document.querySelector("#sim_table")) {
+        sim_table = await sim_table;
     }
     divLoading.style.display = "none";
 });

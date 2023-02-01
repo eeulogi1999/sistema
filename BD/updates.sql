@@ -38,3 +38,13 @@ ALTER TABLE `movimientos` CHANGE `mov_serie` `mov_serie` VARCHAR(20) CHARACTER S
 
 
 ALTER TABLE `tcambios` ADD `gtc_origen` INT NOT NULL DEFAULT '1' AFTER `gtc_gt4_id`;
+
+
+CREATE TABLE `company5_bd_20602849172`.`simulaciones` (`sim_id` BIGINT NOT NULL AUTO_INCREMENT ,
+ `sim_tipo` INT NOT NULL , `sim_bie_id` BIGINT NOT NULL , `sim_qtn` DECIMAL(12,6) NOT NULL DEFAULT '20' ,
+  `sin_qkg` DECIMAL(12,6) NOT NULL DEFAULT '1' , `sim_ptn` DECIMAL(12,6) NOT NULL ,
+   `sim_pkg` DECIMAL(12,6) NOT NULL , `sim_p_1` DECIMAL(12,6) NULL , `sim_p_2` DECIMAL(12,6) NULL ,
+    `sim_p_3` DECIMAL(12,6) NULL , `sim_p_4` DECIMAL(12,6) NULL , `sim_det` DECIMAL(6,4) NOT NULL DEFAULT '17.7' ,
+     `sim_exp` DECIMAL(6,4) NOT NULL DEFAULT '93' , `sim_cadm` DECIMAL(6,4) NOT NULL DEFAULT '15' , 
+     `sim_plus` DECIMAL(6,4) NOT NULL DEFAULT '0' , `sim_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+     `sim_gus_id` BIGINT NOT NULL , PRIMARY KEY (`sim_id`)) ENGINE = InnoDB;

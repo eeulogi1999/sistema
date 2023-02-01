@@ -190,7 +190,7 @@ class Gerencial extends Controllers{
     public function prueba(){
         //$this->configuraciones->insertRegistro(array('con_clave'=>'cron','con_valor'=>'"'.date("H-i").'"'));
         // curl_core();
-        $nm = date('Y-m-d',strtotime('next month '.str_replace('"','',$_SESSION['periodo'])."-01"));
+        $nm = date('Y-m-d',strtotime('next month '.strClean($_SESSION['periodo']).'-01'));
         dep($nm);
     }
     public function getExpDet($id){

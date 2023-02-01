@@ -205,7 +205,7 @@ class Reportes extends Controllers{
         $bie = $this->bienes->selectRegistros();
         $si = array();
         $r = array('status' => false,'msg' => "No procesado");
-        $nm = date('Y-m-d',strtotime('next month '.str_replace('"','',$_SESSION['periodo'])."-01"));
+        $nm = date('Y-m-d',strtotime('next month '.strClean($_SESSION['periodo']).'-01'));
         $si['mov_alm_id'] = 1;
         $si['mov_serie'] = 'SI01';
         $si['mov_numero'] = 1;
