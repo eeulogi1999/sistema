@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded',function () {
             "numerate": true,
             "columns":[
                 {"data":"mov_doc",header:{t:"DOC.",align:'center'},tipo:'string'},
-                {"data":"mov_age_id.age_gem_id.gem_razonsocial",header:"MATERIAL",tipo:'string'},
+                {"data":"mov_age_id.age_gem_id.gem_razonsocial",header:"AGENTE",tipo:'string'},
                 {"data":"mov_cue_id.cue_nombre",header:"CUENTAS",tipo:'string'},
-                {"data":"mov_bie_id.bie_nombre",header:"AGENTE",tipo:'string'},
+                {"data":"mov_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
                 {"data":"mov_mde_id.0.mde_q",header:{t:"CANT./KG",align:'right'},tipo:'float'},
                 {"data":"mov_tonq",header:{t:"CANT./TON",align:'right'},tipo:'float',style:{color:'success'}},
                 {"data":"mov_mde_id.0.mde_vu",header:{t:"PRECIO/KG",align:'right'},tipo:'money',chr:'mov_gt4_id'},

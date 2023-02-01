@@ -419,7 +419,6 @@ class Main extends Controllers{
         $writer->save('Assets/excel/format_out.xlsx');
         die(); 
     }
-    
     public function htmlPdf(){
         $dompdf = new Dompdf\Dompdf();
         ob_end_clean();

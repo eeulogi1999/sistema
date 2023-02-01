@@ -1,5 +1,4 @@
 <?php 
-
 @ob_start();
 require_once 'Libraries/phpspreadsheet/vendor/autoload.php';
 class Liquidez extends Controllers{
@@ -340,7 +339,8 @@ class Liquidez extends Controllers{
             $liq = array();
             $liq['liq_age_id'] = $sal[$i]['liq_age_id']['age_id'];
             $liq['liq_monto'] = $sal[$i]['liq_actual'];
-            $liq['liq_fecha'] = '2023-01-01';
+            $nm = date('Y-m-d',strtotime('next month '.str_replace('"','',$_SESSION['periodo'])."-01"));
+            $liq['liq_fecha'] = $nm;
             $d = $this->liquidez->insertRegistro($liq);
             $r = array('status' => true,'msg' => "Procesado Correctamente");
         }

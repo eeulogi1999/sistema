@@ -189,7 +189,9 @@ class Gerencial extends Controllers{
     }
     public function prueba(){
         //$this->configuraciones->insertRegistro(array('con_clave'=>'cron','con_valor'=>'"'.date("H-i").'"'));
-        curl_core();
+        // curl_core();
+        $nm = date('Y-m-d',strtotime('next month '.str_replace('"','',$_SESSION['periodo'])."-01"));
+        dep($nm);
     }
     public function getExpDet($id){
         $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_t10_id'=>51,'mov_cue_id'=>$id,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));

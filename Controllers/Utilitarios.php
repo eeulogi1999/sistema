@@ -158,7 +158,6 @@ class Utilitarios extends Controllers{
         echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
     }
-
     public function getChartUSD(){
         $res = array('mer'=>array(),'sun'=>array());
         $a = $this->tcambios->selectRegistros(array('gtc_origen'=>2,'custom'=>'DATE_FORMAT(gtc_fecha,"%Y") = "'.date('Y').'" ORDER BY gtc_fecha ASC'),array('gtc_gt4_id'));

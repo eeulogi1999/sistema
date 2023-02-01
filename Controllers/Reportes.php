@@ -205,6 +205,7 @@ class Reportes extends Controllers{
         $bie = $this->bienes->selectRegistros();
         $si = array();
         $r = array('status' => false,'msg' => "No procesado");
+        $nm = date('Y-m-d',strtotime('next month '.str_replace('"','',$_SESSION['periodo'])."-01"));
         $si['mov_alm_id'] = 1;
         $si['mov_serie'] = 'SI01';
         $si['mov_numero'] = 1;
@@ -213,9 +214,9 @@ class Reportes extends Controllers{
         $si['mov_t12_id'] = 16;
         $si['mov_t10_id'] = 1;
         $si['mov_tce_id'] = 1;
-        $si['mov_fechaE'] = '2023-01-01';
-        $si['mov_fechaR'] = '2023-01-01';
-        $si['mov_fechaV'] = '2023-01-01';
+        $si['mov_fechaE'] = $nm;
+        $si['mov_fechaR'] = $nm;
+        $si['mov_fechaV'] = $nm;
         $si['mov_tipo'] = 2;
         $si['mov_subtotal'] = 1;
         $si['mov_igv_id'] = '{"mov_igv": "0.00", "mov_neto": "1.00", "mov_gravada": "0.00", "mov_inafecta": "0.00", "mov_exonerada": "1.00"}';

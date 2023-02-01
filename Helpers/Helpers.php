@@ -434,10 +434,10 @@
         curl_close($ch);
         return $result;
     }
-    function curl_core(){
+    function curl_core($url= BASE_URL.'/Main/get/gcl/1'){
         $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'http://localhost/sistema/Main/get/gcl/1',
+        CURLOPT_URL => $url,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_HTTPAUTH=>CURLAUTH_BASIC,
         CURLOPT_USERPWD=>'admin@companycacel.com:qwert',
@@ -454,6 +454,6 @@
         ));
         $response = curl_exec($curl);
         curl_close($curl);
-        echo $response;
+        return $response;
     }
  ?>
