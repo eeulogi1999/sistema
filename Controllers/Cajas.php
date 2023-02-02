@@ -161,7 +161,7 @@ class Cajas extends Controllers{
         die();
     }
     public function getI($cue_id){
-        $arrData = $this->cajas->selectRegistros(array('caj_cue_id'=>$cue_id,'custom'=>'caj_tipo in (1,5,4,0) AND caj_monto > 0 AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' ORDER BY caj_fecha ASC'));
+        $arrData = $this->cajas->selectRegistros(array('caj_cue_id'=>$cue_id,'custom'=>'caj_tipo in (1,5,4,0,8) AND caj_monto > 0 AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' ORDER BY caj_fecha ASC'));
         for ($i=0; $i < count($arrData); $i++) { 
             $arrData[$i]['caj_nro'] = $i+1;
             //$arrData[$i]['caj_tipo'] = CAJ[$arrData[$i]['caj_tipo']];
@@ -179,7 +179,7 @@ class Cajas extends Controllers{
         die();
     }
     public function getE($cue_id){
-        $arrData = $this->cajas->selectRegistros(array('caj_cue_id'=>$cue_id,'custom'=>'caj_tipo in (2,5,0) AND caj_monto < 0 AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' ORDER BY caj_fecha ASC'));
+        $arrData = $this->cajas->selectRegistros(array('caj_cue_id'=>$cue_id,'custom'=>'caj_tipo in (2,5,0,8) AND caj_monto < 0 AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' ORDER BY caj_fecha ASC'));
         for ($i=0; $i < count($arrData); $i++) { 
             $arrData[$i]['caj_nro'] = $i+1;
            // $arrData[$i]['caj_tipo'] = CAJ[$arrData[$i]['caj_tipo']];
