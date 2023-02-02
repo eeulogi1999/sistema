@@ -221,7 +221,7 @@ class Reportes extends Controllers{
         $si['mov_subtotal'] = 1;
         $si['mov_igv_id'] = '{"mov_igv": "0.00", "mov_neto": "1.00", "mov_gravada": "0.00", "mov_inafecta": "0.00", "mov_exonerada": "1.00"}';
         $si['mov_total'] = 1;
-        $s = $this->movimientos->insertRegistro($si,array('mov_fechaE'));
+        $s = $this->movimientos->insertRegistro($si,array('mov_t12_id','mov_fechaE'));
         foreach ($bie as $i => $d) {
             $m = array();
             $r = $this->getCostoBien($d['bie_id'],$_SESSION['periodo'],null,0);
