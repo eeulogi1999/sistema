@@ -27,16 +27,22 @@ class Cuentas extends Controllers{
             $arrData = $this->cuentas->selectRegistros(array('cue_status'=>1));
         }
         $pre = 'cue'; $tabla = 'Cuentas';
+        $this->newController('Main');
+        $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
+        unset($this->Main);
+
         for ($i=0; $i < count($arrData); $i++) { 
             $btnView = '';
             $btnEdit = '';
             $btnDelete = '';
             $btnStatus = '';
-             $arrData[$i][$pre.'_nro'] = $i+1;
-            $arrData[$i][$pre.'_saldo'] = $this->cajas->searchRegistro(array('caj_cue_id'=>$arrData[$i][$pre.'_id'],'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),' SUM(caj_monto) AS saldo ')['saldo'];
+            $arrData[$i][$pre.'_nro'] = $i+1;
+            $saldo = $this->cajas->searchRegistro(array('caj_cue_id'=>$arrData[$i][$pre.'_id'],'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),' SUM(caj_monto) AS saldo ')['saldo'];
+            $arrData[$i][$pre.'_saldo'] = ($arrData[$i]['cue_gt4_id']['gt4_id']==2)?$saldo*floatval($tga):$saldo;
+            $arrData[$i][$pre.'_saldon'] = $saldo;
             $arrData[$i][$pre.'_status'] = '<span class="badge badge-'.STATUS[array_keys(STATUS)[$arrData[$i][$pre.'_status']]].'">'.array_keys(STATUS)[$arrData[$i][$pre.'_status']].'</span>';
             if($_SESSION['perMod']['gtp_r']){
-                $btnView = '<button class="btn btn-info btn-sm" onClick="viewCue('.$arrData[$i][$pre.'_id'].')" title="Ver '.$tabla.'"><i class="far fa-eye"></i></button>';
+                $btnView = '<button class="btn btn-info btn-sm" onClick="viewCue('.$arrData[$i][$pre.'_id'].','.$arrData[$i][$pre.'_saldo'].','.$arrData[$i][$pre.'_saldon'].','.$tga.')" title="Ver '.$tabla.'"><i class="far fa-eye"></i></button>';
             }
             if($_SESSION['perMod']['gtp_u']){
                 $btnEdit = '<button class="btn btn-primary  btn-sm" onClick="edit('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Editar '.$tabla.'"><i class="fas fa-pencil-alt"></i></button>';
@@ -62,7 +68,7 @@ class Cuentas extends Controllers{
             $caj['caj_tipo'] = 0;
             $caj['caj_numero'] = $i;
             $caj['caj_cue_id'] = $sal[$i]['cue_id'];
-            $caj['caj_monto'] = $sal[$i]['cue_saldo'];
+            $caj['caj_monto'] = $sal[$i]['cue_saldon'];
             $nm = date('Y-m-d',strtotime('next month '.strClean($_SESSION['periodo']).'-01'));
             $caj['caj_fecha'] = $nm;
             $d = $this->cajas->insertRegistro($caj);

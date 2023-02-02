@@ -34,7 +34,7 @@ class Reportes extends Controllers{
         $mtc = 0;
         $kar = array();
         foreach ($arrMde as $i => $mde) {
-            $item = $this->movimientos->selectRegistro($mde['mde_mov_id']);
+            $item = $this->movimientos->selectRegistro($mde['mde_mov_id'],array('mov_gus_id','mov_age_id','mov_alm_id','gtc_gt4_id'));
             $item['mov_serie'] = '<a href="#" onclick="getViewMov('.$item['mov_id'].')">'.$item['mov_serie'].'-'.str_pad($item['mov_numero'],8,0,STR_PAD_LEFT).'</a>' ;
             $item['mov_nro'] = $i+1;
             $c_mde = array('c_q'=>'','c_vu'=>'','c_importe'=>'');
@@ -52,7 +52,7 @@ class Reportes extends Controllers{
                 $prom = ($qs==0)?0:$mts/$qs;
                 $v_mde = array('v_q'=>$mde['mde_q'],'v_vu'=>$prom,'v_importe'=>$mde['mde_q']*$prom);
                 $mtcv += $mde['mde_q']*$prom;
-                $mtv += $mde['mde_importe'];
+                $mtv += ($item['mov_gt4_id']['gt4_id']==2)?$mde['mde_importe']*$item['mov_tce_id']['tce_gtc_id']['gtc_tventa']:$mde['mde_importe'];
                 $mts -= $mde['mde_q']*$prom;
                 $qs -= $mde['mde_q'];
             }

@@ -213,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $("#select_age").click(function(e) {
         $('#mov_age_id').children().attr('value',age_table.getSelectedItem().age_id);
         $('#mov_age_id').children().text(age_table.getSelectedItem().age_ide+' - '+age_table.getSelectedItem().age_nombre);
+        $('#mov_gt4_id').val(age_table.getSelectedItem().age_gt4_id.gt4_id);
     })
     $('#mov_fechaE').change(function (e) {ftnTcambio(this);});
     $('#mde_gta_id').change(function (e){  mdeProducto();  })

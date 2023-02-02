@@ -76,6 +76,8 @@
           </div>
         </div>
         <br>
+        <h5 class="text-right"><strong>Neto: </strong><span id="liq_actualn"></span></h5>
+        <h5 class="text-right"><strong>T.C. Sunat: </strong><span id="liq_tga"></span></h5>
         <h4 class="text-right"><strong>Saldo Final: </strong><span class="text-info" id="liq_actual"></span></h4>
       </div>
       <div class="modal-footer" style="justify-content: space-between">

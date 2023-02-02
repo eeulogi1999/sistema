@@ -1,8 +1,12 @@
 <?php 
     headerAdmin($data); 
-    getModal('modalCajas',$data);
-    getModal('modalAgentes',$data);
-    getModal('modalTableAge',$data);
+    if ($data['page_data']['caj']['caj_tipo']== 8) {
+      getModal('modalCambios',$data);
+    } else {
+      getModal('modalCajas',$data);
+      getModal('modalAgentes',$data);
+      getModal('modalTableAge',$data);
+    }
 ?>
 <main class="app-content">
   <div class="app-title">

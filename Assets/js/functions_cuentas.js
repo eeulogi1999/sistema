@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"caj_fecha",header:{t:"FECHA",c:'text'},tipo:'string'},
                 {"data":"caj_age_id.age_nombre",header:{t:"AGENTE",c:'text'},tipo:'string'},
-                {"data":"caj_monto",header:{t:"MONTO",align:'right'},tipo:'money',footer:{ c:"sum" }}
+                {"data":"caj_monto",header:{t:"MONTO",align:'right'},tipo:'money',chr:'caj_gt4_id',footer:{ c:"sum" }}
             ]
         }); 
     }
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"caj_fecha",header:{t:"FECHA",c:'text'},tipo:'string'},
                 {"data":"caj_age_id.age_nombre",header:{t:"AGENTE",c:'text'},tipo:'string'},
-                {"data":"caj_monto",header:{t:"MONTO",align:'right'},tipo:'money',footer:{ c:"sum" }}
+                {"data":"caj_monto",header:{t:"MONTO",align:'right'},tipo:'money',chr:'caj_gt4_id',footer:{ c:"sum" }}
             ]
         }); 
     }
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"caj_fecha",header:{t:"FECHA",c:'text',style:{miw:80}},tipo:'string'},
                 {"data":"caj_tga_id.tga_nombre",header:{t:"T. GASTO",c:'text'},tipo:'string'},
                 {"data":"caj_responsable",header:{t:"RESPONSABLE",c:'text'},tipo:'string'},
-                {"data":"caj_monto",header:{t:"MONTO",align:'right'},tipo:'money',footer:{ c:"sum" }}
+                {"data":"caj_monto",header:{t:"MONTO",align:'right'},tipo:'money',chr:'caj_gt4_id',footer:{ c:"sum" }}
             ]
         }); 
     }
@@ -67,14 +67,24 @@ window.addEventListener('load', async () => {
     divLoading.style.display = "none";
 });
 
-function viewCue(id) {
+function viewCue(id,a,b,tga) {
     $('#modalViewCue').modal('show');
     // mvb_cue.reload(base_url+"/Cajas/getDetalles/"+id)
     // setTimeout(() => {
     //     mvb_cue.rezise();
     //     mvb_cue.select(true);
     // }, 220);
-
+    fetch(base_url + '/Main/get/cue,'+id)
+    .then(r => r.json())
+    .then(r => {
+        if (r.data.cue_gt4_id.gt4_id == 2) {
+            $('#cue_base').parent().show();
+            $('#cue_tga').parent().show();
+        }else{
+            $('#cue_base').parent().hide();
+            $('#cue_tga').parent().hide();
+        }
+    })
     cue_i.reload(base_url+"/Cajas/getI/"+id)
     setTimeout(() => {
         cue_i.rezise();
@@ -87,4 +97,7 @@ function viewCue(id) {
     setTimeout(() => {
         cue_g.rezise();
     }, 220);
+    $('#cue_base').text(Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Math.abs(b)));
+    $('#cue_tga').text(tga);
+    $('#cue_neto').text(Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.abs(a)));
 }

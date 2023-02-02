@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"ing_tipo",header:{t:"TIPO",c:'text'},tipo:'string'},
                 {"data":"ing_cuenta",header:{t:"CUENTA",c:'text'},tipo:'string'},
                 {"data":"ing_descripcion",header:{t:"DESCRIPCION",c:'text'},tipo:'string'},
-                {"data":"ing_monto",header:{t:"TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"ing_monto",header:{t:"TOTAL",align:'right'},chr:'egr_gt4_id',tipo:'money',footer:{ c:"sum" }},
             ]
         });
     }
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"egr_tipo",header:{t:"TIPO",c:'text'},tipo:'string'},
                 {"data":"egr_cuenta",header:{t:"CUENTA",c:'text'},tipo:'string'},
                 {"data":"egr_descripcion",header:{t:"DESCRIPCION",c:'text'},tipo:'string'},
-                {"data":"egr_monto",header:{t:"TOTAL",align:'right'},tipo:'money',style:{condition:{minzero:'text-danger'}},footer:{ c:"sum" }},
+                {"data":"egr_monto",header:{t:"TOTAL",align:'right'},tipo:'money',chr:'egr_gt4_id',style:{condition:{minzero:'text-danger'}},footer:{ c:"sum" }},
             ]
         });
     }
@@ -79,7 +79,7 @@ async function editLiq(id) {
      
 }
 
-function viewLiq(id,a) {
+function viewLiq(id,a,b,tga) {
     $('#liq_actual').text()
     $('#modalViewLiq').modal('show');
     $("#liq_pdf").attr("href",base_url+"/Liquidez/getPdf/"+id);
@@ -88,6 +88,13 @@ function viewLiq(id,a) {
     fetch(base_url + '/Main/get/age,'+id)
     .then(r => r.json())
     .then(r => {
+        if (r.data.age_gt4_id.gt4_id == 2) {
+            $('#liq_actualn').parent().show();
+            $('#liq_tga').parent().show();
+        }else{
+            $('#liq_actualn').parent().hide();
+            $('#liq_tga').parent().hide();
+        }
         var text = (r.data.age_gem_id==null)?r.data.age_gpe_id.gpe_nombre+' ,'+r.data.age_gpe_id.gpe_apellidos:r.data.age_gem_id.gem_razonsocial;
         $("#h_age_id").text(text);
     })
@@ -100,9 +107,11 @@ function viewLiq(id,a) {
     setTimeout(() => {
         mvb_caj.rezise();
     }, 400);
-     
+
     setTimeout(() => {
         let mt = Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.abs(a));
+        $('#liq_actualn').text(Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Math.abs(b)));
+        $('#liq_tga').text(tga);
         if (a<0) {
             $('#liq_actual').text('POR PAGAR  '+mt);
         }else if (a>0){

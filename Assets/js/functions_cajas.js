@@ -12,7 +12,7 @@ var col_caj = [
     {"data":"caj_cue_id.cue_nombre",header:{t:"CUENTA",c:'text'},tipo:'string'},
     {"data":"caj_t1m_id.t1m_descripcion",header:{t:"MEDIO DE PAGO",c:'text'},tipo:'string'},
     {"data":"caj_observaciones",header:{t:"OBSERVACIONES"},tipo:'text'},
-    {"data":"caj_monto",header:{t:"MONTO",align:'right'},tipo:'money',footer:{ c:"sum" }},
+    {"data":"caj_monto",header:{t:"MONTO",align:'right'},tipo:'money',chr:'caj_gt4_id',footer:{ c:"sum" }},
     {"data":"caj_status",header:{t:"ESTADO"},tipo:'string'},
     {"data":"caj_options",header:"ACCIONES",tipo:'string'}
 ];
@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded',function () {
         $("#select_age").click(function(e) {
             $('#caj_age_id').children().attr('value',age_table.getSelectedItem().age_id);
             $('#caj_age_id').children().text(age_table.getSelectedItem().age_ide+' - '+age_table.getSelectedItem().age_nombre);
+            $('#caj_gt4_id').val(age_table.getSelectedItem().age_gt4_id.gt4_id);
         })
     }
 
@@ -231,7 +232,6 @@ async function editCaj(id){
             break;
     }    
 }
-
 async function viewCaj(id,tipo=null){
     if (tipo!=null) {
         data.caj = {caj_tipo:tipo};

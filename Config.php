@@ -85,7 +85,7 @@
 
 	const AGE_TIPO = array('MIXTO'=>'warning','PROVEEDOR'=>'primary','CLIENTE'=>'success');
 	
-	const CAJ = array('scuentas','Ingresos','Egresos','Gastos','Iadicionales','Cinternos','Nota-Credito','Nota-Debito');
+	const CAJ = array('scuentas','Ingresos','Egresos','Gastos','Iadicionales','Cinternos','Nota-Credito','Nota-Debito','Cambio-Dolares');
 	//Stados
 	const STATUS = array('INACTIVO'=>'primary','ACTIVO'=>'success','ELIMINADO'=>'danger');
 	const NCR_MOT = array(
