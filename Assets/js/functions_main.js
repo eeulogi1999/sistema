@@ -175,7 +175,7 @@ async function edit(prefijo,id,res=false,php=false) {
                 }
             }
             if (typeof window['getPos'+capitalize(prefijo)]==='function') {
-                window['getPos'+capitalize(prefijo)](response.data);
+                window['getPos'+capitalize(prefijo)]();
             }
 
             $('#modal_'+prefijo).modal('show');

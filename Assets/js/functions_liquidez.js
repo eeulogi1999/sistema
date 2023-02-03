@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"ing_tipo",header:{t:"TIPO",c:'text'},tipo:'string'},
                 {"data":"ing_cuenta",header:{t:"CUENTA",c:'text'},tipo:'string'},
                 {"data":"ing_descripcion",header:{t:"DESCRIPCION",c:'text'},tipo:'string'},
-                {"data":"ing_monto",header:{t:"TOTAL",align:'right'},chr:'egr_gt4_id',tipo:'money',footer:{ c:"sum" }},
+                {"data":"ing_monto",header:{t:"TOTAL",align:'right'},chr:'ing_gt4_id',tipo:'money',footer:{ c:"sum" }},
             ]
         });
     }

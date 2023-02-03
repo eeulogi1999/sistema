@@ -49,3 +49,14 @@ CREATE TABLE `company5_bd_20602849172`.`simulaciones` (`sim_id` BIGINT NOT NULL 
      `sim_exp` DECIMAL(6,4) NOT NULL DEFAULT '93' , `sim_cadm` DECIMAL(6,4) NOT NULL DEFAULT '15' , 
      `sim_plus` DECIMAL(6,4) NOT NULL DEFAULT '0' , `sim_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , 
      `sim_gus_id` BIGINT NOT NULL , PRIMARY KEY (`sim_id`)) ENGINE = InnoDB;
+
+
+     ALTER TABLE `simulaciones` CHANGE `sin_qkg` `sim_qkg` DECIMAL(12,6) NOT NULL DEFAULT '1.000000';
+     ALTER TABLE `simulaciones` ADD `sim_obs` TEXT NULL AFTER `sim_gus_id`;
+     ALTER TABLE `simulaciones` ADD CONSTRAINT `simulaciones_bienes` FOREIGN KEY (`sim_bie_id`) REFERENCES `bienes`(`bie_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+     ALTER TABLE `simulaciones` ADD CONSTRAINT `simulaciones_usuarios` FOREIGN KEY (`sim_gus_id`) REFERENCES `company5_bd_cacel`.`usuarios`(`gus_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+     ALTER TABLE `simulaciones` ADD `sim_g` DECIMAL(12,6) NOT NULL DEFAULT '0.56' AFTER `sim_p_4`;
+     ALTER TABLE `simulaciones` ADD `sim_tce_id` BIGINT NOT NULL AFTER `sim_g`;
+     ALTER TABLE `simulaciones` ADD CONSTRAINT `simulaciones_tcespeciales` FOREIGN KEY (`sim_tce_id`) REFERENCES `tcespeciales`(`tce_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+     ALTER TABLE `simulaciones` ADD `sim_pc` DECIMAL(12,6) NOT NULL DEFAULT '29' AFTER `sim_p_4`;
+     ALTER TABLE `simulaciones` ADD `sim_pm` DECIMAL(12,6) NOT NULL DEFAULT '29' AFTER `sim_pc`;

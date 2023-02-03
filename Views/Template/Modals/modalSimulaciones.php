@@ -10,6 +10,16 @@
       <div class="modal-body">
         <form id="form_sim" name="form_sim" class="form-horizontal">
           <input type="hidden" id="sim_id" name="sim_id" value="">
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label for="sim_bie_id">MATERIAL<span class="required">*</span></label>
+              <select class="form-control" id="sim_bie_id" name="sim_bie_id"></select>
+            </div>
+            <div class="form-group col">
+              <label for="sim_obs">OBSERVACIONES<span class="required">*</span></label>
+              <input type="text" class="form-control valid" id="sim_obs" name="sim_obs">
+            </div>
+          </div>
           <div>
             <div class="table-responsive">
               <table class="table table-hover table-bordered table-sm " id="val_table" width="100%"></table>
@@ -30,9 +40,10 @@
               <table class="table table-hover table-bordered table-sm " id="out_table" width="100%"></table>
             </div>
           </div>
-          <div class="tile-footer mt-3">
-            <button id="set_sim" class="btn btn-primary" type="submit"><i
-                class="fa fa-fw fa-lg fa-check-circle"></i><span>Guardar</span></button>&nbsp;&nbsp;&nbsp;
+          <div class="tile-footer">
+            <button id="set_sim" onclick="event.preventDefault();set('sim')" class="btn btn-info"><i
+                class="fa fa-fw fa-lg fa-check-circle"></i><span
+                id="set_sim">Actualizar</span></button>&nbsp;&nbsp;&nbsp;
             <button class="btn btn-danger" type="button" data-dismiss="modal"><i
                 class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
           </div>
