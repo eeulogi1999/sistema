@@ -9,15 +9,15 @@
       <span class="d-flex align-items-center mr-2">SUNAT</span>
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="sol">S/</span>
-        </div>
-        <input type="text" class="form-control" id="gtc_sol" placeholder="SOLES" aria-describedby="sol" size="10">
-      </div>
-      <div class="input-group">
-        <div class="input-group-prepend">
           <span class="input-group-text" id="dol">$ </span>
         </div>
         <input type="text" class="form-control" id="gtc_dol" placeholder="DOLARES" aria-describedby="dol" size="10">
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="sol">S/</span>
+        </div>
+        <input type="text" class="form-control" id="gtc_sol" placeholder="SOLES" aria-describedby="sol" size="10">
       </div>
     </div>
   </div>
