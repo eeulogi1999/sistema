@@ -410,6 +410,14 @@ function previewFiles(th,content) {
                             }
                             
                         }
+                        if (o.columns[j].render) {
+                            d = await o.columns[j].render(r);
+                            o.data[i][o.columns[j].data] = d;
+                            if (o.src) {
+                                window[o.src][i][o.columns[j].data] = d;
+                            }
+                        }
+
                         switch (o.columns[j].tipo) {
                             case 'btn':
                                 cell.innerHTML = d +' '+btn;
@@ -445,7 +453,7 @@ function previewFiles(th,content) {
                             default:
                                 cell.innerHTML = d;
                                 break;
-                        }   
+                        }
                     } 
                 } 
                 var te = (o.numerate)?'<td></td>':'';
@@ -548,6 +556,16 @@ function previewFiles(th,content) {
                         $(table).children('tr').unbind();
                     }
                 }
+                if (typeof o.cell != undefined) {
+                    if (o.cell) {
+                        $(table[0].getElementsByTagName("td")).dblclick(function(){
+                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+parseInt($(this).parent().attr('id'))+',`'+o.columns[$(this).index()-1].data+'`,event)">')
+                            //$(this).addClass('edit').siblings().removeClass('edit');  
+                        })
+                    } else {
+                        $(table).children('td').unbind();
+                    }
+                }
                 return true;
             },
             rezise: function(){
@@ -595,6 +613,37 @@ function previewFiles(th,content) {
                     done = 1;
                 })
                 .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
+            },
+            editCell : function(r,d,e){
+                e.preventDefault();
+                o.data[r][d] = parseFloat(e.target.value)
+                if (o.copyCellEditOrigin) {
+                    window[o.src] = o.data;
+                    o.copyCellEditOrigin();
+                }
+                draw();
+                zise();
+                listenTree();
+                if (typeof o.select != undefined) {
+                    if (o.select) {
+                        $(table[0].getElementsByTagName("tr")).click(function(){
+                            $(this).addClass('selected').siblings().removeClass('selected');  
+                        })
+                    } else {
+                        $(table).children('tr').unbind();
+                    }
+                }
+                if (typeof o.cell != undefined) {
+                    if (o.cell) {
+                        $(table[0].getElementsByTagName("td")).dblclick(function(){
+                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+parseInt($(this).parent().attr('id'))+',`'+o.columns[$(this).index()-1].data+'`,event)">')
+                           // $(this).addClass('edit').siblings().removeClass('edit');  
+                        })
+                    } else {
+                        $(table).children('td').unbind();
+                    }
+                }
+                return true;
             },
             getTotales: function(){
                 return o.tf;

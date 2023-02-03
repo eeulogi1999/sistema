@@ -79,10 +79,13 @@ class Movimientos extends Controllers{
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
         }
+        $this->newController('Main');
+        $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
+        unset($this->Main);
         $data['page_tag'] = "Estado de Ordenes de Ventas";
         $data['page_title'] = "Estado de Ordenes de Ventas";
         $data['page_name'] = "Estado de Ordenes de Ventas";
-        $data['page_data'] = array('periodo'=>$_SESSION['periodo']); 
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'sim'=>array('sim_gtc'=>$tga)); 
         $data['page_functions_js'] = array("functions_eventas.js","functions_movimientos.js");
         $this->views->getView($this,"eventas",$data);
     }
