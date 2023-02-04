@@ -559,7 +559,7 @@ function previewFiles(th,content) {
                 if (typeof o.cell != undefined) {
                     if (o.cell) {
                         $(table[0].getElementsByTagName("td")).dblclick(function(){
-                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+parseInt($(this).parent().attr('id'))+',`'+o.columns[$(this).index()-1].data+'`,event)">')
+                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+0+',`'+o.columns[$(this).index()-1].data+'`,event)">')
                             //$(this).addClass('edit').siblings().removeClass('edit');  
                         })
                     } else {
@@ -633,10 +633,10 @@ function previewFiles(th,content) {
                         $(table).children('tr').unbind();
                     }
                 }
-                if (typeof o.cell != undefined) {
+                if (typeof o.cell != undefined) {   //parseInt($(this).parent().attr('id')) -> 0
                     if (o.cell) {
                         $(table[0].getElementsByTagName("td")).dblclick(function(){
-                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+parseInt($(this).parent().attr('id'))+',`'+o.columns[$(this).index()-1].data+'`,event)">')
+                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+0+',`'+o.columns[$(this).index()-1].data+'`,event)">')
                            // $(this).addClass('edit').siblings().removeClass('edit');  
                         })
                     } else {

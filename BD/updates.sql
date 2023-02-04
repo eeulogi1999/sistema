@@ -60,3 +60,6 @@ CREATE TABLE `company5_bd_20602849172`.`simulaciones` (`sim_id` BIGINT NOT NULL 
      ALTER TABLE `simulaciones` ADD CONSTRAINT `simulaciones_tcespeciales` FOREIGN KEY (`sim_tce_id`) REFERENCES `tcespeciales`(`tce_id`) ON DELETE CASCADE ON UPDATE CASCADE;
      ALTER TABLE `simulaciones` ADD `sim_pc` DECIMAL(12,6) NOT NULL DEFAULT '29' AFTER `sim_p_4`;
      ALTER TABLE `simulaciones` ADD `sim_pm` DECIMAL(12,6) NOT NULL DEFAULT '29' AFTER `sim_pc`;
+     ALTER TABLE `simulaciones` ADD `sim_igv` DECIMAL(12,6) NOT NULL AFTER `sim_exp`;
+
+     ALTER TABLE `simulaciones` ADD `sim_imp` DECIMAL(12,6) NOT NULL AFTER `sim_igv`;

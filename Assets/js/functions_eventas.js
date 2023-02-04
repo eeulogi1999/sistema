@@ -204,7 +204,11 @@ function openModalSim() {
     }, 50);
 }
 async function setPreSim(where,json,res) {
-    json = {...data.sim,...json,...val_json[0]}
+    if (parseInt(val_json[0].sim_id)>0) {
+        json.sim_obs = $('#sim_obs').val()
+    } else {
+        json = {...data.sim,...json,...val_json[0]}
+    }
     inp_table.clear()
     por_table.clear()
     out_table.clear()
@@ -212,8 +216,14 @@ async function setPreSim(where,json,res) {
     return {json}; 
 }
 async function getPosSim() {
-    console.log(data.simId)
-    val_json = data.simId
+    val_json[0] = data.simId
+    val_json[0].sim_gtc = data.simId.sim_tce_id.tce_gtc_id.gtc_tcompra
+    val_json[0].sim_gus_id = data.simId.sim_gus_id.gus_id
+    val_json[0].sim_bie_id = data.simId.sim_bie_id.bie_id 
+    val_json[0].sim_tce_id = data.simId.sim_tce_id.tce_id
+    for (const r in data.simId) {
+        val_json[0][r] = parseFloat(data.simId[r])
+    }
     inp_table.reload();
     setTimeout(() => {
         por_table.reload();
