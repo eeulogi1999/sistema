@@ -48,6 +48,9 @@ async function del(prefijo,id,res=false) {
                     $$(prefijo+'_table').load(base_url+"/"+table+"/get"+table);
                 } else {
                     window[prefijo+'_table'].reload();
+                    if (typeof window['delPos'+capitalize(prefijo)]==='function') {
+                        window['delPos'+capitalize(prefijo)]();
+                    }
                 }
             } else {
                 swal("Atención!", response.msg, "error");
@@ -131,6 +134,9 @@ async function set(prefijo,where= null,json = null,res = false) {
                         $$(prefijo+'_table').load(base_url+"/"+table+"/get"+table);
                     } else {
                         window[prefijo+'_table'].reload();
+                        if (typeof window['setPos'+capitalize(prefijo)]==='function') {
+                            window['setPos'+capitalize(prefijo)]();
+                        }
                     }
                 }
             } else {

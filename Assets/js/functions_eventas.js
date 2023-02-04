@@ -1,6 +1,6 @@
-var eve_table,sim_table, val_table,inp_table,out_table,por_table;
+var eve_table,sim_table,nac_table, val_table,inp_table,out_table,por_table,res_table;
 var url_eve = base_url+"/Movimientos/getEventas";
-var url_sim = base_url+"/Movimientos/getSimulaciones";
+var url_sim = base_url+"/Movimientos/getSimulaciones/";
 var val_json = {};
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
@@ -28,21 +28,46 @@ document.addEventListener('DOMContentLoaded',function () {
     }
     if (document.querySelector("#sim_table")) {
         sim_table = $('#sim_table').autoTable({
-            "url": url_sim,
+            "url": url_sim+1,
             "numerate": true,
             "columns":[
                 {"data":"sim_bie_id.bie_nombre",header:{t:"MATERIAL",align:'center'},tipo:'string'},
-                {"data":"sim_created",header:"FECHA",tipo:'string'},
-                {"data":"sim_obs",header:{t:"OBSERV.",align:'center'},tipo:'string'},
+                {"data":"sim_created",header:"ULTIMA MODIFICACIÓN",tipo:'string'},
+                {"data":"sim_gus_id.gus_gpe_id.gpe_nombre",header:"USER",tipo:'string'},
                 {"data":"sim_q",header:{t:"CANTIDAD KG.",align:'right'},tipo:'float'},
                 {"data":"sim_p",header:{t:"PRECIO/KG",align:'right'},tipo:'money'},
                 {"data":"sim_m",header:{t:"VENTA BRUTA",align:'right'},tipo:'money'},
-                {"data":"sim_tce_id.tce_gtc_id.gtc_tcompra",header:{t:"T.C SUNAT",align:'right'},tipo:'float'},
+                {"data":"sim_tce_id.tce_gtc_id.gtc_tcompra",render:(r)=>{return (r.sim_tce_id.tce_compra)?r.sim_tce_id.tce_compra:r.sim_tce_id.tce_gtc_id.gtc_tcompra}
+                ,header:{t:"T.C SUNAT",align:'right'},tipo:'float'},
                 {"data":"sim_g",header:{t:"GASTO",align:'right'},tipo:'float'},
                 {"data":"sim_n",header:{t:"VENTA NETA",align:'right'},tipo:'money'},
                 {"data":"sim_pp",header:{t:"P/KG MERCADO",align:'right'},tipo:'money'},
                 {"data":"sim_pc",header:{t:"P/KG COMPANY",align:'right'},tipo:'money'},
                 {"data":"sim_pm",header:{t:"P/KG MAXIMO",align:'right'},tipo:'money',style:{color:'danger'}},
+                {"data":"sim_obs",header:{t:"OBSERV.",align:'center'},tipo:'string'},
+                {"data":"sim_opt",header:{t:"OPCIONES",align:'center'},tipo:'string'}
+            ]
+        });
+    }
+    if (document.querySelector("#nac_table")) {
+        nac_table = $('#nac_table').autoTable({
+            "url": url_sim+2,
+            "numerate": true,
+            "columns":[
+                {"data":"sim_bie_id.bie_nombre",header:{t:"MATERIAL",align:'center'},tipo:'string'},
+                {"data":"sim_created",header:"ULTIMA MODIFICACIÓN",tipo:'string'},
+                {"data":"sim_gus_id.gus_gpe_id.gpe_nombre",header:"USER",tipo:'string'},
+                {"data":"sim_q",header:{t:"CANTIDAD KG.",align:'right'},tipo:'float'},
+                {"data":"sim_p",header:{t:"PRECIO/KG",align:'right'},tipo:'money'},
+                {"data":"sim_m",header:{t:"VENTA BRUTA",align:'right'},tipo:'money'},
+                {"data":"sim_tce_id.tce_gtc_id.gtc_tcompra",render:(r)=>{return (r.sim_tce_id.tce_compra)?r.sim_tce_id.tce_compra:r.sim_tce_id.tce_gtc_id.gtc_tcompra}
+                ,header:{t:"T.C SUNAT",align:'right'},tipo:'float'},
+                {"data":"sim_g",header:{t:"GASTO",align:'right'},tipo:'float'},
+                {"data":"sim_n",header:{t:"VENTA NETA",align:'right'},tipo:'money'},
+                {"data":"sim_pp",header:{t:"P/KG MERCADO",align:'right'},tipo:'money'},
+                {"data":"sim_pc",header:{t:"P/KG COMPANY",align:'right'},tipo:'money'},
+                {"data":"sim_pm",header:{t:"P/KG MAXIMO",align:'right'},tipo:'money',style:{color:'danger'}},
+                {"data":"sim_obs",header:{t:"OBSERV.",align:'center'},tipo:'string'},
                 {"data":"sim_opt",header:{t:"OPCIONES",align:'center'},tipo:'string'}
             ]
         });
@@ -59,10 +84,28 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"sim_qtn",header:{t:"TN",align:'right'},tipo:'float'},
                 {"data":"sim_qkg",header:{t:"KG",align:'right'},tipo:'float'},
                 {"data":"sim_ptn",header:{t:"P/TN",align:'right'},tipo:'float'},
-                {"data":"sim_pkg",render:(r)=>{return r.sim_ptn/1000},header:{t:"P/KG",align:'right'},tipo:'float'},
+                {"data":"sim_pkg",render:(r)=>{
+                    if (r.sim_tipo == 1) {
+                        return r.sim_ptn/1000
+                    } else {
+                        return r.sim_pkg
+                    }
+                },header:{t:"P/KG",align:'right'},tipo:'float'},
                 {"data":"sim_gtc",header:{t:"T.C. SUNAT",align:'right'},tipo:'float'},
-                {"data":"sim_mbtn",render:(r)=>{return r.sim_qtn*r.sim_ptn*r.sim_gtc},header:{t:"M. BRUTO/TN",align:'right'},tipo:'float'},
-                {"data":"sim_mbkg",render:(r)=>{return r.sim_qkg*r.sim_pkg*r.sim_gtc},header:{t:"M. BRUTO/KG",align:'right'},tipo:'float'},
+                {"data":"sim_mbtn",render:(r)=>{
+                    if (r.sim_tipo == 1) {
+                        return r.sim_qtn*r.sim_ptn*r.sim_gtc
+                    } else {
+                        return r.sim_pkg*1000*r.sim_qtn
+                    }
+                },header:{t:"M. BRUTO/TN",align:'right'},tipo:'float'},
+                {"data":"sim_mbkg",render:(r)=>{
+                    if (r.sim_tipo == 1) {
+                        return r.sim_qkg*r.sim_pkg*r.sim_gtc
+                    } else {
+                        return r.sim_pkg
+                    }
+                },header:{t:"M. BRUTO/KG",align:'right'},tipo:'float'},
                 {"data":"sim_g",header:{t:"GASTO",align:'right'},tipo:'float',style:{bg:'danger'}},
                 {"data":"sim_mntn",render:(r)=>{return r.sim_mbtn-(r.sim_g*1000*r.sim_qtn)},header:{t:"M. NETO/TN",align:'right'},tipo:'float'},
                 {"data":"sim_mnkg",render:(r)=>{return r.sim_mbkg-(r.sim_g*r.sim_qkg)},header:{t:"M. NETO/KG",align:'right'},tipo:'float'}
@@ -73,6 +116,9 @@ document.addEventListener('DOMContentLoaded',function () {
                     out_table.reload()
                     setTimeout(() => {
                         val_table.reload()
+                        setTimeout(() => {
+                            res_table.reload()
+                        }, 50);
                     }, 50);
                 }, 50);
             }
@@ -85,18 +131,20 @@ document.addEventListener('DOMContentLoaded',function () {
             "rezise": false,
             "export": false,
             "columns":[
-                {"data":"sim_exp",header:{t:"% COM.",align:'right'},tipo:'float'},
-                {"data":"sim_igv",header:{t:"% IGV",align:'right'},tipo:'float'},
-                {"data":"sim_imp",header:{t:"% IMP.",align:'right'},tipo:'float'},
-                {"data":"sim_cadm",header:{t:"% C. ADM",align:'right'},tipo:'float'},
-                {"data":"sim_plus",header:{t:"% PLUS",align:'right'},edit:'text',tipo:'float'},
+                {"data":"sim_exp",header:{t:"% COM.",align:'right'},tipo:'float',style:{bg:'success'}},
+                {"data":"sim_igv",header:{t:"% IGV",align:'right'},tipo:'float',style:{bg:'info'}},
+                {"data":"sim_imp",header:{t:"% IMP.",align:'right'},tipo:'float',style:{bg:'primary'}},
+                {"data":"sim_cadm",header:{t:"% C. ADM",align:'right'},tipo:'float',style:{bg:'warning'}},
+                {"data":"sim_plus",header:{t:"% PLUS",align:'right'},edit:'text',tipo:'float',style:{bg:'danger'}}
             ],
             "copyCellEditOrigin": async ()=>{
-                //inp_table.reload()
                 setTimeout(() => {
                     out_table.reload()
                     setTimeout(() => {
                         val_table.reload()
+                        setTimeout(() => {
+                            res_table.reload()
+                        }, 50);
                     }, 50);
                 }, 50);
 
@@ -106,29 +154,25 @@ document.addEventListener('DOMContentLoaded',function () {
             "src": 'val_json',
             "numerate": true,
             "rezise": false,
-            "cell":true,
-            "thid": 'sim_id',
             "export": false,
             "columns":[
-                {"data":"sim_mbtn",header:{t:"M. BRUTO/TN",align:'right'},tipo:'float',style:{bg:'primary'}},
-                {"data":"sim_mbkg",header:{t:"M. BRUTO/KG",align:'right'},tipo:'float',style:{bg:'primary'}},
-                {"data":"sim_mxtn",render:(r)=>{ return r.sim_mbtn*r.sim_exp/100},header:{t:"M. C./TN",align:'right'},tipo:'float',style:{bg:'success'}},
-                {"data":"sim_mxkg",render:(r)=>{ return r.sim_mbkg*r.sim_exp/100},header:{t:"M. C./KG",align:'right'},tipo:'float',style:{bg:'success'}},
-                {"data":"sim_migtn",render:(r)=>{ return r.sim_mxtn*r.sim_igv/100},header:{t:"M. IGV/TN",align:'right'},tipo:'float',style:{bg:'secondary'}},
-                {"data":"sim_migkg",render:(r)=>{ return r.sim_mxkg*r.sim_igv/100},header:{t:"M. IGV/KG",align:'right'},tipo:'float',style:{bg:'secondary'}},
-                {"data":"sim_miptn",render:(r)=>{ return r.sim_mbtn*r.sim_imp/100},header:{t:"M. IMP/TN",align:'right'},tipo:'float'},
-                {"data":"sim_mipkg",render:(r)=>{ return r.sim_mbkg*r.sim_imp/100},header:{t:"M. IMP/KG",align:'right'},tipo:'float'},
-                {"data":"sim_mrtn",render:(r)=>{ return r.sim_migtn-r.sim_miptn},header:{t:"M.R./TN",align:'right'},tipo:'float',style:{bg:'info'}},
-                {"data":"sim_mrkg",render:(r)=>{ return r.sim_migkg-r.sim_mipkg},header:{t:"M.R./KG",align:'right'},tipo:'float',style:{bg:'info'}},
-                {"data":"sim_matn",render:(r)=>{ return r.sim_mrtn*r.sim_cadm/100},header:{t:"M. ADM./TN",align:'right'},tipo:'float'},
-                {"data":"sim_makg",render:(r)=>{ return r.sim_mrkg*r.sim_cadm/100},header:{t:"M. ADM./KG",align:'right'},tipo:'float'},
-                {"data":"sim_mptn",render:(r)=>{ return r.sim_matn*r.sim_plus/100},header:{t:"M. NETO/TN",align:'right'},tipo:'float',style:{bg:'danger'}},
-                {"data":"sim_mpkg",render:(r)=>{ return r.sim_makg*r.sim_plus/100},header:{t:"M. NETO/KG",align:'right'},tipo:'float',style:{bg:'danger'}}
+                {"data":"sim_mbtn",header:{t:"BRUTO/TN",align:'right'},tipo:'float'},
+                {"data":"sim_mbkg",header:{t:"BRUTO/KG",align:'right'},tipo:'float'},
+                {"data":"sim_mxtn",render:(r)=>{ return r.sim_mbtn*r.sim_exp/100},header:{t:"COMPRA/TN",align:'right'},tipo:'float',style:{bg:'success'}},
+                {"data":"sim_mxkg",render:(r)=>{ return r.sim_mbkg*r.sim_exp/100},header:{t:"COMPRA/KG",align:'right'},tipo:'float',style:{bg:'success'}},
+                {"data":"sim_migtn",render:(r)=>{ return r.sim_mxtn*r.sim_igv/100},header:{t:"IGV/TN",align:'right'},tipo:'float',style:{bg:'info'}},
+                {"data":"sim_migkg",render:(r)=>{ return r.sim_mxkg*r.sim_igv/100},header:{t:"IGV/KG",align:'right'},tipo:'float',style:{bg:'info'}},
+                {"data":"sim_miptn",render:(r)=>{ return r.sim_mbtn*r.sim_imp/100},header:{t:"IMP/TN",align:'right'},tipo:'float',style:{bg:'primary'}},
+                {"data":"sim_mipkg",render:(r)=>{ return r.sim_mbkg*r.sim_imp/100},header:{t:"IMP/KG",align:'right'},tipo:'float',style:{bg:'primary'}},
+                {"data":"sim_mrtn",render:(r)=>{ return r.sim_migtn-r.sim_miptn},header:{t:"RETOR/TN",align:'right'},tipo:'float'},
+                {"data":"sim_mrkg",render:(r)=>{ return r.sim_migkg-r.sim_mipkg},header:{t:"RETOR/KG",align:'right'},tipo:'float'},
+                {"data":"sim_matn",render:(r)=>{ return r.sim_mrtn*(1-r.sim_cadm/100)},header:{t:"ADM./TN",align:'right'},tipo:'float',style:{bg:'warning'}},
+                {"data":"sim_makg",render:(r)=>{ return r.sim_mrkg*(1-r.sim_cadm/100)},header:{t:"ADM./KG",align:'right'},tipo:'float',style:{bg:'warning'}},
+                {"data":"sim_mptn",render:(r)=>{ return r.sim_matn*(1-r.sim_plus/100)},header:{t:"NETO/TN",align:'right'},tipo:'float',style:{bg:'danger'}},
+                {"data":"sim_mpkg",render:(r)=>{ return r.sim_makg*(1-r.sim_plus/100)},header:{t:"NETO/KG",align:'right'},tipo:'float',style:{bg:'danger'}}
             ],
             "copyCellEditOrigin": async ()=>{
-                por_table.reload()
-                // val_table.reload()
-                // inp_table.reload()
+                //por_table.reload()
             }
         });
         val_table = $('#val_table').autoTable({
@@ -143,18 +187,38 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"sim_p_2",header:{t:"PRECIO 2",align:'right'},tipo:'float'},
                 {"data":"sim_p_3",header:{t:"PRECIO 3",align:'right'},tipo:'float'},
                 {"data":"sim_p_4",header:{t:"PRECIO 4",align:'right'},tipo:'float'},
-                {"data":"sim_pp",render:(r)=>{ return (r.sim_p_1+r.sim_p_2+r.sim_p_3+r.sim_p_4)/4 },header:{t:"PRECIO PROMEDIO",align:'right'},tipo:'float',style:{bg:'info'}},
+                {"data":"sim_pp",render:(r)=>{ 
+                    let ls = [r.sim_p_1,r.sim_p_2,r.sim_p_3,r.sim_p_4];
+                    let li = [];
+                    for (const i in ls) {
+                        if (ls[i] > 0) {
+                            li.push(ls[i])
+                        }
+                    }
+                    return li.reduce(function(a, b){return a + b;})/li.length},
+                header:{t:"PRECIO PROMEDIO",align:'right'},tipo:'float',style:{bg:'info'}},
                 {"data":"sim_pc",header:{t:"PRECIO CACEL",align:'right'},tipo:'float',style:{bg:'warning'}},
-                {"data":"sim_pm",render:(r)=>{ return r.sim_mnkg+r.sim_mpkg},header:{t:"PRECIO MAXIMO",align:'right'},tipo:'float',style:{bg:'danger'}}
+                {"data":"sim_pm",render:(r)=>{ return r.sim_mnkg+r.sim_makg*(r.sim_plus/100)},header:{t:"PRECIO MAXIMO",align:'right'},tipo:'float',style:{bg:'danger'}}
             ],
             "copyCellEditOrigin": async ()=>{
-                // por_table.reload()
-                // out_table.reload()
-                // inp_table.reload()
+                res_table.reload()
             }
+        });
+        res_table = $('#res_table').autoTable({
+            "src": 'val_json',
+            "rezise": false,
+            "export": false,
+            "columns":[
+                {"data":"sim_mkg",render:(r)=>{return r.sim_mnkg-r.sim_pc},header:{t:"MARGEN KG",align:'right'},tipo:'float'},
+                {"data":"sim_mtn",render:(r)=>{return r.sim_qtn*1000*r.sim_mkg},header:{t:"MARGEN TN",align:'right'},tipo:'float'},
+                {"data":"sim_ikg",render:(r)=>{return r.sim_mnkg-r.sim_pm},header:{t:"INV. KG",align:'right'},tipo:'float'},
+                {"data":"sim_itn",render:(r)=>{return r.sim_qtn*1000*r.sim_ikg},header:{t:"INV. TN",align:'right'},tipo:'float'}
+            ],
+            "copyCellEditOrigin": async ()=>{}
         });
         $('#sim_bie_id').loadOptions('bienes',['bie_nombre'],{'bie_status':1});
     }
+    document.querySelector("body").style.overflowY = 'auto';
 
 });
 
@@ -165,30 +229,39 @@ window.addEventListener('load', async () => {
     if (document.querySelector("#sim_table")) {
         sim_table = await sim_table;
     }
+    if (document.querySelector("#nac_table")) {
+        nac_table = await nac_table;
+    }
     if (document.querySelector("#form_sim")) {
         inp_table = await inp_table;
         por_table = await por_table;
         out_table = await out_table;
         val_table = await val_table;
+        res_table = await res_table;
     }
     divLoading.style.display = "none";
 });
-function openModalSim() {
+function openModalC(t) {
+    openModal('sim');
+    data.sim.sim_tipo = t;
     let r = {};
+    r.sim_tipo = t
     r.sim_id=0
-    r.sim_p_1=29
-    r.sim_p_2=29
-    r.sim_p_3=29
-    r.sim_p_4=29
-    r.sim_pc=29
+    r.sim_p_1=(t==1)?29:5.1
+    r.sim_p_2=(t==1)?29:5.1
+    r.sim_p_3=(t==1)?29:5.1
+    r.sim_p_4=(t==1)?29:5.1
+    r.sim_pc=(t==1)?29:5.1
     r.sim_qtn = 20
     r.sim_qkg = 1
     r.sim_ptn = 8205
+    r.sim_pkg = 5.15
     r.sim_gtc = parseFloat(data.sim.sim_gtc)
-    r.sim_g = 0.56
-    r.sim_exp = 93
-    r.sim_igv = 18
-    r.sim_imp = 3.5
+    r.sim_g = (t==1)?0.56:0.05
+    r.sim_exp = (t==1)?93:100
+    r.sim_det = 17.7
+    r.sim_igv = (t==1)?18:17.7;
+    r.sim_imp = (t==1)?3.5:2.5;
     r.sim_cadm = 55
     r.sim_plus = 0
     val_json[0] = r;
@@ -199,13 +272,21 @@ function openModalSim() {
             out_table.reload();
             setTimeout(() => {
                 val_table.reload();
+                setTimeout(() => {
+                    res_table.reload();
+                }, 50);
             }, 50);
         }, 50);
     }, 50);
 }
-async function setPreSim(where,json,res) {
+function setPreSim(where,json,res) {
+    if (val_json[0].sim_gtc != data.simId.sim_tce_id.tce_gtc_id.gtc_tcompra) {
+       set('tce',{tce_id:data.simId.sim_tce_id.tce_id,tce_compra:val_json[0].sim_gtc}) 
+    }
     if (parseInt(val_json[0].sim_id)>0) {
         json.sim_obs = $('#sim_obs').val()
+        json = {...val_json[0],...data,...json}
+        delete json.sim_created;
     } else {
         json = {...data.sim,...json,...val_json[0]}
     }
@@ -213,11 +294,20 @@ async function setPreSim(where,json,res) {
     por_table.clear()
     out_table.clear()
     val_table.clear()
+    res_table.clear()
     return {json}; 
+}
+function setPosSim(where,json,res) {
+    nac_table.reload()
+    return true; 
+}
+function delPosSim(where,json,res) {
+    nac_table.reload()
+    return true; 
 }
 async function getPosSim() {
     val_json[0] = data.simId
-    val_json[0].sim_gtc = data.simId.sim_tce_id.tce_gtc_id.gtc_tcompra
+    val_json[0].sim_gtc = (data.simId.sim_tce_id.tce_compra)?data.simId.sim_tce_id.tce_compra:data.simId.sim_tce_id.tce_gtc_id.gtc_tcompra
     val_json[0].sim_gus_id = data.simId.sim_gus_id.gus_id
     val_json[0].sim_bie_id = data.simId.sim_bie_id.bie_id 
     val_json[0].sim_tce_id = data.simId.sim_tce_id.tce_id
@@ -231,6 +321,9 @@ async function getPosSim() {
             out_table.reload();
             setTimeout(() => {
                 val_table.reload();
+                setTimeout(() => {
+                    res_table.reload();
+                }, 50);
             }, 50);
         }, 50);
     }, 50);

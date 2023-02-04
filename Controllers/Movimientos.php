@@ -497,14 +497,14 @@ class Movimientos extends Controllers{
         // $dompdf->stream('my.pdf',array('Attachment'=>0));
         die();
     }
-    public function getSimulaciones(){
-        $res = $this->simulaciones->selectRegistros();
+    public function getSimulaciones($tipo){
+        $res = $this->simulaciones->selectRegistros(array('sim_tipo'=>$tipo));
         foreach ($res as $i => $r) {
             $e = '';
             $d = '';
             $res[$i]['sim_q'] = $res[$i]['sim_qtn']*1000;
             $res[$i]['sim_p'] = $res[$i]['sim_pkg'];
-            $res[$i]['sim_m'] = $res[$i]['sim_q']*$res[$i]['sim_p'];
+            $res[$i]['sim_m'] = $res[$i]['sim_q']*$res[$i]['sim_p']*$res[$i]['sim_tce_id']['tce_gtc_id']['gtc_tcompra'];
             $res[$i]['sim_n'] = $res[$i]['sim_m']-$res[$i]['sim_g']*$res[$i]['sim_q'];
             $res[$i]['sim_pp'] = ($res[$i]['sim_p_1']+$res[$i]['sim_p_2']+$res[$i]['sim_p_3']+$res[$i]['sim_p_4'])/4;
             if($_SESSION['perMod']['gtp_u']){

@@ -616,9 +616,8 @@ function previewFiles(th,content) {
             },
             editCell : function(r,d,e){
                 e.preventDefault();
-                o.data[r][d] = parseFloat(e.target.value)
                 if (o.copyCellEditOrigin) {
-                    window[o.src] = o.data;
+                    window[o.src][r][d] = parseFloat(e.target.value);
                     o.copyCellEditOrigin();
                 }
                 draw();

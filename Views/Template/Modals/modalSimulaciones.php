@@ -25,6 +25,14 @@
               <table class="table table-hover table-bordered table-sm " id="val_table" width="100%"></table>
             </div>
           </div><br>
+          <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+              <div class="table-responsive">
+                <table class="table table-hover table-bordered table-sm " id="res_table" width="100%"></table>
+              </div>
+            </div>
+          </div><br>
           <div>
             <div class="table-responsive">
               <table class="table table-hover table-bordered table-sm " id="inp_table" width="100%"></table>
@@ -32,7 +40,7 @@
           </div><br>
           <div>
             <div class="table-responsive">
-              <table class="table table-hover table-bordered table-sm bg-warning" id="por_table" width="100%"></table>
+              <table class="table table-hover table-bordered table-sm" id="por_table" width="100%"></table>
             </div>
           </div><br>
           <div>
