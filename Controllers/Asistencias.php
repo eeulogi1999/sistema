@@ -42,9 +42,21 @@ class Asistencias extends Controllers{
             $nh += (intval($nm->format('h'))<12)?intval($nm->format('h')):0;
             $nm = (intval($nm->format('i'))>0)?intval($nm->format('i'))/60:0;
             $nh += $nm;
+            $sat = date('Y-m-d',strtotime('saturday this week',strtotime($_SESSION['asi']['asi_week'])));
+            $sab = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]["col_id"],'custom'=>'DATE_FORMAT(asi_horaE, "%Y-%m-%d") = "'.$sat.'"'));
+            $ht = 0;
+            if ($r['asi_ndias']<6) {
+                if (!empty($sab)) {
+                    $ht = ($r['asi_ndias']*9)-3;
+                } else {
+                    $ht = ($r['asi_ndias']*9);
+                }
+            } else {
+                $ht = 51;
+            }
             $view = '<button class="btn btn-success btn-sm" onClick="viewAsi('.$r['asi_col_id']['col_id'].')" title="Asistencias"><i class="far fa-eye"></i></button>'; 
             $hex = '<button class="btn btn-warning btn-sm" onClick="viewHex('.$r['asi_col_id']['col_id'].')" title="Horas Extras"><i class="far fa-eye"></i></button>'; 
-            $r['asi_nhoras'] = ($nh>51)?$nh-51:0;
+            $r['asi_nhoras'] = ($r['asi_ndias']>0)?$nh-$ht:0;
             $r['asi_options'] = '<div class="text-center">'.$view.'</div>';
             array_push($rw,$r); 
         }
