@@ -118,6 +118,16 @@ document.addEventListener('DOMContentLoaded',function () {
                         val_table.reload()
                         setTimeout(() => {
                             res_table.reload()
+                            setTimeout(() => {
+                                if (data.sim.sim_tipo == 2) {
+                                    $('#inp_table tr > *:nth-child(4)').hide();
+                                    $('#inp_table tr > *:nth-child(5)').hide();
+                                    $('#inp_table tr > *:nth-child(6)').hide();
+                                    $('#out_table tr > *:nth-child(4)').hide();
+                                    $('#out_table tr > *:nth-child(5)').hide();
+                                    $('#por_table tr > *:nth-child(2)').hide();
+                                }
+                            }, 50);
                         }, 50);
                     }, 50);
                 }, 50);
@@ -144,6 +154,16 @@ document.addEventListener('DOMContentLoaded',function () {
                         val_table.reload()
                         setTimeout(() => {
                             res_table.reload()
+                            setTimeout(() => {
+                                if (data.sim.sim_tipo == 2) {
+                                    $('#inp_table tr > *:nth-child(4)').hide();
+                                    $('#inp_table tr > *:nth-child(5)').hide();
+                                    $('#inp_table tr > *:nth-child(6)').hide();
+                                    $('#out_table tr > *:nth-child(4)').hide();
+                                    $('#out_table tr > *:nth-child(5)').hide();
+                                    $('#por_table tr > *:nth-child(2)').hide();
+                                }
+                            }, 50);
                         }, 50);
                     }, 50);
                 }, 50);
@@ -202,6 +222,16 @@ document.addEventListener('DOMContentLoaded',function () {
             ],
             "copyCellEditOrigin": async ()=>{
                 res_table.reload()
+                setTimeout(() => {
+                    if (data.sim.sim_tipo == 2) {
+                        $('#inp_table tr > *:nth-child(4)').hide();
+                        $('#inp_table tr > *:nth-child(5)').hide();
+                        $('#inp_table tr > *:nth-child(6)').hide();
+                        $('#out_table tr > *:nth-child(4)').hide();
+                        $('#out_table tr > *:nth-child(5)').hide();
+                        $('#por_table tr > *:nth-child(2)').hide();
+                    }
+                }, 50);
             }
         });
         res_table = $('#res_table').autoTable({
@@ -274,14 +304,34 @@ function openModalC(t) {
                 val_table.reload();
                 setTimeout(() => {
                     res_table.reload();
+                    setTimeout(() => {
+                        if (data.sim.sim_tipo == 2) {
+                            $('#inp_table tr > *:nth-child(4)').hide();
+                            $('#inp_table tr > *:nth-child(5)').hide();
+                            $('#inp_table tr > *:nth-child(6)').hide();
+                            $('#out_table tr > *:nth-child(4)').hide();
+                            $('#out_table tr > *:nth-child(5)').hide();
+                            $('#por_table tr > *:nth-child(2)').hide();
+                            $('#por_table tr > th:nth-child(3)').text('% DET+IGV')
+                            $('#out_table tr > th:nth-child(6)').text('DET/TN')
+                            $('#out_table tr > th:nth-child(7)').text('DET/KG')
+                        }else{
+                            $('#inp_table tr > *').css('display','table-cell');
+                            $('#por_table tr > *').css('display','table-cell');
+                            $('#out_table tr > *').css('display','table-cell');
+                            $('#por_table tr > th:nth-child(3)').text('% IGV')
+                            $('#out_table tr > th:nth-child(6)').text('IGV/TN')
+                            $('#out_table tr > th:nth-child(7)').text('IGV/KG')
+                        }
+                    }, 50);
                 }, 50);
             }, 50);
         }, 50);
     }, 50);
 }
 function setPreSim(where,json,res) {
-    if (val_json[0].sim_gtc != data.simId.sim_tce_id.tce_gtc_id.gtc_tcompra) {
-       set('tce',{tce_id:data.simId.sim_tce_id.tce_id,tce_compra:val_json[0].sim_gtc}) 
+    if (val_json[0].sim_gtc != data.sim.sim_gtc) {
+       set('tce',{tce_id:data.sim.sim_tce_id,tce_compra:val_json[0].sim_gtc}) 
     }
     if (parseInt(val_json[0].sim_id)>0) {
         json.sim_obs = $('#sim_obs').val()
@@ -307,6 +357,7 @@ function delPosSim(where,json,res) {
 }
 async function getPosSim() {
     val_json[0] = data.simId
+    data.sim.sim_tipo = parseInt(data.simId.sim_tipo)
     val_json[0].sim_gtc = (data.simId.sim_tce_id.tce_compra)?data.simId.sim_tce_id.tce_compra:data.simId.sim_tce_id.tce_gtc_id.gtc_tcompra
     val_json[0].sim_gus_id = data.simId.sim_gus_id.gus_id
     val_json[0].sim_bie_id = data.simId.sim_bie_id.bie_id 
@@ -323,6 +374,26 @@ async function getPosSim() {
                 val_table.reload();
                 setTimeout(() => {
                     res_table.reload();
+                    setTimeout(() => {
+                        if (data.sim.sim_tipo == 2) {
+                            $('#inp_table tr > *:nth-child(4)').hide();
+                            $('#inp_table tr > *:nth-child(5)').hide();
+                            $('#inp_table tr > *:nth-child(6)').hide();
+                            $('#out_table tr > *:nth-child(4)').hide();
+                            $('#out_table tr > *:nth-child(5)').hide();
+                            $('#por_table tr > *:nth-child(2)').hide();
+                            $('#por_table tr > th:nth-child(3)').text('% DET+IGV')
+                            $('#out_table tr > th:nth-child(6)').text('DET/TN')
+                            $('#out_table tr > th:nth-child(7)').text('DET/KG')
+                        }else{
+                            $('#inp_table tr > *').css('display','table-cell');
+                            $('#por_table tr > *').css('display','table-cell');
+                            $('#out_table tr > *').css('display','table-cell');
+                            $('#por_table tr > th:nth-child(3)').text('% IGV')
+                            $('#out_table tr > th:nth-child(6)').text('IGV/TN')
+                            $('#out_table tr > th:nth-child(7)').text('IGV/KG')
+                        }
+                    }, 50);
                 }, 50);
             }, 50);
         }, 50);
