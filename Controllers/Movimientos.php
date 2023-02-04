@@ -85,7 +85,7 @@ class Movimientos extends Controllers{
         $data['page_tag'] = "Estado de Ordenes de Ventas";
         $data['page_title'] = "Estado de Ordenes de Ventas";
         $data['page_name'] = "Estado de Ordenes de Ventas";
-        $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'sim'=>array('sim_tce_id'=>$tce['tce_id'],'sim_gtc'=>$tce['tce_gtc_id']['gtc_tcompra'],'sim_tipo'=>1,'sim_gus_id'=>$_SESSION['gus']['gus_id'])); 
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'per'=>$_SESSION['perMod'],'sim'=>array('sim_tce_id'=>$tce['tce_id'],'sim_gtc'=>$tce['tce_gtc_id']['gtc_tcompra'],'sim_tipo'=>1,'sim_gus_id'=>$_SESSION['gus']['gus_id'])); 
         $data['page_functions_js'] = array("functions_eventas.js","functions_movimientos.js");
         $this->views->getView($this,"eventas",$data);
     }
@@ -507,7 +507,7 @@ class Movimientos extends Controllers{
             $res[$i]['sim_m'] = $res[$i]['sim_q']*$res[$i]['sim_p']*$res[$i]['sim_tce_id']['tce_gtc_id']['gtc_tcompra'];
             $res[$i]['sim_n'] = $res[$i]['sim_m']-$res[$i]['sim_g']*$res[$i]['sim_q'];
             $res[$i]['sim_pp'] = ($res[$i]['sim_p_1']+$res[$i]['sim_p_2']+$res[$i]['sim_p_3']+$res[$i]['sim_p_4'])/4;
-            if($_SESSION['perMod']['gtp_u']){
+            if($_SESSION['perMod']['gtp_w']){
                 $e = '<button class="btn btn-primary btn-sm" onClick="edit(`sim`,'.$res[$i]['sim_id'].')" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
             }
             if($_SESSION['perMod']['gtp_d']){	

@@ -272,6 +272,10 @@ window.addEventListener('load', async () => {
     divLoading.style.display = "none";
 });
 function openModalC(t) {
+    if (data.per.gtp_u) {
+        $('#por_table').hide()
+        $('#out_table').hide()
+    }
     openModal('sim');
     data.sim.sim_tipo = t;
     let r = {};
@@ -356,6 +360,10 @@ function delPosSim(where,json,res) {
     return true; 
 }
 async function getPosSim() {
+    if (data.per.gtp_u) {
+        $('#por_table').hide()
+        $('#out_table').hide()
+    }
     val_json[0] = data.simId
     data.sim.sim_tipo = parseInt(data.simId.sim_tipo)
     val_json[0].sim_gtc = (data.simId.sim_tce_id.tce_compra)?data.simId.sim_tce_id.tce_compra:data.simId.sim_tce_id.tce_gtc_id.gtc_tcompra
