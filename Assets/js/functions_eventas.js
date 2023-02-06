@@ -81,34 +81,34 @@ document.addEventListener('DOMContentLoaded',function () {
             "thid": 'sim_id',
             "export": false,
             "columns":[
-                {"data":"sim_qtn",header:{t:"TN",align:'right'},tipo:'float'},
+                {"data":"sim_qtn",head:{t:'CANTIDAD',colspan:2},header:{t:"TN",align:'right'},tipo:'float'},
                 {"data":"sim_qkg",header:{t:"KG",align:'right'},tipo:'float'},
-                {"data":"sim_ptn",header:{t:"P/TN",align:'right'},tipo:'float'},
+                {"data":"sim_ptn",head:{t:'PRECIO',colspan:2},header:{t:"TN",align:'right'},tipo:'float'},
                 {"data":"sim_pkg",render:(r)=>{
                     if (r.sim_tipo == 1) {
                         return r.sim_ptn/1000
                     } else {
                         return r.sim_pkg
                     }
-                },header:{t:"P/KG",align:'right'},tipo:'float'},
+                },header:{t:"KG",align:'right'},tipo:'float'},
                 {"data":"sim_gtc",header:{t:"T.C. SUNAT",align:'right'},tipo:'float'},
-                {"data":"sim_mbtn",render:(r)=>{
+                {"data":"sim_mbtn",head:{t:'MONTO SOLES',colspan:2},render:(r)=>{
                     if (r.sim_tipo == 1) {
                         return r.sim_qtn*r.sim_ptn*r.sim_gtc
                     } else {
                         return r.sim_pkg*1000*r.sim_qtn
                     }
-                },header:{t:"SOLES/TN",align:'right'},tipo:'float'},
+                },header:{t:"TN",align:'right'},tipo:'float'},
                 {"data":"sim_mbkg",render:(r)=>{
                     if (r.sim_tipo == 1) {
                         return r.sim_qkg*r.sim_pkg*r.sim_gtc
                     } else {
                         return r.sim_pkg
                     }
-                },header:{t:"SOLES/KG",align:'right'},tipo:'float'},
+                },header:{t:"KG",align:'right'},tipo:'float'},
                 {"data":"sim_g",header:{t:"GASTO",align:'right'},tipo:'float',style:{bg:'danger'}},
-                {"data":"sim_mntn",render:(r)=>{return r.sim_mbtn-(r.sim_g*1000*r.sim_qtn)},header:{t:"PRECIO/TN",align:'right'},tipo:'float'},
-                {"data":"sim_mnkg",render:(r)=>{return r.sim_mbkg-(r.sim_g*r.sim_qkg)},header:{t:"PRECIO/KG",align:'right'},tipo:'float'}
+                {"data":"sim_mntn",head:{t:'PRECIO',colspan:2},render:(r)=>{return r.sim_mbtn-(r.sim_g*1000*r.sim_qtn)},header:{t:"TN",align:'right'},tipo:'float'},
+                {"data":"sim_mnkg",render:(r)=>{return r.sim_mbkg-(r.sim_g*r.sim_qkg)},header:{t:"KG",align:'right'},tipo:'float'}
             ],
             "copyCellEditOrigin": async ()=>{
                 por_table.reload()
@@ -176,20 +176,20 @@ document.addEventListener('DOMContentLoaded',function () {
             "rezise": false,
             "export": false,
             "columns":[
-                {"data":"sim_mbtn",header:{t:"BRUTO/TN",align:'right'},tipo:'float'},
-                {"data":"sim_mbkg",header:{t:"BRUTO/KG",align:'right'},tipo:'float'},
-                {"data":"sim_mxtn",render:(r)=>{ return r.sim_mbtn*r.sim_exp/100},header:{t:"COMPRA/TN",align:'right'},tipo:'float',style:{bg:'success'}},
-                {"data":"sim_mxkg",render:(r)=>{ return r.sim_mbkg*r.sim_exp/100},header:{t:"COMPRA/KG",align:'right'},tipo:'float',style:{bg:'success'}},
-                {"data":"sim_migtn",render:(r)=>{ return r.sim_mxtn*r.sim_igv/100},header:{t:"IGV/TN",align:'right'},tipo:'float',style:{bg:'info'}},
-                {"data":"sim_migkg",render:(r)=>{ return r.sim_mxkg*r.sim_igv/100},header:{t:"IGV/KG",align:'right'},tipo:'float',style:{bg:'info'}},
-                {"data":"sim_miptn",render:(r)=>{ return r.sim_mbtn*r.sim_imp/100},header:{t:"IMP/TN",align:'right'},tipo:'float',style:{bg:'primary'}},
-                {"data":"sim_mipkg",render:(r)=>{ return r.sim_mbkg*r.sim_imp/100},header:{t:"IMP/KG",align:'right'},tipo:'float',style:{bg:'primary'}},
-                {"data":"sim_mrtn",render:(r)=>{ return r.sim_migtn-r.sim_miptn},header:{t:"RETOR/TN",align:'right'},tipo:'float'},
-                {"data":"sim_mrkg",render:(r)=>{ return r.sim_migkg-r.sim_mipkg},header:{t:"RETOR/KG",align:'right'},tipo:'float'},
-                {"data":"sim_matn",render:(r)=>{ return r.sim_mrtn*(1-r.sim_cadm/100)},header:{t:"ADM./TN",align:'right'},tipo:'float',style:{bg:'warning'}},
-                {"data":"sim_makg",render:(r)=>{ return r.sim_mrkg*(1-r.sim_cadm/100)},header:{t:"ADM./KG",align:'right'},tipo:'float',style:{bg:'warning'}},
-                {"data":"sim_mptn",render:(r)=>{ return r.sim_matn*(1-r.sim_plus/100)},header:{t:"NETO/TN",align:'right'},tipo:'float',style:{bg:'danger'}},
-                {"data":"sim_mpkg",render:(r)=>{ return r.sim_makg*(1-r.sim_plus/100)},header:{t:"NETO/KG",align:'right'},tipo:'float',style:{bg:'danger'}}
+                {"data":"sim_mbtn",header:{t:"TN",align:'right'},head:{t:'MONTO BRUTO',colspan:2},tipo:'float'},
+                {"data":"sim_mbkg",header:{t:"KG",align:'right'},tipo:'float'},
+                {"data":"sim_mxtn",render:(r)=>{ return r.sim_mbtn*r.sim_exp/100},head:{t:'COMPRA',colspan:2},header:{t:"TN",align:'right'},tipo:'float',style:{bg:'success'}},
+                {"data":"sim_mxkg",render:(r)=>{ return r.sim_mbkg*r.sim_exp/100},header:{t:"KG",align:'right'},tipo:'float',style:{bg:'success'}},
+                {"data":"sim_migtn",render:(r)=>{ return r.sim_mxtn*r.sim_igv/100},head:{t:'IGV',colspan:2},header:{t:"TN",align:'right'},tipo:'float',style:{bg:'info'}},
+                {"data":"sim_migkg",render:(r)=>{ return r.sim_mxkg*r.sim_igv/100},header:{t:"KG",align:'right'},tipo:'float',style:{bg:'info'}},
+                {"data":"sim_miptn",render:(r)=>{ return r.sim_mbtn*r.sim_imp/100},head:{t:'IMPUESTO',colspan:2},header:{t:"TN",align:'right'},tipo:'float',style:{bg:'primary'}},
+                {"data":"sim_mipkg",render:(r)=>{ return r.sim_mbkg*r.sim_imp/100},header:{t:"KG",align:'right'},tipo:'float',style:{bg:'primary'}},
+                {"data":"sim_mrtn",render:(r)=>{ return r.sim_migtn-r.sim_miptn},head:{t:'RETORNO',colspan:2},header:{t:"TN",align:'right'},tipo:'float'},
+                {"data":"sim_mrkg",render:(r)=>{ return r.sim_migkg-r.sim_mipkg},header:{t:"KG",align:'right'},tipo:'float'},
+                {"data":"sim_matn",render:(r)=>{ return r.sim_mrtn*(1-r.sim_cadm/100)},head:{t:'GASTO ADM.',colspan:2},header:{t:"TN",align:'right'},tipo:'float',style:{bg:'warning'}},
+                {"data":"sim_makg",render:(r)=>{ return r.sim_mrkg*(1-r.sim_cadm/100)},header:{t:"KG",align:'right'},tipo:'float',style:{bg:'warning'}},
+                {"data":"sim_mptn",render:(r)=>{ return r.sim_matn*(1-r.sim_plus/100)},head:{t:'MONTO NETO',colspan:2},header:{t:"TN",align:'right'},tipo:'float',style:{bg:'danger'}},
+                {"data":"sim_mpkg",render:(r)=>{ return r.sim_makg*(1-r.sim_plus/100)},header:{t:"KG",align:'right'},tipo:'float',style:{bg:'danger'}}
             ],
             "copyCellEditOrigin": async ()=>{
                 //por_table.reload()
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "rezise": false,
             "export": false,
             "columns":[
-                {"data":"sim_p_1",header:{t:"L. NORTE",align:'right'},tipo:'float'},
+                {"data":"sim_p_1",header:{t:"L. NORTE",align:'right'},head:{t:'PRECIOS DEL MERCADO',colspan:4},tipo:'float'},
                 {"data":"sim_p_2",header:{t:"L. CENTRO",align:'right'},tipo:'float'},
                 {"data":"sim_p_3",header:{t:"L. SUR",align:'right'},tipo:'float'},
                 {"data":"sim_p_4",header:{t:"L. OTROS",align:'right'},tipo:'float'},
@@ -239,10 +239,10 @@ document.addEventListener('DOMContentLoaded',function () {
             "rezise": false,
             "export": false,
             "columns":[
-                {"data":"sim_mkg",render:(r)=>{return r.sim_mnkg-r.sim_pc},header:{t:"MARGEN KG",align:'right'},tipo:'float'},
-                {"data":"sim_mtn",render:(r)=>{return r.sim_qtn*1000*r.sim_mkg},header:{t:"MARGEN TN",align:'right'},tipo:'float'},
-                {"data":"sim_ikg",render:(r)=>{return r.sim_mnkg-r.sim_pm},header:{t:"INV. KG",align:'right'},tipo:'float'},
-                {"data":"sim_itn",render:(r)=>{return r.sim_qtn*1000*r.sim_ikg},header:{t:"INV. TN",align:'right'},tipo:'float'}
+                {"data":"sim_mkg",render:(r)=>{return r.sim_mnkg-r.sim_pc},head:{t:'MARGEN',colspan:2},header:{t:"KG",align:'right'},tipo:'float'},
+                {"data":"sim_mtn",render:(r)=>{return r.sim_qtn*1000*r.sim_mkg},header:{t:"TN",align:'right'},tipo:'float'},
+                {"data":"sim_ikg",render:(r)=>{return r.sim_mnkg-r.sim_pm},head:{t:'INVERSION',colspan:2},header:{t:"KG",align:'right'},tipo:'float'},
+                {"data":"sim_itn",render:(r)=>{return r.sim_qtn*1000*r.sim_ikg},header:{t:"TN",align:'right'},tipo:'float'}
             ],
             "copyCellEditOrigin": async ()=>{}
         });
@@ -316,16 +316,16 @@ function openModalC(t) {
                             $('#out_table tr > *:nth-child(4)').hide();
                             $('#out_table tr > *:nth-child(5)').hide();
                             $('#por_table tr > *:nth-child(2)').hide();
-                            $('#por_table tr > th:nth-child(3)').text('% DET+IGV')
-                            $('#out_table tr > th:nth-child(6)').text('DET/TN')
-                            $('#out_table tr > th:nth-child(7)').text('DET/KG')
+                            $('#por_table tr:eq(1) > th:nth-child(3)').text('% DET+IGV')
+                            $('#out_table tr:eq(1) > th:nth-child(6)').text('DET/TN')
+                            $('#out_table tr:eq(1) > th:nth-child(7)').text('DET/KG')
                         }else{
                             $('#inp_table tr > *').css('display','table-cell');
                             $('#por_table tr > *').css('display','table-cell');
                             $('#out_table tr > *').css('display','table-cell');
-                            $('#por_table tr > th:nth-child(3)').text('% IGV')
-                            $('#out_table tr > th:nth-child(6)').text('IGV/TN')
-                            $('#out_table tr > th:nth-child(7)').text('IGV/KG')
+                            $('#por_table tr:eq(1) > th:nth-child(3)').text('% IGV')
+                            $('#out_table tr:eq(1) > th:nth-child(6)').text('IGV/TN')
+                            $('#out_table tr:eq(1) > th:nth-child(7)').text('IGV/KG')
                         }
                     }, 50);
                 }, 50);
@@ -390,16 +390,16 @@ async function getPosSim() {
                             $('#out_table tr > *:nth-child(4)').hide();
                             $('#out_table tr > *:nth-child(5)').hide();
                             $('#por_table tr > *:nth-child(2)').hide();
-                            $('#por_table tr > th:nth-child(3)').text('% DET+IGV')
-                            $('#out_table tr > th:nth-child(6)').text('DET/TN')
-                            $('#out_table tr > th:nth-child(7)').text('DET/KG')
+                            $('#por_table tr:eq(1) > th:nth-child(3)').text('% DET+IGV')
+                            $('#out_table tr:eq(1) > th:nth-child(6)').text('DET/TN')
+                            $('#out_table tr:eq(1) > th:nth-child(7)').text('DET/KG')
                         }else{
                             $('#inp_table tr > *').css('display','table-cell');
                             $('#por_table tr > *').css('display','table-cell');
                             $('#out_table tr > *').css('display','table-cell');
-                            $('#por_table tr > th:nth-child(3)').text('% IGV')
-                            $('#out_table tr > th:nth-child(6)').text('IGV/TN')
-                            $('#out_table tr > th:nth-child(7)').text('IGV/KG')
+                            $('#por_table tr:eq(1) > th:nth-child(3)').text('% IGV')
+                            $('#out_table tr:eq(1) > th:nth-child(6)').text('IGV/TN')
+                            $('#out_table tr:eq(1) > th:nth-child(7)').text('IGV/KG')
                         }
                     }, 50);
                 }, 50);

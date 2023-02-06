@@ -289,23 +289,32 @@ function previewFiles(th,content) {
             +'<button class="btn btn-secondary" onclick="'+$(table).attr('id')+'.toExcel(); "><i class="fas fa-download"></i></button>'
             +'</div>')
             }
-            $(table).append('<thead class="bg-dark-lite sticky-top"><tr></tr></thead>');
+            $(table).append('<thead class="bg-dark-lite sticky-top"><tr style="display:none;"></tr><tr></tr></thead>');
             $(table).append('<tbody></tbody>');
             $(table).append('<tfoot class="bg-dark-lite sticky-bottom"><tr></tr></tfoot>');
             thead = $(table).children('thead');
             tbody = $(table).children('tbody')[0];
             tfoot = $(table).children('tfoot');
+            var nh = 0;
             for (const i in o.columns) {
+                if (typeof o.columns[i].head === 'object') {
+                    nh = o.columns[i].head.colspan;
+                    $(thead).children('tr').eq(0).append('<th class="text-center" colspan="'+o.columns[i].head.colspan+'">'+o.columns[i].head.t+'</th>')
+                    $(thead).children('tr').eq(0).attr('style','display: table-row;')
+                }else{
+                    nh -= 1;
+                    if (nh <= 0) {
+                        $(thead).children('tr').eq(0).append('<th></th>')
+                    }
+                }
                 if (typeof o.columns[i].header === 'object') {
                     var ne = o.columns[i].data.split('.');
                     var ix = ne[ne.length-1];
-                    //let th = $(thead).children('tr').append('<th></th>');
                     let style = '';
                     if (typeof o.columns[i].header === 'object') {
                         if (typeof o.columns[i].header.style != 'undefined') {
                             if (typeof o.columns[i].header.style.miw != 'undefined') {
                                 style += o.columns[i].header.style.miw;
-                                //th.style.minWidth = o.columns[i].header.style.miw;
                             }
                         }
                     }
@@ -316,25 +325,26 @@ function previewFiles(th,content) {
                                 $('#t_'+ix)[0].addEventListener('input', textFilter);
                                 break;
                             case 'select':
-                                $(thead).children('tr').append('<th><div class="text-center">'+o.columns[i].header.t+'</div><select class="form-control"><option value="0">1</option></select></th>');
+                                $(thead).children('tr').eq(1).append('<th><div class="text-center">'+o.columns[i].header.t+'</div><select class="form-control"><option value="0">1</option></select></th>');
                                 break;
                             case 'date':
-                                $(thead).children('tr').append('<th><div class="text-center">'+o.columns[i].header.t+'</div><input type="date" class="form-control"></th>');
+                                $(thead).children('tr').eq(1).append('<th><div class="text-center">'+o.columns[i].header.t+'</div><input type="date" class="form-control"></th>');
                                 break;
                             default:
     
                                 break;
                         }
                     }else{
-                        $(thead).children('tr').append('<th>'+o.columns[i].header.t+'</th>');  
+                        $(thead).children('tr').eq(1).append('<th><div class="text-center"> '+o.columns[i].header.t+'</div></th>');  
                     }
 
                 }else{
-                    $(thead).children('tr').append('<th>'+o.columns[i].header+'</th>');
+                    $(thead).children('tr').eq(1).append('<th><div class="text-center"> '+o.columns[i].header+'</div></th>');
                 }
             }
             if (numerate) {
-                $(thead).children('tr').prepend('<th>N°</th>');
+                $(thead).children('tr').eq(1).prepend('<th>N°</th>');
+                $(thead).children('tr').eq(0).prepend('<th></th>')
             }
             draw();
             zise();
