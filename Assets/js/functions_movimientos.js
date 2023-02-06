@@ -583,7 +583,7 @@ function openModalMov() {
             $('#mov_t12_id').val(2);
             $('#mov_t10_id').val(data.mov_t10_id??49);
             $('#mde_gta_id').val(9);
-            ftnSetMov_numero(data.mov_t10_id?'OC01':'NE01',2,$('#mov_t10_id').val());
+            ftnSetMov_numero(data.mov_t10_id?'OD2022':'NE01',2,$('#mov_t10_id').val());
             if (data.mov_t10_id) {
                 $('#mde_gta_id').parent().show();
                 $('thead tr th:nth-child('+($('#mde_gta_id').parent().index()+1)+')',$('#mde_gta_id').parent().parent().parent().parent()[0]).show()
