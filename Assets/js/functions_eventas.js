@@ -98,17 +98,17 @@ document.addEventListener('DOMContentLoaded',function () {
                     } else {
                         return r.sim_pkg*1000*r.sim_qtn
                     }
-                },header:{t:"M. BRUTO/TN",align:'right'},tipo:'float'},
+                },header:{t:"SOLES/TN",align:'right'},tipo:'float'},
                 {"data":"sim_mbkg",render:(r)=>{
                     if (r.sim_tipo == 1) {
                         return r.sim_qkg*r.sim_pkg*r.sim_gtc
                     } else {
                         return r.sim_pkg
                     }
-                },header:{t:"M. BRUTO/KG",align:'right'},tipo:'float'},
+                },header:{t:"SOLES/KG",align:'right'},tipo:'float'},
                 {"data":"sim_g",header:{t:"GASTO",align:'right'},tipo:'float',style:{bg:'danger'}},
-                {"data":"sim_mntn",render:(r)=>{return r.sim_mbtn-(r.sim_g*1000*r.sim_qtn)},header:{t:"M. NETO/TN",align:'right'},tipo:'float'},
-                {"data":"sim_mnkg",render:(r)=>{return r.sim_mbkg-(r.sim_g*r.sim_qkg)},header:{t:"M. NETO/KG",align:'right'},tipo:'float'}
+                {"data":"sim_mntn",render:(r)=>{return r.sim_mbtn-(r.sim_g*1000*r.sim_qtn)},header:{t:"PRECIO/TN",align:'right'},tipo:'float'},
+                {"data":"sim_mnkg",render:(r)=>{return r.sim_mbkg-(r.sim_g*r.sim_qkg)},header:{t:"PRECIO/KG",align:'right'},tipo:'float'}
             ],
             "copyCellEditOrigin": async ()=>{
                 por_table.reload()
@@ -203,10 +203,10 @@ document.addEventListener('DOMContentLoaded',function () {
             "rezise": false,
             "export": false,
             "columns":[
-                {"data":"sim_p_1",header:{t:"PRECIO 1",align:'right'},tipo:'float'},
-                {"data":"sim_p_2",header:{t:"PRECIO 2",align:'right'},tipo:'float'},
-                {"data":"sim_p_3",header:{t:"PRECIO 3",align:'right'},tipo:'float'},
-                {"data":"sim_p_4",header:{t:"PRECIO 4",align:'right'},tipo:'float'},
+                {"data":"sim_p_1",header:{t:"L. NORTE",align:'right'},tipo:'float'},
+                {"data":"sim_p_2",header:{t:"L. CENTRO",align:'right'},tipo:'float'},
+                {"data":"sim_p_3",header:{t:"L. SUR",align:'right'},tipo:'float'},
+                {"data":"sim_p_4",header:{t:"L. OTROS",align:'right'},tipo:'float'},
                 {"data":"sim_pp",render:(r)=>{ 
                     let ls = [r.sim_p_1,r.sim_p_2,r.sim_p_3,r.sim_p_4];
                     let li = [];
@@ -272,7 +272,7 @@ window.addEventListener('load', async () => {
     divLoading.style.display = "none";
 });
 function openModalC(t) {
-    if (data.per.gtp_u) {
+    if (!parseInt(data.per.gtp_u)) {
         $('#por_table').hide()
         $('#out_table').hide()
     }
@@ -360,7 +360,7 @@ function delPosSim(where,json,res) {
     return true; 
 }
 async function getPosSim() {
-    if (data.per.gtp_u) {
+    if (!parseInt(data.per.gtp_u)) {
         $('#por_table').hide()
         $('#out_table').hide()
     }
