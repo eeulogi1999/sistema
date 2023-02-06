@@ -38,7 +38,7 @@
 							//die();
 							if(count($arrDatatwo) > 0 ){
 								for ($i=0; $i < count($arrDatatwo); $i++) { 
-									$htmlOptions .= '<option value="'.$arrDatatwo[$i]['gcl_gem_id']['gem_id'].'">'.$arrDatatwo[$i]['gcl_gem_id']['gem_razonsocial'].'</option>';
+									$htmlOptions .= '<option value="'.$arrDatatwo[$i]['gcl_id'].'">'.$arrDatatwo[$i]['gcl_gem_id']['gem_razonsocial'].'</option>';
 								}
 							}
 							$arrResponse = array('status' => true, 'msg' => 'ok','htmlOp'=>$htmlOptions);

@@ -33,7 +33,7 @@
                 <div class="row mb-4">
                     <div class="col-3">
                         <div>
-                            <img src="<?= base_url();?>/.uploads/<?= (!empty($alm['alm_est_id']['est_logo'])) ? $alm['alm_est_id']['est_logo'] : $gcl['gcl_imagen'];?>" width="120">
+                            <img src="<?= base_url();?>/.uploads/<?= (!empty($alm['alm_est_id']['est_logo'])) ? $alm['alm_est_id']['est_logo'] : $gcl['gcl_imagen'];?>" width="200">
                         </div>
                     </div>
                     <div class="col-5 align-items-center">

@@ -106,7 +106,7 @@
 
         .tbl-detalle thead th {
             padding: 5px;
-            background-color: #711529;
+            background-color:#f2767f;
             color: #FFF;
         }
 
@@ -128,7 +128,7 @@
         }
 
         .tblfoot {
-            background-color: #711529;
+            background-color: #f2767f;
             /* #009688 */
             border-radius: 7px;
             padding: 5px;
@@ -140,7 +140,7 @@
         }
 
         .tblfoot_Final {
-            background-color: #bf0811;
+            background-color: #f2767f;
             border-radius: 7px;
             border-top: black;
             border-bottom: black;
@@ -194,9 +194,8 @@
                         <?= $alm['alm_est_id']['est_gdi_id']['gdi_distrito'] ?>
                         <br><br>
                         <strong>Contactos</strong><br>
-                        <span>https://companycacel.com/</span> <br>
-                        <span>companycacelsac@gmail.com</span><br>
-                        <span>+51 922 012 611    +51 922 532 641</span>
+                        <span><?= $gcl['gcl_correo'] ?></span><br>
+                        <span>+51 <?= $gcl['gcl_telefono'] ?></span>
                     </p>
 
                 </td>
