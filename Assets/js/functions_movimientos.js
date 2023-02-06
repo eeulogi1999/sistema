@@ -569,6 +569,7 @@ function openModalMov() {
     document.querySelector('#set_mov').classList.replace("btn-info","btn-primary");
     $('#set_mov span').html("Guardar");
     document.querySelector("#formMov").reset();
+    $('#mov_observaciones').val('')
     $('#mov_ncr_id').attr('data','0');
     $('#mov_cue_id').parent().parent().hide();
     switch (data.mov_t12_id) {
@@ -580,16 +581,22 @@ function openModalMov() {
             break;
         case 2:
             $('#mov_t12_id').val(2);
-            $('#mov_t10_id').val(49);
+            $('#mov_t10_id').val(data.mov_t10_id??49);
             $('#mde_gta_id').val(9);
-            ftnSetMov_numero('NE01',2,49);
+            ftnSetMov_numero(data.mov_t10_id?'OC01':'NE01',2,$('#mov_t10_id').val());
+            if (data.mov_t10_id) {
+                $('#mde_gta_id').parent().show();
+                $('thead tr th:nth-child('+($('#mde_gta_id').parent().index()+1)+')',$('#mde_gta_id').parent().parent().parent().parent()[0]).show()
+            }
             break;
         case 1:
             $('#mov_t12_id').val(1);
-            $('#mov_t10_id').val(50);
+            $('#mov_t10_id').val(data.mov_t10_id??50);
             $('#mde_gta_id').val(9);
-            ftnSetMov_numero('NS01',1,50);
-            break;
+            ftnSetMov_numero(data.mov_t10_id?'OV01':'NE01',1,$('#mov_t10_id').val());
+            if (data.mov_t10_id) {
+                $('#mov_cue_id').parent().parent().parent().show();
+            }
         case 13:
             $('#mov_t12_id').val(13);
             $('#mov_t10_id').val(1);
@@ -613,6 +620,7 @@ function openModalMov() {
     changet10t12()
     mde.clear();
     document.querySelector("#mov_fechaE").valueAsDate = new Date();
+    document.querySelector("#mov_fechaV").valueAsDate = new Date();
     ftnTcambio(document.querySelector("#mov_fechaE"));
     $('#modal_mov').modal('show');
 }
@@ -641,6 +649,7 @@ function editMov(id) {
             $('#mde_t6m_id').val(58);
             $('#mde_gta_id').val(1);
             document.querySelector("#mov_fechaE").valueAsDate = new Date(mov.mov_fechaE);
+            document.querySelector("#mov_fechaV").valueAsDate = new Date(mov.mov_fechaV);
             ftnTcambio(document.querySelector("#mov_fechaE"));
             mde_json = mov.mov_mde_id;
             for (const i in mde_json) {

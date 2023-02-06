@@ -157,7 +157,6 @@
 				$request = $this->x->select($sql);
 				if(!empty($request)){
 					$sql  = "UPDATE {$this->name_table} SET $update WHERE ".$this->columns[$x]['Field']." = ".$this->{$this->columns[$x]['Field']};
-					
 					$arrData = array();
 					foreach ($com as $i => $d) {
 						array_push($arrData,$this->{$i});

@@ -190,8 +190,10 @@
                         $gcl['gcl_gem_id']['gem_gdi_id']['gdi_gpr_id']['gpr_provincia'].' - '.
                         $gcl['gcl_gem_id']['gem_gdi_id']['gdi_distrito'] ?>
                         <br>
-                        SUCURSAL:<?=  $alm['alm_est_id']['est_direccion']?> <br>
-                        <?= $alm['alm_est_id']['est_gdi_id']['gdi_distrito'] ?>
+                        <?php if ($gcl['gcl_gem_id']['gem_ruc'] != '20607330647' && $mov['mov_tipo'] != 3 ) {?> 
+                            SUCURSAL:<?=  $alm['alm_est_id']['est_direccion']?> <br>
+                            <?= $alm['alm_est_id']['est_gdi_id']['gdi_distrito'] ?>                        
+                        <?php }  ?>
                         <br><br>
                         <strong>Contactos</strong><br>
                         <span><?= $gcl['gcl_correo'] ?></span><br>
@@ -307,7 +309,11 @@
             </tr>
             <!-- <img src="<?= $mov['mov_qr'] ?>" width="100" alt="" srcset=""> -->
             <tr>
-                <td colspan="4" rowspan="8"><img src="<?= $mov['mov_qr_web'] ?>" alt="" srcset=""></td>
+                <td colspan="4" rowspan="8">
+                        <?php if ($gcl['gcl_gem_id']['gem_ruc'] != '20607330647' && $mov['mov_tipo'] != 3 ) {?> 
+                            <img src="<?= $mov['mov_qr_web'] ?>" alt="" srcset="">                      
+                        <?php }  ?>
+                </td>
                 <td colspan="2" class="tblfoot"><strong>OP. EXONERADA</strong></td>
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_exonerada']) ?></td>
             </tr>
@@ -330,15 +336,15 @@
         SON: <span><?= $mov['mov_letras_pen'] ?></span>
     </div><br><br><br>
     <p><strong>CONDICION DE PAGO:  </strong> Pago contra entrega,La fecha de pago se calculará a partir de la recepción de la factura en nuestras instalaciones.</p>
-    <p><strong>LUGAR DE ENTREGA:  </strong><?= $alm['alm_est_id']['est_direccion'] ?></p>
+    <!-- <p><strong>LUGAR DE ENTREGA:  </strong><?= $alm['alm_est_id']['est_direccion'] ?></p> -->
     <div ><strong>CONDICION DE ENTREGA:</strong></div>
-    <div >PENALIDAD: Zinsa cobrará una penalidad de 3% sobre el valor total de la OC por cada día de incumplimiento de la fecha de entrega estipulada en la orden de compra.</div>
-    <p>ENTREGA DE BIENES: Coordinar con almacén cita de recepción, como mínimo un dia antes de la entrega, a los Tlfs: 613-7516 / 940483986. Horario de atención: L-V 8:30am -
+    <div >PENALIDAD: Liferli cobrará una penalidad de 3% sobre el valor total de la OC por cada día de incumplimiento de la fecha de entrega estipulada en la orden de compra.</div>
+    <p>ENTREGA DE BIENES: Coordinar con almacén cita de recepción, como mínimo un dia antes de la entrega, a los Tlfs: <?= $gcl['gcl_telefono']?> . Horario de atención: L-V 8:30am -
 5:30 pm y sábados previa coordinación. En la entrega presentar: guía de remisión indicando Nro de OC (Destinatario y Sunat) y copia de la OC. En caso de no presentar alguno
 de estos documentos o de no haber programado su cita de recepción no se recibirá la mercadería.</p>
     <p>ENTREGA DE FACTURAS: Adjuntar la siguiente documentación: guía de remisión destinatario con sello de almacén, factura destinatario y Sunat indicando el nro. de OC y
 copia de la OC. En caso de no presentar alguno de los documentos no se recibirá la factura. Horario de recepción: Lun - Mie - Vie 8:30 am - 1:00 pm.</p>
-    <p>COMPRA DE CHATARRAS: El precio se ajustará con premio o castigo en base al rendimiento calculado por Zinsa.</p>
+    <p>COMPRA DE MATERIALES: El precio se ajustará con premio o castigo en base al rendimiento calculado por Liferli.</p>
     <?php } else { ?>
     <p class="text-center">Gracias por la confianza, el apoyo y ante todo por la preferencia !<br>
     Dios lo bendiga hoy, mañana y siempre!</p>

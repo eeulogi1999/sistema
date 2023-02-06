@@ -252,7 +252,7 @@ class Movimientos extends Controllers{
                 if (intval($mov['mov_t10_id']) == 53) {
                     $mov['mov_serie'] = $mov['mov_serie'].'-'.$mov['mov_numero'];
                 }
-                $mov['mov_tce_id'] = $tce;
+                $mov['mov_tce_id'] = $tce['tce_id'];
                 $mov['mov_t12num'] = $b_mov['mov_t12num'];
                 $mov['mov_id'] = $b_mov['mov_id'];
                 $mov['mov_alm_id'] = $_SESSION['alm']['alm_id'];
