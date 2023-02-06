@@ -77,11 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#mov_cue_id').loadOptions('cuentas',['cue_nombre'],{'cue_status':1});
     $('#mov_gt4_id').loadOptions('t4monedas',['gt4_descripcion']);
     $('#mde_t6m_id').loadOptions('t6medidas',['t6m_sunat']);
-    if (parseInt(data.mov_t12_id)==2) {
-        $('#mde_gta_id').loadOptions('tafectaciones',['gta_descripcion'],{'gta_id':9});
-    } else {
-        $('#mde_gta_id').loadOptions('tafectaciones',['gta_descripcion'],{'gta_status':1});
-    }
+    $('#mde_gta_id').loadOptions('tafectaciones',['gta_descripcion'],{'gta_status':1});
     $('#mde_f_bie_id').loadOptions('bienes',['bie_nombre'],{'bie_status':1});
     $('#mov_d_alm_id').loadOptions('almacenes',['alm_nombre']);
     $('#mde_bie_id').change(function(){
