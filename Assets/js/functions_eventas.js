@@ -203,10 +203,10 @@ document.addEventListener('DOMContentLoaded',function () {
             "rezise": false,
             "export": false,
             "columns":[
-                {"data":"sim_p_1",header:{t:"NORTE",align:'right'},tipo:'float'},
-                {"data":"sim_p_2",header:{t:"CENTRO",align:'right'},tipo:'float'},
-                {"data":"sim_p_3",header:{t:"SUR",align:'right'},tipo:'float'},
-                {"data":"sim_p_4",header:{t:"OTROS",align:'right'},tipo:'float'},
+                {"data":"sim_p_1",header:{t:"L. NORTE",align:'right'},tipo:'float'},
+                {"data":"sim_p_2",header:{t:"L. CENTRO",align:'right'},tipo:'float'},
+                {"data":"sim_p_3",header:{t:"L. SUR",align:'right'},tipo:'float'},
+                {"data":"sim_p_4",header:{t:"L. OTROS",align:'right'},tipo:'float'},
                 {"data":"sim_pp",render:(r)=>{ 
                     let ls = [r.sim_p_1,r.sim_p_2,r.sim_p_3,r.sim_p_4];
                     let li = [];
@@ -272,7 +272,7 @@ window.addEventListener('load', async () => {
     divLoading.style.display = "none";
 });
 function openModalC(t) {
-    if (data.per.gtp_u) {
+    if (!parseInt(data.per.gtp_u)) {
         $('#por_table').hide()
         $('#out_table').hide()
     }
@@ -360,7 +360,7 @@ function delPosSim(where,json,res) {
     return true; 
 }
 async function getPosSim() {
-    if (data.per.gtp_u) {
+    if (!parseInt(data.per.gtp_u)) {
         $('#por_table').hide()
         $('#out_table').hide()
     }
