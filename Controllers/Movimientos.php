@@ -19,6 +19,8 @@ class Movimientos extends Controllers{
         $this->newModel('t2identidades');
         $this->newModel('tcespeciales');
         $this->newModel('tafectaciones');
+        $this->newModel('bienes');
+        $this->newModel('simulaciones');
         $this->formatter = new NumeroALetras();
     }
     public function Movimientos(){
@@ -38,6 +40,18 @@ class Movimientos extends Controllers{
                 $_SESSION['mov']['mov_tipo'] = '02';
                 $data['page_data']['mov_t12_id'] = 2;
                 break; 
+            case 'ordenventa':
+                $_SESSION['mov']['mov_tipo'] = '04';
+                $data['page_data']['mov_t12_id'] = 1;
+                $data['page_data']['mov_t10_id'] = 53;
+                $data['page_title'] = 'Orden de Venta';
+                break;
+            case 'ordencompra':
+                $_SESSION['mov']['mov_tipo'] = '03';
+                $data['page_data']['mov_t12_id'] = 2;
+                $data['page_data']['mov_t10_id'] = 52;
+                $data['page_title'] = 'Orden de Compra';
+                break;
             case 'salidas':
                 $_SESSION['mov']['mov_tipo'] = '01';
                 $data['page_data']['mov_t12_id'] = 1;
@@ -61,8 +75,61 @@ class Movimientos extends Controllers{
         $data['page_functions_js'] = array("functions_movimientos.js","functions_sbienes.js","functions_agentes.js","functions_empresas.js","functions_personas.js");
         $this->views->getView($this,"movimientos",$data);
     }
+    public function Eventas(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $this->newController('Main');
+        $tce = $this->Main->getTcambio(date('Y-m-d'),true);
+        unset($this->Main);
+        $data['page_tag'] = "Estado de Ordenes de Ventas";
+        $data['page_title'] = "Estado de Ordenes de Ventas";
+        $data['page_name'] = "Estado de Ordenes de Ventas";
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'per'=>$_SESSION['perMod'],'sim'=>array('sim_tce_id'=>$tce['tce_id'],'sim_gtc'=>$tce['tce_gtc_id']['gtc_tcompra'],'sim_tipo'=>1,'sim_gus_id'=>$_SESSION['gus']['gus_id'])); 
+        $data['page_functions_js'] = array("functions_eventas.js","functions_movimientos.js");
+        $this->views->getView($this,"eventas",$data);
+    }
+    public function getEventas(){
+        $eve = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>1,'mov_tipo'=>4));
+        foreach ($eve as $i => $r) {
+            $eve[$i]['mov_doc'] = '<a href="#" onclick="getViewMov('.$r['mov_id'].')">'.$r['mov_serie'].'</a>' ;
+            $eve[$i]['mov_mde_id'] = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$r['mov_id']),array('mde_mov_id')); 
+            $eve[$i]['mov_bie_id'] = $eve[$i]['mov_mde_id'][0]['mde_bie_id'];
+            $eve[$i]['mov_tonq'] = $eve[$i]['mov_mde_id'][0]['mde_q']/1000;
+            $eve[$i]['mov_tonvu'] = $eve[$i]['mov_total']/$eve[$i]['mov_tonq'];
+            // if ($eve[$i]['mov_gt4_id']['gt4_id'] == 2) {
+            //     $eve[$i]['mov_total'] = $eve[$i]['mov_total']*$eve[$i]['mov_tce_id']['tce_gtc_id']['gtc_tcompra'];
+            // }
+            $qe = 0;
+            $ref = '';
+            $mde = $this->mdetalles->selectRegistros(array('mde_ref_mov_id'=>$r['mov_id']));
+            foreach ($mde as $j => $o) {
+                $qe += $o['mde_q'];
+                $ref .= '<a class="dropdown-item" href="#" onClick="getViewMov('.$o['mde_mov_id']['mov_id'].')">'.$o['mde_mov_id']['mov_serie'].'-'.str_pad($o['mde_mov_id']['mov_numero'],8,0,STR_PAD_LEFT).'</a>';
+            }
+            $eve[$i]['mov_qe'] = $qe; 
+            $eve[$i]['mov_qs'] = $eve[$i]['mov_mde_id'][0]['mde_q']-$qe; 
+            if ($eve[$i]['mov_qs'] < 10 && $r['mov_mstatus'] == 1) {
+                $r['mov_mstatus'] = 2;
+            }
+            $eve[$i]['mov_qeref'] = '<div class="dropdown"><button class="btn btn-info dropdown-toggle" type="button" id="drop_'.$i.'" data-toggle="dropdown" 
+            aria-haspopup="true" aria-expanded="false">DOC. REF.</button><div class="dropdown-menu" aria-labelledby="drop_'.$i.'">'.$ref.'</div></div>';
+            $eve[$i]['mov_mstatus'] = '<span class="badge badge-'.OV_STATUS[$r['mov_mstatus']][1].'">'.OV_STATUS[$r['mov_mstatus']][0].'</span>';
+        }
+        echo json_encode($eve,JSON_UNESCAPED_UNICODE);
+        die();
+    }
     public function getMovimientos($mov_t12_id){
-        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>$mov_t12_id,'mov_tipo'=>$_SESSION['mov']['mov_tipo'],'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
+        if (!isset($_SESSION['mov'])) {
+            $_SESSION['mov']['mov_tipo'] = 1;
+        }
+        if ($_SESSION['mov']['mov_tipo']==4) {
+            $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>$mov_t12_id,
+            'mov_tipo'=>$_SESSION['mov']['mov_tipo']));
+        } else {
+            $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>$mov_t12_id,
+            'mov_tipo'=>$_SESSION['mov']['mov_tipo'],'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
+        }
         for ($i=0; $i < count($arrData); $i++) {
             $btnEdit = '';
             $btnView = '';
@@ -74,13 +141,21 @@ class Movimientos extends Controllers{
             }else{
                 $arrData[$i]['mov_age_ide'] = '<span class="badge badge-warning">nulo</span>';
             }
-            $arrData[$i]['mov_serie'] = $arrData[$i]['mov_serie'].'-'.str_pad($arrData[$i]['mov_numero'],8,0,STR_PAD_LEFT);
+            
+            if ($arrData[$i]['mov_t10_id']['t10_id'] == 53) {
+                $arrData[$i]['mov_serie'] = $arrData[$i]['mov_serie'];
+            }else{
+                $arrData[$i]['mov_serie'] = $arrData[$i]['mov_serie'].'-'.str_pad($arrData[$i]['mov_numero'],8,0,STR_PAD_LEFT);
+            }
             if ($mov_t12_id == 18) {
                 $mov_mov_id = $this->movimientos->selectRegistro($arrData[$i]['mov_id']);
                 $arrData[$i]['mov_serie2'] = $mov_mov_id['mov_serie'].'-'.str_pad($mov_mov_id['mov_numero'],8,0,STR_PAD_LEFT);
             }
             $arrData[$i]['mov_subtotal'] = formatMoney($arrData[$i]['mov_subtotal']);
             $arrData[$i]['mov_igv'] = formatMoney(json_decode($arrData[$i]['mov_igv_id'],true)['mov_igv']);
+            if ($arrData[$i]['mov_gt4_id']['gt4_id'] == 2) {
+                $arrData[$i]['mov_total'] = $arrData[$i]['mov_total']*$arrData[$i]['mov_tce_id']['tce_gtc_id']['gtc_tcompra'];
+            }
             $arrData[$i]['mov_total'] = $arrData[$i]['mov_total'];
             $arrData[$i]['mov_t12num'] = $arrData[$i]['mov_tipo'].'-'.date( "m", strtotime($arrData[$i]['mov_fechaE'])).str_pad($arrData[$i]['mov_t12num'],6,'0',STR_PAD_LEFT);
             $arrData[$i]['mov_mstatus'] = '<span class="badge badge-'.MSTATUS[$arrData[$i]['mov_mstatus']][1].'">'.MSTATUS[$arrData[$i]['mov_mstatus']][0].'</span>';
@@ -141,12 +216,15 @@ class Movimientos extends Controllers{
                                         'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = "'.date( "Y-m", strtotime($_POST['mov_fechaE'])).'"',
                                         'mov_t12_id'=>$_POST['mov_t12_id']),' MAX(mov_t12num) AS num ');
                 $mov = $_POST;
+                if (intval($mov['mov_t10_id']) == 53) {
+                    $mov['mov_serie'] = $mov['mov_serie'].'-'.$mov['mov_numero'];
+                }
                 $mov['mov_tce_id'] = $tce['tce_id'];
                 $mov['mov_t12num'] = intval($t12num['num'])+1;
                 $mov['mov_alm_id'] =  (isset($mov['mov_alm_id']))?$mov['mov_alm_id']:$_SESSION['alm']['alm_id'];
                 $mov['mov_tipo'] = (isset($mov['mov_tipo']))?$mov['mov_tipo']:$_SESSION['mov']['mov_tipo'];
                 $mov['mov_fechaR'] = $_POST['mov_fechaE'];
-                $mov['mov_fechaV'] = $_POST['mov_fechaE'];
+                $mov['mov_fechaV'] = (isset($_POST['mov_fechaV']))?$_POST['mov_fechaV']:$_POST['mov_fechaE'];
                 $mov['mov_gus_id'] = $_SESSION['gus']['gus_id'];
                 $mov_id = $this->movimientos->insertRegistro($mov,array('mov_serie','mov_numero','mov_alm_id','mov_tipo','mov_fechaE')); 
                 if (isset($mov_id['exist'])) {
@@ -171,13 +249,16 @@ class Movimientos extends Controllers{
             } else {
                 $b_mov =  $this->movimientos->selectRegistro($_POST['mov_id']);
                 $mov = $_POST;
+                if (intval($mov['mov_t10_id']) == 53) {
+                    $mov['mov_serie'] = $mov['mov_serie'].'-'.$mov['mov_numero'];
+                }
                 $mov['mov_tce_id'] = $tce;
                 $mov['mov_t12num'] = $b_mov['mov_t12num'];
                 $mov['mov_id'] = $b_mov['mov_id'];
                 $mov['mov_alm_id'] = $_SESSION['alm']['alm_id'];
                 $mov['mov_tipo'] = (isset($mov['mov_tipo']))?$mov['mov_tipo']:$_SESSION['mov']['mov_tipo'];
                 $mov['mov_fechaR'] = $_POST['mov_fechaE'];
-                $mov['mov_fechaV'] = $_POST['mov_fechaE'];
+                $mov['mov_fechaV'] = (isset($_POST['mov_fechaV']))?$_POST['mov_fechaV']:$_POST['mov_fechaE'];
                 $mov['mov_gus_id'] = $_SESSION['gus']['gus_id'];
                 $mov_id = $this->movimientos->updateRegistro($mov,array('mov_serie','mov_numero','mov_alm_id','mov_tipo')); 
 
@@ -352,6 +433,12 @@ class Movimientos extends Controllers{
         if ($data['mov']['mov_tipo']=='01') {
             $title = 'DOC. SALIDA     -      '.$data['mov']['mov_t12_id']['t12_descripcion'].'     -       '.strtoupper($data['mov']['mov_t10_id']['t10_descripcion']);
         }
+        if ($data['mov']['mov_tipo']=='03') {
+            $title = 'DOC. ORDEN DE COMPRA     -      '.$data['mov']['mov_t12_id']['t12_descripcion'].'     -       '.strtoupper($data['mov']['mov_t10_id']['t10_descripcion']);
+        }
+        if ($data['mov']['mov_tipo']=='04') {
+            $title = 'DOC. ORDEN DE VENTA    -      '.$data['mov']['mov_t12_id']['t12_descripcion'].'     -       '.strtoupper($data['mov']['mov_t10_id']['t10_descripcion']);
+        }
         $arrResponse = array("status" => true, "title"=>$title ,"data" => $html);
         echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         die();
@@ -375,13 +462,13 @@ class Movimientos extends Controllers{
         $web = Endroid\QrCode\Builder\Builder::create()
             ->writer(new Endroid\QrCode\Writer\PngWriter())
             ->writerOptions([])
-            ->data('https://companycacel.com/')
+            ->data(BASE_URL.'/Assets/pdf/brochure.pdf')
             ->encoding(new Endroid\QrCode\Encoding\Encoding('UTF-8'))
             ->errorCorrectionLevel(new Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh())
             ->size(100)
             ->margin(1)
             ->roundBlockSizeMode(new Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin())
-            ->labelText('Pagina Web')
+            ->labelText('Brochure')
             ->labelFont(new Endroid\QrCode\Label\Font\NotoSans(11))
             ->labelAlignment(new Endroid\QrCode\Label\Alignment\LabelAlignmentCenter())
             ->validateResult(false)
@@ -408,6 +495,27 @@ class Movimientos extends Controllers{
         // $dompdf->setPaper('A4');
         // $dompdf->render();
         // $dompdf->stream('my.pdf',array('Attachment'=>0));
+        die();
+    }
+    public function getSimulaciones($tipo){
+        $res = $this->simulaciones->selectRegistros(array('sim_tipo'=>$tipo));
+        foreach ($res as $i => $r) {
+            $e = '';
+            $d = '';
+            $res[$i]['sim_q'] = $res[$i]['sim_qtn']*1000;
+            $res[$i]['sim_p'] = $res[$i]['sim_pkg'];
+            $res[$i]['sim_m'] = $res[$i]['sim_q']*$res[$i]['sim_p']*$res[$i]['sim_tce_id']['tce_gtc_id']['gtc_tcompra'];
+            $res[$i]['sim_n'] = $res[$i]['sim_m']-$res[$i]['sim_g']*$res[$i]['sim_q'];
+            $res[$i]['sim_pp'] = ($res[$i]['sim_p_1']+$res[$i]['sim_p_2']+$res[$i]['sim_p_3']+$res[$i]['sim_p_4'])/4;
+            if($_SESSION['perMod']['gtp_w']){
+                $e = '<button class="btn btn-primary btn-sm" onClick="edit(`sim`,'.$res[$i]['sim_id'].')" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
+            }
+            if($_SESSION['perMod']['gtp_d']){	
+                $d = '<button class="btn btn-danger btn-sm" onClick="del(`sim`,'.$res[$i]['sim_id'].')" title="Eliminar"><i class="far fa-trash-alt"></i></button>';
+            }
+            $res[$i]['sim_opt'] = '<div class="text-center">'.$e.' '.$d.'</div>';
+        }
+        echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
     }
 

@@ -39,8 +39,6 @@ class Roles extends Controllers{
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();
     }
-
-
     public function getTpermisos($id){
         $arrData = $this->tpermisos->selectRegistros(array('gtp_gro_id'=>$id));
         $arr = array();

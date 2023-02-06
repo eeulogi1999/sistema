@@ -68,9 +68,18 @@ async function setGar() {
     }
 }
 
-function openModalCol() {
+function openModalColC() {
     openModal('col');
     $("#col_est_id").val(1);
     //col_gar_id
     $("#col_puesto").val(''); 
+}
+
+async function setPreCol(where,json,res) {
+    if (data.colId) {
+        let hsbase = JSON.parse(data.colId.col_hsbase)??[];
+        hsbase.push({col_sbase:data.colId.col_sbase,col_fecha:new Date().toISOString().slice(0, 10)})
+        json.col_hsbase = JSON.stringify(hsbase)
+    }
+    return {json}; 
 }

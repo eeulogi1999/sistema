@@ -34,15 +34,18 @@
         require_once ($view_footer);        
     }
 	//Muestra información formateada
-	function dep($data){
+	function dep($data,$die = true){
         $format  = print_r('<pre>');
         $format .= print_r($data);
         $format .= print_r('</pre>');
+        if ($die) {
+            die();
+        }
         return $format;
     }
     function getModal(string $nameModal, $data){
         $view_modal = "Views/Template/Modals/{$nameModal}.php";
-        require_once $view_modal;        
+        require $view_modal;        
     }
     function getFile(string $url, $data){
         ob_start();
@@ -127,6 +130,8 @@
         $string = str_ireplace("[","",$string);
         $string = str_ireplace("]","",$string);
         $string = str_ireplace("==","",$string);
+        $string = str_ireplace("'","",$string);
+        $string = str_ireplace('"',"",$string);
         return $string;
     }
 
@@ -193,8 +198,8 @@
         $token = $r1.'-'.$r2.'-'.$r3.'-'.$r4;
         return $token;
     }
-    function formatMoney($cantidad){
-        $cantidad = SMONEY.' '.number_format($cantidad,2,SPD,SPM);
+    function formatMoney($cantidad,$t4m=null){
+        $cantidad = ((!empty($t4m))?$t4m['gt4_simbolo']:SMONEY).' '.number_format($cantidad,2,SPD,SPM);
         return $cantidad;
     }
     
@@ -431,13 +436,13 @@
         curl_close($ch);
         return $result;
     }
-    function curl_core(){
+    function curl_core($url= BASE_URL.'/Main/get/gcl/1'){
         $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'http://localhost/sistema/Main/get/gcl/1',
+        CURLOPT_URL => $url,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_HTTPAUTH=>CURLAUTH_BASIC,
-        CURLOPT_USERPWD=>'administrador@regomsa.com.pe:1sistemas-SOM',
+        CURLOPT_USERPWD=>'admin@companycacel.com:qwert',
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 0,
@@ -451,6 +456,6 @@
         ));
         $response = curl_exec($curl);
         curl_close($curl);
-        echo $response;
+        return $response;
     }
  ?>

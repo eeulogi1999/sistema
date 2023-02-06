@@ -78,9 +78,10 @@
                     </div>
                     <div class="col-4 border rounded border-secondary h-115 justify-content-center align-items-center">
                         <div class=" p-3" style="height: 118px;">
-                            <b class="text-right">Fecha :</b> <?= $mov['mov_fechaE']; ?><br>
+                            <b class="text-right">Fecha Emisión:</b> <?= $mov['mov_fechaE']; ?><br>
+                            <b class="text-right">Fecha Venc.:</b> <?= $mov['mov_fechaV']; ?><br>
                             <b>Moneda: </b><?= $mov['mov_gt4_id']['gt4_descripcion']; ?><br>
-                            <b>Monto:</b> <?= formatMoney($mov['mov_total']); ?><br>
+                            <b>Monto:</b> <?= formatMoney($mov['mov_total'],$mov['mov_gt4_id']); ?><br>
                             <b>Cuenta:</b> <?= (!empty($mov['mov_cue_id']))?$mov['mov_cue_id']['cue_nombre']:''; ?>
                         </div>
 
@@ -116,8 +117,8 @@
                                     <?php if ($mov['mov_t12_id']['t12_id']==18) { ?>
                                         <td class="text-left"><?= $producto['mde_f_bie_id']['bie_nombre']; ?></td>
                                     <?php } ?>
-                                    <td class="text-right"><?=formatMoney($producto['mde_vu']) ?></td>
-                                    <td class="text-right"><?=formatMoney($producto['mde_importe']) ?></td>
+                                    <td class="text-right"><?=formatMoney($producto['mde_vu'],$mov['mov_gt4_id']) ?></td>
+                                    <td class="text-right"><?=formatMoney($producto['mde_importe'],$mov['mov_gt4_id']) ?></td>
                                 </tr>
                                 <?php 
                                     }
@@ -129,21 +130,21 @@
                                 <tr>
                                     <td colspan="<?= ($mov['mov_t12_id']['t12_id']==18)?4:3?>"> <strong>OBSERVACIONES: </strong></td>
                                     <td colspan="2" class="text-right">Sub-Total:</td>
-                                    <td class="text-right"><?= formatMoney($mov['mov_subtotal']) ?></td>
+                                    <td class="text-right"><?= formatMoney($mov['mov_subtotal'],$mov['mov_gt4_id']) ?></td>
                                 </tr>
                                 <tr>
                                     <td colspan="<?= ($mov['mov_t12_id']['t12_id']==18)?4:3?>" rowspan="2"><p><?= $mov['mov_observaciones'] ?></p></td>
                                     <td colspan="2" class="text-right">Igv (18%):</td>
-                                    <td class="text-right"><?= formatMoney($mov['mov_igv_id']['mov_igv']) ?></td>
+                                    <td class="text-right"><?= formatMoney($mov['mov_igv_id']['mov_igv'],$mov['mov_gt4_id']) ?></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="text-right">Total:</td>
-                                    <td class="text-right"><?= formatMoney($mov['mov_total']) ?></td>
+                                    <td class="text-right"><?= formatMoney($mov['mov_total'],$mov['mov_gt4_id']) ?></td>
                                 </tr>
                                 <?php if (isset($mov['mov_igv_id']['mov_neto'])) { ?>
                                 <tr>
                                     <td colspan="<?= ($mov['mov_t12_id']['t12_id']==18)?6:5?>" class="text-right">Neto a Pago:</td>
-                                    <td class="text-right"><?= formatMoney($mov['mov_igv_id']['mov_neto']) ?></td>
+                                    <td class="text-right"><?= formatMoney($mov['mov_igv_id']['mov_neto'],$mov['mov_gt4_id']) ?></td>
                                 </tr>
                                 <?php } ?>
                             </tfoot>

@@ -97,7 +97,7 @@
           </div>
         </form>
         <div class="tile-footer">
-          <button id="set_gus" class="btn btn-primary" onclick="event.preventDefault();set('gus')"><i
+          <button id="set_gus" class="btn btn-primary" onclick="event.preventDefault();set('gus',{php:true})"><i
               class="fa fa-fw fa-lg fa-check-circle"></i><span>Guardar</span></button>&nbsp;&nbsp;&nbsp;
           <button class="btn btn-danger" type="button" data-dismiss="modal"><i
               class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>

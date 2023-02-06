@@ -30,10 +30,11 @@ class Adscripciones extends Controllers{
         $data['page_title'] = ucfirst($_GET['url']).' de Activos';
         $data['page_name'] = $_GET['url'];
         $data['page_data'] = array();
-        $data['page_functions_js'] = array("functions_adscripciones.js","functions_activos.js","functions_colaboradores.js");
+        $data['page_functions_js'] = array("functions_adscripciones.js","functions_activos.js","functions_colaboradores.js","functions_ubicaciones.js");
         $this->views->getView($this,"adscripciones",$data);
     }
     public function getAdscripciones(){
+        $pre = 'ads';
         $arrData = $this->adscripciones->selectRegistros(array('ads_tipo'=>$_SESSION['ads']['ads_tipo']));
         for ($i=0; $i < count($arrData); $i++) {
             $btnEdit = '';
@@ -43,7 +44,7 @@ class Adscripciones extends Controllers{
             $arrData[$i]['ads_nro'] = $i+1;
             $arrData[$i]['ads_status'] = '<span class="badge badge-'.STATUS[array_keys(STATUS)[$arrData[$i]['ads_status']]].'">'.array_keys(STATUS)[$arrData[$i]['ads_status']].'</span>';
             if($_SESSION['perMod']['gtp_u']){
-                $btnEdit = '<button class="btn btn-primary btn-sm" onClick="editAds('.$arrData[$i]['ads_id'].')" title="Editar Registro"><i class="fas fa-pencil-alt"></i></button>';
+                $btnEdit = '<button class="btn btn-primary btn-sm" onClick="edit('."'ads',".$arrData[$i]['ads_id'].",'php'".')" title="Editar Registro"><i class="fas fa-pencil-alt"></i></button>';
             }
             if($_SESSION['perMod']['gtp_d']){	
                 $btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'ads',".$arrData[$i]['ads_id'].')" title="Eliminar Registro"><i class="far fa-trash-alt"></i></button>';
@@ -65,12 +66,8 @@ class Adscripciones extends Controllers{
                 }
             }
             $arrAde = $_POST['ads_ade_id'];
-            $arrUbi = $_POST['ads_ubi_id'];
             unset($_POST['ads_ade_id']);
-            unset($_POST['ads_ubi_id']);
             $_POST['ads_cunico'] =  $this->adscripciones->searchRegistro(array('ads_tipo'=>$_SESSION['ads']['ads_tipo']),"MAX(ads_cunico) as 'next'")['next']+1;
-            $_POST['ads_ubi_id'] = $this->ubicaciones->insertRegistro($arrUbi)['ubi_id'];
-            $_POST['ads_tipo'] = $_SESSION['ads']['ads_tipo'];
             $asi = $this->adscripciones->insertRegistro($_POST);
             foreach ($arrAde as $i => $ade){ 
                 $ade['ade_ads_id'] = $asi['ads_id'];
@@ -80,32 +77,12 @@ class Adscripciones extends Controllers{
         }
         die();
     }
-    public function delAdscripciones(){
-        if (!empty($_POST['ads_id'])) {
-            $asi = $this->adscripciones->deleteRegistro($_POST['ads_id']);
-            if ($asi) {
-                $arrResponse = array('status'=>true,'msg'=>'ok','data'=>$asi);
-            } else {
-                $arrResponse = array('status'=>false,'msg'=>'No se pudo eliminar el Registro');
-            }
-        }else {
-            $arrResponse = array('status'=>true,'msg'=>'No se puede procesar el ID');
-        }
-        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
-        die();
-    }
-    public function getMovimiento($id,$return = false) {      
-        $asi = $this->adscripciones->selectRegistro($id);
-        $asi['ads_ade_id'] = $this->adetalles->selectRegistros(array('ade_ads_id'=>$id),array('ade_ads_id')); 
-        if (!empty($asi)) {
-            $response = array('status'=>true,'msg'=>'ok','data'=>$asi);
-        } else {
-            $response = array('status'=>false,'msg'=>'Movimiento no Encontrado','data'=>$asi);
-        }
-        if ($return) {
-            return $response;
+    public function getAds($data,$res = false){
+        $data['ads_ade_id'] = $this->adetalles->selectRegistros(array('ade_ads_id'=>$data['ads_id']),array('ade_ads_id'));
+        if ($res) {
+            return $data;
         }else{
-            echo json_encode($response,JSON_UNESCAPED_UNICODE);
+            echo json_encode($data,JSON_UNESCAPED_UNICODE); 
             die();
         }
     }

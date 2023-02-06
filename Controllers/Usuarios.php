@@ -55,7 +55,14 @@
 			echo json_encode($arr,JSON_UNESCAPED_UNICODE);
 			die();
 		}
-
-
+		public function setUsuarios($data=null,$res=false){
+			$data['gus_password'] =  hash("SHA256",$data['gus_password']);
+			if ($res) {
+				return $data;
+			}else{
+				echo json_encode($arr,JSON_UNESCAPED_UNICODE);
+				die();
+			}
+		}
 	}
  ?>

@@ -34,7 +34,7 @@ class Reportes extends Controllers{
         $mtc = 0;
         $kar = array();
         foreach ($arrMde as $i => $mde) {
-            $item = $this->movimientos->selectRegistro($mde['mde_mov_id']);
+            $item = $this->movimientos->selectRegistro($mde['mde_mov_id'],array('mov_gus_id','mov_age_id','mov_alm_id','gtc_gt4_id'));
             $item['mov_serie'] = '<a href="#" onclick="getViewMov('.$item['mov_id'].')">'.$item['mov_serie'].'-'.str_pad($item['mov_numero'],8,0,STR_PAD_LEFT).'</a>' ;
             $item['mov_nro'] = $i+1;
             $c_mde = array('c_q'=>'','c_vu'=>'','c_importe'=>'');
@@ -52,7 +52,7 @@ class Reportes extends Controllers{
                 $prom = ($qs==0)?0:$mts/$qs;
                 $v_mde = array('v_q'=>$mde['mde_q'],'v_vu'=>$prom,'v_importe'=>$mde['mde_q']*$prom);
                 $mtcv += $mde['mde_q']*$prom;
-                $mtv += $mde['mde_importe'];
+                $mtv += ($item['mov_gt4_id']['gt4_id']==2)?$mde['mde_importe']*$item['mov_tce_id']['tce_gtc_id']['gtc_tventa']:$mde['mde_importe'];
                 $mts -= $mde['mde_q']*$prom;
                 $qs -= $mde['mde_q'];
             }
@@ -205,6 +205,7 @@ class Reportes extends Controllers{
         $bie = $this->bienes->selectRegistros();
         $si = array();
         $r = array('status' => false,'msg' => "No procesado");
+        $nm = date('Y-m-d',strtotime('next month '.strClean($_SESSION['periodo']).'-01'));
         $si['mov_alm_id'] = 1;
         $si['mov_serie'] = 'SI01';
         $si['mov_numero'] = 1;
@@ -213,14 +214,14 @@ class Reportes extends Controllers{
         $si['mov_t12_id'] = 16;
         $si['mov_t10_id'] = 1;
         $si['mov_tce_id'] = 1;
-        $si['mov_fechaE'] = '2023-01-01';
-        $si['mov_fechaR'] = '2023-01-01';
-        $si['mov_fechaV'] = '2023-01-01';
+        $si['mov_fechaE'] = $nm;
+        $si['mov_fechaR'] = $nm;
+        $si['mov_fechaV'] = $nm;
         $si['mov_tipo'] = 2;
         $si['mov_subtotal'] = 1;
         $si['mov_igv_id'] = '{"mov_igv": "0.00", "mov_neto": "1.00", "mov_gravada": "0.00", "mov_inafecta": "0.00", "mov_exonerada": "1.00"}';
         $si['mov_total'] = 1;
-        $s = $this->movimientos->insertRegistro($si,array('mov_fechaE'));
+        $s = $this->movimientos->insertRegistro($si,array('mov_t12_id','mov_fechaE'));
         foreach ($bie as $i => $d) {
             $m = array();
             $r = $this->getCostoBien($d['bie_id'],$_SESSION['periodo'],null,0);

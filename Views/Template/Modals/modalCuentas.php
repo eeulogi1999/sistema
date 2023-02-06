@@ -69,6 +69,9 @@
             </div>
           </div>
         </div>
+        <h5 class="text-right"><strong>Neto: </strong><span id="cue_base"></span></h5>
+        <h5 class="text-right"><strong>T.C. Sunat: </strong><span id="cue_tga"></span></h5>
+        <h4 class="text-right"><strong>Saldo: </strong><span class="text-info" id="cue_neto"></span></h4>
         <!-- <table class="table table-hover table-bordered table-sm " id="mvb_cue" width="100%"></table> -->
         <!-- <div id="mvb_cue"> -->
       </div>

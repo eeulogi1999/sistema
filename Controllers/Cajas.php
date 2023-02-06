@@ -83,6 +83,19 @@ class Cajas extends Controllers{
         $data['page_functions_js'] = array("functions_cajas.js");
         $this->views->getView($this,"cajas",$data);
     }
+    public function Cambios(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $data['page_tag'] = "Cambio Dolares";
+        $data['page_title'] = "Cambio Dolares";
+        $data['page_name'] = "Cambio Dolares";
+        $num = $this->cajas->searchRegistro(array('caj_tipo'=>8),' MAX(caj_numero) AS num ')['num']+1;
+        $data['page_data'] = array('caj'=>array('caj_tipo'=>8,'caj_numero'=>$num,'caj_gus_id'=>$_SESSION['gus']['gus_id']),
+        'periodo'=>$_SESSION['periodo']); 
+        $data['page_functions_js'] = array("functions_cambios.js");
+        $this->views->getView($this,"cajas",$data);
+    }
     public function Iadicionales(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
@@ -148,10 +161,10 @@ class Cajas extends Controllers{
         die();
     }
     public function getI($cue_id){
-        $arrData = $this->cajas->selectRegistros(array('caj_tipo'=>1,'caj_cue_id'=>$cue_id,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' ORDER BY caj_fecha ASC'));
+        $arrData = $this->cajas->selectRegistros(array('caj_cue_id'=>$cue_id,'custom'=>'caj_tipo in (1,5,4,0,8) AND caj_monto > 0 AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' ORDER BY caj_fecha ASC'));
         for ($i=0; $i < count($arrData); $i++) { 
             $arrData[$i]['caj_nro'] = $i+1;
-            $arrData[$i]['caj_tipo'] = CAJ[$arrData[$i]['caj_tipo']];
+            //$arrData[$i]['caj_tipo'] = CAJ[$arrData[$i]['caj_tipo']];
             if (!empty($arrData[$i]['caj_age_id'])) {
                 if (!empty($arrData[$i]['caj_age_id']['age_gem_id'])) {
                     $arrData[$i]['caj_age_id']['age_nombre'] = $arrData[$i]['caj_age_id']['age_gem_id']['gem_razonsocial'];
@@ -159,17 +172,17 @@ class Cajas extends Controllers{
                     $arrData[$i]['caj_age_id']['age_nombre'] = $arrData[$i]['caj_age_id']['age_gpe_id']['gpe_nombre'];
                 }
             }else {
-                $arrData[$i]['caj_age_id']['age_nombre'] = '';
+                $arrData[$i]['caj_age_id']['age_nombre'] = '<span class="badge badge-success">'.CAJ[$arrData[$i]['caj_tipo']].'</span>';
             }
         }
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();
     }
     public function getE($cue_id){
-        $arrData = $this->cajas->selectRegistros(array('caj_tipo'=>2,'caj_cue_id'=>$cue_id,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' ORDER BY caj_fecha ASC'));
+        $arrData = $this->cajas->selectRegistros(array('caj_cue_id'=>$cue_id,'custom'=>'caj_tipo in (2,5,0,8) AND caj_monto < 0 AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' ORDER BY caj_fecha ASC'));
         for ($i=0; $i < count($arrData); $i++) { 
             $arrData[$i]['caj_nro'] = $i+1;
-            $arrData[$i]['caj_tipo'] = CAJ[$arrData[$i]['caj_tipo']];
+           // $arrData[$i]['caj_tipo'] = CAJ[$arrData[$i]['caj_tipo']];
             if (!empty($arrData[$i]['caj_age_id'])) {
                 if (!empty($arrData[$i]['caj_age_id']['age_gem_id'])) {
                     $arrData[$i]['caj_age_id']['age_nombre'] = $arrData[$i]['caj_age_id']['age_gem_id']['gem_razonsocial'];
@@ -177,7 +190,7 @@ class Cajas extends Controllers{
                     $arrData[$i]['caj_age_id']['age_nombre'] = $arrData[$i]['caj_age_id']['age_gpe_id']['gpe_nombre'];
                 }
             }else {
-                $arrData[$i]['caj_age_id']['age_nombre'] = '';
+                $arrData[$i]['caj_age_id']['age_nombre'] = '<span class="badge badge-success">'.CAJ[$arrData[$i]['caj_tipo']].'</span>';
             }
         }
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);

@@ -1,8 +1,6 @@
 <?php 
-
 @ob_start();
 require_once 'Libraries/phpspreadsheet/vendor/autoload.php';
-require_once 'Controllers/Reportes.php';
 class Liquidez extends Controllers{
     public function __construct(){
         parent::__construct(strtolower(get_class($this)));
@@ -10,9 +8,7 @@ class Liquidez extends Controllers{
         $this->newModel('t2identidades');
         $this->newModel('movimientos');
         $this->newModel('cajas');
-        if (empty($this->Reportes)) {
-            $this->Reportes = new Reportes();
-        }
+        $this->newController('Reportes');
     }
     public function Liquidez(){
         if(empty($_SESSION['perMod']['gtp_r'])){
@@ -56,122 +52,139 @@ class Liquidez extends Controllers{
         $this->views->getView($this,"cajas",$data);
     }
     public function getLiquidez($res=null){
-        $ageData = $this->agentes->selectRegistros();
+        $ageData = $this->agentes->selectRegistros(null,array('gpe_gdi_id','gem_gdi_id'));
         $pre = 'liq'; $tabla = 'Liquidez';
+        $this->newController('Main');
+        $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
+        unset($this->Main);
         $liqData = array();
         $liqCobrar = array();
         $liqPagar = array();
         $liq_ncuadre = array();
         $liq_sum = array('liq_cobrar'=>0,'liq_pagar'=>0);
         for ($i=0; $i < count($ageData); $i++) { 
-            $btnView = '';
-            $btnEdit = '';
-            $age = array();
-            if (!empty($ageData[$i]['age_gem_id'])) {
-                $age['age_id'] = $ageData[$i]['age_id'];
-                $age['age_ide'] =         $ageData[$i]['age_gem_id']['gem_ruc'];
-                $age['age_nombre'] =      $ageData[$i]['age_gem_id']['gem_razonsocial'];
-                $age['age_direccion'] =   $ageData[$i]['age_gem_id']['gem_direccion'];
-                $age['age_email'] =       $ageData[$i]['age_gem_id']['gem_email'];
-                $age['age_gdi_id'] =      $ageData[$i]['age_gem_id']['gem_gdi_id'];
-                $age['age_gt2_id'] =      $this->t2identidades->selectRegistro(4);
-            } else {
-                $age['age_id'] = $ageData[$i]['age_id'];
-                $age['age_ide'] =         $ageData[$i]['age_gpe_id']['gpe_identificacion'];
-                $age['age_nombre'] =      $ageData[$i]['age_gpe_id']['gpe_nombre'].', '.$ageData[$i]['age_gpe_id']['gpe_apellidos'];
-                $age['age_direccion'] =   $ageData[$i]['age_gpe_id']['gpe_direccion'];
-                $age['age_email'] =       $ageData[$i]['age_gpe_id']['gpe_email'];
-                $age['age_gdi_id'] =      $ageData[$i]['age_gpe_id']['gpe_gdi_id'];
-                $age['age_gt2_id'] =      $ageData[$i]['age_gpe_id']['gpe_gt2_id'];
-            }
-            $id = $this->liquidez->searchRegistro(array('liq_age_id'=>$ageData[$i]['age_id'],'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']));
-            $id = (!empty($id)) ? $id['liq_id'] : 0 ;
-            $liqData[$i][$pre.'_nro'] = $i+1;
-            $liqData[$i][$pre.'_age_id']=$age;
-            $liqData[$i][$pre.'_si']=$this->liquidez->searchRegistro(
-                array('liq_age_id'=>$ageData[$i]['age_id'],'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']),
-                'liq_age_id,IFNULL(SUM(liq_monto), 0) AS liq_total_sum',
-                array('liq_age_id'))['liq_total_sum'];
-
-            $liqData[$i][$pre.'_mtc']=$this->movimientos->searchRegistro(
-                array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_tipo'=>2,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']),
-                'mov_age_id,IFNULL(SUM(mov_total), 0) AS mov_total_sum',
-                array('mov_age_id'))['mov_total_sum'];
-
-            $detr =  $this->movimientos->selectRegistros(
-                array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_tipo'=>1,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']),
-                array('mov_age_id','mov_alm_id','mov_tce_id'));
-
-            $liqData[$i][$pre.'_mtv'] = 0;
-            if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
-                $g_ds = 0;
-                $rpt = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
-                foreach ($rpt as $p => $d) {
-                    $g_ds += $d['mov_sum']*0.177-$d['mov_sum']*0.025;
-                }  
-                $liqData[$i][$pre.'_mtv'] = $g_ds*0.25;
-            } else {
-                for ($j=0; $j < count($detr) ; $j++) { 
-                    $liqData[$i][$pre.'_mtv'] = $liqData[$i][$pre.'_mtv']+floatval(json_decode($detr[$j]['mov_igv_id'],true)['mov_neto']);
+                $btnView = '';
+                $btnEdit = '';
+                $age = array();
+                if ($_SESSION['gus']['gus_id']==6) {
+                    if ($ageData[$i]['age_id']!= 143 ) {
+                        continue;
+                    }
                 }
-            }
-            
-            
-            $liqData[$i][$pre.'_mti']=$this->cajas->searchRegistro(
-                array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
-                'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
-                array('caj_age_id'))['caj_total_sum'];
+                if (!empty($ageData[$i]['age_gem_id'])) {
+                    $age['age_id'] = $ageData[$i]['age_id'];
+                    $age['age_ide'] =         $ageData[$i]['age_gem_id']['gem_ruc'];
+                    $age['age_nombre'] =      $ageData[$i]['age_gem_id']['gem_razonsocial'];
+                    $age['age_direccion'] =   $ageData[$i]['age_gem_id']['gem_direccion'];
+                    $age['age_email'] =       $ageData[$i]['age_gem_id']['gem_email'];
+                    $age['age_gt4_id'] =      $ageData[$i]['age_gt4_id'];
+                } else {
+                    $age['age_id'] = $ageData[$i]['age_id'];
+                    $age['age_ide'] =         $ageData[$i]['age_gpe_id']['gpe_identificacion'];
+                    $age['age_nombre'] =      $ageData[$i]['age_gpe_id']['gpe_nombre'].', '.$ageData[$i]['age_gpe_id']['gpe_apellidos'];
+                    $age['age_direccion'] =   $ageData[$i]['age_gpe_id']['gpe_direccion'];
+                    $age['age_email'] =       $ageData[$i]['age_gpe_id']['gpe_email'];
+                    $age['age_gt4_id'] =       $ageData[$i]['age_gt4_id'];
+                }
+                $id = $this->liquidez->searchRegistro(array('liq_age_id'=>$ageData[$i]['age_id'],'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+                $id = (!empty($id)) ? $id['liq_id'] : 0 ;
+                $liqData[$i][$pre.'_nro'] = $i+1;
+                $liqData[$i][$pre.'_age_id']=$age;
+                $liqData[$i][$pre.'_si']=$this->liquidez->searchRegistro(
+                    array('liq_age_id'=>$ageData[$i]['age_id'],'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                    'liq_age_id,IFNULL(SUM(liq_monto), 0) AS liq_total_sum',
+                    array('liq_age_id'))['liq_total_sum'];
 
-            $liqData[$i][$pre.'_mte']=-$this->cajas->searchRegistro(
-                array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>2,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
-                'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
-                array('caj_age_id'))['caj_total_sum'];
-
-            $liqData[$i][$pre.'_castigo']=$this->cajas->searchRegistro(
-                    array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>6,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
-                    'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
-                    array('caj_age_id'))['caj_total_sum'];
+                $mtc=$this->movimientos->searchRegistro(
+                    array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_tipo'=>2,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']),
+                    'mov_age_id,IFNULL(SUM(mov_total), 0) AS mov_total_sum',
+                    array('mov_age_id'))['mov_total_sum'];
+                $liqData[$i][$pre.'_mtc']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$mtc*floatval($tga):$mtc;
+                $liqData[$i][$pre.'_mtcn'] = $mtc;
     
-            $liqData[$i][$pre.'_premio']=$this->cajas->searchRegistro(
-                    array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>7,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                $mtv =  $this->movimientos->searchRegistro(
+                    array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_tipo'=>1,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']),
+                    'mov_age_id,IFNULL(SUM(CAST(JSON_EXTRACT(mov_igv_id, "$.mov_neto")  AS DECIMAL(12,3))), 0) AS mov_total_sum')['mov_total_sum'];
+
+                $liqData[$i][$pre.'_mtv']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$mtv*floatval($tga):$mtv;
+                $liqData[$i][$pre.'_mtvn'] = $mtv; 
+
+                if ($liqData[$i][$pre.'_age_id']['age_id'] == 2 || $liqData[$i][$pre.'_age_id']['age_id'] == 5) {
+                    $liqData[$i][$pre.'_age_id']['age_nombre'] = '<span class="badge badge-success">'.$liqData[$i][$pre.'_age_id']['age_nombre'].'</span>';
+                    if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
+                        $rpt1 = $this->getDetracciones(true);
+                        $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt1,'mov_dscg'));
+                    }
+                    if ($liqData[$i][$pre.'_age_id']['age_id'] == 5) {
+                        $rpt2 = $this->getExportaciones(true);
+                        $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt2,'mov_dscg'));
+                    }
+
+                }
+                $mti=$this->cajas->searchRegistro(
+                    array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
                     'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
                     array('caj_age_id'))['caj_total_sum'];
-            $liqData[$i][$pre.'_actual']=$liqData[$i][$pre.'_si']-$liqData[$i][$pre.'_mtc']+$liqData[$i][$pre.'_mtv']-$liqData[$i][$pre.'_mti']+$liqData[$i][$pre.'_mte']+$liqData[$i][$pre.'_castigo']+$liqData[$i][$pre.'_premio'];
-            $text = '';
-            switch (true) {
-                case $liqData[$i][$pre.'_actual']<-0.5:
-                    $text = '<span class="badge badge-danger">POR PAGAR</span>';
-                    break;
-                case $liqData[$i][$pre.'_actual']>0.5:
-                    $text = '<span class="badge badge-warning">POR COBRAR</span>';
-                    break;
-                default:
-                    $text = '<span class="badge badge-success">CUADRE</span>';
-                    break;
-            }
-            $liqData[$i][$pre.'_estado']= $text;
-            if($_SESSION['perMod']['gtp_u']){
-                if ($id>0) {
-                    $btnEdit = '<button class="btn btn-primary  btn-sm" onClick="editLiq('.$id.')" title="Editar '.$tabla.'"><i class="fas fa-pencil-alt"></i></button>';
-                }    
-            }
-            $btnDet = '<button class="btn btn-warning  btn-sm" onClick="viewLiq('.$ageData[$i]['age_id'].','.$liqData[$i][$pre.'_actual'].')" title="Ver '.$tabla.'"><i class="far fa-eye"></i></button>'; 
-            $liqData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDet.'</div>';
-            switch (true) {
-                case $liqData[$i][$pre.'_actual']<-0.5:
-                    array_push($liq_ncuadre,$liqData[$i]);
-                    array_push($liqPagar,$liqData[$i]);
-                    $liq_sum['liq_pagar'] += abs($liqData[$i][$pre.'_actual']);
-                    break;
-                case $liqData[$i][$pre.'_actual']>0.5:
-                    array_push($liq_ncuadre,$liqData[$i]);
-                    array_push($liqCobrar,$liqData[$i]);
-                    $liq_sum['liq_cobrar'] += abs($liqData[$i][$pre.'_actual']);
-                    break;
-                default:
-                    break;
-            }
+                $liqData[$i][$pre.'_mti']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$mti*floatval($tga):$mti;
+                $liqData[$i][$pre.'_mtin'] = $mti;
+
+                $mte=-$this->cajas->searchRegistro(
+                    array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>2,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                    'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
+                    array('caj_age_id'))['caj_total_sum'];
+                $liqData[$i][$pre.'_mte']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$mte*floatval($tga):$mte;
+                $liqData[$i][$pre.'_mten'] = $mte;
+    
+                $castigo=$this->cajas->searchRegistro(
+                        array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>6,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                        'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
+                        array('caj_age_id'))['caj_total_sum'];
+                $liqData[$i][$pre.'_castigo']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$castigo*floatval($tga):$castigo;
+                $liqData[$i][$pre.'_castigon'] = $castigo;
         
+                $premio=$this->cajas->searchRegistro(
+                        array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>7,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                        'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
+                        array('caj_age_id'))['caj_total_sum'];
+                $liqData[$i][$pre.'_premio']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$premio*floatval($tga):$premio;
+                $liqData[$i][$pre.'_premion'] = $premio;
+
+                $liqData[$i][$pre.'_actual']=$liqData[$i][$pre.'_si']-$liqData[$i][$pre.'_mtc']+$liqData[$i][$pre.'_mtv']-$liqData[$i][$pre.'_mti']+$liqData[$i][$pre.'_mte']+$liqData[$i][$pre.'_castigo']+$liqData[$i][$pre.'_premio'];
+                $liqData[$i][$pre.'_actualn']=$liqData[$i][$pre.'_si']-$liqData[$i][$pre.'_mtcn']+$liqData[$i][$pre.'_mtvn']-$liqData[$i][$pre.'_mtin']+$liqData[$i][$pre.'_mten']+$liqData[$i][$pre.'_castigon']+$liqData[$i][$pre.'_premion'];
+                $text = '';
+                switch (true) {
+                    case $liqData[$i][$pre.'_actual']<-0.5:
+                        $text = '<span class="badge badge-danger">POR PAGAR</span>';
+                        break;
+                    case $liqData[$i][$pre.'_actual']>0.5:
+                        $text = '<span class="badge badge-warning">POR COBRAR</span>';
+                        break;
+                    default:
+                        $text = '<span class="badge badge-success">CUADRE</span>';
+                        break;
+                }
+                $liqData[$i][$pre.'_estado']= $text;
+                if($_SESSION['perMod']['gtp_u']){
+                    if ($id>0) {
+                        $btnEdit = '<button class="btn btn-primary  btn-sm" onClick="editLiq('.$id.')" title="Editar '.$tabla.'"><i class="fas fa-pencil-alt"></i></button>';
+                    }    
+                }
+                $btnDet = '<button class="btn btn-warning  btn-sm" onClick="viewLiq('.$ageData[$i]['age_id'].','.$liqData[$i][$pre.'_actual'].','.$liqData[$i][$pre.'_actualn'].','.floatval($tga).')" title="Ver '.$tabla.'"><i class="far fa-eye"></i></button>'; 
+                $liqData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDet.'</div>';
+                switch (true) {
+                    case $liqData[$i][$pre.'_actual']<-0.5:
+                        array_push($liq_ncuadre,$liqData[$i]);
+                        array_push($liqPagar,$liqData[$i]);
+                        $liq_sum['liq_pagar'] += abs($liqData[$i][$pre.'_actual']);
+                        break;
+                    case $liqData[$i][$pre.'_actual']>0.5:
+                        array_push($liq_ncuadre,$liqData[$i]);
+                        array_push($liqCobrar,$liqData[$i]);
+                        $liq_sum['liq_cobrar'] += abs($liqData[$i][$pre.'_actual']);
+                        break;
+                    default:
+                        break;
+                }
         }
         switch ($res) {
             case 'cobrar':
@@ -212,10 +225,12 @@ class Liquidez extends Controllers{
         $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>1,'custom'=>$str_caj));
         $nd = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>6,'custom'=>$str_caj));
         $sl = $this->liquidez->searchRegistro(array('liq_age_id'=>$age_id,'custom'=>$str_liq));
+        $age = $this->agentes->selectRegistro($age_id);
         $ing = array();
         if (!empty($sl)) {
             if ($sl['liq_monto']<=0) {
                 $r = array();
+                $r['ing_gt4_id'] = $age['age_gt4_id'];
                 $r['ing_fecha'] = $sl['liq_fecha'];
                 $r['ing_tipo'] = 'SALDO INICIAL'; 
                 $r['ing_cuenta'] = ''; 
@@ -226,6 +241,7 @@ class Liquidez extends Controllers{
         }
         for ($i=0; $i < count($arrMov); $i++) {
             $r = array();
+            $r['ing_gt4_id'] = $arrMov[$i]['mov_gt4_id'];
             $r['ing_fecha'] = $arrMov[$i]['mov_fechaE'];
             $r['ing_tipo'] = $arrMov[$i]['mov_t12_id']['t12_descripcion'];
             $r['ing_cuenta'] = (!empty($arrMov[$i]['mov_cue_id']))?$arrMov[$i]['mov_cue_id']['cue_nombre']:''; 
@@ -235,6 +251,7 @@ class Liquidez extends Controllers{
         }
         for ($i=0; $i < count($arrCaj); $i++) {
             $r = array();
+            $r['ing_gt4_id'] = $arrCaj[$i]['caj_gt4_id'];
             $r['ing_fecha'] = $arrCaj[$i]['caj_fecha'];
             $r['ing_tipo'] = CAJ[$arrCaj[$i]['caj_tipo']];
             $r['ing_cuenta'] = $arrCaj[$i]['caj_cue_id']['cue_nombre'];
@@ -244,6 +261,7 @@ class Liquidez extends Controllers{
         }
         for ($i=0; $i < count($nd); $i++) {
             $r = array();
+            $r['ing_gt4_id'] = $nd[$i]['caj_gt4_id'];
             $r['ing_fecha'] = $nd[$i]['caj_fecha'];
             $r['ing_tipo'] = CAJ[$nd[$i]['caj_tipo']];
             $r['ing_cuenta'] = (!empty($nd[$i]['caj_cue_id']))?$nd[$i]['caj_cue_id']['cue_nombre']:'';
@@ -278,10 +296,12 @@ class Liquidez extends Controllers{
         $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>2,'custom'=>$str_caj));
         $nc = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>7,'custom'=>$str_caj));
         $sl = $this->liquidez->searchRegistro(array('liq_age_id'=>$age_id,'custom'=>$str_liq));
+        $age = $this->agentes->selectRegistro($age_id);
         $egr = array();
         if (!empty($sl)) {
             if ($sl['liq_monto']>0) {
                 $r = array();
+                $r['egr_gt4_id'] = $age['age_gt4_id'];
                 $r['egr_fecha'] = $sl['liq_fecha'];
                 $r['egr_tipo'] = 'SALDO INICIAL' ; 
                 $r['egr_cuenta'] = ''; 
@@ -292,6 +312,7 @@ class Liquidez extends Controllers{
         }
         for ($i=0; $i < count($arrMov); $i++) {
             $r = array();
+            $r['egr_gt4_id'] = $arrMov[$i]['mov_gt4_id'];
             $r['egr_fecha'] = $arrMov[$i]['mov_fechaE'];
             $r['egr_tipo'] = $arrMov[$i]['mov_t12_id']['t12_descripcion'];
             $r['egr_cuenta'] = (!empty($arrMov[$i]['mov_cue_id']))?$arrMov[$i]['mov_cue_id']['cue_nombre']:''; 
@@ -301,6 +322,7 @@ class Liquidez extends Controllers{
         }
         for ($i=0; $i < count($arrCaj); $i++) {
             $r = array();
+            $r['egr_gt4_id'] = $arrCaj[$i]['caj_gt4_id'];
             $r['egr_fecha'] = $arrCaj[$i]['caj_fecha'];
             $r['egr_tipo'] = CAJ[$arrCaj[$i]['caj_tipo']];
             $r['egr_cuenta'] = $arrCaj[$i]['caj_cue_id']['cue_nombre'];
@@ -310,6 +332,7 @@ class Liquidez extends Controllers{
         }
         for ($i=0; $i < count($nc); $i++) {
             $r = array();
+            $r['egr_gt4_id'] = $nc[$i]['caj_gt4_id'];
             $r['egr_fecha'] = $nc[$i]['caj_fecha'];
             $r['egr_tipo'] = CAJ[$nc[$i]['caj_tipo']];
             $r['egr_cuenta'] = (!empty($nc[$i]['caj_cue_id']))?$nc[$i]['caj_cue_id']['cue_nombre']:'';
@@ -333,8 +356,9 @@ class Liquidez extends Controllers{
         for ($i=0; $i < count($sal); $i++) { 
             $liq = array();
             $liq['liq_age_id'] = $sal[$i]['liq_age_id']['age_id'];
-            $liq['liq_monto'] = $sal[$i]['liq_actual'];
-            $liq['liq_fecha'] = '2023-01-01';
+            $liq['liq_monto'] = $sal[$i]['liq_actualn'];
+            $nm = date('Y-m-d',strtotime('next month '.strClean($_SESSION['periodo']).'-01'));
+            $liq['liq_fecha'] = $nm;
             $d = $this->liquidez->insertRegistro($liq);
             $r = array('status' => true,'msg' => "Procesado Correctamente");
         }
@@ -410,6 +434,60 @@ class Liquidez extends Controllers{
         header('Pragma: public');
         $writer->save('php://output');
         die();
+    }
+    public function getDetracciones($out=false){
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+        $this->newController('Main');
+        $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
+        unset($this->Main);
+        foreach ($res as $i => $d) {
+            if ($d['mov_cue_id']['cue_gt4_id']['gt4_id']==2) {
+                $d['mov_sum'] = $d['mov_sum']*floatval($tga);
+                $res[$i]['mov_sum'] = $d['mov_sum']*floatval($tga);
+            }
+            $res[$i]['mov_detraccion'] = $d['mov_sum']*0.177;
+            $res[$i]['mov_impuesto'] = $d['mov_sum']*0.025; //($res[$i]['mov_cue_id']['cue_porcentaje']/100)
+            $res[$i]['mov_det_liq'] = $res[$i]['mov_detraccion']-$res[$i]['mov_impuesto'];
+            $res[$i]['mov_porc'] = '<input type="text" value="'.$res[$i]['mov_cue_id']['cue_porcentaje'].'" name="det" size="4" onChange="setPorcentaje('.$res[$i]['mov_cue_id']['cue_id'].',event)">'; 
+            $res[$i]['mov_dscg'] = $res[$i]['mov_det_liq']*($res[$i]['mov_cue_id']['cue_porcentaje']/100);
+            $res[$i]['mov_sald'] = $res[$i]['mov_det_liq']-$res[$i]['mov_dscg'];
+            $btnView = '<button class="btn btn-info btn-sm" onclick="getDetView('.$d['mov_cue_id']['cue_id'].')" title="Ver Registro" > <i class="far fa-eye"></i> </button>';
+            $res[$i]['mov_options'] = '<div class="text-center">'.$btnView.'</div>';
+        }
+        if ($out) {
+            return $res;
+        } else {
+            echo json_encode($res,JSON_UNESCAPED_UNICODE);
+            die();
+        }
+    }
+    public function getExportaciones($out=false){
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+        $this->newController('Main');
+        $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
+        unset($this->Main);
+        foreach ($res as $i => $r) {
+            if ($d['mov_cue_id']['cue_gt4_id']['gt4_id']==2) {
+                $d['mov_sum'] = $d['mov_sum']*floatval($tga);
+                $res[$i]['mov_sum'] = $d['mov_sum']*floatval($tga);
+            }
+            $res[$i]['mov_porc'] = '<input type="text" value="'.$r['mov_cue_id']['cue_por_exp'].'" size="4" onChange="setPorExp('.$r['mov_cue_id']['cue_id'].',event)">'; 
+            $res[$i]['mov_base'] = $r['mov_sum']*$r['mov_cue_id']['cue_por_exp'];
+            $res[$i]['mov_cigv'] = $res[$i]['mov_base']*0.18;
+            $res[$i]['mov_impuesto'] =  $r['mov_sum']*0.035;
+            $res[$i]['mov_retorno'] = $res[$i]['mov_cigv']-$res[$i]['mov_impuesto'];
+            $res[$i]['mov_porc_ret'] = '<input type="text" value="'.$r['mov_cue_id']['cue_porcentaje'].'" size="4" name="exp" onChange="setPorcentaje('.$r['mov_cue_id']['cue_id'].',event)">';
+            $res[$i]['mov_dscg'] = $res[$i]['mov_retorno']*($res[$i]['mov_cue_id']['cue_porcentaje']/100);
+            $res[$i]['mov_sald'] = $res[$i]['mov_retorno']-$res[$i]['mov_dscg']; 
+            $btnView = '<button class="btn btn-info btn-sm" onclick="getExpDet('.$r['mov_cue_id']['cue_id'].')" title="Ver Registro" > <i class="far fa-eye"></i> </button>';
+            $res[$i]['mov_options'] = '<div class="text-center">'.$btnView.'</div>';
+        }  
+        if ($out) {
+            return $res;
+        } else {
+            echo json_encode($res,JSON_UNESCAPED_UNICODE);
+            die();
+        }
     }
 }
 

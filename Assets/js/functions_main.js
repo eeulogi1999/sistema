@@ -48,6 +48,9 @@ async function del(prefijo,id,res=false) {
                     $$(prefijo+'_table').load(base_url+"/"+table+"/get"+table);
                 } else {
                     window[prefijo+'_table'].reload();
+                    if (typeof window['delPos'+capitalize(prefijo)]==='function') {
+                        window['delPos'+capitalize(prefijo)]();
+                    }
                 }
             } else {
                 swal("Atención!", response.msg, "error");
@@ -92,6 +95,12 @@ async function off(node,prefijo,id,res=false) {
 }
 async function set(prefijo,where= null,json = null,res = false) {
     var table = capitalize(getTable(prefijo));
+    if (typeof window['setPre'+capitalize(prefijo)]==='function') {
+        var arr = await window['setPre'+capitalize(prefijo)](where,Object.fromEntries(new FormData(document.querySelector('#form_'+prefijo))),res);
+        where = arr.where??where;
+        json = arr.json??json;
+        res = arr.res??res;
+    }
     if (json != null) {
         var formData = new FormData();
         for (const i in json) {
@@ -125,6 +134,9 @@ async function set(prefijo,where= null,json = null,res = false) {
                         $$(prefijo+'_table').load(base_url+"/"+table+"/get"+table);
                     } else {
                         window[prefijo+'_table'].reload();
+                        if (typeof window['setPos'+capitalize(prefijo)]==='function') {
+                            window['setPos'+capitalize(prefijo)]();
+                        }
                     }
                 }
             } else {
@@ -141,17 +153,18 @@ async function set(prefijo,where= null,json = null,res = false) {
         return response;
     }
 }
-async function edit(prefijo,id,res=false) {
+async function edit(prefijo,id,res=false,php=false) {
     document.querySelector('#titleModal_'+prefijo).innerHTML ="Actualizar "+capitalize(getTable(prefijo));
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#set_'+prefijo).classList.replace("btn-primary", "btn-info");
     document.querySelector("#form_"+prefijo).reset();
     $('#set_'+prefijo+' span').html("Actualizar");
-    var response = await fetch(base_url + '/Main/get/'+prefijo+','+id)
+    var response = await fetch(base_url + '/Main/get/'+prefijo+','+id+(php?','+php:''))
     .then(response => response.json())
     .then(response => {
         if(response.status){
             for (const i in response.data) {
+                data[prefijo+'Id'] = response.data;
                 if (document.querySelector('#'+i) && response.data[i] != null) {
                     let pin = i.split('_');
                     if (pin.length>2) {
@@ -167,13 +180,17 @@ async function edit(prefijo,id,res=false) {
                     }
                 }
             }
+            if (typeof window['getPos'+capitalize(prefijo)]==='function') {
+                window['getPos'+capitalize(prefijo)]();
+            }
+
             $('#modal_'+prefijo).modal('show');
             return response;
         }else{
             swal("Error", response.msg , "error");
         }
     })
-    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+    .catch(e => console.error(e))
     if (res) {
         return response.data;
     }
@@ -183,6 +200,7 @@ async function view(prefijo,id,res=false) {
     .then(response => response.json())
     .then(response => {
         if(response.status){
+            data[prefijo+'Id'] = response.data 
             for (const i in response.data) {
                 $('#v_'+i).text(response.data[i]); 
             }
@@ -201,13 +219,16 @@ function resetModal(prefijo) {
     document.querySelector("#form_"+prefijo).reset();
     $('#modal_'+prefijo).modal('hide');
 }
-function openModal(prefijo) {
-    document.querySelector('#'+prefijo+'_id').value = "";
+function openModal(pre) {
+    document.querySelector('#'+pre+'_id').value = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
-    document.querySelector('#set_'+prefijo).classList.replace("btn-info", "btn-primary");
-    $('#set_'+prefijo+' span').html("Guardar");
-    document.querySelector('#titleModal_'+prefijo).innerHTML = "Nuevo";  //+ capitalize( getTable(prefijo))
-    document.querySelector("#form_"+prefijo).reset();
-    $('#modal_'+prefijo).modal('show');
+    document.querySelector('#set_'+pre).classList.replace("btn-info", "btn-primary");
+    $('#set_'+pre+' span').html("Guardar");
+    document.querySelector('#titleModal_'+pre).innerHTML = "Nuevo";  //+ capitalize( getTable(prefijo))
+    document.querySelector("#form_"+pre).reset();
+    if (typeof window['openModal'+capitalize(pre)]==='function') {
+        window['openModal'+capitalize(pre)]();
+    }
+    $('#modal_'+pre).modal('show');
 }
 

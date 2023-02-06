@@ -64,6 +64,9 @@
                   </div>
                 </div>
               </div>
+              <div>
+                Doc. Ref. <input type="checkbox" id="mov_ref">
+              </div>
             </div>
             <div class="form-group col-md-1">
             </div>
@@ -78,7 +81,7 @@
                       placeholder="Serie" required>
                   </div>
                   <div class="col-md-4">
-                    <input type="text" class="form-control valid" id="mov_numero" maxlength="8" name="mov_numero"
+                    <input type="text" class="form-control valid" id="mov_numero" maxlength="10" name="mov_numero"
                       placeholder="Número" required>
                   </div>
                 </div>
@@ -101,6 +104,17 @@
                   </div>
                   <div class="col-md-8">
                     <input type="date" class="form-control valid" id="mov_fechaE" name="mov_fechaE" required=""
+                      onkeypress="return controlTag(event);">
+                  </div>
+                </div>
+              </div>
+              <div class="datosform pb-1">
+                <div class="row">
+                  <div class="col-md-4 text-right">
+                    <label for="mov_fechaV">Fecha de Venc.<span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="date" class="form-control valid" id="mov_fechaV" name="mov_fechaV" required=""
                       onkeypress="return controlTag(event);">
                   </div>
                 </div>
@@ -165,6 +179,7 @@
                           </div>
                         </th>
                         <th style="display:none"  >Tipo de IGV</th>
+                        <th style="display:none"  >Doc. Ref.</th>
                         <th>Importe</th>
                         <th  width="100">  
                           <span>Exp.</span>
@@ -189,6 +204,7 @@
                         <td><input type="text" class="form-control valid " id="mde_vu" name="mde_vu" value="0.00"
                             disabled></td>
                         <td style="display:none" ><select type="text" class="form-control" id="mde_gta_id" name="mde_gta_id"></select></td>
+                        <td style="display:none" ><select type="text" class="form-control" id="mde_ref_mov_id" name="mde_ref_mov_id"></select></td>
                         <td><input type="text" class="form-control valid" id="mde_importe" name="mde_importe"
                             value="0.00" disabled>
                         </td>

@@ -44,19 +44,30 @@ class Gerencial extends Controllers{
         $data['page_title'] = "Exportaciones";
         $data['page_name'] = "Exportaciones";
         $data['page_data'] = array('age_tipo'=>0,'periodo'=>$_SESSION['periodo']);
-        $data['page_functions_js'] = array("functions_gerencial.js","functions_reportes.js");
+        $data['page_functions_js'] = array("functions_gerencial.js","functions_movimientos.js");
         $this->views->getView($this,"exportaciones",$data);
     }
     public function Volumen(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
         }
-        $data['page_tag'] = "Volumen de Ventas";
-        $data['page_title'] = "Volumen de Ventas";
-        $data['page_name'] = "Volumen de Ventas";
+        $data['page_tag'] = "Volumen de Ventas Nacionales";
+        $data['page_title'] = "Volumen de Ventas Nacionales";
+        $data['page_name'] = "Volumen de Ventas Nacionales";
         $data['page_data'] = array('age_tipo'=>0,'periodo'=>$_SESSION['periodo']);
-        $data['page_functions_js'] = array("functions_volumen.js");
+        $data['page_functions_js'] = array("functions_volumen.js","functions_movimientos.js");
         $this->views->getView($this,"detracciones",$data);
+    }
+    public function Vexportacion(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $data['page_tag'] = "Volumen de Ventas Exportacion";
+        $data['page_title'] = "Volumen de Ventas Exportacion";
+        $data['page_name'] = "Volumen de Ventas Exportacion";
+        $data['page_data'] = array('age_tipo'=>0,'periodo'=>$_SESSION['periodo']);
+        $data['page_functions_js'] = array("functions_volumen.js","functions_movimientos.js");
+        $this->views->getView($this,"exportaciones",$data);
     }
     public function Detracciones(){
         if(empty($_SESSION['perMod']['gtp_r'])){
@@ -66,7 +77,7 @@ class Gerencial extends Controllers{
         $data['page_title'] = "Detracciones";
         $data['page_name'] = "Detracciones";
         $data['page_data'] = array('age_tipo'=>0,'periodo'=>$_SESSION['periodo']);
-        $data['page_functions_js'] = array("functions_gerencial.js","functions_reportes.js");
+        $data['page_functions_js'] = array("functions_gerencial.js","functions_reportes.js","functions_movimientos.js");
         $this->views->getView($this,"detracciones",$data);
     }
     public function Cventas(){
@@ -92,7 +103,6 @@ class Gerencial extends Controllers{
         $data['cve'] = $this->Reportes->getCventas(true);
         //$this->views->getView($this,"pdf",$data);
     }
-
     public function getGerencial($out=false){
         $res = array();
         $res[0]['res_descripcion']='EFECTIVO';
@@ -129,15 +139,6 @@ class Gerencial extends Controllers{
             die();
         }
     }
-    public function getExportaciones($out=false){
-        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
-        if ($out) {
-            return $res;
-        } else {
-            echo json_encode($res,JSON_UNESCAPED_UNICODE);
-            die();
-        }
-    }
     public function getResultados($out=false){
         $res = array();
         $res[0]['sfi_des']='Ingreso por Ventas';
@@ -164,21 +165,6 @@ class Gerencial extends Controllers{
             die();
         }
     }
-    public function getDetracciones($out=false){
-        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
-        foreach ($res as $i => $d) {
-            $res[$i]['mov_detraccion'] = $d['mov_sum']*0.177;
-            $res[$i]['mov_impuesto'] = $d['mov_sum']*0.025;
-            $res[$i]['mov_det_liq'] = $res[$i]['mov_detraccion']-$res[$i]['mov_impuesto'];
-        }
-        if ($out) {
-            return $res;
-        } else {
-            echo json_encode($res,JSON_UNESCAPED_UNICODE);
-            die();
-        }
-    }
-
     public function getPdf(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
@@ -203,7 +189,65 @@ class Gerencial extends Controllers{
     }
     public function prueba(){
         //$this->configuraciones->insertRegistro(array('con_clave'=>'cron','con_valor'=>'"'.date("H-i").'"'));
-        curl_core();
+        // curl_core();
+        $nm = date('Y-m-d',strtotime('next month '.strClean($_SESSION['periodo']).'-01'));
+        dep($nm);
+    }
+    public function getExpDet($id){
+        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_t10_id'=>51,'mov_cue_id'=>$id,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
+        for ($i=0; $i < count($arrData); $i++) {
+            $btnEdit = '';
+            $btnView = '';
+            $btnDelete = '';
+            $btnPdf = '';
+            $arrData[$i]['mov_nro'] = $i+1;
+            if (!is_null($arrData[$i]['mov_age_id'])) {
+                $arrData[$i]['mov_age_ide'] = (!empty($arrData[$i]['mov_age_id']['age_gem_id'])) ? $arrData[$i]['mov_age_id']['age_gem_id']['gem_razonsocial'] : $arrData[$i]['mov_age_id']['age_gpe_id']['gpe_nombre'].', '.$arrData[$i]['mov_age_id']['age_gpe_id']['gpe_apellidos'] ;
+            }else{
+                $arrData[$i]['mov_age_ide'] = '<span class="badge badge-warning">nulo</span>';
+            }
+            $arrData[$i]['mov_serie'] = $arrData[$i]['mov_serie'].'-'.str_pad($arrData[$i]['mov_numero'],8,0,STR_PAD_LEFT);
+            $arrData[$i]['mov_subtotal'] = formatMoney($arrData[$i]['mov_subtotal']);
+            $arrData[$i]['mov_igv'] = formatMoney(json_decode($arrData[$i]['mov_igv_id'],true)['mov_igv']);
+            $arrData[$i]['mov_total'] = $arrData[$i]['mov_total'];
+            $arrData[$i]['mov_t12num'] = $arrData[$i]['mov_tipo'].'-'.date( "m", strtotime($arrData[$i]['mov_fechaE'])).str_pad($arrData[$i]['mov_t12num'],6,'0',STR_PAD_LEFT);
+            $arrData[$i]['mov_mstatus'] = '<span class="badge badge-'.MSTATUS[$arrData[$i]['mov_mstatus']][1].'">'.MSTATUS[$arrData[$i]['mov_mstatus']][0].'</span>';
+            if($_SESSION['perMod']['gtp_r']){	
+                $btnView = '<button class="btn btn-info btn-sm" onclick="getViewMov('.$arrData[$i]['mov_id'].')" title="Ver '.$arrData[$i]['mov_t10_id']['t10_descripcion'].'" > <i class="far fa-eye"></i> </button>';
+                $btnPdf = '<a class="btn btn-danger btn-sm" href="'.base_url().'/Movimientos/getPdf/'.$arrData[$i]['mov_id'].'" target="_blanck" title="Pdf '.$arrData[$i]['mov_t10_id']['t10_descripcion'].'" ><i class="far fa-file-pdf"></i></a>';
+            }
+            $arrData[$i]['mov_options'] = '<div class="text-center">'.$btnView.' '.$btnPdf.'</div>';
+        }
+        echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+        die();
+    }
+    public function getDetView($id){
+        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_cue_id'=>$id,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
+        for ($i=0; $i < count($arrData); $i++) {
+            $btnEdit = '';
+            $btnView = '';
+            $btnDelete = '';
+            $btnPdf = '';
+            $arrData[$i]['mov_nro'] = $i+1;
+            if (!is_null($arrData[$i]['mov_age_id'])) {
+                $arrData[$i]['mov_age_ide'] = (!empty($arrData[$i]['mov_age_id']['age_gem_id'])) ? $arrData[$i]['mov_age_id']['age_gem_id']['gem_razonsocial'] : $arrData[$i]['mov_age_id']['age_gpe_id']['gpe_nombre'].', '.$arrData[$i]['mov_age_id']['age_gpe_id']['gpe_apellidos'] ;
+            }else{
+                $arrData[$i]['mov_age_ide'] = '<span class="badge badge-warning">nulo</span>';
+            }
+            $arrData[$i]['mov_serie'] = $arrData[$i]['mov_serie'].'-'.str_pad($arrData[$i]['mov_numero'],8,0,STR_PAD_LEFT);
+            $arrData[$i]['mov_subtotal'] = formatMoney($arrData[$i]['mov_subtotal']);
+            $arrData[$i]['mov_igv'] = formatMoney(json_decode($arrData[$i]['mov_igv_id'],true)['mov_igv']);
+            $arrData[$i]['mov_total'] = $arrData[$i]['mov_total'];
+            $arrData[$i]['mov_t12num'] = $arrData[$i]['mov_tipo'].'-'.date( "m", strtotime($arrData[$i]['mov_fechaE'])).str_pad($arrData[$i]['mov_t12num'],6,'0',STR_PAD_LEFT);
+            $arrData[$i]['mov_mstatus'] = '<span class="badge badge-'.MSTATUS[$arrData[$i]['mov_mstatus']][1].'">'.MSTATUS[$arrData[$i]['mov_mstatus']][0].'</span>';
+            if($_SESSION['perMod']['gtp_r']){	
+                $btnView = '<button class="btn btn-info btn-sm" onclick="getViewMov('.$arrData[$i]['mov_id'].')" title="Ver '.$arrData[$i]['mov_t10_id']['t10_descripcion'].'" > <i class="far fa-eye"></i> </button>';
+                $btnPdf = '<a class="btn btn-danger btn-sm" href="'.base_url().'/Movimientos/getPdf/'.$arrData[$i]['mov_id'].'" target="_blanck" title="Pdf '.$arrData[$i]['mov_t10_id']['t10_descripcion'].'" ><i class="far fa-file-pdf"></i></a>';
+            }
+            $arrData[$i]['mov_options'] = '<div class="text-center">'.$btnView.' '.$btnPdf.'</div>';
+        }
+        echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+        die();
     }
 }
 

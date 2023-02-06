@@ -1,5 +1,5 @@
 var gmo_table;
-var url_gmo = base_url+"/Modulos/getModulos"; ///Modulos/getModulos
+var url_gmo = base_url+"/Modulos/getModulos";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#gmo_table")) {
@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"gmo_nro",header:{t:"#"},tipo:'string'},
                 {"data":"gmo_titulo",header:{t:"NOMBRE"},tipo:'string'},
-                {"data":"gmo_descripcion",header:{t:"DESCRIPCION"},tipo:'string'},
+                {"data":"gmo_path",header:{t:"RUTA"},tipo:'string'},
+                {"data":"gmo_icon",header:{t:"ICONO"},tipo:'string'},
                 {"data":"gmo_status",header:{t:"ESTADO"},tipo:'string'},
                 {"data":"gmo_options",header:"ACCIONES",tipo:'string'}
             ]

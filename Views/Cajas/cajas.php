@@ -1,15 +1,19 @@
 <?php 
     headerAdmin($data); 
-    getModal('modalCajas',$data);
-    getModal('modalAgentes',$data);
-    getModal('modalTableAge',$data);
+    if ($data['page_data']['caj']['caj_tipo']== 8) {
+      getModal('modalCambios',$data);
+    } else {
+      getModal('modalCajas',$data);
+      getModal('modalAgentes',$data);
+      getModal('modalTableAge',$data);
+    }
 ?>
 <main class="app-content">
   <div class="app-title">
     <h4>
       <i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
       <?php if($_SESSION['perMod']['gtp_w']){ ?>
-        <button class="btn btn-primary" type="button" onclick="openModalCaj('caj');"><i class="fas fa-plus-circle" aria-hidden="true"></i> Nuevo</button>
+        <button class="btn btn-primary" type="button" onclick="openModalCajP('caj');"><i class="fas fa-plus-circle" aria-hidden="true"></i> Nuevo</button>
       <?php } ?>
     </h4>
     <div class="d-flex">
