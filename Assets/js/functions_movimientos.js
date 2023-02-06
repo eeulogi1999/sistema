@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     {"data":"mov_serie2",header:{t:"DOC-DESTINO",c:'text'},tipo:'string'},
                     {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
                     {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
-                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }}, //$arrData[$i]['mov_total']
+                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',chr:'mov_gt4_id',footer:{ c:"sum" }}, //$arrData[$i]['mov_total']
                     {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
                     {"data":"mov_options",header:"ACCIONES",tipo:'string'}
                 ]
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     {"data":"mov_age_ide",header:{t:"AGENTE",c:'text'},tipo:'string'},
                     {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
                     {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
-                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }},
+                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',chr:'mov_gt4_id',footer:{ c:"sum" }},
                     {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
                     {"data":"mov_options",header:"ACCIONES",tipo:'string'}
                 ]
