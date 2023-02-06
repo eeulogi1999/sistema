@@ -339,11 +339,11 @@
     <!-- <p><strong>LUGAR DE ENTREGA:  </strong><?= $alm['alm_est_id']['est_direccion'] ?></p> -->
     <!-- <div ><strong>CONDICION DE ENTREGA:</strong></div> -->
     <!-- <div >PENALIDAD: Liferli cobrará una penalidad de 3% sobre el valor total de la OC por cada día de incumplimiento de la fecha de entrega estipulada en la orden de compra.</div> -->
-    <p class="text-justify">ENTREGA DE BIENES: Coordinar con almacén cita de recepción, como mínimo un dia antes de la entrega, al Tlf: <?= $gcl['gcl_telefono']?> . Horario de atención: L-V 8:30am -
-5:30 pm y sábados previa coordinación. En la entrega presentar: guía de remisión indicando Nro de OC (Destinatario y Sunat) y copia de la OC. En caso de no presentar alguno
-de estos documentos o de no haber programado su cita de recepción no se recibirá la mercadería.</p>
+    <p class="text-justify">ENTREGA DE BIENES: Coordinar con almacén una cita de recepción, como mínimo un dia antes de la entrega, al Tlf/Cel Nro: <?= $gcl['gcl_telefono']?>. Horario de atención: L-V 8:00am -
+5:30 pm y sáb 8:00 am - 1:00 pm.  previa coordinación. En la entrega presentar :  guía de remisión indicando Nro de  OC (Destinatario y Sunat) y copia de la OC. En caso de no presentar alguno
+de estos docs o de no haber programado su cita de recepción no se recibirá la mercadería.</p>
     <p class="text-justify">ENTREGA DE FACTURAS: Adjuntar la siguiente documentación: guía de remisión destinatario con sello de almacén, factura destinatario y Sunat indicando el nro. de OC y
-copia de la OC. En caso de no presentar alguno de los documentos no se recibirá la factura. Horario de recepción: Lun - Mie - Vie 8:30 am - 1:00 pm.</p>
+copia de la OC. En caso de no presentar alguno de los documentos no se recibirá la factura. Horario de recepción: Lun - Mie - Vie 8:30 am - 5:00 pm.</p>
     <!-- <p>COMPRA DE MATERIALES: El precio se ajustará con premio o castigo en base al rendimiento calculado por Liferli.</p> -->
     <?php } else { ?>
     <p class="text-center">Gracias por la confianza, el apoyo y ante todo por la preferencia !<br>
