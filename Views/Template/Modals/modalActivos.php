@@ -110,7 +110,7 @@
                 <div class="tile-footer mt-3">
                     <button id="btnActionForm" class="btn btn-info" type="submit"><i
                             class="fa fa-fw fa-lg fa-check-circle"></i><span
-                            id="set_act">Actualizar</span></button>&nbsp;&nbsp;&nbsp;
+                            id="set_act">Guardar</span></button>&nbsp;&nbsp;&nbsp;
                     <button class="btn btn-danger" type="button" data-dismiss="modal"><i
                             class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
                 </div>

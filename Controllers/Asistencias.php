@@ -25,20 +25,39 @@ class Asistencias extends Controllers{
             $r['asi_col_id'] = $rwcol[$i];
             $r['asi_ndias'] = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]['col_id'],
             'custom'=>'asi_ext IS NULL AND WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'),
-            "COUNT(asi_id) as 'nd'")['nd'];
-            //$r['asi_ndias'] = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]['col_id'],'custom'=>'WEEKOFYEAR(asi_horaE) = WEEKOFYEAR(CURDATE())'),"COUNT(asi_id) as 'nd'")['nd'];
-            $rwnh = $this->asistencias->selectRegistros(array('asi_col_id'=>$rwcol[$i]['col_id'],'asi_ext'=>1,'custom'=>'WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'));
+            "COUNT(DISTINCT(DATE_FORMAT(asi_horaE, '%Y-%m-%d'))) as 'nd'")['nd'];
+            $rwnh = $this->asistencias->selectRegistros(array('asi_col_id'=>$rwcol[$i]['col_id'],
+            'custom'=>'asi_ext IS NULL AND WEEKOFYEAR(asi_horaE) = "'.explode('W',$_SESSION['asi']['asi_week'])[1].'"'));
             $nh = 0;
+            $nm = (new DateTime)->setTime(0,0,0);
             for ($j=0; $j < count($rwnh); $j++) { 
                 $dt1 = new DateTime($rwnh[$j]['asi_horaE']);
                 $dt2 = new DateTime($rwnh[$j]['asi_horaS']);
                 $dif = $dt1->diff($dt2);
-                $nh+=intval($dif->format('%h'));
+                $nmh = (intval($nm->format('h'))<12)?intval($nm->format('h')):0;
+                $nh += intval($dif->format('%h')) +$nmh;
+                $nm = (new DateTime)->setTime(0,intval($nm->format('i')),0);
+                $nm = $nm->modify('+'.$dif->format('%i').' minute');
+            }
+            $nh += (intval($nm->format('h'))<12)?intval($nm->format('h')):0;
+            $nm = (intval($nm->format('i'))>0)?intval($nm->format('i'))/60:0;
+            $nh += $nm;
+            $sat = date('Y-m-d',strtotime('saturday this week',strtotime($_SESSION['asi']['asi_week'])));
+            $sab = $this->asistencias->searchRegistro(array('asi_col_id'=>$rwcol[$i]["col_id"],'custom'=>'DATE_FORMAT(asi_horaE, "%Y-%m-%d") = "'.$sat.'"'));
+            $ht = 0;
+            if ($r['asi_ndias']<6) {
+                if (!empty($sab)) {
+                    $ht = ($r['asi_ndias']*9)-3;
+                } else {
+                    $ht = ($r['asi_ndias']*9);
+                }
+            } else {
+                $ht = 51;
             }
             $view = '<button class="btn btn-success btn-sm" onClick="viewAsi('.$r['asi_col_id']['col_id'].')" title="Asistencias"><i class="far fa-eye"></i></button>'; 
             $hex = '<button class="btn btn-warning btn-sm" onClick="viewHex('.$r['asi_col_id']['col_id'].')" title="Horas Extras"><i class="far fa-eye"></i></button>'; 
-            $r['asi_nhoras'] = $nh;
-            $r['asi_options'] = '<div class="text-center">'.$view.' '.$hex.'</div>';
+            $r['asi_nhoras'] = ($r['asi_ndias']>0)?$nh-$ht:0;
+            $r['asi_options'] = '<div class="text-center">'.$view.'</div>';
             array_push($rw,$r); 
         }
         echo json_encode($rw,JSON_UNESCAPED_UNICODE);
@@ -125,6 +144,22 @@ class Asistencias extends Controllers{
             $r =array('status'=>false);
         }
         echo json_encode($r,JSON_UNESCAPED_UNICODE);
+        die();
+    }
+    public function setAsistencias(){
+        $res = array('status'=>false,'msg'=>'Datos no Recibidos','data'=>$_POST);
+        if ($_POST) {
+            for ($i=1; $i < 7; $i++) { 
+                if ($_POST['ms_'.$i]!= '' && $_POST['me_'.$i]!= '') {
+                    $this->asistencias->insertRegistro(array('asi_col_id'=>$_POST['asi_col_id'],'asi_horaE'=>$_POST['d_'.$i].' '.$_POST['ms_'.$i],'asi_horaS'=>$_POST['d_'.$i].' '.$_POST['me_'.$i]),array('asi_col_id','asi_horaE'));
+                }
+                if ($_POST['ts_'.$i]!= '' && $_POST['te_'.$i]!= '') {
+                    $this->asistencias->insertRegistro(array('asi_col_id'=>$_POST['asi_col_id'],'asi_horaE'=>$_POST['d_'.$i].' '.$_POST['ts_'.$i],'asi_horaS'=>$_POST['d_'.$i].' '.$_POST['te_'.$i]),array('asi_col_id','asi_horaE'));
+                }
+            }
+            $res = array('status'=>true,'msg'=>'Guardado Correctamente','data'=>$_POST);
+        }
+        echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
     }
 }

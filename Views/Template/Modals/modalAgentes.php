@@ -51,6 +51,10 @@
             </select>
           </div>
           <div class="datosform pb-1">
+            <label for="age_gt4_id">MONEDA<span class="required">*</span></label>
+            <select class="form-control" id="age_gt4_id" name="age_gt4_id" required></select>
+          </div>
+          <div class="datosform pb-1">
             <label for="age_status">STATUS<span class="required">*</span></label>
             <select class="form-control" data-live-search="true" id="age_status" name="age_status" required>
               <option value="1">ACTIVO</option>

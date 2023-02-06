@@ -213,7 +213,7 @@
     <table class="tbl-cliente">
         <tbody>
             <tr>
-                <td class="wd10"><?= !empty($mov['mov_age_id']['age_gem_id'])?'Razón Social ':'Nombre:' ?></td>
+                <td class="wd10"><?= !empty($mov['mov_age_id']['age_gem_id'])?'RAZÓN SOCIAL ':'NOMBRE:' ?></td>
                 <td class="wd50"><?= $mov['mov_age_id']['age_nombre'] ?></td>
                 <td class="wd10">MONEDA:</td>
                 <td class="wd10"><?= $mov['mov_gt4_id']['gt4_descripcion'] ?></td>
@@ -222,11 +222,11 @@
             </tr>
             <?php if ($mov['mov_t12_id']['t12_id']<3) { ?>
                 <tr>
-                    <td class="wd10"><?= !empty($mov['mov_age_id']['age_gem_id'])?'RUC ':'Identificacion:' ?></td>
+                    <td class="wd10"><?= !empty($mov['mov_age_id']['age_gem_id'])?'RUC ':'N° DOC. :' ?></td>
                     <td class="wd50"><?= $mov['mov_age_id']['age_ide'] ?></td>
-                    <td class="wd10">FECHA</td>
+                    <td class="wd10">FECHA :</td>
                     <td class="wd10"><?= $mov['mov_fechaE'] ?></td>
-                    <td class="wd10">PAGO</td>
+                    <td class="wd10">PAGO:</td>
                     <td class="wd10"><?= (empty($mov['mov_cre_id'])) ? 'Contado' : 'Credito' ; ?></td>
                 </tr>
                 <tr>
@@ -241,7 +241,9 @@
                 </tr>
                 <tr>
                     <td class="wd10">EMISOR:</td>
-                    <td class="wd50"><?= !isset($mov['mov_gus_id'])? '': $mov['mov_gus_id']['gus_gpe_id']['gpe_nombre']?></td>
+                    <td class="wd10"><?= !isset($mov['mov_gus_id'])? '': $mov['mov_gus_id']['gus_gpe_id']['gpe_nombre']?></td>
+                    <td class="wd10">FECHA VENC.:</td>
+                    <td class="wd10"><?= $mov['mov_fechaV'] ?></td>
                 </tr>
             <?php } else {?>
                 <tr>
@@ -295,7 +297,7 @@
                 <td colspan="7"></td>
             </tr>
             <tr>
-                <td colspan="4"> <strong>OBSERVACIONES: </strong></td>
+                <td colspan="4"> <strong>OBSERVACIONES:  </strong></td>
                 <td colspan="2" class="tblfoot "><strong>OP. GRAVADA</strong></td>
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_gravada']) ?></td>
             </tr>
@@ -304,8 +306,9 @@
                 <td colspan="2" class="tblfoot"><strong>OP. INAFECTA</strong></td>
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_inafecta']) ?></td>
             </tr>
+            <!-- <img src="<?= $mov['mov_qr'] ?>" width="100" alt="" srcset=""> -->
             <tr>
-                <td colspan="4" rowspan="8"><img src="<?= $mov['mov_qr'] ?>" alt="" srcset=""><img src="<?= $mov['mov_qr_web'] ?>" alt="" srcset=""></td>
+                <td colspan="4" rowspan="8"><img src="<?= $mov['mov_qr_web'] ?>" alt="" srcset=""></td>
                 <td colspan="2" class="tblfoot"><strong>OP. EXONERADA</strong></td>
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_exonerada']) ?></td>
             </tr>
@@ -323,10 +326,23 @@
             </tr>
         </tfoot>
     </table><br><br>
+    <?php if ($mov['mov_tipo']==3) { ?>
     <div class="tbl-cliente">
         SON: <span><?= $mov['mov_letras_pen'] ?></span>
-    </div><br>
+    </div><br><br><br>
+    <p><strong>CONDICION DE PAGO:  </strong> Pago contra entrega,La fecha de pago se calculará a partir de la recepción de la factura en nuestras instalaciones.</p>
+    <p><strong>LUGAR DE ENTREGA:  </strong><?= $alm['alm_est_id']['est_direccion'] ?></p>
+    <div ><strong>CONDICION DE ENTREGA:</strong></div>
+    <div >PENALIDAD: Zinsa cobrará una penalidad de 3% sobre el valor total de la OC por cada día de incumplimiento de la fecha de entrega estipulada en la orden de compra.</div>
+    <p>ENTREGA DE BIENES: Coordinar con almacén cita de recepción, como mínimo un dia antes de la entrega, a los Tlfs: 613-7516 / 940483986. Horario de atención: L-V 8:30am -
+5:30 pm y sábados previa coordinación. En la entrega presentar: guía de remisión indicando Nro de OC (Destinatario y Sunat) y copia de la OC. En caso de no presentar alguno
+de estos documentos o de no haber programado su cita de recepción no se recibirá la mercadería.</p>
+    <p>ENTREGA DE FACTURAS: Adjuntar la siguiente documentación: guía de remisión destinatario con sello de almacén, factura destinatario y Sunat indicando el nro. de OC y
+copia de la OC. En caso de no presentar alguno de los documentos no se recibirá la factura. Horario de recepción: Lun - Mie - Vie 8:30 am - 1:00 pm.</p>
+    <p>COMPRA DE CHATARRAS: El precio se ajustará con premio o castigo en base al rendimiento calculado por Zinsa.</p>
+    <?php } else { ?>
     <p class="text-center">Gracias por la confianza, el apoyo y ante todo por la preferencia !<br>
     Dios lo bendiga hoy, mañana y siempre!</p>
+    <?php } ?>
 </body>
 </html>

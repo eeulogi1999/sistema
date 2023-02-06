@@ -63,7 +63,7 @@
             </div>
         </form>
         <div class="tile-footer">
-          <button id="set_caj" class="btn btn-primary"
+          <button id="set_caj" class="btn btn-info"
             onclick="event.preventDefault();setCaj()"><i
               class="fa fa-fw fa-lg fa-check-circle"></i><span>Guardar</span></button>&nbsp;&nbsp;&nbsp;
           <button class="btn btn-danger" type="button" data-dismiss="modal"><i

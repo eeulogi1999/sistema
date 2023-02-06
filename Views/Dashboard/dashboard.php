@@ -1,142 +1,105 @@
-<?php headerAdmin($data); ?>
+<?php 
+    headerAdmin($data); 
+?>
 <main class="app-content">
   <div class="app-title">
-    <div>
-      <h1><i class="fa fa-dashboard"></i><?= $data['page_title'] ?></h1>
-    </div>
-    <ul class="app-breadcrumb breadcrumb">
-      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-      <li class="breadcrumb-item"><a href="<?= base_url(); ?>/dashboard">Dashboard</a></li>
-    </ul>
-  </div>
-
-  <!-- <div id="wizard" class="form_wizard wizard_horizontal">
-        <ul class="wizard_steps">
-          <li>
-            <a href="#step-1" class="selected" id="fase1" >
-              <span class="step_no"  id="step1">1</span>
-              <span class="step_descr">
-                Productos(Materia Prima)<br />
-                <small>Almacen 1</small>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#step-2" id="fase2" class="done">
-              <span class="step_no" id="step2">2</span>
-              <span class="step_descr">
-                Productos en Proceso<br />
-                <small>Almacen 1</small>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#step-3" id="fase3" class="done">
-              <span class="step_no" id="step3">3</span>
-              <span class="step_descr">
-                Productos Terminados<br />
-                <small>Almacen 1</small>
-              </span>
-            </a>
-          </li>
-
-        </ul>  
-      </div>    -->
-  <div class="row">
-    <?php if(!empty($_SESSION['permisos'][2]['r'])){ ?>
-    <div class="col-md-6 col-lg-3">
-      <a href="<?= base_url() ?>/usuarios" class="linkw">
-        <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
-          <div class="info">
-            <h4>Usuarios</h4>
-            <!-- <p><b><?= $data['usuarios'] ?></b></p> -->
-          </div>
+    <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
+    </h1>
+    <div class="d-flex">
+      <span class="d-flex align-items-center mr-2">SUNAT</span>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="dol">$ </span>
         </div>
-      </a>
-    </div>
-    <?php } ?>
-    <?php if(!empty($_SESSION['permisos'][3]['r'])){ ?>
-    <div class="col-md-6 col-lg-3">
-      <a href="<?= base_url() ?>/clientes" class="linkw">
-        <div class="widget-small info coloured-icon"><i class="icon fa fa-user fa-3x"></i>
-          <div class="info">
-            <h4>Clientes</h4>
-            <!-- <p><b><?= $data['clientes'] ?></b></p> -->
-          </div>
+        <input type="text" class="form-control" id="gtc_dol" placeholder="DOLARES" aria-describedby="dol" size="10">
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="sol">S/</span>
         </div>
-      </a>
-    </div>
-    <?php } ?>
-    <?php if(!empty($_SESSION['permisos'][4]['r']) ){ ?>
-    <div class="col-md-6 col-lg-3">
-      <a href="<?= base_url() ?>/productos" class="linkw">
-        <div class="widget-small warning coloured-icon"><i class="icon fa fa fa-archive fa-3x"></i>
-          <div class="info">
-            <h4>Productos</h4>
-            <!-- <p><b><?= $data['productos'] ?></b></p> -->
-          </div>
-        </div>
-      </a>
-    </div>
-    <?php } ?>
-    <?php if(!empty($_SESSION['permisos'][5]['r'])){ ?>
-    <div class="col-md-6 col-lg-3">
-      <a href="<?= base_url() ?>/pedidos" class="linkw">
-        <div class="widget-small danger coloured-icon"><i class="icon fa fa-shopping-cart fa-3x"></i>
-          <div class="info">
-            <h4>Pedidos</h4>
-            <!-- <p><b><?= $data['pedidos'] ?></b></p> -->
-          </div>
-        </div>
-      </a>
-    </div>
-    <?php } ?>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="tile">
-        <div class="container-title">
-          <h3 class="tile-title">COMPRAS POR SEMANA</h3>
-          <div class="dflex">
-            <input class="date-picker ventasMes" id="comprasMes" name="comprasMes" placeholder="Mes y Año">
-            <button type="button" class="btnVentasMes btn btn-info btn-sm" onclick="fntSearchCMes()"> <i
-                class="fas fa-search"></i> </button>
-          </div>
-        </div>
-        <div id="graficasCompraMes"></div>
+        <input type="text" class="form-control" id="gtc_sol" placeholder="SOLES" aria-describedby="sol" size="10">
       </div>
     </div>
-    <div class="col-md-6">
+  </div>
+  <div class="row">
+    <div class="col-md-12">
       <div class="tile">
-        <div class="container-title">
-          <h3 class="tile-title">VENTAS POR SEMANA</h3>
-          <div class="dflex">
-            <input class="date-picker ventasMes" id="ventasMes" name="ventasMes" placeholder="Mes y Año">
-            <button type="button" class="btnVentasMes btn btn-info btn-sm" onclick="fntSearchVMes()"> <i
-                class="fas fa-search"></i> </button>
+        <div class="tile-body">
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered table-sm" id="ten_table" width="100%"></table>
           </div>
         </div>
-        <div id="graficasVentaMes"></div>
       </div>
     </div>
-   <!--  <div id="graficasInventario">
-      <select class="form-control" data-live-search="true" id="listArticulo" name="listArticulo" 
-        tabindex="-98">
-        <option value="1">CALIBRADOR 8X1/128/200MM C/M</option>
-        <option value="2">CINTA METRICA 100 M STANLEY</option>
-        <option value="3">CIZALLA TIJERA 18'' ACERO</option>
-        <option value="4">ESTANTE METALICO RIVET GORILA</option>
-        <option value="5">LAMPAS</option>
-        <option value="6">COSTALES MINEROS (CIENTO)</option>
-        <option value="7">WINCHA 50M</option>
-        <option value="8">BOLSAS DE MUESTREO (CIENTO)</option>
-        <option value="9">PLATAFORMA DE CARGA 453.6 KG</option>
-        <option value="10">AUTOTRANSFORMADOR 220 - 110 V </option>
-        
-      </select>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="tile">
+        <div class="tile-body">
+          <!-- <h5 class="text-center">NOTAS</h5> -->
+          <!-- PRECIOS ACTUALIZADOS 
+            Brillo 31.50
+            Grueso 30
+            Delgado 29
+            Grupo 5.10 
+            Bronce 19.50
+            Rad.bronce 17
+            Viruta de bronce 14
+            Duro 5.40
+            Perfil 6.20
+            Acero 4
+            Rad. Aluminio 4
+            Olla sucia 4.50
+            Olla limpia 5.50
+            Oxee 6
+            Batería 67
+            Chata 57
+            Tierra bateria 3.90
+            Cocalata 3.80
+            Cable 6.50
+            Cable grasa 6
+            Cable sulfatado 5.5
+            Carrocería 4.50
+            Antimonio 8
+            Chapa 2 -->
+          <figure class="highcharts-figure">
+            <div id="ten_copper"></div>
+            <p class="highcharts-description"></p>
+          </figure>
+        </div>
+      </div>
     </div>
-  </div>-->
-  
+    <div class="col-md-4">
+      <div class="tile">
+        <div class="tile-body">
+          <figure class="highcharts-figure">
+            <div id="ten_plomo"></div>
+            <p class="highcharts-description"></p>
+          </figure>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="tile">
+        <div class="tile-body">
+          <figure class="highcharts-figure">
+            <div id="ten_usd"></div>
+            <p class="highcharts-description"></p>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="tile-body">
+          <h4>NOTICIAS</h4>
+          <a href="https://www.cochilco.cl/Paginas/Estudios/Mercados%20de%20metales%20e%20insumos%20estrat%C3%A9gicos/Informes-Semanales-2015.aspx"
+            target="_bank">COCHILCO</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 <?php footerAdmin($data); ?>

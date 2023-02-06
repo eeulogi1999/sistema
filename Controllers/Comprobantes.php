@@ -24,7 +24,6 @@ class Comprobantes extends Controllers{
         $this->customModel('TcambiosModel');    //modelo perzonalizado!
         $this->formatter = new NumeroALetras(); 
     }
-
     public function Comprobantes(){
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
@@ -62,7 +61,6 @@ class Comprobantes extends Controllers{
         $data['page_functions_js'] = array("functions_comprobantes.js","functions_bienes.js");
         $this->views->getView($this,"comprobantes",$data); 
     }
-
     public function getNumComprobante(){
         $com_serie = $_SESSION['com']['t10']['l_serie'].str_pad($_SESSION['est']['est_serie'],3,0,STR_PAD_LEFT);
         $com = array();
@@ -74,7 +72,6 @@ class Comprobantes extends Controllers{
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();
     }
-
     public function getComprobantes(){
         $arrData = $this->comprobantes->selectRegistros(array('com_est_id'=>$_SESSION['est']['est_id'],'com_t10_id'=>$_SESSION['com']['t10']['t10_id']));
         for ($i=0; $i < count($arrData); $i++) {
@@ -107,7 +104,6 @@ class Comprobantes extends Controllers{
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();
     }
-
     public function setComprobante(){
         if ($_POST) { 
             foreach ($_POST as $i => $value) {
@@ -205,7 +201,6 @@ class Comprobantes extends Controllers{
             die();
         }
     }
-
     public function searchComprobante(){
         $dataTP = explode("-",$_POST['com_serienum']); 
         $where = array();
@@ -238,7 +233,6 @@ class Comprobantes extends Controllers{
         $data['com'] = ($arrData['status']) ? $arrData['data'] : null;
         $this->views->getView($this,"view",$data);
     }
-
     public function getPdf($com_id){
         if(is_numeric($com_id)){
             $arrData = $this->getComprobante($com_id,true);

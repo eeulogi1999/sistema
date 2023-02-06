@@ -11,7 +11,7 @@ class Colaboradores extends Controllers{
         $data['page_tag'] = 'Personales';
         $data['page_title'] = 'Personales';
         $data['page_name'] = 'Personales';
-        $data['page_data'] = array();
+        $data['page_data'] = array('col'=>array());
         $data['page_functions_js'] = array("functions_colaboradores.js","functions_personas.js","functions_areas.js");
         $this->views->getView($this,strtolower(get_class($this)),$data);
     }

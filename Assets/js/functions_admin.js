@@ -269,6 +269,7 @@ function previewFiles(th,content) {
         var thead = null;
         var tbody = null;
         var tfoot = null;
+        var o = o;
         o.tf = {};
         var numerate = o.numerate;
         if (o.src != undefined) {
@@ -337,6 +338,7 @@ function previewFiles(th,content) {
             }
             draw();
             zise();
+            listenTree();
             window.addEventListener('resize',function(){zise()});
         };
         var draw = async function(){
@@ -403,8 +405,19 @@ function previewFiles(th,content) {
                             if (typeof o.columns[j].style.bg != 'undefined') {
                                 cell.classList.add('bg-'+o.columns[j].style.bg);
                             }
+                            if (typeof o.columns[j].style.color != 'undefined') {
+                                cell.classList.add('text-'+o.columns[j].style.color);
+                            }
                             
                         }
+                        if (o.columns[j].render) {
+                            d = await o.columns[j].render(r);
+                            o.data[i][o.columns[j].data] = d;
+                            if (o.src) {
+                                window[o.src][i][o.columns[j].data] = d;
+                            }
+                        }
+
                         switch (o.columns[j].tipo) {
                             case 'btn':
                                 cell.innerHTML = d +' '+btn;
@@ -413,10 +426,18 @@ function previewFiles(th,content) {
                                 cell.innerHTML = data[o.columns[j].data][d];
                                 break;
                             case 'money':
-                                if (d == '' || d == null) {
-                                    cell.innerHTML = Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(0);
+                                if (o.columns[j].chr) {
+                                    if (d == '' || d == null) {
+                                        cell.innerHTML = Intl.NumberFormat(r[o.columns[j].chr].gt4_locale, { style: 'currency', currency: r[o.columns[j].chr].gt4_sunat }).format(0);
+                                    } else {
+                                        cell.innerHTML = Intl.NumberFormat(r[o.columns[j].chr].gt4_locale, { style: 'currency', currency: r[o.columns[j].chr].gt4_sunat }).format(Math.ceil10(parseFloat(d),-2).toFixed(2));
+                                    }
                                 } else {
-                                    cell.innerHTML = Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(parseFloat(d),-2).toFixed(2));
+                                    if (d == '' || d == null) {
+                                        cell.innerHTML = Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(0);
+                                    } else {
+                                        cell.innerHTML = Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(parseFloat(d),-2).toFixed(2));
+                                    }
                                 }
                                 break;
                             case 'int':
@@ -432,7 +453,7 @@ function previewFiles(th,content) {
                             default:
                                 cell.innerHTML = d;
                                 break;
-                        }   
+                        }
                     } 
                 } 
                 var te = (o.numerate)?'<td></td>':'';
@@ -442,7 +463,17 @@ function previewFiles(th,content) {
                     var ix = ne[ne.length-1];
                     var align = (typeof o.columns[k].header.align != 'undefined')?'text-'+o.columns[k].header.align:'';
                     if (typeof o.columns[k].footer === 'object') {
-                        let mt = (o.columns[k].tipo=='money')?Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(o.tf[ix],-2).toFixed(2)):Math.ceil10(o.tf[ix],-2).toFixed(2);
+                        var mt = 0;
+                        if (o.columns[k].tipo=='money') {
+                            if (o.columns[k].chr) {
+                                mt = Intl.NumberFormat(o.data[0][o.columns[k].chr].gt4_locale, { style: 'currency', currency: o.data[0][o.columns[k].chr].gt4_sunat }).format(Math.ceil10(o.tf[ix],-2).toFixed(2));
+                            } else {
+                                mt = Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(o.tf[ix],-2).toFixed(2));
+                            }
+                        } else {
+                            mt = Math.ceil10(o.tf[ix],-2).toFixed(2);
+                            
+                        }
                         $(tfoot).children('tr').append('<td class="'+align+'">'+mt+'</td>'); 
                     } else {
                         var su = (typeof o.columns[k].footer === 'undefined')?'':o.columns[k].footer;
@@ -492,6 +523,13 @@ function previewFiles(th,content) {
         };
         constructor.prototype = {
             clear: function(){
+                if (typeof o.src != 'undefined') {
+                    window[o.src] = {};
+                    o.data = window[o.src];
+                }
+                if (typeof o.url != 'undefined') {
+                    o.data = {};
+                }
                 $(tbody).html('<tr><td colspan="'+(numerate?o.columns.length+1:o.columns.length)+'" class="text-center">Ningún dato disponible en esta tabla =(</td></tr>');
                 return true;
             },
@@ -516,6 +554,16 @@ function previewFiles(th,content) {
                         })
                     } else {
                         $(table).children('tr').unbind();
+                    }
+                }
+                if (typeof o.cell != undefined) {
+                    if (o.cell) {
+                        $(table[0].getElementsByTagName("td")).dblclick(function(){
+                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+0+',`'+o.columns[$(this).index()-1].data+'`,event)">')
+                            //$(this).addClass('edit').siblings().removeClass('edit');  
+                        })
+                    } else {
+                        $(table).children('td').unbind();
                     }
                 }
                 return true;
@@ -565,6 +613,36 @@ function previewFiles(th,content) {
                     done = 1;
                 })
                 .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
+            },
+            editCell : function(r,d,e){
+                e.preventDefault();
+                if (o.copyCellEditOrigin) {
+                    window[o.src][r][d] = parseFloat(e.target.value);
+                    o.copyCellEditOrigin();
+                }
+                draw();
+                zise();
+                listenTree();
+                if (typeof o.select != undefined) {
+                    if (o.select) {
+                        $(table[0].getElementsByTagName("tr")).click(function(){
+                            $(this).addClass('selected').siblings().removeClass('selected');  
+                        })
+                    } else {
+                        $(table).children('tr').unbind();
+                    }
+                }
+                if (typeof o.cell != undefined) {   //parseInt($(this).parent().attr('id')) -> 0
+                    if (o.cell) {
+                        $(table[0].getElementsByTagName("td")).dblclick(function(){
+                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+0+',`'+o.columns[$(this).index()-1].data+'`,event)">')
+                           // $(this).addClass('edit').siblings().removeClass('edit');  
+                        })
+                    } else {
+                        $(table).children('td').unbind();
+                    }
+                }
+                return true;
             },
             getTotales: function(){
                 return o.tf;
@@ -626,7 +704,6 @@ function previewFiles(th,content) {
             } else {
                 $(tbody).html('<tr><td colspan="'+(numerate?objects.columns.length+1:objects.columns.length)+'" class="text-center">Ningún dato disponible en esta tabla =(</td></tr>');
             }
-            
         }
         constructor.prototype = {
             clear: function(){

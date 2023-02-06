@@ -10,7 +10,6 @@ class Html2array{
 		}
 		return $return;
 	}
-
 	static function tdrows($elements,$html){
 		$str = array();
 		foreach ($elements as $element) {
@@ -21,6 +20,22 @@ class Html2array{
 			}	
 		}
 		return $str;
+	}
+	static function getElemetByQuery($contents,$dt){
+		$DOM = new DOMDocument;
+		$DOM->loadHTML($contents);
+		$xpath = new DomXPath($DOM);
+		$items = $DOM->getElementsByTagName('main')->item(0);
+		$rw = $xpath->query('div/div/div/div/span["'.$dt.'" = "instrument-price-last"]', $items);
+		return $rw[0]->nodeValue;
+	}
+	static function getElemetByQueryExp($contents){
+		$DOM = new DOMDocument;
+		$DOM->loadHTML($contents);
+		$xpath = new DomXPath($DOM);
+		$items = $DOM->getElementsByTagName('article')->item(0);
+		$rw = $xpath->query('div/ul/li', $items);
+		return $rw[0]->childNodes[1]->data;
 	}
 }
 

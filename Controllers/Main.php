@@ -86,16 +86,23 @@ class Main extends Controllers{
         echo $data;
         die();
     }
-    public function getTcambio($fecha){
+    public function getTcambio($fecha,$res=false){
         $gt = $this->tcambios->searchRegistro(array('gtc_fecha'=>$fecha));
-        $arrData = $this->tcespeciales->searchRegistro(array('tce_gtc_id'=>$gt['gtc_id']));
+        $arrData = null;
+        if (!empty($gt)) {
+            $arrData = $this->tcespeciales->searchRegistro(array('tce_gtc_id'=>$gt['gtc_id']));
+        }
         if (empty($arrData)) {
             $tc = CurlConnectionGet('https://api.apis.net.pe/v1/tipo-cambio-sunat?fecha='.$fecha,null,'apis-token-1.aTSI1U7KEuT-6bbbCguH-4Y8TI6KS73N');
             $itc = $this->tcambios->insertRegistro(array('gtc_fecha'=>$tc['fecha'],'gtc_gt4_id'=>2,'gtc_tcompra'=>$tc['compra'],'gtc_tventa'=>$tc['venta']));
             $tce = $this->tcespeciales->insertRegistro(array('tce_gtc_id'=>$itc['gtc_id']));
             $arrData = $this->tcespeciales->selectRegistro($tce['tce_id']);
         }
-        echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+        if ($res) {
+            return $arrData;
+        } else {
+            echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+        }        
         die();
     }
     public function getAll($pre){
@@ -143,6 +150,12 @@ class Main extends Controllers{
         unset($_POST['prefijo']);
         unset($_POST['where']);
         $tabla = $this->getTable($prefijo);
+        if (isset($where['php'])) {
+            unset($where['php']);
+            $this->newController(ucfirst($tabla));
+            $_POST = $this->{ucfirst($tabla)}->{'set'.ucfirst($tabla)}($_POST,true);
+            unset($this->{ucfirst($tabla)});
+        }
         $this->newModel($tabla);
         if ($_POST) {
             if (intval($_POST[$prefijo.'_id'])==0) {
@@ -164,13 +177,18 @@ class Main extends Controllers{
         if (is_numeric($id)) {
             $arrData = $this->{$tabla}->selectRegistro($id);
             if (!empty($arrData)) {
-                $arrResponse = array('status' => true, 'msg' => 'OK','data'=>$arrData);
+                $res = array('status' => true, 'msg' => 'OK','data'=>$arrData);
+                if (isset($data[2]) && $data[2]=='php' ) {
+                    $this->newController(ucfirst($tabla));
+                    $res['data'] = $this->{ucfirst($tabla)}->{'get'.ucfirst($prefijo)}($arrData,true);
+                    unset($this->{ucfirst($tabla)});
+                }
             } else {
-                $arrResponse = array('status' => false, 'msg' => 'Error al recuperar los datos de '.$tabla);
+                $res = array('status' => false, 'msg' => 'Error al recuperar los datos de '.$tabla);
             }
         }
         unset($this->{$tabla});
-        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+        echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
     }
     public function setPeriodo(){
@@ -401,7 +419,6 @@ class Main extends Controllers{
         $writer->save('Assets/excel/format_out.xlsx');
         die(); 
     }
-    
     public function htmlPdf(){
         $dompdf = new Dompdf\Dompdf();
         ob_end_clean();

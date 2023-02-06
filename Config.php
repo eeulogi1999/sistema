@@ -85,7 +85,7 @@
 
 	const AGE_TIPO = array('MIXTO'=>'warning','PROVEEDOR'=>'primary','CLIENTE'=>'success');
 	
-	const CAJ = array('scuentas','Ingresos','Egresos','Gastos','Iadicionales','Cinternos','Nota-Credito','Nota-Debito');
+	const CAJ = array('scuentas','Ingresos','Egresos','Gastos','Iadicionales','Cinternos','Nota-Credito','Nota-Debito','Cambio-Dolares');
 	//Stados
 	const STATUS = array('INACTIVO'=>'primary','ACTIVO'=>'success','ELIMINADO'=>'danger');
 	const NCR_MOT = array(
@@ -114,6 +114,11 @@
 					array('CONFORME','success'),
 					array('OBSERVADO','warning')
 					);
+	const OV_STATUS = array(
+		array('CANCELADO','danger'),
+		array('PENDIENTE','warning'),
+		array('CERRADO','success')
+		);
 	//const MSTATUS = array('CONFORME','OBSERVADO','ANULADO');
 	const T9P = array('Cuentas de orden Acreedoras,Cuentas de orden Deudoras',
 	'Activo','Activo','Activo','Pasivo','Patrimonio','Gastos por Naturaleza',
