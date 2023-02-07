@@ -228,7 +228,7 @@
                     <td class="wd10">FECHA :</td>
                     <td class="wd10"><?= $mov['mov_fechaE'] ?></td>
                     <td class="wd10">PAGO:</td>
-                    <td class="wd10"><?= (empty($mov['mov_cre_id'])) ? 'Contado' : 'Credito' ; ?></td>
+                    <td class="wd10"><?= ($_SESSION['gcl']['gcl_gem_id']['gem_ruc'] == '20607330647') ? 'Credito' : 'Contado' ; ?></td>
                 </tr>
                 <tr>
                     <td class="wd10">DIRECCION:</td>
