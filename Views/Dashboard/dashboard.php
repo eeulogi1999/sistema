@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
       <div class="tile">
         <div class="tile-body">
           <figure class="highcharts-figure">
@@ -78,17 +78,44 @@
           </figure>
         </div>
       </div>
-    </div>
-    <div class="col-md-4">
+    </div> -->
+    <?php if ($_SESSION['gcl']['gcl_gem_id']['gem_ruc'] == '20609315327') { ?>
+    <div class="col-md-8">
       <div class="tile">
         <div class="tile-body">
-          <figure class="highcharts-figure">
+          <h4 class="text-center">SUGERENCIAS</h4>
+          <div>1 - Mantener actulizado las Ordenes de Venta en el sistema , para nuestra mejor orden contable.</div>
+          <div>2 - Proporcionar factura o boleta del tipo de cambio dolares a nombre de la empresa y hacer entrega
+            mensual a nuestro equipo.</div>
+          <div>3 - Proporcionar las facturas de pago de los gastos aduaneros TPP y/o otros junto con constancia de pago.
+          </div>
+          <div>4 - Proporcionar los documentos de la dua mensualmente y dar seguimiento hasta que sarpe la nave para
+            evitar problemas contables.</div>
+          <div>5 - Cada INGRESO O SALIDA de la cuenta SOLES O DOLARES empresa EXPORTADORA .solo sera de acuerdo a su
+            movimiento de sus (FACTURAS).</div>
+          <div>6 - No ingresar dinero libre a las cuentas soles o dolares / solo sera movientos con comprabantes (LEY
+            BANCARIZACION). PARA ELLO SE HABILITARA UNA CUENTA EXTERNA DE UNA EMPRESA NACIONAL QUE TENDRA TOTAL CONTROL
+            DE SUS MOVIMIENTOS.</div>
+          <div>7 - Cuadre liquides según avance de las ventas.</div>
+          <div class="text-uppercase">8 - Mantener comunicacion fluida con nuestro equipo ayudara a no tener problemas
+            futuros.</div>
+          <br>
+          <h4 class="text-center">CONFIDENCIALIDAD</h4>
+          <div>SE OBLIGA A NO REVELAR LA EXISTENCIA DE LA PRESENTE DECLARACIÓN, EMPRESA, SISTEMA Y/O PROYECTO. Las
+            partes acuerdan que cualquier información intercambiada,
+            facilitada o creada entre ellas durante el desarrollo del plan, <strong>será mantenida en estricta
+              CONFIDENCIALIDAD.</strong> </div>
+          <div>La parte receptora correspondiente, <strong>sólo podrá revelar información confidencial
+              a quienes la necesiten y estén autorizados previamente por la parte de CUYA INFORMACION CONFIDENCIAL SE
+              TRATA.</strong> </div>
+          <!-- <figure class="highcharts-figure">
             <div id="ten_usd"></div>
             <p class="highcharts-description"></p>
-          </figure>
+          </figure> -->
         </div>
       </div>
     </div>
+    <?php  } ?>
   </div>
   <div class="row">
     <div class="col-md-12">
