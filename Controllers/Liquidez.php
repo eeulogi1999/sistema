@@ -470,7 +470,6 @@ class Liquidez extends Controllers{
             if ($r['mov_cue_id']['cue_gt4_id']['gt4_id']==2) {
                 $res[$i]['mov_sum'] = $r['mov_sum']*floatval($tga);
                 $r['mov_sum'] = $r['mov_sum']*floatval($tga);
-                
             }
             $res[$i]['mov_porc'] = '<input type="text" value="'.$r['mov_cue_id']['cue_por_exp'].'" size="4" onChange="setPorExp('.$r['mov_cue_id']['cue_id'].',event)">'; 
             $res[$i]['mov_base'] = $r['mov_sum']*$r['mov_cue_id']['cue_por_exp'];
