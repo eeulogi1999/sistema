@@ -84,33 +84,33 @@
       <div class="tile">
         <div class="tile-body">
           <h4 class="text-center">SUGERENCIAS</h4>
-          <div>1 - Mantener actulizado las Ordenes de Venta en el sistema , para nuestra mejor orden contable.</div>
+          <div>1 - Mantener actulizado las Ordenes de Venta en el sistema, para nuestra mejor orden.</div>
           <div>2 - Proporcionar factura o boleta del tipo de cambio dolares a nombre de la empresa y hacer entrega
             mensual a nuestro equipo.</div>
           <div>3 - Proporcionar las facturas de pago de los gastos aduaneros TPP y/o otros junto con constancia de pago.
           </div>
           <div>4 - Proporcionar los documentos de la dua mensualmente y dar seguimiento hasta que sarpe la nave para
-            evitar problemas contables.</div>
-          <div>5 - Cada INGRESO O SALIDA de la cuenta SOLES O DOLARES empresa EXPORTADORA .solo sera de acuerdo a su
+            evitar problemas.</div>
+          <div>5 - Cada INGRESO O SALIDA de la cuenta SOLES O DOLARES empresa EXPORTADORA, solo sera de acuerdo a su
             movimiento de sus (FACTURAS).</div>
-          <div>6 - No ingresar dinero libre a las cuentas soles o dolares / solo sera movientos con comprabantes (LEY
+          <div>6 - No ingresar dinero libre a las cuentas soles o dolares / solo sera movimientos con comprabantes (LEY
             BANCARIZACION).</div>
           <div>7 - Cuadre liquides según avance de las ventas.</div>
-          <div class="text-uppercase">8 - Mantener comunicacion fluida con nuestro equipo ayudara a no tener problemas
+          <div class="text-uppercase">8 - Mantener comunicación fluida con nuestro equipo ayudara a no tener problemas
             futuros.</div>
           <br>
+          <h4 class="text-center">SEGURIDAD</h4>
+              <div>1. No compartir con terceros ni guardar la contraseña del sistema en la Computadora</div>
+              <div>2. No mantener la sesión y/o ventana abierta si no se esta operando</div>
+              <div>3. Ayudanos a proteger nuestros datos, ¡proteger los datos significa proteger a las personas!</div><br>
           <h4 class="text-center">CONFIDENCIALIDAD</h4>
           <div>SE OBLIGA A NO REVELAR LA EXISTENCIA DE LA PRESENTE DECLARACIÓN, EMPRESA, SISTEMA Y/O PROYECTO. Las
             partes acuerdan que cualquier información intercambiada,
             facilitada o creada entre ellas durante el desarrollo del plan, <strong>será mantenida en estricta
               CONFIDENCIALIDAD.</strong> </div>
-          <div>La parte receptora correspondiente, <strong>sólo podrá revelar información confidencial
+          <>La parte receptora correspondiente, <strong>sólo podrá revelar información confidencial
               a quienes la necesiten y estén autorizados previamente por la parte de CUYA INFORMACION CONFIDENCIAL SE
-              TRATA.</strong> </div>
-              <h4 class="text-center">SEGURIDAD</h4>
-              <div>No compartir con terceros ni guardar la contraseña del sistema en la Computadora</div>
-              <div>No mantener la sesión y/o ventana abierta si no se esta operando</div>
-              <div>Ayudanos a proteger nuestros datos, ¡proteger los datos significa proteger a las personas!</div>
+              TRATA.</strong>
           <!-- <figure class="highcharts-figure">
             <div id="ten_usd"></div>
             <p class="highcharts-description"></p>
