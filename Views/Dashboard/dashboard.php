@@ -84,7 +84,7 @@
       <div class="tile">
         <div class="tile-body">
           <h4 class="text-center">SUGERENCIAS</h4>
-          <div>1 - Mantener actulizado las Ordenes de Venta en el sistema, para nuestra mejor orden.</div>
+          <div>1 - Mantener actulizado las Ordenes de Venta en el sistema, para nuestra mejor orden administrativo.</div>
           <div>2 - Proporcionar factura o boleta del tipo de cambio dolares a nombre de la empresa y hacer entrega
             mensual a nuestro equipo.</div>
           <div>3 - Proporcionar las facturas de pago de los gastos aduaneros TPP y/o otros junto con constancia de pago.
@@ -108,9 +108,9 @@
             partes acuerdan que cualquier información intercambiada,
             facilitada o creada entre ellas durante el desarrollo del plan, <strong>será mantenida en estricta
               CONFIDENCIALIDAD.</strong> </div>
-          <>La parte receptora correspondiente, <strong>sólo podrá revelar información confidencial
+              <div>La parte receptora correspondiente, <strong>sólo podrá revelar información confidencial
               a quienes la necesiten y estén autorizados previamente por la parte de CUYA INFORMACION CONFIDENCIAL SE
-              TRATA.</strong>
+              TRATA.</strong> </div>
           <!-- <figure class="highcharts-figure">
             <div id="ten_usd"></div>
             <p class="highcharts-description"></p>
