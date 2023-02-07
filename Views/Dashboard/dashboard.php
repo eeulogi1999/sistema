@@ -108,6 +108,10 @@
           <div>La parte receptora correspondiente, <strong>sólo podrá revelar información confidencial
               a quienes la necesiten y estén autorizados previamente por la parte de CUYA INFORMACION CONFIDENCIAL SE
               TRATA.</strong> </div>
+              <h4 class="text-center">SEGURIDAD</h4>
+              <div>No compartir con terceros ni guardar la contraseña del sistema en la Computadora</div>
+              <div>No mantener la sesión y/o ventana abierta si no se esta operando</div>
+              <div>Ayudanos a proteger nuestros datos, ¡proteger los datos significa proteger a las personas!</div>
           <!-- <figure class="highcharts-figure">
             <div id="ten_usd"></div>
             <p class="highcharts-description"></p>
