@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 06-02-2023 a las 19:23:56
+-- Tiempo de generación: 07-02-2023 a las 14:51:06
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 7.4.0
 
@@ -490,7 +490,7 @@ CREATE TABLE `establecimientos` (
 --
 
 INSERT INTO `establecimientos` (`est_id`, `est_nombre`, `est_direccion`, `est_serie`, `est_logo`, `est_gdi_id`, `est_created`, `est_updated`, `est_status`) VALUES
-(1, 'Puente Piedra', 'Mz A, lote 12, tambo Inga, Ref. km 27 Panam. Norte', '01', 'liferli.png', 150125, '2022-07-25 12:30:55', '2022-07-25 12:30:55', 1);
+(1, 'Puente Piedra', 'Mz A, lote 12, tambo Inga, Ref. km 27 Panam. Norte', '01', 'liferli.png', 150716, '2022-07-25 12:30:55', '2022-07-25 12:30:55', 1);
 
 -- --------------------------------------------------------
 
@@ -532,7 +532,7 @@ CREATE TABLE `mdetalles` (
 --
 
 INSERT INTO `mdetalles` (`mde_id`, `mde_bie_id`, `mde_t6m_id`, `mde_gta_id`, `mde_mov_id`, `mde_q`, `mde_vu`, `mde_igv`, `mde_des`, `mde_ref_mov_id`, `mde_importe`, `mde_detraccion`) VALUES
-(1, 1, 23, 9, 1030, '1000.000000', '30.000000', 0, NULL, NULL, '30000.000000000000', 0);
+(3, 1, 23, 9, 1031, '2000.000000', '30.000000', 0, NULL, NULL, '60000.000000000000', 0);
 
 -- --------------------------------------------------------
 
@@ -608,7 +608,7 @@ CREATE TABLE `movimientos` (
 --
 
 INSERT INTO `movimientos` (`mov_id`, `mov_age_id`, `mov_alm_id`, `mov_serie`, `mov_numero`, `mov_t12num`, `mov_gt4_id`, `mov_t12_id`, `mov_t10_id`, `mov_tce_id`, `mov_cue_id`, `mov_fechaE`, `mov_fechaR`, `mov_fechaV`, `mov_tipo`, `mov_subtotal`, `mov_igv_id`, `mov_total`, `mov_ncr_id`, `mov_observaciones`, `mov_gus_id`, `mov_mov_id`, `mov_created`, `mov_updated`, `mov_mstatus`) VALUES
-(1030, 155, 1, 'NE01', 1, 1, 1, 2, 49, 895, NULL, '2023-02-06', '2023-02-06', '2023-03-06', 3, '30000.000000000000', '{\"mov_igv\": \"0.00\", \"mov_neto\": \"30000.00\", \"mov_gravada\": \"0.00\", \"mov_inafecta\": \"0.00\", \"mov_exonerada\": \"30000.00\"}', '30000.000000000000', NULL, 'Doc Prueba', 1, NULL, '2023-02-06 12:46:52', '2023-02-06 12:46:52', 1);
+(1031, 155, 1, 'OC01', 1, 1, 1, 2, 52, 895, NULL, '2023-02-06', '2023-02-06', '2023-03-06', 3, '60000.000000000000', '{\"mov_igv\": \"0.00\", \"mov_neto\": \"60000.00\", \"mov_gravada\": \"0.00\", \"mov_inafecta\": \"0.00\", \"mov_exonerada\": \"60000.00\"}', '60000.000000000000', NULL, 'Doc Prueba', 1, NULL, '2023-02-06 15:23:31', '2023-02-06 15:23:31', 1);
 
 -- --------------------------------------------------------
 
@@ -2958,7 +2958,8 @@ CREATE TABLE `tcespeciales` (
 --
 
 INSERT INTO `tcespeciales` (`tce_id`, `tce_gtc_id`, `tce_compra`, `tce_venta`) VALUES
-(895, 343, NULL, NULL);
+(895, 343, NULL, NULL),
+(896, 351, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -9555,13 +9556,13 @@ ALTER TABLE `liquidez`
 -- AUTO_INCREMENT de la tabla `mdetalles`
 --
 ALTER TABLE `mdetalles`
-  MODIFY `mde_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `mde_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `movimientos`
 --
 ALTER TABLE `movimientos`
-  MODIFY `mov_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1031;
+  MODIFY `mov_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1032;
 
 --
 -- AUTO_INCREMENT de la tabla `ppagos`
@@ -9693,7 +9694,7 @@ ALTER TABLE `tareas`
 -- AUTO_INCREMENT de la tabla `tcespeciales`
 --
 ALTER TABLE `tcespeciales`
-  MODIFY `tce_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=896;
+  MODIFY `tce_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=897;
 
 --
 -- AUTO_INCREMENT de la tabla `tendencias`

@@ -29,13 +29,16 @@
 							$_SESSION['gus'] = $arrData;
 							$_SESSION['login'] = true;
 							$htmlOptions = "";
-							//if ($_SESSION['gus']['gus_id']==1) {
+							if ($_SESSION['gus']['gus_id']==1) {
 								$arrDatatwo = $this->clientes->selectRegistros();
-							//} else {
-							//	$arrDatatwo = $this->accesos->selectRegistros(array('gac_gus_id'=>$_SESSION['gus']['gus_id']));
-							//}
-							//dep($arrDatatwo);
-							//die();
+							} else {
+								$arrDatatwo = array();
+								$gac = $this->accesos->selectRegistros(array('gac_gus_id'=>$_SESSION['gus']['gus_id']));
+								foreach ($gac as $i => $r) {
+									$gcl = $this->clientes->selectRegistro($r['gac_gcl_id']['gcl_id']);
+									array_push($arrDatatwo, $gcl);
+								}
+							}
 							if(count($arrDatatwo) > 0 ){
 								for ($i=0; $i < count($arrDatatwo); $i++) { 
 									$htmlOptions .= '<option value="'.$arrDatatwo[$i]['gcl_id'].'">'.$arrDatatwo[$i]['gcl_gem_id']['gem_razonsocial'].'</option>';

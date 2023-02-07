@@ -25,3 +25,11 @@ CREATE TABLE `company5_bd_cacel`.`logs` (
     `log_datetime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , 
     PRIMARY KEY (`log_id`)) ENGINE = InnoDB;
 
+
+
+INSERT INTO `empresas` (`gem_id`, `gem_ruc`, `gem_razonsocial`, `gem_direccion`, `gem_gdi_id`, `gem_email`, `gem_status`) VALUES 
+(NULL, '20609315327', 'IMPORT & EXPORT FIVADOYS S.A.C.', 'CAR.CAR. PANAMERICANA NORTE KM 232.5 LOTE. 06', '150125', NULL, '1');
+INSERT INTO `clientes` (`gcl_id`, `gcl_gem_id`, `gcl_imagen`, `gcl_correo`, `gcl_pweb`, `gcl_telefono`, `gcl_status`) VALUES 
+(NULL, '16', 'liferli.png', 'inversionesferlisac@gmail.com', 'www.page.com', '922012611', '1');
+INSERT INTO `usuarios` (`gus_id`, `gus_gpe_id`, `gus_imagen`, `gus_gro_id`, `gus_user`, `gus_password`, `gus_token`, `gus_create`, `gus_update`, `gus_telefono`, `gus_gcl_id`, `gus_gar_id`, `gus_status`) VALUES 
+(NULL, '141', NULL, '2', 'norte3@companycacel.com', '', NULL, '2023-01-19 14:21:28', '2023-01-19 14:21:28', NULL, '3', '3', '1');
