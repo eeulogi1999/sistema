@@ -93,7 +93,7 @@
             evitar problemas.</div>
           <div>5 - Cada INGRESO O SALIDA de la cuenta SOLES O DOLARES empresa EXPORTADORA, solo sera de acuerdo a su
             movimiento de sus (FACTURAS).</div>
-          <div>6 - No ingresar dinero libre a las cuentas soles o dolares / solo sera movimientos con comprabantes (LEY
+          <div>6 - NO INGRESAR dinero libre a las cuentas Soles o Dolares / solo sera movimientos con comprabantes (LEY
             BANCARIZACION).</div>
           <div>7 - Cuadre liquides según avance de las ventas.</div>
           <div class="text-uppercase">8 - Mantener comunicación fluida con nuestro equipo ayudara a no tener problemas
