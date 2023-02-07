@@ -599,7 +599,10 @@ function openModalMov() {
     document.querySelector("#formMov").reset();
     $('#mov_observaciones').val('')
     $('#mov_ncr_id').attr('data','0');
-    $('#mov_cue_id').parent().parent().hide();
+    $('#mov_cue_id').parent().parent().parent().hide();
+    $('#mov_mov_id').parent().parent().parent().hide();
+    $('#mde_ref_mov_id').parent().hide();
+    $('thead tr th:nth-child('+($('#mde_ref_mov_id').parent().index()+1)+')',$('#mde_ref_mov_id').parent().parent().parent().parent()[0]).hide()
     switch (data.mov_t12_id) {
         case 16:
             $('#mov_t12_id').val(16);
@@ -659,11 +662,18 @@ function editMov(id) {
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#set_'+prefijo).classList.replace("btn-primary", "btn-info");
     $('#set_'+prefijo+' span').html("Actualizar");
+    $('#mov_cue_id').parent().parent().parent().hide();
     fetch(base_url + '/Movimientos/getMovimiento/'+id)
     .then(response => response.json())
     .then(response => {
         if(response.status){
+            if ($('#mov_ref').prop('checked')) {
+                $('#mov_ref').click()
+            }
             var mov = response.data;
+            if (mov.mov_t10_id.t10_id == 53) {
+                $('#mov_cue_id').parent().parent().parent().show();
+            }
             $('#mov_id').val(mov.mov_id);
             if (mov.mov_age_id != null) {
                 $('#mov_age_id').children().attr('value',mov.mov_age_id.age_id);
@@ -671,15 +681,34 @@ function editMov(id) {
             }
             $('#mov_t12_id').val(mov.mov_t12_id.t12_id);
             $('#mov_t10_id').val(mov.mov_t10_id.t10_id); 
-            $('#mov_serie').val(mov.mov_serie); 
-            $('#mov_numero').val(mov.mov_numero); 
+            if (data.mov_t10_id == 53) {
+                $('#mov_serie').val(mov.mov_serie.split('-')[0]); 
+                $('#mov_numero').val(mov.mov_serie.split('-')[1]);
+            }else{
+                $('#mov_serie').val(mov.mov_serie); 
+                $('#mov_numero').val(mov.mov_numero); 
+            }
             $('#mov_gt4_id').val(mov.mov_gt4_id.gt4_id);
+            if (mov.mov_fechaV) {
+                $('#mov_fechaV').val(mov.mov_fechaV); 
+            }else{
+                $('#mov_fechaV').parent().parent().parent().hide();
+            }
+            if (mov.mov_cue_id) {
+                $('#mov_cue_id').val(mov.mov_cue_id.cue_id); 
+                $('#mov_cue_id').parent().parent().parent().show();
+            }
             $('#mde_t6m_id').val(58);
             $('#mde_gta_id').val(1);
             document.querySelector("#mov_fechaE").valueAsDate = new Date(mov.mov_fechaE);
             document.querySelector("#mov_fechaV").valueAsDate = new Date(mov.mov_fechaV);
             ftnTcambio(document.querySelector("#mov_fechaE"));
             mde_json = mov.mov_mde_id;
+            if (mde_json[0]['mde_ref_mov_id']) {
+                if (!$('#mov_ref').prop('checked')) {
+                    $('#mov_ref').click()
+                }
+            }
             for (const i in mde_json) {
                 mde_json[i]['mde_q'] = parseFloat(mde_json[i]['mde_q']).toFixed(2);
                 mde_json[i]['mde_vu'] = parseFloat(mde_json[i]['mde_vu']).toFixed(2);
