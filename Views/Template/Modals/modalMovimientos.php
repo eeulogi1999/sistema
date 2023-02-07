@@ -64,6 +64,18 @@
                   </div>
                 </div>
               </div>
+              <?php  if ($_SESSION['gcl']['gcl_gem_id']['gem_ruc'] == '20607330647') { ?>
+                <div class="datosform pb-1">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="mov_contacto">CONTACTO<span class="required">*</span></label>
+                  </div>
+                  <div class="col-md-8 px-0">
+                    <input type="text" class="form-control valid" id="mov_contacto" name="mov_contacto" required>
+                  </div>
+                </div>
+              </div>
+              <?php } ?>
               <div>
                 Doc. Ref. <input type="checkbox" id="mov_ref">
               </div>

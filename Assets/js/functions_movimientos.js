@@ -209,6 +209,9 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('mov_subtotal', formMtx.mov_subtotal);  delete formMtx.mov_subtotal;
         formData.append('mov_total', formMtx.mov_total);  delete formMtx.mov_total;
         formData.append('mov_mde_id', JSON.stringify(mde_json)); 
+        if (document.getElementById("mov_contacto")) {
+            formMtx.mov_contacto = $('#mov_contacto').val();
+        }
         formData.append('mov_igv_id', JSON.stringify(formMtx));
         formData.append('mov_observaciones', $('#mov_observaciones').val());  
         if(data.mov_t12_id == 1 || data.mov_t12_id == 2 ){
@@ -655,6 +658,11 @@ function editMov(id) {
                 mde_json[i]['mde_options'] = '<div class="text-center"><button class="btn btn-primary btn-sm" onClick="event.preventDefault();editMde(' + i + ');" title="Editar"><i class="fas fa-pencil-alt"></i></button>'+
                 '<button class="btn btn-danger btn-sm" onClick="event.preventDefault();deleteMde(' + i + ');" title="Eliminar"><i class="far fa-trash-alt"></i></button></div>';
             }
+            if (document.getElementById("mov_contacto")) {
+                let igv = JSON.parse(mov.mov_igv_id);
+                $('#mov_contacto').val( igv.mov_contacto??'');
+            }
+
             mde.reload();
             setTimeout(() => {
                 subtotalMde();

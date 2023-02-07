@@ -240,9 +240,15 @@
                                 $mov['mov_age_id']['age_gdi_id']['gdi_gpr_id']['gpr_provincia'].'-'.
                                 $mov['mov_age_id']['age_gdi_id']['gdi_distrito']?></td>
                 </tr>
+                <?php $mov['mov_igv_id'] = json_decode($mov['mov_igv_id'],true); ?>
                 <tr>
-                    <td class="wd10">EMISOR:</td>
-                    <td class="wd10"><?= !isset($mov['mov_gus_id'])? '': $mov['mov_gus_id']['gus_gpe_id']['gpe_nombre']?></td>
+                    <?php  if ($_SESSION['gcl']['gcl_gem_id']['gem_ruc'] == '20607330647') { ?>
+                        <td class="wd10">CONTACTO:</td>
+                        <td class="wd10"><?= $mov['mov_igv_id']['mov_contacto']??'' ?></td>
+                    <?php } else { ?>
+                        <td class="wd10">EMISOR:</td>
+                        <td class="wd10"><?= !isset($mov['mov_gus_id'])? '': $mov['mov_gus_id']['gus_gpe_id']['gpe_nombre']?></td>
+                    <?php } ?>
                     <td class="wd10">FECHA VENC.:</td>
                     <td class="wd10"><?= $mov['mov_fechaV'] ?></td>
                 </tr>
@@ -289,9 +295,7 @@
                 <td class="text-center"><?= "0.00" ?></td>
                 <td class="text-right"><?= formatMoney($mde['mde_importe']) ?></td>
             </tr>
-            <?php }
-            $mov['mov_igv_id'] = json_decode($mov['mov_igv_id'],true);
-            ?>
+            <?php } ?>
         </tbody><br><br>
         <tfoot>
             <tr>
