@@ -112,7 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
         var gtc = $(this).prop('checked');
         if (gtc) {
             $('#mde_detraccion').removeAttr("disabled");
-            
             $('#mov_cue_id').parent().parent().parent().show();
             $('#mov_t10_id').val(2);
             document.querySelector('#mov_cue_id').focus();
