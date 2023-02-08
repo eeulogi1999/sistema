@@ -321,7 +321,7 @@ function previewFiles(th,content) {
                     if ( typeof o.columns[i].header.c!= 'undefined') {
                         switch (o.columns[i].header.c) {
                             case 'text':
-                                var input = $(thead).children('tr').append('<th><div class="text-center">'+o.columns[i].header.t+'</div><input type="text" id="t_'+ix+'" class="form-control"></th>');
+                                var input = $(thead).children('tr').eq(1).append('<th><div class="text-center">'+o.columns[i].header.t+'</div><input type="text" id="t_'+ix+'" class="form-control"></th>');
                                 $('#t_'+ix)[0].addEventListener('input', textFilter);
                                 break;
                             case 'select':

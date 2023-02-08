@@ -21,6 +21,7 @@ class Movimientos extends Controllers{
         $this->newModel('tafectaciones');
         $this->newModel('bienes');
         $this->newModel('simulaciones');
+        $this->newModel('t4monedas');
         $this->formatter = new NumeroALetras();
     }
     public function Movimientos(){
@@ -155,6 +156,7 @@ class Movimientos extends Controllers{
             $arrData[$i]['mov_igv'] = formatMoney(json_decode($arrData[$i]['mov_igv_id'],true)['mov_igv']);
             if ($arrData[$i]['mov_gt4_id']['gt4_id'] == 2) {
                 $arrData[$i]['mov_total'] = $arrData[$i]['mov_total']*$arrData[$i]['mov_tce_id']['tce_gtc_id']['gtc_tcompra'];
+                $arrData[$i]['mov_gt4_id'] = $this->t4monedas->selectRegistro(1);
             }
             $arrData[$i]['mov_total'] = $arrData[$i]['mov_total'];
             $arrData[$i]['mov_t12num'] = $arrData[$i]['mov_tipo'].'-'.date( "m", strtotime($arrData[$i]['mov_fechaE'])).str_pad($arrData[$i]['mov_t12num'],6,'0',STR_PAD_LEFT);
