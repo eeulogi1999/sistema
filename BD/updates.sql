@@ -27,3 +27,5 @@ CREATE TABLE `company5_bd_cacel`.`logs` (
 
 
     ALTER TABLE `empresas` ADD `gem_gcl_id` JSON NOT NULL AFTER `gem_gdi_id`;
+
+    ALTER TABLE `personas` ADD `gpe_gcl_id` JSON NOT NULL AFTER `gpe_gdi_id`;

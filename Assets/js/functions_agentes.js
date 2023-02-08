@@ -72,7 +72,9 @@ window.addEventListener('load', async () => {
 });
 
 async function setGem() {
-    var gem = await set('gem',['gem_ruc'],null,true);
+    var form = Object.fromEntries(new FormData(document.getElementById("form_gem")));
+    form.gem_gcl_id = JSON.stringify([data.gcl_id]);
+    var gem = await set('gem',['gem_ruc'],form,true);
     if (gem.status) {
         resetModal('gem');
         await $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial']);
@@ -80,7 +82,9 @@ async function setGem() {
     }
 }
 async function setGpe() {
-    var gpe = await set('gpe',['gpe_identificacion'],null,true);
+    var form = Object.fromEntries(new FormData(document.getElementById("form_gpe")));
+    form.gpe_gcl_id = JSON.stringify([data.gcl_id]);
+    var gpe = await set('gpe',['gpe_identificacion'],form,true);
     if (gpe.status) {
         resetModal('gpe');
         await $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos']);

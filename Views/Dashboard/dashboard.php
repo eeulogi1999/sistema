@@ -83,6 +83,15 @@
     <div class="col-md-8">
       <div class="tile">
         <div class="tile-body">
+          <h4 class="text-center">CUENTAS</h4>
+          <div>BCP DOLARES: 191-9932896-1-90 &nbsp;&nbsp;-&nbsp;&nbsp; CCI: 002 191 009932896190 51</div>
+          <div>BCP SOLES: &nbsp;&nbsp; 191-9938278-0-44 &nbsp;&nbsp;-&nbsp;&nbsp; CCI: 002 191 0099382788044 55 </div><br>
+          <h4 class="text-center">DOCUMENTOS</h4>
+          <?php 
+            $files = scandir(__DIR__.'/../../Assets/pdf/private');
+            for ($i=2; $i < count($files) ; $i++) { ?>
+              <?= $i-1 ?>- <a target="_bank" href="<?= media().'/pdf/private/'.$files[$i] ?>"><?= $files[$i] ?></a><br>
+           <?php } ?>
           <h4 class="text-center">SUGERENCIAS</h4>
           <div>1 - Mantener actulizado las Ordenes de Venta en el sistema, para nuestra mejor orden administrativo.</div>
           <div>2 - Proporcionar factura o boleta del tipo de cambio dolares a nombre de la empresa y hacer entrega
