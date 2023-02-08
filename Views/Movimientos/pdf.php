@@ -190,7 +190,7 @@
                         $gcl['gcl_gem_id']['gem_gdi_id']['gdi_gpr_id']['gpr_provincia'].' - '.
                         $gcl['gcl_gem_id']['gem_gdi_id']['gdi_distrito'] ?>
                         <br>
-                        <?php if ($gcl['gcl_gem_id']['gem_ruc'] != '20607330647' && $mov['mov_tipo'] != 3 ) {?> 
+                        <?php if ($gcl['gcl_gem_id']['gem_ruc'] != '20607330647' && $mov['mov_tipo'] != 3 || $gcl['gcl_gem_id']['gem_ruc'] != '20609315327' ) {?> 
                             SUCURSAL:<?=  $alm['alm_est_id']['est_direccion']?> <br>
                             <?= $alm['alm_est_id']['est_gdi_id']['gdi_distrito'] ?>                        
                         <?php }  ?>

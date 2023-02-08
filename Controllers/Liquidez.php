@@ -117,7 +117,7 @@ class Liquidez extends Controllers{
                     }
                     if ($liqData[$i][$pre.'_age_id']['age_id'] == 5) {
                         $rpt2 = $this->getExportaciones(true);
-                        $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt2,'mov_dscg'));
+                        $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt2,'mov_margen')); //mov_dscg
                     }
 
                 }
@@ -471,6 +471,8 @@ class Liquidez extends Controllers{
                 $res[$i]['mov_sum'] = $r['mov_sum']*floatval($tga);
                 $r['mov_sum'] = $r['mov_sum']*floatval($tga);
             }
+            $res[$i]['mov_por_gcl'] = '<input type="text" value="'.$r['mov_cue_id']['cue_por_gcl'].'" size="4" onChange="setPorGcl('.$r['mov_cue_id']['cue_id'].',event)" '.(($_SESSION['gus']['gus_id'] == 4)?'':'disabled').'>'; 
+            $res[$i]['mov_margen'] = $res[$i]['mov_sum']*($r['mov_cue_id']['cue_por_gcl']/100);
             $res[$i]['mov_porc'] = '<input type="text" value="'.$r['mov_cue_id']['cue_por_exp'].'" size="4" onChange="setPorExp('.$r['mov_cue_id']['cue_id'].',event)">'; 
             $res[$i]['mov_base'] = $r['mov_sum']*$r['mov_cue_id']['cue_por_exp'];
             $res[$i]['mov_cigv'] = $res[$i]['mov_base']*0.18;

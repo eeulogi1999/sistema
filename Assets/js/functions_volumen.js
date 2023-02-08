@@ -21,7 +21,9 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"mov_cue_id.cue_nombre",header:"CUENTAS",tipo:'string',footer:"TOTALES"},
                 {"data":"mov_sum",header:{t:"TOTAL VENTAS",align:'right'},tipo:'money',footer:{ c:"sum" }}, //mov_options
-                {"data":"mov_options",header:{t:"OPCIONES",align:'center'},tipo:'string'} 
+                {"data":"mov_options",header:{t:"OPCIONES",align:'center'},tipo:'string'},
+                {"data":"mov_por_gcl",header:{t:"% PORCENTAJE",align:'center'},tipo:'string'}, 
+                {"data":"mov_margen",header:{t:"MARGEN",align:'center'},tipo:'money',footer:{ c:"sum" }}
             ]
         });
     }
@@ -52,4 +54,9 @@ function getDetView(id) {
     setTimeout(() => {
         mov_table.rezise();
     }, 400);
+}
+
+async function setPorGcl(id,e) {
+    await set(`cue`,null,{cue_id:id,cue_por_gcl:e.target.value},true); 
+    exp_table.reload()
 }

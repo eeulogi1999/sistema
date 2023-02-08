@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"mov_cue_id.cue_nombre",header:"CUENTAS",tipo:'string',style:{color:'info'},footer:"TOTALES"},
                 {"data":"mov_sum",header:{t:"TOTAL VENTAS",align:'right'},tipo:'money',style:{color:'info'},footer:{ c:"sum" }}, 
                 {"data":"mov_options",header:{t:"OPCIONES",align:'center'},tipo:'string'},
+                {"data":"mov_por_gcl",header:{t:"% PORCENTAJE",align:'center'},tipo:'string',style:{bg:'success'}}, 
+                {"data":"mov_margen",header:{t:"MARGEN",align:'center'},tipo:'money',footer:{ c:"sum" },style:{bg:'success'}},
                 {"data":"mov_porc",header:{t:"% PROM. COMPRAS",align:'center'},tipo:'string'},
                 {"data":"mov_base",header:{t:"COMPRAS",align:'center'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"mov_cigv",header:{t:"IGV",align:'center'},tipo:'money'},
@@ -186,4 +188,9 @@ function getDetView(id) {
     setTimeout(() => {
         mov_table.rezise();
     }, 400);
+}
+
+async function setPorGcl(id,e) {
+    await set(`cue`,null,{cue_id:id,cue_por_gcl:e.target.value},true); 
+    exp_table.reload()
 }

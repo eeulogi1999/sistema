@@ -84,6 +84,7 @@
       <div class="tile">
         <div class="tile-body">
           <h4 class="text-center">CUENTAS</h4>
+          <div><strong>CUENTA FIVADOYS S.A.C</strong></div>
           <div>BCP DOLARES: 191-9932896-1-90 &nbsp;&nbsp;-&nbsp;&nbsp; CCI: 002 191 009932896190 51</div>
           <div>BCP SOLES: &nbsp;&nbsp; 191-9938278-0-44 &nbsp;&nbsp;-&nbsp;&nbsp; CCI: 002 191 0099382788044 55 </div><br>
           <h4 class="text-center">DOCUMENTOS</h4>
@@ -113,6 +114,7 @@
               <div>2. No mantener la sesión y/o ventana abierta si no se esta operando</div>
               <div>3. Ayudanos a proteger nuestros datos, ¡proteger los datos significa proteger a las personas!</div><br>
           <h4 class="text-center">CONFIDENCIALIDAD</h4>
+          - <a target="_bank" href="<?= media().'/pdf/private/PROYECCION_DE_LA_NUEVA_EMPRESA.pdf' ?>"><?= 'PROYECCION_DE_LA_NUEVA_EMPRESA.pdf' ?></a><br>
           <div>SE OBLIGA A NO REVELAR LA EXISTENCIA DE LA PRESENTE DECLARACIÓN, EMPRESA, SISTEMA Y/O PROYECTO. Las
             partes acuerdan que cualquier información intercambiada,
             facilitada o creada entre ellas durante el desarrollo del plan, <strong>será mantenida en estricta

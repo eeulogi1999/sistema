@@ -29,3 +29,5 @@ CREATE TABLE `company5_bd_cacel`.`logs` (
     ALTER TABLE `empresas` ADD `gem_gcl_id` JSON NOT NULL AFTER `gem_gdi_id`;
 
     ALTER TABLE `personas` ADD `gpe_gcl_id` JSON NOT NULL AFTER `gpe_gdi_id`;
+
+    ALTER TABLE `cuentas` ADD `cue_por_gcl` DECIMAL(6,3) NOT NULL DEFAULT '5.76' AFTER `cue_por_exp`;
