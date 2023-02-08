@@ -110,7 +110,7 @@
                                     foreach ($detalles as $producto) {
                                     ?>
                                 <tr>
-                                    <td class="text-center"><?= $producto['mde_q']; ?></td>
+                                    <td class="text-center"><?= number_format($producto['mde_q'], 2,'.','') ?></td>
                                     <td class="text-center"> <a href="#" onclick="ftnViewBie(<?= $producto['mde_bie_id']['bie_id'] ?>)" ><?= $producto['mde_bie_id']['bie_codigo'] ?></a></td>
                                     <td class="text-left"><?= $producto['mde_t6m_id']['t6m_descripcion']; ?></td>
                                     <td class="text-left"><?= $producto['mde_bie_id']['bie_nombre'] ?></td>
