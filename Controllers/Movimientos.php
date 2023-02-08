@@ -68,6 +68,7 @@ class Movimientos extends Controllers{
                 header("Location:".base_url().'/dashboard');
                 break;
         }
+        $data['page_data']['gcl_id'] = $_SESSION['gcl']['gcl_id'];
         $data['estData'] = $this->establecimientos->selectRegistros();  
         $data['page_data']['periodo'] = $_SESSION['periodo'];
         $data['page_data']['mov_tipo'] = $_SESSION['mov']['mov_tipo']; //'xfun'=>

@@ -109,11 +109,20 @@ class Main extends Controllers{
         $tabla = $this->getTable($pre);
         $this->newModel($tabla);
         $arrData = $this->{$tabla}->selectRegistros();
+        if ($pre == 'gem') {
+            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"json_extract(gem_gcl_id,'$[0]') = ".$_SESSION['gcl']['gcl_id'].""));
+        }
+        if ($pre == 'gpe') {
+            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"json_extract(gpe_gcl_id,'$[0]') = ".$_SESSION['gcl']['gcl_id'].""));
+        }
         for ($i=0; $i < count($arrData); $i++) {
             $btnView = '';
             $btnEdit = '';
             $btnDelete = '';
             if (isset($arrData[$i][$pre.'_status'])) {
+                if ($arrData[$i][$pre.'_status'] == 0) {
+                    continue;
+                }
                 $arrData[$i][$pre.'_status'] = '<span class="badge badge-'.STATUS[array_keys(STATUS)[$arrData[$i][$pre.'_status']]].'">'.array_keys(STATUS)[$arrData[$i][$pre.'_status']].'</span>';
             }
             if((isset($_SESSION['perMod']['gtp_r']))?$_SESSION['perMod']['gtp_r']:0){

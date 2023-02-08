@@ -30,11 +30,10 @@ class Agentes extends Controllers{
     }
     public function getAgentes($age_tipo){
         if (intval($age_tipo)>0) {
-            $arrData = $this->agentes->selectRegistros(array('age_tipo'=>$age_tipo));
+            $arrData = $this->agentes->selectRegistros(array('age_tipo'=>$age_tipo,'age_status'=>1));
         }else {
-            $arrData = $this->agentes->selectRegistros();
+            $arrData = $this->agentes->selectRegistros(array('age_status'=>1));
         }
-        
         $pre = 'age'; $tabla = 'Agentes';
         for ($i=0; $i < count($arrData); $i++) { 
             $btnView = '';

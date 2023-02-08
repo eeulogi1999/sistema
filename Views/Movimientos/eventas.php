@@ -25,7 +25,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-md-12">
       <div class="tile">
         <h3 class="text-center">EXPORTACION</h3>
@@ -58,6 +58,6 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </main>
 <?php footerAdmin($data); ?>

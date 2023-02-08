@@ -24,3 +24,6 @@ CREATE TABLE `company5_bd_cacel`.`logs` (
     `log_restore` TEXT NOT NULL , 
     `log_datetime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , 
     PRIMARY KEY (`log_id`)) ENGINE = InnoDB;
+
+
+    ALTER TABLE `empresas` ADD `gem_gcl_id` JSON NOT NULL AFTER `gem_gdi_id`;

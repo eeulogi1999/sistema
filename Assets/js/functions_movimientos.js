@@ -624,10 +624,11 @@ function openModalMov() {
             $('#mov_t12_id').val(1);
             $('#mov_t10_id').val(data.mov_t10_id??50);
             $('#mde_gta_id').val(9);
-            ftnSetMov_numero(data.mov_t10_id?'OV01':'NE01',1,$('#mov_t10_id').val());
+            ftnSetMov_numero(data.mov_t10_id?'OV01':'NS01',1,$('#mov_t10_id').val());
             if (data.mov_t10_id) {
                 $('#mov_cue_id').parent().parent().parent().show();
             }
+            break;
         case 13:
             $('#mov_t12_id').val(13);
             $('#mov_t10_id').val(1);

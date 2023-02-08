@@ -7025,6 +7025,10 @@ button.bg-secondary:focus {
   background-color: #00aa8d !important;
 }
 
+.bg-socios {
+  background-color: #007896 !important;
+}
+
 a.bg-success:hover, a.bg-success:focus,
 button.bg-success:hover,
 button.bg-success:focus {

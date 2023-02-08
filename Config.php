@@ -2,7 +2,7 @@
 	define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].((isset($_SERVER['HTTPS']))?'':'/'.basename(dirname(__FILE__))));
 	//define('BASE_URL',$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']);
 	const PHPID = "erpsocios";  // erpregomsa, erpcacel ,erpegest ,erpsocios
-	const CID = "cacel";  //regomsa,cacel, egest
+	const CID = "socios";  //regomsa,cacel, egest,socios
 
 	//Zona horaria
 	date_default_timezone_set('America/Lima');
@@ -26,7 +26,7 @@
 	const SMONEY = "S/";
 	const CURRENCY = "SOLES";
 
-	const BG = array('cacel'=>'"#711529 !important"','regomsa'=>'"#009688 !important"','egest'=>'"##00aa8d !important"');
+	const BG = array('cacel'=>'"#711529 !important"','regomsa'=>'"#009688 !important"','egest'=>'"##00aa8d !important"','socios'=>'"#007896 !important"');
 	const PPA_TIPO = array('Planilla','Adelanto');
 	//Api PayPal
 	//SANDBOX PAYPAL
