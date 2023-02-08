@@ -35,7 +35,7 @@
 			}
 			
 			$sql = "SELECT * FROM {$this->name_table} $strWhere";
-			// dep($sql,false);
+			//dep($sql,false);
 			$request = $this->x->select_all($sql);
 			foreach ($request as $i => $row) {
 				foreach ($this->references as $j => $ref) { 

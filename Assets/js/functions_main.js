@@ -95,12 +95,6 @@ async function off(node,prefijo,id,res=false) {
 }
 async function set(prefijo,where= null,json = null,res = false) {
     var table = capitalize(getTable(prefijo));
-    if (typeof window['setPre'+capitalize(prefijo)]==='function') {
-        var arr = await window['setPre'+capitalize(prefijo)](where,Object.fromEntries(new FormData(document.querySelector('#form_'+prefijo))),res);
-        where = arr.where??where;
-        json = arr.json??json;
-        res = arr.res??res;
-    }
     if (json != null) {
         var formData = new FormData();
         for (const i in json) {
@@ -108,6 +102,12 @@ async function set(prefijo,where= null,json = null,res = false) {
         }
     } else {
         var formData = new FormData(document.querySelector('#form_'+prefijo));
+    }
+    if (typeof window['setPre'+capitalize(prefijo)]==='function') {
+        var arr = await window['setPre'+capitalize(prefijo)](where,Object.fromEntries(formData),res);
+        where = arr.where??where;
+        json = arr.json??json;
+        res = arr.res??res;
     }
     if (data[prefijo]) {
         for (const i in data[prefijo]) {
@@ -121,7 +121,7 @@ async function set(prefijo,where= null,json = null,res = false) {
             body: formData
         })
         .then(response => response.json())
-        .then(response => {
+        .then(async response => {
             if (response.status) {
                 if (res) {
                     return response;
@@ -133,13 +133,16 @@ async function set(prefijo,where= null,json = null,res = false) {
                         //$$(prefijo+'_table').load(base_url+"/Main/getAll/"+prefijo);
                         $$(prefijo+'_table').load(base_url+"/"+table+"/get"+table);
                     } else {
-                        window[prefijo+'_table'].reload();
                         if (typeof window['setPos'+capitalize(prefijo)]==='function') {
-                            window['setPos'+capitalize(prefijo)]();
+                            await window['setPos'+capitalize(prefijo)](response);
                         }
+                        window[prefijo+'_table'].reload();
                     }
                 }
             } else {
+                if (typeof window['setPos'+capitalize(prefijo)]==='function') {
+                    await window['setPos'+capitalize(prefijo)](response);
+                }
                 swal({
                     title: "Atención",
                     text: response.msg + "</br><pre class='text-left'>" + JSON.stringify(response.data, null, 2) + "</pre>",

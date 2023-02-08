@@ -71,8 +71,6 @@ class Agentes extends Controllers{
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();
     }
-
-
 }
 
 ?>

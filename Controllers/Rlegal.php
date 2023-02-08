@@ -71,7 +71,6 @@ class Rlegal extends Controllers{
         dep($_FILES);
         die();
     }
-
     public function boti(){
         $curl = curl_init();
         curl_setopt_array($curl, array(

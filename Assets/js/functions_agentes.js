@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
-    $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1,custom:'json_extract(gem_gcl_id,'+"'$[0]'"+') = '+data.gcl_id});
-    $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1,custom:'json_extract(gpe_gcl_id,'+"'$[0]'"+') = '+data.gcl_id});
+    $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1,custom:'JSON_OVERLAPS(gem_gcl_id,'+"'"+data.gcl_id+"'"+')'});
+    $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1,custom:'JSON_OVERLAPS(gpe_gcl_id,'+"'"+data.gcl_id+"'"+')'});
     $('#age_gt4_id').loadOptions('t4monedas',['gt4_sunat']);
     
     $('input:radio[name=age_t]').change(function() {
@@ -41,11 +41,11 @@ document.addEventListener('DOMContentLoaded',function () {
     })
 
     $('#select_gem').click(async function() {
-        await $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1,custom:'json_extract(gem_gcl_id,'+"'$[0]'"+') = '+data.gcl_id});
+        await $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1,custom:'JSON_OVERLAPS(gem_gcl_id,'+"'"+data.gcl_id+"'"+')'});
         $('#age_gem_id').val(gem_table.getSelectedItem().gem_id)
     })
     $('#select_gpe').click(async function() {
-        await $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1,custom:'json_extract(gpe_gcl_id,'+"'$[0]'"+') = '+data.gcl_id});
+        await $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1,custom:'JSON_OVERLAPS(gpe_gcl_id,'+"'"+data.gcl_id+"'"+')'});
         $('#age_gpe_id').val(gpe_table.getSelectedItem().gpe_id)
     })
     
@@ -77,17 +77,21 @@ async function setGem() {
     var gem = await set('gem',['gem_ruc'],form,true);
     if (gem.status) {
         resetModal('gem');
-        await $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1,custom:'json_extract(gem_gcl_id,'+"'$[0]'"+') = '+data.gcl_id});
+        await $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1,custom:'JSON_OVERLAPS(gem_gcl_id,'+"'"+data.gcl_id+"'"+')'});
         $('#age_gem_id').val(gem.gem_id)
     }
 }
 async function setGpe() {
     var form = Object.fromEntries(new FormData(document.getElementById("form_gpe")));
     form.gpe_gcl_id = JSON.stringify([parseInt(data.gcl_id)]);
-    var gpe = await set('gpe',['gpe_identificacion'],form,true);
+    if (form.gpe_gt2_id == 1) {
+        var gpe = await set('gpe',['gpe_identificacion',],form,true);
+    }else{
+        var gpe = await set('gpe',['gpe_identificacion','gpe_gt2_id'],form,true);
+    }
     if (gpe.status) {
         resetModal('gpe');
-        await $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1,custom:'json_extract(gpe_gcl_id,'+"'$[0]'"+') = '+data.gcl_id});
+        await $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1,custom:'JSON_OVERLAPS(gpe_gcl_id,'+"'"+data.gcl_id+"'"+')'});
         $('#age_gpe_id').val(gpe.gpe_id)
     }
 }

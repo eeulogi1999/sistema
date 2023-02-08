@@ -54,3 +54,20 @@ window.addEventListener('load', async () => {
     gem_table = await gem_table;
     divLoading.style.display = "none";
 });
+
+async function setPreGem(where,json,res) {
+    if (!json.gem_gcl_id) {
+        json.gem_gcl_id = await JSON.stringify([parseInt(data.gcl_id)]);
+    }
+    return {json}
+}
+
+async function setPosGem(res) {
+    if (res.exist) {
+        var gem_gcl_id = JSON.parse(res.data.gem_gcl_id);
+        gem_gcl_id.push(parseInt(data.gcl_id));
+        await set('gem',null,{gem_id:parseInt(res.gem_id),gem_gcl_id:JSON.stringify(gem_gcl_id)})
+        return true
+    }
+    return false
+}

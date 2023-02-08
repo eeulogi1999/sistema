@@ -74,3 +74,21 @@ window.addEventListener('load', async () => {
     gpe_table = await gpe_table;
     divLoading.style.display = "none";
 });
+
+async function setPreGpe(where,json,res) {
+    if (!json.gpe_gcl_id) {
+        json.gpe_gcl_id = JSON.stringify([parseInt(data.gcl_id)]);
+    }
+    return {json}
+}
+
+async function setPosGpe(res) {
+    if (res.exist) {
+        let gpe_gcl_id = JSON.parse(res.data.gpe_gcl_id);
+        gpe_gcl_id.push(parseInt(data.gcl_id));
+        await set('gpe',null,{gpe_id:parseInt(res.gpe_id),gpe_gcl_id:JSON.stringify(gpe_gcl_id)})
+        return true
+    }
+    return false
+}
+

@@ -110,10 +110,10 @@ class Main extends Controllers{
         $this->newModel($tabla);
         $arrData = $this->{$tabla}->selectRegistros();
         if ($pre == 'gem') {
-            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"json_extract(gem_gcl_id,'$[0]') = ".$_SESSION['gcl']['gcl_id'].""));
+            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"JSON_OVERLAPS(gem_gcl_id,'".$_SESSION['gcl']['gcl_id']."')"));
         }
         if ($pre == 'gpe') {
-            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"json_extract(gpe_gcl_id,'$[0]') = ".$_SESSION['gcl']['gcl_id'].""));
+            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"JSON_OVERLAPS(gpe_gcl_id,'".$_SESSION['gcl']['gcl_id']."')"));
         }
         for ($i=0; $i < count($arrData); $i++) {
             $btnView = '';
@@ -131,8 +131,10 @@ class Main extends Controllers{
             if((isset($_SESSION['perMod']['gtp_u']))?$_SESSION['perMod']['gtp_r']:0){
                 $btnEdit = '<button class="btn btn-primary  btn-sm" onClick="edit('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Editar '.$tabla.'"><i class="fas fa-pencil-alt"></i></button>';
             }
-            if((isset($_SESSION['perMod']['gtp_d']))?$_SESSION['perMod']['gtp_r']:0){
-                $btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="far fa-trash-alt"></i></button>';
+            if (!($pre == 'gem' || $pre == 'gpe')) {
+                if((isset($_SESSION['perMod']['gtp_d']))?$_SESSION['perMod']['gtp_r']:0){
+                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="far fa-trash-alt"></i></button>';
+                }
             }
             $arrData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
         }

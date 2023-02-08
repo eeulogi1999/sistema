@@ -54,7 +54,6 @@
 			}
 			die();
 		}
-
 		public function loginEmpresa(){
 			if($_POST){
 				if(empty($_POST['gac_gcl_id'])){
@@ -160,7 +159,6 @@
 			}
 			die();
 		}
-
 		public function setPassword(){
 			if(empty($_POST['idUsuario']) || empty($_POST['txtEmail']) || empty($_POST['txtToken']) || empty($_POST['txtPassword']) || empty($_POST['txtPasswordConfirm'])){
 					$arrResponse = array('status' => false, 'msg' => 'Error de datos' );
