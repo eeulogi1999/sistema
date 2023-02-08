@@ -13,7 +13,7 @@ class Cajas extends Controllers{
         $data['page_title'] = "Ingresos";
         $data['page_name'] = "Ingresos";
         $num = $this->cajas->searchRegistro(array('caj_tipo'=>1),' MAX(caj_numero) AS num ')['num']+1;
-        $data['page_data'] = array('age_tipo' => 0,
+        $data['page_data'] = array('age_tipo' => 0,'gcl_id'=> $_SESSION['gcl']['gcl_id'],
         'caj'=>array('caj_tipo'=>1,'caj_numero'=>$num,'caj_gus_id'=>$_SESSION['gus']['gus_id']),
         'periodo'=>$_SESSION['periodo']); 
         $data['page_functions_js'] = array("functions_cajas.js","functions_agentes.js");
@@ -27,7 +27,7 @@ class Cajas extends Controllers{
         $data['page_title'] = "Egresos";
         $data['page_name'] = "Egresos";
         $num = $this->cajas->searchRegistro(array('caj_tipo'=>2),' MAX(caj_numero) AS num ')['num']+1;
-        $data['page_data'] = array('age_tipo' => 0,
+        $data['page_data'] = array('age_tipo' => 0,'gcl_id'=> $_SESSION['gcl']['gcl_id'],
         'caj'=>array('caj_tipo'=>2,'caj_numero'=>$num,'caj_gus_id'=>$_SESSION['gus']['gus_id']),
         'periodo'=>$_SESSION['periodo']); 
         $data['page_functions_js'] = array("functions_cajas.js","functions_agentes.js");

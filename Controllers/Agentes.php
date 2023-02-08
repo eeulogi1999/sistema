@@ -13,7 +13,7 @@ class Agentes extends Controllers{
         $data['page_tag'] = "Clientes";
         $data['page_title'] = "Clientes";
         $data['page_name'] = "Clientes";
-        $data['page_data'] = array('age_tipo' => 2);
+        $data['page_data'] = array('age_tipo' => 2,'gcl_id'=> $_SESSION['gcl']['gcl_id']);
         $data['page_functions_js'] = array("functions_agentes.js","functions_empresas.js","functions_personas.js");
         $this->views->getView($this,"agentes",$data);
     }
@@ -24,7 +24,7 @@ class Agentes extends Controllers{
         $data['page_tag'] = "Proveedores";
         $data['page_title'] = "Proveedores";
         $data['page_name'] = "Proveedores";
-        $data['page_data'] = array('age_tipo' => 1);
+        $data['page_data'] = array('age_tipo' => 1,'gcl_id'=> $_SESSION['gcl']['gcl_id']);
         $data['page_functions_js'] = array("functions_agentes.js","functions_empresas.js","functions_personas.js");
         $this->views->getView($this,"agentes",$data);
     }
