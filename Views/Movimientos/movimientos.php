@@ -7,7 +7,6 @@
     getModal('modalEmpresas',$data);
     getModal('modalTableBie',$data);
     getModal('modalTableAge',$data);
-    getModal('modalDescuentos',$data);
 ?>
   <main class="app-content">    
       <div class="app-title">

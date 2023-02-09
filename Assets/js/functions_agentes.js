@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
-    $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial']);
-    $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos']);
+    $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1});
+    $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1});
     
     $('input:radio[name=age_t]').change(function() {
         if ($(this).val()=='gem_v') {
@@ -39,10 +39,12 @@ document.addEventListener('DOMContentLoaded',function () {
         openModal('gpe');
     })
 
-    $('#select_gem').click(function() {
+    $('#select_gem').click(async function() {
+        await $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1});
         $('#age_gem_id').val(gem_table.getSelectedItem().gem_id)
     })
-    $('#select_gpe').click(function() {
+    $('#select_gpe').click(async function() {
+        await $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1});
         $('#age_gpe_id').val(gpe_table.getSelectedItem().gpe_id)
     })
     
@@ -72,7 +74,7 @@ async function setGem() {
     var gem = await set('gem',['gem_ruc'],null,true);
     if (gem.status) {
         resetModal('gem');
-        $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial']);
+        await $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1});
         $('#age_gem_id').val(gem.gem_id)
     }
 }
@@ -81,7 +83,7 @@ async function setGpe() {
     console.log(gpe);
     if (gpe.status) {
         resetModal('gpe');
-        $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos']);
+        await $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1});
         $('#age_gpe_id').val(gpe.gpe_id)
     }
 }

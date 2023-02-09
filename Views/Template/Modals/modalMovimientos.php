@@ -151,8 +151,8 @@
                         <th class="w-auto" id="tipoDetalle">Bien <a class="text-success" href="#" id="new_bien">
                             [<i class="fas fa-plus-circle">Seleccionar</i>]</a></th>
                         <th class="w-auto" id="new_f_bien" style="display:none" >Bien Destino</th>
-                        <th>Cantidad</th>
                         <th>CALIDAD</th>
+                        <th>Cantidad</th>
                         <th width="100">
                           <div class="form-row h-100 justify-content-center ">
                             <div class="col">P.U.
@@ -166,13 +166,6 @@
                         </th>
                         <th style="display:none"  >Tipo de IGV</th>
                         <th>Importe</th>
-                        <th  width="100px">  
-                          <!-- <span>Exp.</span>
-                          <input type="checkbox" id="mde_exp" name="mde_exp">&nbsp;&nbsp;                        
-                          <span>Det.</span>
-                          <input type="checkbox" id="mde_det" name="mde_det">&nbsp;% -->
-                          <a href="#" id="set_open_mde" onclick="setDescuentos(null,event)">Descuentos</a>
-                        </th>
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -183,19 +176,15 @@
                           </select></td>
                         <td style="display:none" ><select class="form-control" id="mde_f_bie_id" name="mde_f_bie_id">
                           </select></td>
+                          <td><select class="form-control" data-live-search="true" id="mde_t6m_id" name="mde_t6m_id"
+                            required></select></td>
                         <td><input type="text" class="form-control valid" id="mde_q" name="mde_q" disabled value="0.00">
                         </td>
-                        <td><select class="form-control" data-live-search="true" id="mde_t6m_id" name="mde_t6m_id"
-                            required></select></td>
                         <td><input type="text" class="form-control valid " id="mde_vu" name="mde_vu" value="0.00"
                             disabled></td>
                         <td style="display:none" ><select type="text" class="form-control" id="mde_gta_id" name="mde_gta_id"></select></td>
                         <td><input type="text" class="form-control valid" id="mde_importe" name="mde_importe"
                             value="0.00" disabled>
-                        </td>
-                        <td>
-                          <input type="text" class="form-control valid" name="mde_des" id="mde_des" value="0.00">
-                          <!-- <input type="text" class="form-control valid" id="mde_detraccion" name="mde_detraccion" disabled value="15"> -->
                         </td>
                         <td>
                           <div class="text-center">
@@ -222,11 +211,51 @@
               </div>
             </div>
           </div>
-        </div>
+        </div><br>
         <div class="row">
           <div class="form-group col-md-9 ">
+            <h6 class="text-center">SECCION DE GASTOS</h6>
+            <table class="table table-hover table-bordered mb-0">
+              <thead>
+                <tr>
+                  <th>CALIDAD</th>
+                  <th>TIPO</th>
+                  <th>CANTIDAD</th>
+                  <th>MONTO</th>
+                  <th>SUBTOTAL</th>
+                  <th>OPCIONES</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                <td>
+                    <select class="form-control" id="des_t6m_id" name="des_t6m_id"></select>
+                  </td>
+                  <td>
+                    <select class="form-control" id="des_tga_id" name="des_tga_id"></select>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" name="des_q" id="des_q">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" name="des_p" id="des_p">
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" name="des_mt" id="des_mt" readonly>
+                  </td>
+                  <td>
+                    <button class="btn btn-primary  btn-sm" onclick="event.preventDefault();setDes();" id="set_des" title="Agregar">
+                      <i class="fa fa-plus mr-0"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table><br>
+            <div class="table-responsive">
+                  <table class="table table-hover table-bordered table-sm " id="des_table" width="100%"></table>
+                  </div>
             <label class="pt-4 " for="mov_observaciones ">Notas y/o Observaciones:</label>
-            <textarea id="mov_observaciones" name="mov_observaciones" rows="7" class="form-control"></textarea>
+            <textarea id="mov_observaciones" name="mov_observaciones" rows="3" class="form-control"></textarea>
           </div>
           <div class="form-group col-md-3">
             <form id="formMtx" name="formMtx">
@@ -280,7 +309,7 @@
                     <label for="cde_des">Descuentos</label>
                   </div>
                   <div class="col-md-8">
-                    <input type="text" class="form-control valid validText text-right" id="cde_des"
+                    <input type="text" class="form-control valid validText text-right" id="mov_des"
                       name="cde_des" value="0.00" readonly>
                   </div>
                 </div>

@@ -29,12 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
         "rezise": false,
         "export": false,
         "columns":[
-            {"data":"mde_q",header:"Cantidad",tipo:'float'},
             {"data":"mde_bie_id.bie_nombre",header:"Articulo",tipo:'string'},
             {"data":"mde_t6m_id.t6m_sunat",header:"CALIDAD",tipo:'string'},
+            {"data":"mde_q",header:"Cantidad",tipo:'float'},
             {"data":"mde_vu",header:"P.U.",tipo:'float'},
-            {"data":"mde_gta_id.gta_descripcion",header:"Tipo Igv",tipo:'string'},
-            {"data":"mde_desm",header:"Descuentos",tipo:'float'},
             {"data":"mde_importe",header:"Importe",tipo:'float'},
             {"data":"mde_options",header:"Acciones",tipo:'string'}
         ]
@@ -46,7 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
             "rezise": false,
             "export": false,
             "columns":[
-                {"data":"des_tipo_id.tipo_des",header:"TIPO",tipo:'string',footer:"TOTALES"},
+                {"data":"des_t6m_id.t6m_descripcion",header:"CALIDAD",tipo:'string'},
+                {"data":"des_tga_id.tga_nombre",header:"TIPO",tipo:'string',footer:"TOTALES"},
                 {"data":"des_q",header:'CANTIDAD',tipo:'float',footer:{ c:"sum" }},
                 {"data":"des_p",header:'MONTO',tipo:'money'},
                 {"data":"des_mt",header:'SUBTOTAL',tipo:'money',footer:{ c:"sum" }},
@@ -59,6 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#mov_cue_id').loadOptions('cuentas',['cue_nombre'],{'cue_status':1});
     $('#mov_gt4_id').loadOptions('t4monedas',['gt4_descripcion']);
     $('#mde_t6m_id').loadOptions('t6medidas',['t6m_descripcion'],{'t6m_status':1});
+    $('#des_t6m_id').loadOptions('t6medidas',['t6m_descripcion'],{'t6m_status':1});
+    $('#des_tga_id').loadOptions('tgastos',['tga_nombre'],{'tga_status':1});
     if (parseInt(data.mov_t12_id)==2) {
         $('#mde_gta_id').loadOptions('tafectaciones',['gta_descripcion'],{'gta_id':9});
     } else {
@@ -197,19 +198,16 @@ document.addEventListener('DOMContentLoaded', function () {
         var formData = new FormData(document.getElementById("formMov"));                
         var formMtx = Object.fromEntries(new FormData(document.getElementById("formMtx")));
         for (const i in mde_json) {
-            if (Object.hasOwnProperty.call(mde_json, i)) {
-                delete mde_json[i].mde_options;
-            }
-            for (const e in mde_json[i].mde_des) {
-                if (Object.hasOwnProperty.call(mde_json[i].mde_des, e)) {
-                    delete mde_json[i].mde_des[e].des_options;
-                }
-            }
+            delete mde_json[i].mde_options;
+        }
+        for (const i in des_json) {
+            delete des_json[i].des_options;
         }
         formData.set('mov_gtc_id',$('#gtc_compra').attr('data'));
         formData.set('mov_ncr_id',$('#mov_ncr_id').attr('data'));
         formData.append('mov_subtotal', formMtx.mov_subtotal);  delete formMtx.mov_subtotal;
         formData.append('mov_total', formMtx.mov_total);  delete formMtx.mov_total;
+        formData.append('mov_des_id', JSON.stringify(des_json)); 
         formData.append('mov_mde_id', JSON.stringify(mde_json)); 
         formData.append('mov_igv_id', JSON.stringify(formMtx));
         formData.append('mov_observaciones', $('#mov_observaciones').val());  
@@ -406,8 +404,6 @@ function setMde(id=-1) {
         },
         mde_q: parseFloat($('#mde_q').val()), 
         mde_vu: mde_igv ? parseFloat($('#mde_vu').val())/1.18 : parseFloat($('#mde_vu').val()),
-        mde_igv: +mde_igv,
-        mde_des: {...des_json},
         mde_desm:parseFloat($('#mde_des').val()),
         mde_f_bie_id:{
             bie_id: parseInt($('#mde_f_bie_id').val()),
@@ -440,9 +436,13 @@ function setDes(id=-1) {
         }
     }
     des_json[pin] = {
-        des_tipo_id: {
-            tipo_id: $('#des_tipo_id').val(),
-            tipo_des: $('#des_tipo_id').find('option:selected').text()
+        des_t6m_id: {
+            t6m_id: $('#des_t6m_id').val(),
+            t6m_descripcion: $('#des_t6m_id').find('option:selected').text()
+        },
+        des_tga_id: {
+            tga_id: $('#des_tga_id').val(),
+            tga_nombre: $('#des_tga_id').find('option:selected').text()
         },
         des_q: parseFloat($('#des_q').val()), 
         des_p: parseFloat($('#des_p').val()),
@@ -451,8 +451,8 @@ function setDes(id=-1) {
         '<button class="btn btn-danger btn-sm" onClick="event.preventDefault();deleteDes(' + pin + ');" title="Eliminar"><i class="far fa-trash-alt"></i></button></div>'
     };
     des.reload();
-    // subtotalMde();
-    // cleanMde();
+    subtotalMde();
+    cleanDes();
     $('#set_des').removeClass('btn-info').addClass('btn-primary');
     $('#set_des').children('i').removeClass('fa-refresh').addClass('fa-plus');
     $('#set_des').attr('onclick','event.preventDefault();setDes();')                 
@@ -491,6 +491,7 @@ function deleteDes(id) {
         if (isConfirm) {
             delete des_json[id];
             des.reload();
+            subtotalMde();
         }
     });
 }
@@ -507,13 +508,11 @@ function editMde(id) {
     $('#mde_igv').prop('checked',mde_json[id].mde_igv>0?1:0);
     $('#mde_det').prop('checked',mde_json[id].mde_detraccion>0?1:0);
     $('#mde_detraccion').val(mde_json[id].mde_detraccion>0?mde_json[id].mde_detraccion:15);
-    $('#mde_des').val(mde_json[id].mde_desm);
     $('#mde_vu').val(mde_json[id].mde_vu);
     $('#mde_importe').val(mde_json[id].mde_importe);
     $('#set_mde').removeClass('btn-primary').addClass('btn-info');
     $('#set_mde').children('i').removeClass('fa-plus').addClass('fa-refresh');
     $('#set_mde').attr('onclick','event.preventDefault();setMde('+id+');')
-    $('#set_open_mde').attr('onclick','setDescuentos('+id+',event)')
     $('#set_mde').slideDown();
     if (parseInt(data.mov_t12_id)==18) {
         $('#mde_f_bie_id').parent().show() 
@@ -523,6 +522,17 @@ function editMde(id) {
     $("#mde_importe").removeAttr("disabled");
     $("#mde_q").removeAttr("disabled");
     $("#mde_vu").removeAttr("disabled");
+}
+function editDes(id) {
+    $('#des_t6m_id').val(des_json[id].des_t6m_id.t6m_id);
+    $('#des_tga_id').val(des_json[id].des_tga_id.tga_id);
+    $('#des_q').val(des_json[id].des_q);
+    $('#des_p').val(des_json[id].des_p);
+    $('#des_mt').val(des_json[id].des_mt);
+    $('#set_des').removeClass('btn-primary').addClass('btn-info');
+    $('#set_des').children('i').removeClass('fa-plus').addClass('fa-refresh');
+    $('#set_des').attr('onclick','event.preventDefault();setDes('+id+');')
+    $('#set_des').slideDown();
 }
 function cleanMde() {
     $('#mde_q').val('');
@@ -538,8 +548,12 @@ function cleanMde() {
     if (parseInt(data.mov_t12_id)!=18) {
         $('#mde_f_bie_id').parent().hide() 
         $('#new_f_bien').hide();
-    }
-    
+    } 
+}
+function cleanDes() {
+    $('#des_q').val('');
+    $('#des_p').val('');
+    $('#des_mt').val('');
 }
 function openMde() {
     $("#mde_importe").removeAttr("disabled");
@@ -557,7 +571,6 @@ function subtotalMde() {
     var arrInafecto = [11,12,13,14,15,16,17,18];
     for (const i in mde_json) {
         if (Object.hasOwnProperty.call(mde_json, i)) {
-            mde_des+=parseFloat(mde_json[i].mde_desm);
 			switch (true) {
 				case arrExonerado.includes(parseInt(mde_json[i].mde_gta_id.gta_id)):
 					subExonerada += parseFloat(mde_json[i].mde_importe);
@@ -578,12 +591,16 @@ function subtotalMde() {
 			}
         }
     }
+    for (const i in des_json) {
+        const e = des_json[i];
+        mde_des+=des_json[i].des_mt
+
+    }
     $('#mov_exonerada').val(Math.ceil10(subExonerada,-2).toFixed(2));
-    
     $('#mov_inafecta').val(Math.ceil10(subInafecta,-2).toFixed(2));
     $('#mov_gravada').val(Math.ceil10(subGravada,-2).toFixed(2));
     var subtotal = Math.ceil10(subExonerada + subInafecta + subGravada,-2);
-    $('#cde_des').val(Math.ceil10(mde_des,-2).toFixed(2));
+    $('#mov_des').val(Math.ceil10(mde_des,-2).toFixed(2));
     $('#mov_subtotal').val(subtotal.toFixed(2));
     $('#mov_igv').val(Math.round10((subGravada * 0.18),-2).toFixed(2));
     $('#mov_total').val(Math.round10((subtotal -mde_des+ (subGravada * 0.18)),-2).toFixed(2));

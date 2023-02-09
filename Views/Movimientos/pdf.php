@@ -310,29 +310,27 @@
     <table class="tbl-detalle">
         <thead>
             <tr>
+                <th class="wd20 text-center">CALIDAD</th>
                 <th class="wd20 text-center">TIPO</th>
                 <th class="wd20 text-center">CANTIDAD</th>
-                <th class="wd20 text-center">CALIDAD</th>
                 <th class="wd20 text-center">MONTO</th>
                 <th class="wd20 text-right">SUBTOTAL</th>
             </tr>
         </thead>
         <tbody>
             <?php 
-			for ($i = 0; $i < count($mov['mov_mde_id']);$i++) {
-					$mde = $mov['mov_mde_id'][$i];
-                    $mde['mde_des'] = json_decode($mde['mde_des'],true);
-                    foreach ($mde['mde_des'] as $j => $r) {    
-                    ?>
-                    <tr>
-                        <td class="text-center"><?= $r['des_tipo_id']['tipo_des'] ?></td>
-                        <td class="text-right"><?= number_format($r['des_q'], 2,'.','') ?></td>
-                        <td class="text-center"><?= $mde['mde_t6m_id']['t6m_descripcion'] ?></td>
-                        <td class="text-right"><?= number_format($r['des_p'], 2,'.','') ?></td>
-                        <td class="text-right"><?= formatMoney($r['des_mt']) ?></td>
-                    </tr>
-                    <?php } 
-            }
+            $des_sum = 0;
+			for ($i = 0; $i < count($mov['mov_des_id']);$i++) { 
+                $r = $mov['mov_des_id'][$i];
+                $des_sum+=$r['des_mt'];?>
+                <tr>
+                    <td class="text-center"><?= $r['des_t6m_id']['t6m_descripcion'] ?></td>
+                    <td class="text-center"><?= $r['des_tga_id']['tga_nombre'] ?></td>
+                    <td class="text-right"><?= number_format($r['des_q'], 2,'.','') ?></td>
+                    <td class="text-right"><?= number_format($r['des_p'], 2,'.','') ?></td>
+                    <td class="text-right"><?= formatMoney($r['des_mt']) ?></td>
+                </tr>
+            <?php  }
             $mov['mov_igv_id'] = json_decode($mov['mov_igv_id'],true);
             ?>
         </tbody>
@@ -350,14 +348,14 @@
                     <p><?= $mov['mov_observaciones'] ?></p>
                 </td>
                 <td colspan="2" class="tblfoot"><strong>DESCUENTOS</strong></td>
-                <td class="text-right tbltval"><?= formatMoney($mov['mov_igv_id']['mov_igv']) ?></td>
+                <td class="text-right tbltval"><?= formatMoney($des_sum) ?></td>
             </tr>
             <tr>
                 <td colspan="2" class="tblfoot_Final"><strong>TOTAL</strong></td>
                 <td class="text-right tbltval"><?= formatMoney($mov['mov_total']) ?></td>
             </tr>
         </tfoot>
-    </table>
+    </table><br>
 
     <div class="tbl-cliente">
         SON: <span><?= $mov['mov_letras_pen'] ?></span>
