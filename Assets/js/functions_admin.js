@@ -554,7 +554,7 @@ function previewFiles(th,content) {
                     .then(r => {return r})
                     .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
                 }
-                draw();
+                await draw();
                 zise();
                 listenTree();
                 if (typeof o.select != undefined) {
@@ -624,13 +624,13 @@ function previewFiles(th,content) {
                 })
                 .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
             },
-            editCell : function(r,d,e){
+            editCell : async function(r,d,e){
                 e.preventDefault();
                 if (o.copyCellEditOrigin) {
                     window[o.src][r][d] = parseFloat(e.target.value);
                     o.copyCellEditOrigin();
                 }
-                draw();
+                await draw();
                 zise();
                 listenTree();
                 if (typeof o.select != undefined) {

@@ -310,11 +310,25 @@ function openModalC(t) {
                     res_table.reload();
                     setTimeout(() => {
                         if (data.sim.sim_tipo == 2) {
-                            $('#inp_table tr > *:nth-child(4)').hide();
-                            $('#inp_table tr > *:nth-child(5)').hide();
-                            $('#inp_table tr > *:nth-child(6)').hide();
-                            $('#out_table tr > *:nth-child(4)').hide();
-                            $('#out_table tr > *:nth-child(5)').hide();
+                            $('#inp_table tbody tr > *:nth-child(4)').hide();
+                            $('#inp_table thead tr:eq(1) > *:nth-child(4)').hide();
+                            $('#inp_table thead tr:eq(0) > *:nth-child(3)').hide();
+                            $('#inp_table tfoot tr > *:nth-child(4)').hide();
+                            $('#inp_table tbody tr > *:nth-child(5)').hide();
+                            $('#inp_table thead tr:eq(1) > *:nth-child(5)').hide();
+                            $('#inp_table tfoot tr > *:nth-child(5)').hide();
+                            $('#inp_table tbody tr > *:nth-child(6)').hide();
+                            $('#inp_table thead tr:eq(1) > *:nth-child(6)').hide();
+                            $('#inp_table thead tr:eq(0) > *:nth-child(4)').hide();
+                            $('#inp_table tfoot tr > *:nth-child(6)').hide();
+                            $('#out_table tbody tr > *:nth-child(4)').hide();
+                            $('#out_table tfoot tr > *:nth-child(4)').hide();
+                            $('#out_table thead tr:eq(1) > *:nth-child(4)').hide();
+                            $('#out_table thead tr:eq(0) > *:nth-child(3)').hide();
+                            $('#out_table tbody tr > *:nth-child(5)').hide();
+                            $('#out_table tfoot tr > *:nth-child(5)').hide();
+                            $('#out_table thead tr:eq(1) > *:nth-child(5)').hide();
+                            $('#out_table thead tr:eq(0) > *:nth-child(4)').text('DETRACCION');
                             $('#por_table tr > *:nth-child(2)').hide();
                             $('#por_table tr:eq(1) > th:nth-child(3)').text('% DET+IGV')
                             $('#out_table tr:eq(1) > th:nth-child(6)').text('DET/TN')
@@ -323,6 +337,7 @@ function openModalC(t) {
                             $('#inp_table tr > *').css('display','table-cell');
                             $('#por_table tr > *').css('display','table-cell');
                             $('#out_table tr > *').css('display','table-cell');
+                            $('#out_table thead tr:eq(0) > *:nth-child(4)').text('IGV');
                             $('#por_table tr:eq(1) > th:nth-child(3)').text('% IGV')
                             $('#out_table tr:eq(1) > th:nth-child(6)').text('IGV/TN')
                             $('#out_table tr:eq(1) > th:nth-child(7)').text('IGV/KG')
@@ -384,11 +399,25 @@ async function getPosSim() {
                     res_table.reload();
                     setTimeout(() => {
                         if (data.sim.sim_tipo == 2) {
-                            $('#inp_table tr > *:nth-child(4)').hide();
-                            $('#inp_table tr > *:nth-child(5)').hide();
-                            $('#inp_table tr > *:nth-child(6)').hide();
-                            $('#out_table tr > *:nth-child(4)').hide();
-                            $('#out_table tr > *:nth-child(5)').hide();
+                            $('#inp_table tbody tr > *:nth-child(4)').hide();
+                            $('#inp_table thead tr:eq(1) > *:nth-child(4)').hide();
+                            $('#inp_table thead tr:eq(0) > *:nth-child(3)').hide();
+                            $('#inp_table tfoot tr > *:nth-child(4)').hide();
+                            $('#inp_table tbody tr > *:nth-child(5)').hide();
+                            $('#inp_table thead tr:eq(1) > *:nth-child(5)').hide();
+                            $('#inp_table tfoot tr > *:nth-child(5)').hide();
+                            $('#inp_table tbody tr > *:nth-child(6)').hide();
+                            $('#inp_table thead tr:eq(1) > *:nth-child(6)').hide();
+                            $('#inp_table thead tr:eq(0) > *:nth-child(4)').hide();
+                            $('#inp_table tfoot tr > *:nth-child(6)').hide();
+                            $('#out_table tbody tr > *:nth-child(4)').hide();
+                            $('#out_table tfoot tr > *:nth-child(4)').hide();
+                            $('#out_table thead tr:eq(1) > *:nth-child(4)').hide();
+                            $('#out_table thead tr:eq(0) > *:nth-child(3)').hide();
+                            $('#out_table tbody tr > *:nth-child(5)').hide();
+                            $('#out_table tfoot tr > *:nth-child(5)').hide();
+                            $('#out_table thead tr:eq(1) > *:nth-child(5)').hide();
+                            $('#out_table thead tr:eq(0) > *:nth-child(4)').text('DETRACCION');
                             $('#por_table tr > *:nth-child(2)').hide();
                             $('#por_table tr:eq(1) > th:nth-child(3)').text('% DET+IGV')
                             $('#out_table tr:eq(1) > th:nth-child(6)').text('DET/TN')
@@ -397,6 +426,7 @@ async function getPosSim() {
                             $('#inp_table tr > *').css('display','table-cell');
                             $('#por_table tr > *').css('display','table-cell');
                             $('#out_table tr > *').css('display','table-cell');
+                            $('#out_table thead tr:eq(0) > *:nth-child(4)').text('IGV');
                             $('#por_table tr:eq(1) > th:nth-child(3)').text('% IGV')
                             $('#out_table tr:eq(1) > th:nth-child(6)').text('IGV/TN')
                             $('#out_table tr:eq(1) > th:nth-child(7)').text('IGV/KG')
