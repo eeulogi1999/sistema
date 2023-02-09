@@ -87,7 +87,7 @@ class Movimientos extends Controllers{
         $data['page_title'] = "Estado de Ordenes de Ventas";
         $data['page_name'] = "Estado de Ordenes de Ventas";
         $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'per'=>$_SESSION['perMod'],'sim'=>array('sim_tce_id'=>$tce['tce_id'],'sim_gtc'=>$tce['tce_gtc_id']['gtc_tcompra'],'sim_tipo'=>1,'sim_gus_id'=>$_SESSION['gus']['gus_id'])); 
-        $data['page_functions_js'] = array("functions_eventas.js","functions_movimientos.js");
+        $data['page_functions_js'] = array("functions_eventas_copy.js","functions_movimientos.js");
         $this->views->getView($this,"eventas",$data);
     }
     public function getEventas(){

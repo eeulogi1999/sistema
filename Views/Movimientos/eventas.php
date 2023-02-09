@@ -1,6 +1,7 @@
 <?php 
     headerAdmin($data); 
-    getModal('modalSimulaciones',$data);
+    //getModal('modalSimulaciones',$data);
+    getModal('modalSpreadsheet',$data);
     getModal('modalMovimientos',$data);
 ?>
 <main class="app-content">
