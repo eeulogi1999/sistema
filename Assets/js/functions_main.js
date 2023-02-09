@@ -95,19 +95,18 @@ async function off(node,prefijo,id,res=false) {
 }
 async function set(prefijo,where= null,json = null,res = false) {
     var table = capitalize(getTable(prefijo));
-    if (json != null) {
-        var formData = new FormData();
-        for (const i in json) {
-            formData.append(i,json[i])
-        }
-    } else {
-        var formData = new FormData(document.querySelector('#form_'+prefijo));
+    if (!json) {
+        json = Object.fromEntries(new FormData(document.querySelector('#form_'+prefijo)));
     }
     if (typeof window['setPre'+capitalize(prefijo)]==='function') {
-        var arr = await window['setPre'+capitalize(prefijo)](where,Object.fromEntries(formData),res);
+        var arr = await window['setPre'+capitalize(prefijo)](where,json,res);
         where = arr.where??where;
         json = arr.json??json;
         res = arr.res??res;
+    }
+    formData = new FormData();
+    for (const i in json) {
+        formData.append(i,json[i])
     }
     if (data[prefijo]) {
         for (const i in data[prefijo]) {
@@ -151,7 +150,9 @@ async function set(prefijo,where= null,json = null,res = false) {
                 });
             }
         })
-        .catch(error => swal("Atención", "Error en el proceso: " + error, "error"))
+        .catch(error => {
+            console.error(error)
+            swal("Atención", "Error en el proceso: " + error, "error")})
     if (res) {
         return response;
     }

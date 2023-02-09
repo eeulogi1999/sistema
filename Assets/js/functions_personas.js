@@ -79,13 +79,20 @@ async function setPreGpe(where,json,res) {
     if (!json.gpe_gcl_id) {
         json.gpe_gcl_id = JSON.stringify([parseInt(data.gcl_id)]);
     }
-    return {json}
+    if (json.gpe_gt2_id == 1) {
+        where = null;
+    }else{
+        where = ['gpe_identificacion','gpe_gt2_id'];
+    }
+    return {where,json}
 }
 
 async function setPosGpe(res) {
     if (res.exist) {
         let gpe_gcl_id = JSON.parse(res.data.gpe_gcl_id);
-        gpe_gcl_id.push(parseInt(data.gcl_id));
+        if (!gpe_gcl_id.includes(parseInt(data.gcl_id))) {
+            gpe_gcl_id.push(parseInt(data.gcl_id));
+        } 
         await set('gpe',null,{gpe_id:parseInt(res.gpe_id),gpe_gcl_id:JSON.stringify(gpe_gcl_id)})
         return true
     }

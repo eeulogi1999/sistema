@@ -59,13 +59,22 @@ async function setPreGem(where,json,res) {
     if (!json.gem_gcl_id) {
         json.gem_gcl_id = await JSON.stringify([parseInt(data.gcl_id)]);
     }
-    return {json}
+    if (!json.gem_id) {
+        if (json.gem_ruc.substring(0, 2)  != '20' && json.gem_ruc.substring(0, 2)  != '10') {
+            where = null;
+        }else{
+            where = ['gem_ruc'];
+        }
+    }
+    return {where,json}
 }
 
 async function setPosGem(res) {
     if (res.exist) {
         var gem_gcl_id = JSON.parse(res.data.gem_gcl_id);
-        gem_gcl_id.push(parseInt(data.gcl_id));
+        if (!gem_gcl_id.includes(parseInt(data.gcl_id))) {
+            gem_gcl_id.push(parseInt(data.gcl_id));
+        }
         await set('gem',null,{gem_id:parseInt(res.gem_id),gem_gcl_id:JSON.stringify(gem_gcl_id)})
         return true
     }
