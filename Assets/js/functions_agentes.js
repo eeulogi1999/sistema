@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "thid": 'age_id',
             "columns":[
                 {"data":"age_tipo",header:{t:"TIPO"},tipo:'string',footer:"TOTALES"},
-                {"data":"age_marca",header:{t:"MARCA"},tipo:'string'},
+                {"data":"age_marca",header:{t:"MARCA",c:'text'},tipo:'string'},
                 {"data":"age_ide",header:{t:"RUC/DNI"},tipo:'string'},
                 {"data":"age_nombre",header:{t:"NOMBRE/RAZON SOCIAL",c:'text'},tipo:'string'},
                 {"data":"age_gdi_id.gdi_distrito",header:{t:"DISTRITO"},tipo:'string'},
