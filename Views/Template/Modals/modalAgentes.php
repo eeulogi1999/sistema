@@ -23,6 +23,10 @@
         <form id="form_age" name="form_age" class="form-horizontal">
           <input type="hidden" id="age_id" name="age_id" value="">
           <div class="datosform pb-1">
+            <label for="age_tipo">MARCA<span class="required">*</span></label>
+            <input type="text" class="form-control" name="age_marca" id="age_marca">
+          </div>
+          <div class="datosform pb-1">
             <label for="age_tipo">TIPO<span class="required">*</span></label>
             <select class="form-control" data-live-search="true" id="age_tipo" name="age_tipo" required>
               <option value="2">CLIENTE</option>
