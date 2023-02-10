@@ -109,11 +109,11 @@ class Main extends Controllers{
         $tabla = $this->getTable($pre);
         $this->newModel($tabla);
         $arrData = $this->{$tabla}->selectRegistros();
-        if ($pre == 'gem') {
-            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"JSON_OVERLAPS(gem_gcl_id,'".$_SESSION['gcl']['gcl_id']."')"));
+        if ($pre == 'gem') { 
+            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"JSON_EXTRACT(gem_gcl_id,'$[0]') = ".$_SESSION['gcl']['gcl_id']." OR JSON_EXTRACT(gem_gcl_id,'$[1]') = ".$_SESSION['gcl']['gcl_id']));
         }
         if ($pre == 'gpe') {
-            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"JSON_OVERLAPS(gpe_gcl_id,'".$_SESSION['gcl']['gcl_id']."')"));
+            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"JSON_EXTRACT(gpe_gcl_id,'$[0]') = ".$_SESSION['gcl']['gcl_id']." OR JSON_EXTRACT(gpe_gcl_id,'$[1]') = ".$_SESSION['gcl']['gcl_id']));
         }
         for ($i=0; $i < count($arrData); $i++) {
             $btnView = '';

@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"age_status",header:{t:"ESTADO"},tipo:'string'},
                 {"data":"age_options",header:"ACCION",tipo:'string'}
             ]
-        });
-    }
-    $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1,custom:'JSON_OVERLAPS(gem_gcl_id,'+"'"+data.gcl_id+"'"+')'});
-    $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1,custom:'JSON_OVERLAPS(gpe_gcl_id,'+"'"+data.gcl_id+"'"+')'});
+        }); //'JSON_OVERLAPS(gem_gcl_id,'+"'"+data.gcl_id+"'"+')'
+    }  //JSON_EXTRACT(`gpe_gcl_id`,'$[0]')=3 OR JSON_EXTRACT(`gpe_gcl_id`,'$[1]')=3
+    $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1,custom:'JSON_EXTRACT(gem_gcl_id,"$[0]") = '+data.gcl_id+' OR JSON_EXTRACT(gem_gcl_id,"$[1]") ='+data.gcl_id});
+    $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1,custom:'JSON_EXTRACT(gpe_gcl_id,"$[0]") = '+data.gcl_id+' OR JSON_EXTRACT(gpe_gcl_id,"$[1]") ='+data.gcl_id});
     $('#age_gt4_id').loadOptions('t4monedas',['gt4_sunat']);
     
     $('input:radio[name=age_t]').change(function() {
@@ -41,11 +41,11 @@ document.addEventListener('DOMContentLoaded',function () {
     })
 
     $('#select_gem').click(async function() {
-        await $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1,custom:'JSON_OVERLAPS(gem_gcl_id,'+"'"+data.gcl_id+"'"+')'});
+        await $('#age_gem_id').loadOptions('empresas',['gem_ruc','gem_razonsocial'],{gem_status:1,custom:'JSON_EXTRACT(gem_gcl_id,"$[0]") = '+data.gcl_id+' OR JSON_EXTRACT(gem_gcl_id,"$[1]") ='+data.gcl_id});
         $('#age_gem_id').val(gem_table.getSelectedItem().gem_id)
     })
     $('#select_gpe').click(async function() {
-        await $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1,custom:'JSON_OVERLAPS(gpe_gcl_id,'+"'"+data.gcl_id+"'"+')'});
+        await  $('#age_gpe_id').loadOptions('personas',['gpe_identificacion','gpe_nombre','gpe_apellidos'],{gpe_status:1,custom:'JSON_EXTRACT(gpe_gcl_id,"$[0]") = '+data.gcl_id+' OR JSON_EXTRACT(gpe_gcl_id,"$[1]") ='+data.gcl_id});
         $('#age_gpe_id').val(gpe_table.getSelectedItem().gpe_id)
     })
     
