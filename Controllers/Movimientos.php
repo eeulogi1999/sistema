@@ -226,7 +226,7 @@ class Movimientos extends Controllers{
                         $mde['mde_gta_id'] = $mde['mde_gta_id']['gta_id'];
                         $mde['mde_mov_id'] = $mov['mov_id'];
                         $mde['mde_igv'] = (isset($mde['mde_igv'])) ? $mde['mde_igv'] : 0 ;
-                        if (!isset($mde['aat_id'])) {
+                        if (intval($mde['mde_id'])>0) {
                             $mde = $this->mdetalles->insertRegistro($mde);
                         } else {
                             $mde = $this->mdetalles->updateRegistro($mde);
@@ -240,7 +240,11 @@ class Movimientos extends Controllers{
                         $des['des_tga_id'] = $des['des_tga_id']['tga_id'];
                         $des['des_t6m_id'] = $des['des_t6m_id']['t6m_id'];
                         $des['des_mov_id'] = $mov['mov_id'];
-                        $des = $this->mdetalles->updateRegistro($des);
+                        if (intval($des['des_id']>0)) {
+                            $des = $this->descuentos->insertRegistro($des);
+                        } else {
+                            $des = $this->descuentos->updateRegistro($des);
+                        }
                     }
                 } 
             }

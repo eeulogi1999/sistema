@@ -356,7 +356,6 @@
             </tr>
         </tfoot>
     </table><br>
-
     <div class="tbl-cliente">
         SON: <span><?= $mov['mov_letras_pen'] ?></span>
     </div><br>

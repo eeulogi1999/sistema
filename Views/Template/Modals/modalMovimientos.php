@@ -306,11 +306,11 @@
               <div class="datosform">
                 <div class="row">
                   <div class="col-md-4">
-                    <label for="cde_des">Descuentos</label>
+                    <label for="mov_des">Descuentos</label>
                   </div>
                   <div class="col-md-8">
                     <input type="text" class="form-control valid validText text-right" id="mov_des"
-                      name="cde_des" value="0.00" readonly>
+                      name="mov_des" value="0.00" readonly>
                   </div>
                 </div>
               </div>

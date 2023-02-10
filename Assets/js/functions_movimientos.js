@@ -390,6 +390,7 @@ function setMde(id=-1) {
         }
     }
     mde_json[pin] = {
+        mde_id: (mde_json[pin])?mde_json[pin].mde_id??0:0,
         mde_bie_id: {
             bie_id: $('#mde_bie_id').val(),
             bie_nombre: $('#mde_bie_id').find('option:selected').text()
@@ -436,6 +437,7 @@ function setDes(id=-1) {
         }
     }
     des_json[pin] = {
+        des_id: (des_json[pin])?des_json[pin].des_id??0:0,
         des_t6m_id: {
             t6m_id: $('#des_t6m_id').val(),
             t6m_descripcion: $('#des_t6m_id').find('option:selected').text()
@@ -452,7 +454,6 @@ function setDes(id=-1) {
     };
     des.reload();
     subtotalMde();
-    cleanDes();
     $('#set_des').removeClass('btn-info').addClass('btn-primary');
     $('#set_des').children('i').removeClass('fa-refresh').addClass('fa-plus');
     $('#set_des').attr('onclick','event.preventDefault();setDes();')                 
@@ -691,6 +692,7 @@ function openModalMov() {
     $('#mov_age_id').children().text('Seleccione');  
     changet10t12()
     mde.clear();
+    des.clear();
     document.querySelector("#mov_fechaE").valueAsDate = new Date();
     ftnTcambio(document.querySelector("#mov_fechaE"));
     $('#modal_mov').modal('show');
@@ -730,10 +732,19 @@ function editMov(id) {
                 '<button class="btn btn-danger btn-sm" onClick="event.preventDefault();deleteMde(' + i + ');" title="Eliminar"><i class="far fa-trash-alt"></i></button></div>';
             }
             mde.reload();
+            des_json = mov.mov_des_id;
+            for (const i in des_json) {
+                des_json[i]['des_q'] = parseFloat(des_json[i]['des_q']).toFixed(2);
+                des_json[i]['des_p'] = parseFloat(des_json[i]['des_p']).toFixed(2);
+                des_json[i]['des_mt'] =  parseFloat(des_json[i]['des_mt']).toFixed(2);
+                des_json[i]['des_options'] = '<div class="text-center"><button class="btn btn-primary btn-sm" onClick="event.preventDefault();editDes(' + i + ');" title="Editar"><i class="fas fa-pencil-alt"></i></button>'+
+                '<button class="btn btn-danger btn-sm" onClick="event.preventDefault();deleteDes(' + i + ');" title="Eliminar"><i class="far fa-trash-alt"></i></button></div>';
+            }
+            des.reload();
             setTimeout(() => {
                 subtotalMde();
             }, 1000);
-            
+            $('#mov_cue_id').parent().parent().hide();
             $('#mov_observaciones').val(mov.mov_observaciones); 
             $('#modal_'+prefijo).modal('show');
             return response;

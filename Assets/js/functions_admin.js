@@ -492,7 +492,9 @@ function previewFiles(th,content) {
         };
         constructor.prototype = {
             clear: function(){
-                $(tbody).html('<tr><td colspan="'+(numerate?o.columns.length+1:o.columns.length)+'" class="text-center">Ningún dato disponible en esta tabla =(</td></tr>');
+                o.data = {};
+                draw();
+                zise()
                 return true;
             },
             reload: async function(url=null){
