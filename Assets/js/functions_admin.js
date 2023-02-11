@@ -555,7 +555,6 @@ function previewFiles(th,content) {
                     .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
                 }
                 await draw();
-                zise();
                 listenTree();
                 if (typeof o.select != undefined) {
                     if (o.select) {
@@ -576,6 +575,9 @@ function previewFiles(th,content) {
                         $(table).children('td').unbind();
                     }
                 }
+                setTimeout(() => {
+                    zise();
+                }, 100);
                 return true;
             },
             rezise: function(){

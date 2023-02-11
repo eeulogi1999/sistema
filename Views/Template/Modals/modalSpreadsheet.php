@@ -116,18 +116,18 @@
                     <td id="sim_qtn" class="text-right" >20.00</td>
                     <td id="sim_ptn" class="text-right" >8205.00</td>
                     <td class="sim_gtc text-right" >3.86</td>
-                    <td class="sim_mbtn text-right" >632113.20</td>
+                    <td class="sim_mbtn text-right bg-dark-lite" >632113.20</td>
                     <td class="sim_g text-right bg-danger" >0.56</td>
-                    <td id="sim_mntn" class="text-right" >620913.20</td>
+                    <td id="sim_mntn" class="text-right bg-dark-lite" >620913.20</td>
                   </tr>
                   <tr>
                     <td class="text-center" >KG</td>
-                    <td id="sim_qkg" class="text-right" >1.00</td>
-                    <td id="sim_pkg" class="text-right" >8.21</td>
+                    <td id="sim_qkg" class="text-right bg-dark-lite" >1.00</td>
+                    <td id="sim_pkg" class="text-right bg-dark-lite" >8.21</td>
                     <td class="sim_gtc text-right" >3.86</td>
                     <td class="sim_mbkg text-right" >31.61</td>
                     <td class="sim_g text-right bg-danger" >0.56</td>
-                    <td id="sim_mnkg" class="text-right" >31.05</td>
+                    <td id="sim_mnkg" class="text-right bg-dark-lite" >31.05</td>
                   </tr>
                 </tbody>
               </table>
@@ -169,7 +169,9 @@
                     <th class="text-center" >IMPUESTO</th>
                     <th class="text-center" >RETORNO</th>
                     <th class="text-center" >GASTO ADM.</th>
-                    <th class="text-center" >MONTO NETO</th>
+                    <th class="text-center" >SALDO</th>
+                    <th class="text-center" >MONTO PLUS</th>
+                    <th class="text-center" >SALDO</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -181,7 +183,9 @@
                     <td id="sim_miptn" class="text-right bg-primary" >22123.97</td>
                     <td id="sim_mrtn" class="text-right" >83691.79</td>
                     <td id="sim_matn" class="text-right bg-warning" >37661.31</td>
+                    <td id="sim_msatn" class="text-right" >37661.31</td>
                     <td id="sim_mptn" class="text-right bg-danger" >37661.31</td>
+                    <td id="sim_msptn" class="text-right" >37661.31</td>
                   </tr>
                   <tr>
                     <td  class="text-center">KG</td>
@@ -191,7 +195,9 @@
                     <td id="sim_mipkg" class="text-right bg-primary" >1.11</td>
                     <td id="sim_mrkg" class="text-right" >4.19</td>
                     <td id="sim_makg" class="text-right bg-warning" >1.89</td>
+                    <td id="sim_msakg" class="text-right" >1.89</td>
                     <td id="sim_mpkg" class="text-right bg-danger" >1.89</td>
+                    <td id="sim_mspkg" class="text-right" >1.89</td>
                   </tr>
                 </tbody>
               </table>

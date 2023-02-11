@@ -85,9 +85,11 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#sim_table")) {
         sim_table = await sim_table;
+        sim_table.rezise()
     }
     if (document.querySelector("#nac_table")) {
         nac_table = await nac_table;
+        nac_table.rezise()
     }
     divLoading.style.display = "none";
 });
@@ -134,18 +136,18 @@ function reload() {
             return r.sim_pkg
         }
     })(val_json[0])
-    val_json[0].sim_mbtn = ((r)=>{
-        if (r.sim_tipo == 1) {
-            return r.sim_qtn*r.sim_ptn*r.sim_gtc
-        } else {
-            return r.sim_pkg*1000*r.sim_qtn
-        }
-    })(val_json[0])
     val_json[0].sim_mbkg = ((r)=>{
         if (r.sim_tipo == 1) {
             return r.sim_qkg*r.sim_pkg*r.sim_gtc
         } else {
             return r.sim_pkg
+        }
+    })(val_json[0])
+    val_json[0].sim_mbtn = ((r)=>{
+        if (r.sim_tipo == 1) {
+            return r.sim_qtn*r.sim_ptn*r.sim_gtc
+        } else {
+            return r.sim_pkg*1000*r.sim_qtn
         }
     })(val_json[0])
     val_json[0].sim_mntn = ((r)=>{return r.sim_mbtn-(r.sim_g*1000*r.sim_qtn)})(val_json[0])
@@ -158,10 +160,18 @@ function reload() {
     val_json[0].sim_mipkg = ((r)=>{ return r.sim_mbkg*r.sim_imp/100})(val_json[0])
     val_json[0].sim_mrtn = ((r)=>{ return r.sim_migtn-r.sim_miptn})(val_json[0])
     val_json[0].sim_mrkg = ((r)=>{ return r.sim_migkg-r.sim_mipkg})(val_json[0])
-    val_json[0].sim_matn = ((r)=>{ return r.sim_mrtn*(1-r.sim_cadm/100)})(val_json[0])
-    val_json[0].sim_makg = ((r)=>{ return r.sim_mrkg*(1-r.sim_cadm/100)})(val_json[0])
-    val_json[0].sim_mptn = ((r)=>{ return r.sim_matn*(1-r.sim_plus/100)})(val_json[0])
-    val_json[0].sim_mpkg = ((r)=>{ return r.sim_makg*(1-r.sim_plus/100)})(val_json[0])
+
+    val_json[0].sim_matn = ((r)=>{ return r.sim_mrtn*(r.sim_cadm/100)})(val_json[0])
+    val_json[0].sim_makg = ((r)=>{ return r.sim_mrkg*(r.sim_cadm/100)})(val_json[0])
+    val_json[0].sim_msatn = ((r)=>{ return r.sim_mrtn-r.sim_matn})(val_json[0])
+    val_json[0].sim_msakg = ((r)=>{ return r.sim_mrkg-r.sim_makg})(val_json[0])
+
+    val_json[0].sim_mptn = ((r)=>{ return r.sim_msatn*(r.sim_plus/100)})(val_json[0])
+    val_json[0].sim_mpkg = ((r)=>{ return r.sim_msakg*(r.sim_plus/100)})(val_json[0])
+    val_json[0].sim_msptn = ((r)=>{ return r.sim_msatn-r.sim_mptn})(val_json[0])
+    val_json[0].sim_mspkg = ((r)=>{ return r.sim_msakg-r.sim_mpkg})(val_json[0])
+
+
     val_json[0].sim_pp = ((r)=>{
         let ls = [r.sim_p_1,r.sim_p_2,r.sim_p_3,r.sim_p_4];
         let li = [];
@@ -171,7 +181,7 @@ function reload() {
             }
         }
         return li.reduce(function(a, b){return a + b;})/li.length})(val_json[0])
-    val_json[0].sim_pm = ((r)=>{ return r.sim_mnkg+r.sim_makg*(r.sim_plus/100)})(val_json[0])
+    val_json[0].sim_pm = ((r)=>{ return r.sim_mnkg+r.sim_msakg*(r.sim_plus/100)})(val_json[0])
 
     val_json[0].sim_mkg = ((r)=>{return r.sim_mnkg-r.sim_pc})(val_json[0])
     val_json[0].sim_mtn = ((r)=>{return r.sim_qtn*1000*r.sim_mkg})(val_json[0])
@@ -201,11 +211,15 @@ function reload() {
     $('.sim_gtc').text(val_json[0].sim_gtc)
     $('.sim_g').text(val_json[0].sim_g)
 
-    var es = ['#sim_qtn','#sim_qkg','#sim_ptn','#sim_pkg','.sim_gtc','.sim_g','#sim_p_1','#sim_p_2','#sim_p_3','#sim_p_4','#sim_pc','#sim_exp','#sim_igv','#sim_imp','#sim_cadm','#sim_plus']
+    var es = ['#sim_qtn','#sim_qkg','#sim_ptn','#sim_pkg','.sim_gtc','.sim_g','#sim_p_1','#sim_p_2','#sim_p_3','#sim_p_4','#sim_pc','#sim_exp','#sim_igv','#sim_imp','#sim_cadm','#sim_plus','.sim_mbkg']
     for (const i in es) {
         $(es[i]).dblclick(function(){
             let e =  es[i].substring(1, es[i].length)
-            $(this).html('<input type="text" value="'+val_json[0][e]+'" size="10" onChange="editCell(`'+e+'`,event)">') 
+            if (e == 'sim_mbkg') { 
+                $(this).html('<input type="text" value="'+val_json[0][e]+'" size="10" onChange="editCell(`sim_pkg`,event)">') 
+            } else {
+                $(this).html('<input type="text" value="'+val_json[0][e]+'" size="10" onChange="editCell(`'+e+'`,event)">')  
+            }
         })
     }
     if (data.sim.sim_tipo == 2) {
@@ -215,6 +229,7 @@ function reload() {
         $('#out_table tr > *:nth-child(3)').hide();
         $('#por_table thead tr > *:nth-child(2)').text('DETRACCION');
         $('#out_table thead tr > *:nth-child(4)').text('DETRACCION');
+        $('#inp_table .sim_mbkg').removeClass('bg-dark-lite');
     }else{
         $('#inp_table tr > *:nth-child(3)').css('display','table-cell');
         $('#inp_table tr > *:nth-child(4)').css('display','table-cell');
@@ -222,6 +237,11 @@ function reload() {
         $('#out_table tr > *:nth-child(3)').css('display','table-cell');
         $('#por_table thead tr > *:nth-child(2)').text('% IGV');
         $('#out_table thead tr > *:nth-child(4)').text('IGV');
+        $('#inp_table .sim_mbkg').addClass('bg-dark-lite');
+    }
+    if (!parseInt(data.per.gtp_u)) {
+        $('#por_table').hide()
+        $('#out_table').hide()
     }
 }
 
@@ -249,10 +269,6 @@ function delPosSim(where,json,res) {
     return true; 
 }
 async function getPosSim() {
-    if (!parseInt(data.per.gtp_u)) {
-        $('#por_table').hide()
-        $('#out_table').hide()
-    }
     val_json[0] = data.simId
     data.sim.sim_tipo = parseInt(data.simId.sim_tipo)
     val_json[0].sim_gtc = (data.simId.sim_tce_id.tce_compra)?data.simId.sim_tce_id.tce_compra:data.simId.sim_tce_id.tce_gtc_id.gtc_tcompra
