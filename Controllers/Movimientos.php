@@ -411,7 +411,7 @@ class Movimientos extends Controllers{
             $des_q = array_sum(array_column($f,'des_q'));
             $des_p = ($des_q>0)?$des_mt/$des_q:0;
             $des_mt = formatMoney($des_mt);
-            $data['mov']['des']['mov_'.$r['tga_id']] = ($des_q>0)?$f[0]['des_tga_id']['tga_nombre'].'->'.$des_q.'X'.$des_p.'='.$des_mt:0;
+            $data['mov']['des']['mov_'.$r['tga_id']] = ($des_q>0)?$f[0]['des_t6m_id']['t6m_descripcion'].'->'.$des_q.'X'.$des_p.'='.$des_mt:0;
         }
         $data['mov']['des']['mov_1'] = formatMoney($this->descuentos->searchRegistro(array('des_mov_id'=>$mov_id,'des_tga_id'=>1),'SUM(des_mt) as sum')['sum']);
         $data['mov']['des']['mov_9'] = formatMoney($this->descuentos->searchRegistro(array('des_mov_id'=>$mov_id,'des_tga_id'=>9),'SUM(des_mt) as sum')['sum']);
