@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded',function () {
         });
     }
 
+    $('#sim_bie_id').loadOptions('bienes',['bie_nombre'],{'bie_status':1});
     document.querySelector("body").style.overflowY = 'auto';
 
 });
@@ -115,42 +116,53 @@ function openModalC(t) {
     r.sim_imp = (t==1)?3.5:2.5;
     r.sim_cadm = 55
     r.sim_plus = 0
-    r.sim_pkg = ((r)=>{
+    val_json[0] = r;
+    reload()
+}
+
+function editCell(i,e) {
+    e.preventDefault();
+    e.stopPropagation();
+    val_json[0][i] = parseFloat(e.target.value) 
+    reload()
+}
+function reload() {
+    val_json[0].sim_pkg = ((r)=>{
         if (r.sim_tipo == 1) {
             return r.sim_ptn/1000
         } else {
             return r.sim_pkg
         }
-    })(r)
-    r.sim_mbtn = ((r)=>{
+    })(val_json[0])
+    val_json[0].sim_mbtn = ((r)=>{
         if (r.sim_tipo == 1) {
             return r.sim_qtn*r.sim_ptn*r.sim_gtc
         } else {
             return r.sim_pkg*1000*r.sim_qtn
         }
-    })(r)
-    r.sim_mbkg = ((r)=>{
+    })(val_json[0])
+    val_json[0].sim_mbkg = ((r)=>{
         if (r.sim_tipo == 1) {
             return r.sim_qkg*r.sim_pkg*r.sim_gtc
         } else {
             return r.sim_pkg
         }
-    })(r)
-    r.sim_mntn = ((r)=>{return r.sim_mbtn-(r.sim_g*1000*r.sim_qtn)})(r)
-    r.sim_mnkg = ((r)=>{return r.sim_mbkg-(r.sim_g*r.sim_qkg)})(r)
-    r.sim_mxtn = ((r)=>{ return r.sim_mbtn*r.sim_exp/100})(r)
-    r.sim_mxkg = ((r)=>{ return r.sim_mbkg*r.sim_exp/100})(r)
-    r.sim_migtn = ((r)=>{ return r.sim_mxtn*r.sim_igv/100})(r)
-    r.sim_migkg = ((r)=>{ return r.sim_mxkg*r.sim_igv/100})(r)
-    r.sim_miptn = ((r)=>{ return r.sim_mbtn*r.sim_imp/100})(r)
-    r.sim_mipkg = ((r)=>{ return r.sim_mbkg*r.sim_imp/100})(r)
-    r.sim_mrtn = ((r)=>{ return r.sim_migtn-r.sim_miptn})(r)
-    r.sim_mrkg = ((r)=>{ return r.sim_migkg-r.sim_mipkg})(r)
-    r.sim_matn = ((r)=>{ return r.sim_mrtn*(1-r.sim_cadm/100)})(r)
-    r.sim_makg = ((r)=>{ return r.sim_mrkg*(1-r.sim_cadm/100)})(r)
-    r.sim_mptn = ((r)=>{ return r.sim_matn*(1-r.sim_plus/100)})(r)
-    r.sim_mpkg = ((r)=>{ return r.sim_makg*(1-r.sim_plus/100)})(r)
-    r.sim_pp = ((r)=>{
+    })(val_json[0])
+    val_json[0].sim_mntn = ((r)=>{return r.sim_mbtn-(r.sim_g*1000*r.sim_qtn)})(val_json[0])
+    val_json[0].sim_mnkg = ((r)=>{return r.sim_mbkg-(r.sim_g*r.sim_qkg)})(val_json[0])
+    val_json[0].sim_mxtn = ((r)=>{ return r.sim_mbtn*r.sim_exp/100})(val_json[0])
+    val_json[0].sim_mxkg = ((r)=>{ return r.sim_mbkg*r.sim_exp/100})(val_json[0])
+    val_json[0].sim_migtn = ((r)=>{ return r.sim_mxtn*r.sim_igv/100})(val_json[0])
+    val_json[0].sim_migkg = ((r)=>{ return r.sim_mxkg*r.sim_igv/100})(val_json[0])
+    val_json[0].sim_miptn = ((r)=>{ return r.sim_mbtn*r.sim_imp/100})(val_json[0])
+    val_json[0].sim_mipkg = ((r)=>{ return r.sim_mbkg*r.sim_imp/100})(val_json[0])
+    val_json[0].sim_mrtn = ((r)=>{ return r.sim_migtn-r.sim_miptn})(val_json[0])
+    val_json[0].sim_mrkg = ((r)=>{ return r.sim_migkg-r.sim_mipkg})(val_json[0])
+    val_json[0].sim_matn = ((r)=>{ return r.sim_mrtn*(1-r.sim_cadm/100)})(val_json[0])
+    val_json[0].sim_makg = ((r)=>{ return r.sim_mrkg*(1-r.sim_cadm/100)})(val_json[0])
+    val_json[0].sim_mptn = ((r)=>{ return r.sim_matn*(1-r.sim_plus/100)})(val_json[0])
+    val_json[0].sim_mpkg = ((r)=>{ return r.sim_makg*(1-r.sim_plus/100)})(val_json[0])
+    val_json[0].sim_pp = ((r)=>{
         let ls = [r.sim_p_1,r.sim_p_2,r.sim_p_3,r.sim_p_4];
         let li = [];
         for (const i in ls) {
@@ -158,23 +170,105 @@ function openModalC(t) {
                 li.push(ls[i])
             }
         }
-        return li.reduce(function(a, b){return a + b;})/li.length})(r)
-    r.sim_pm = ((r)=>{ return r.sim_mnkg+r.sim_makg*(r.sim_plus/100)})(r)
+        return li.reduce(function(a, b){return a + b;})/li.length})(val_json[0])
+    val_json[0].sim_pm = ((r)=>{ return r.sim_mnkg+r.sim_makg*(r.sim_plus/100)})(val_json[0])
 
-    r.sim_mkg = ((r)=>{return r.sim_mnkg-r.sim_pc})(r)
-    r.sim_mtn = ((r)=>{return r.sim_qtn*1000*r.sim_mkg})(r)
-    r.sim_ikg = ((r)=>{return r.sim_mnkg-r.sim_pm})(r)
-    r.sim_itn = ((r)=>{return r.sim_qtn*1000*r.sim_ikg})(r)
+    val_json[0].sim_mkg = ((r)=>{return r.sim_mnkg-r.sim_pc})(val_json[0])
+    val_json[0].sim_mtn = ((r)=>{return r.sim_qtn*1000*r.sim_mkg})(val_json[0])
+    val_json[0].sim_ikg = ((r)=>{return r.sim_mnkg-r.sim_pm})(val_json[0])
+    val_json[0].sim_itn = ((r)=>{return r.sim_qtn*1000*r.sim_ikg})(val_json[0])
     
 
-    for (const i in r) {
-        $('#'+i).text(Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(r[i],-2).toFixed(2)))
+    for (const i in val_json[0]) {
+        if (i == 'sim_bie_id' || i == "sim_obs") {
+            $('#'+i).val(val_json[0][i])           
+        } else {
+            $('#'+i).text(Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(val_json[0][i],-2).toFixed(2)))
+        }
+        
     }
-    $('.sim_mbtn').text(Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(r.sim_mbtn,-2).toFixed(2)))
-    $('.sim_mbkg').text(Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(r.sim_mbkg,-2).toFixed(2)))
-    $('.sim_gtc').text(r.sim_gtc)
-    $('.sim_g').text(r.sim_g)
+    $('#sim_exp').text(val_json[0].sim_exp)
+    $('#sim_igv').text(val_json[0].sim_igv)
+    $('#sim_imp').text(val_json[0].sim_imp)
+    $('#sim_cadm').text(val_json[0].sim_cadm)
+    $('#sim_plus').text(val_json[0].sim_plus)
+    $('#sim_qtn').text(val_json[0].sim_qtn)
+    $('#sim_qkg').text(val_json[0].sim_qkg)
+    $('#sim_ptn').text(Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Math.ceil10(val_json[0].sim_ptn,-2).toFixed(2)))
+    $('#sim_pkg').text(Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Math.ceil10(val_json[0].sim_pkg,-2).toFixed(2)))
+    $('.sim_mbtn').text(Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(val_json[0].sim_mbtn,-2).toFixed(2)))
+    $('.sim_mbkg').text(Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(val_json[0].sim_mbkg,-2).toFixed(2)))
+    $('.sim_gtc').text(val_json[0].sim_gtc)
+    $('.sim_g').text(val_json[0].sim_g)
 
-    val_json[0] = r;
+    var es = ['#sim_qtn','#sim_qkg','#sim_ptn','#sim_pkg','.sim_gtc','.sim_g','#sim_p_1','#sim_p_2','#sim_p_3','#sim_p_4','#sim_pc','#sim_exp','#sim_igv','#sim_imp','#sim_cadm','#sim_plus']
+    for (const i in es) {
+        $(es[i]).dblclick(function(){
+            let e =  es[i].substring(1, es[i].length)
+            $(this).html('<input type="text" value="'+val_json[0][e]+'" size="10" onChange="editCell(`'+e+'`,event)">') 
+        })
+    }
+    if (data.sim.sim_tipo == 2) {
+        $('#inp_table tr > *:nth-child(3)').hide();
+        $('#inp_table tr > *:nth-child(4)').hide();
+        $('#por_table tr > *:nth-child(1)').hide();
+        $('#out_table tr > *:nth-child(3)').hide();
+        $('#por_table thead tr > *:nth-child(2)').text('DETRACCION');
+        $('#out_table thead tr > *:nth-child(4)').text('DETRACCION');
+    }else{
+        $('#inp_table tr > *:nth-child(3)').css('display','table-cell');
+        $('#inp_table tr > *:nth-child(4)').css('display','table-cell');
+        $('#por_table tr > *:nth-child(1)').css('display','table-cell');
+        $('#out_table tr > *:nth-child(3)').css('display','table-cell');
+        $('#por_table thead tr > *:nth-child(2)').text('% IGV');
+        $('#out_table thead tr > *:nth-child(4)').text('IGV');
+    }
 }
+
+function setPreSim(where,json,res) {
+    if (val_json[0].sim_gtc != data.sim.sim_gtc) {
+       set('tce',{tce_id:data.sim.sim_tce_id,tce_compra:val_json[0].sim_gtc}) 
+    }
+    if (parseInt(val_json[0].sim_id)>0) {
+        json.sim_obs = $('#sim_obs').val()
+        json = {...val_json[0],...data,...json}
+        delete json.sim_created;
+    } else {
+        json = {...data.sim,...json,...val_json[0]}
+    }
+    return {json}; 
+}
+function setPosSim(where,json,res) {
+    sim_table.reload()
+    nac_table.reload()
+    return true; 
+}
+function delPosSim(where,json,res) {
+    sim_table.reload()
+    nac_table.reload()
+    return true; 
+}
+async function getPosSim() {
+    if (!parseInt(data.per.gtp_u)) {
+        $('#por_table').hide()
+        $('#out_table').hide()
+    }
+    val_json[0] = data.simId
+    data.sim.sim_tipo = parseInt(data.simId.sim_tipo)
+    val_json[0].sim_gtc = (data.simId.sim_tce_id.tce_compra)?data.simId.sim_tce_id.tce_compra:data.simId.sim_tce_id.tce_gtc_id.gtc_tcompra
+    val_json[0].sim_gus_id = data.simId.sim_gus_id.gus_id
+    val_json[0].sim_bie_id = data.simId.sim_bie_id.bie_id 
+    val_json[0].sim_tce_id = data.simId.sim_tce_id.tce_id
+    for (const r in val_json[0]) {
+        if (r == "sim_obs") {
+            val_json[0][r] = val_json[0][r]
+        } else {
+            val_json[0][r] = parseFloat(val_json[0][r]) 
+        }   
+    }
+    reload();
+}
+
+
+
 

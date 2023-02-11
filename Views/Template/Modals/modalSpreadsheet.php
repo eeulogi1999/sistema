@@ -138,11 +138,11 @@
               <table class="table table-hover table-bordered table-sm" id="por_table" width="100%">
                 <thead class="bg-dark-lite sticky-top" style="padding-right: 17px; margin-right: -17px;">
                   <tr>
-                    <th ><div class="text-center"> % COM.</div></th>
-                    <th ><div class="text-center">% IGV</div></th>
-                    <th ><div class="text-center"> % IMP.</div></th>
-                    <th ><div class="text-center"> % C. ADM</div></th>
-                    <th ><div class="text-center"> % PLUS</div></th>
+                    <th class="text-center"> % COM.</th>
+                    <th class="text-center">% IGV</th>
+                    <th class="text-center"> % IMP.</th>
+                    <th class="text-center"> % C. ADM</th>
+                    <th class="text-center"> % PLUS</th>
                   </tr>
                 </thead>
                 <tbody>
