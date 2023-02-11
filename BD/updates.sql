@@ -13,4 +13,9 @@ CREATE TABLE `u125097058_bd_graciela`.`descuentos`
    ALTER TABLE `descuentos` ADD CONSTRAINT `descuentos_tgastos` FOREIGN KEY (`des_tga_id`) REFERENCES `tgastos`(`tga_id`) ON DELETE CASCADE ON UPDATE CASCADE;
    ALTER TABLE `descuentos` ADD CONSTRAINT `descuentos_movimientos` FOREIGN KEY (`des_mov_id`) REFERENCES `movimientos`(`mov_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
-   INSERT INTO `tgastos` (`tga_id`, `tga_nombre`, `tga_status`) VALUES (NULL, 'FLETE', '1'), (NULL, 'CAJA 1', '1'), (NULL, 'CAJA 2', '1'), (NULL, 'CAJA 3', '1'), (NULL, 'CAJA 4', '1'), (NULL, 'BOLSA 1', '1'), (NULL, 'BOLSA 2', '1'), (NULL, 'BOLSA 3', '1');
+   INSERT INTO `tgastos` (`tga_id`, `tga_nombre`, `tga_status`) VALUES 
+   (NULL, 'FLETE', '1'), (NULL, 'CAJA 1', '1'), (NULL, 'CAJA 2', '1'), 
+   (NULL, 'CAJA 3', '1'), (NULL, 'CAJA 4', '1'), (NULL, 'BOLSA 1', '1'),
+    (NULL, 'BOLSA 2', '1'), (NULL, 'BOLSA 3', '1');
+   INSERT INTO `tgastos` (`tga_id`, `tga_nombre`, `tga_status`) VALUES 
+   (NULL, 'PAPEL 1', '1'), (NULL, 'PAPEL 2', '1'), (NULL, 'PAPEL 3', '1'), (NULL, 'OTROS', '1');

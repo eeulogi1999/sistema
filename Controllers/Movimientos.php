@@ -402,12 +402,30 @@ class Movimientos extends Controllers{
         $data['alm'] = $_SESSION['alm'];
         $data['mov'] = $this->getMovimiento($mov_id,true)['data'];
         $data['mov']['mov_letras_pen'] = $this->formatter->toInvoice($data['mov']['mov_total'], 2, "SOLES");
-        // dep(json_decode($data['mov']['mov_mde_id'][0]['mde_des'],true) );
-        $html = getFile("Movimientos/pdf",$data);
-        $html2pdf = new Spipu\Html2Pdf\Html2Pdf('p','A4','es','true','UTF-8');
-        $html2pdf->pdf->setTitle($data['mov']['mov_serie'].'-'.str_pad($data['mov']['mov_numero'],8,0,STR_PAD_LEFT));
-        $html2pdf->writeHTML($html);
-        $html2pdf->output('comprobante-'.$mov_id.'.pdf');   
+
+        $this->newModel('tgastos');
+        $tga = $this->tgastos->selectRegistros();
+        foreach ($tga as $i => $r) {
+            $f = $this->descuentos->selectRegistros(array('des_mov_id'=>$mov_id,'des_tga_id'=>$r['tga_id']),array('des_mov_id'));
+            $des_mt = array_sum(array_column($f,'des_mt'));
+            $des_q = array_sum(array_column($f,'des_q'));
+            $des_p = ($des_q>0)?$des_mt/$des_q:0;
+            $des_mt = formatMoney($des_mt);
+            $data['mov']['des']['mov_'.$r['tga_id']] = ($des_q>0)?$f[0]['des_tga_id']['tga_nombre'].'->'.$des_q.'X'.$des_p.'='.$des_mt:0;
+        }
+        $data['mov']['des']['mov_1'] = formatMoney($this->descuentos->searchRegistro(array('des_mov_id'=>$mov_id,'des_tga_id'=>1),'SUM(des_mt) as sum')['sum']);
+        $data['mov']['des']['mov_9'] = formatMoney($this->descuentos->searchRegistro(array('des_mov_id'=>$mov_id,'des_tga_id'=>9),'SUM(des_mt) as sum')['sum']);
+        
+
+        $html = getFile("Movimientos/pdf",$data);  
+        $dompdf = new Dompdf\Dompdf();
+        $options = new Dompdf\Options();
+        $options->set(array('isRemoteEnabled'=>true));
+        $dompdf->setOptions($options);
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+        $dompdf->stream('comprobante-'.$mov_id.'.pdf', array("Attachment" => false));
+        exit(0);
         die();
     }
 

@@ -725,18 +725,18 @@ function editMov(id) {
             ftnTcambio(document.querySelector("#mov_fechaE"));
             mde_json = mov.mov_mde_id;
             for (const i in mde_json) {
-                mde_json[i]['mde_q'] = parseFloat(mde_json[i]['mde_q']).toFixed(2);
-                mde_json[i]['mde_vu'] = parseFloat(mde_json[i]['mde_vu']).toFixed(2);
-                mde_json[i]['mde_importe'] =  parseFloat(mde_json[i]['mde_importe']).toFixed(2);
+                mde_json[i]['mde_q'] = parseFloat(mde_json[i]['mde_q']);
+                mde_json[i]['mde_vu'] = parseFloat(mde_json[i]['mde_vu']);
+                mde_json[i]['mde_importe'] =  parseFloat(mde_json[i]['mde_importe']);
                 mde_json[i]['mde_options'] = '<div class="text-center"><button class="btn btn-primary btn-sm" onClick="event.preventDefault();editMde(' + i + ');" title="Editar"><i class="fas fa-pencil-alt"></i></button>'+
                 '<button class="btn btn-danger btn-sm" onClick="event.preventDefault();deleteMde(' + i + ');" title="Eliminar"><i class="far fa-trash-alt"></i></button></div>';
             }
             mde.reload();
             des_json = mov.mov_des_id;
             for (const i in des_json) {
-                des_json[i]['des_q'] = parseFloat(des_json[i]['des_q']).toFixed(2);
-                des_json[i]['des_p'] = parseFloat(des_json[i]['des_p']).toFixed(2);
-                des_json[i]['des_mt'] =  parseFloat(des_json[i]['des_mt']).toFixed(2);
+                des_json[i]['des_q'] = parseFloat(des_json[i]['des_q']);
+                des_json[i]['des_p'] = parseFloat(des_json[i]['des_p']);
+                des_json[i]['des_mt'] =  parseFloat(des_json[i]['des_mt']);
                 des_json[i]['des_options'] = '<div class="text-center"><button class="btn btn-primary btn-sm" onClick="event.preventDefault();editDes(' + i + ');" title="Editar"><i class="fas fa-pencil-alt"></i></button>'+
                 '<button class="btn btn-danger btn-sm" onClick="event.preventDefault();deleteDes(' + i + ');" title="Eliminar"><i class="far fa-trash-alt"></i></button></div>';
             }
