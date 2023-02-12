@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 25-01-2023 a las 16:57:09
--- Versión del servidor: 8.0.30
--- Versión de PHP: 7.4.0
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 12-02-2023 a las 02:13:47
+-- Versión del servidor: 10.5.12-MariaDB-cll-lve
+-- Versión de PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `aatributos` (
-  `aat_id` bigint NOT NULL,
-  `aat_act_id` bigint NOT NULL,
-  `aat_val_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `aat_id` bigint(20) NOT NULL,
+  `aat_act_id` bigint(20) NOT NULL,
+  `aat_val_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -40,11 +40,11 @@ CREATE TABLE `aatributos` (
 --
 
 CREATE TABLE `accesos` (
-  `gac_id` bigint NOT NULL,
-  `gac_gus_id` bigint NOT NULL,
-  `gac_gcl_id` bigint NOT NULL,
-  `gac_use` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gac_id` bigint(20) NOT NULL,
+  `gac_gus_id` bigint(20) NOT NULL,
+  `gac_gcl_id` bigint(20) NOT NULL,
+  `gac_use` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `accesos`
@@ -60,12 +60,12 @@ INSERT INTO `accesos` (`gac_id`, `gac_gus_id`, `gac_gcl_id`, `gac_use`) VALUES
 --
 
 CREATE TABLE `acreditos` (
-  `acr_id` bigint NOT NULL,
+  `acr_id` bigint(20) NOT NULL,
   `acr_monto` decimal(12,6) NOT NULL,
-  `acr_ncuota` int NOT NULL,
+  `acr_ncuota` int(11) NOT NULL,
   `acr_interes` decimal(6,4) NOT NULL,
   `acr_fechapago` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -74,14 +74,14 @@ CREATE TABLE `acreditos` (
 --
 
 CREATE TABLE `activos` (
-  `act_id` bigint NOT NULL,
+  `act_id` bigint(20) NOT NULL,
   `act_codigo` varchar(250) NOT NULL,
   `act_nombre` varchar(250) NOT NULL,
-  `act_t9p_id` bigint NOT NULL,
-  `act_act_id` bigint DEFAULT NULL,
+  `act_t9p_id` bigint(20) NOT NULL,
+  `act_act_id` bigint(20) DEFAULT NULL,
   `act_img` varchar(200) DEFAULT NULL,
-  `act_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `act_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -90,16 +90,16 @@ CREATE TABLE `activos` (
 --
 
 CREATE TABLE `adetalles` (
-  `ade_id` bigint NOT NULL,
-  `ade_q` int NOT NULL,
-  `ade_act_id` bigint NOT NULL,
+  `ade_id` bigint(20) NOT NULL,
+  `ade_q` int(11) NOT NULL,
+  `ade_act_id` bigint(20) NOT NULL,
   `ade_serie` varchar(200) DEFAULT NULL,
   `ade_fechaA` date NOT NULL,
-  `ade_vutil` int NOT NULL,
+  `ade_vutil` int(11) NOT NULL,
   `ade_vu` decimal(12,6) NOT NULL,
   `ade_mt` decimal(12,6) NOT NULL,
-  `ade_ads_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `ade_ads_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -108,17 +108,17 @@ CREATE TABLE `adetalles` (
 --
 
 CREATE TABLE `adscripciones` (
-  `ads_id` bigint NOT NULL,
-  `ads_cunico` int NOT NULL,
+  `ads_id` bigint(20) NOT NULL,
+  `ads_cunico` int(11) NOT NULL,
   `ads_fecha` date NOT NULL,
-  `ads_col_id` bigint DEFAULT NULL,
-  `ads_ubi_id` bigint NOT NULL,
-  `ads_tipo` int NOT NULL,
+  `ads_col_id` bigint(20) DEFAULT NULL,
+  `ads_ubi_id` bigint(20) NOT NULL,
+  `ads_tipo` int(11) NOT NULL,
   `ads_motivo` varchar(250) DEFAULT NULL,
-  `ads_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `ads_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `ads_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `ads_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `ads_updated` datetime NOT NULL DEFAULT current_timestamp(),
+  `ads_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -127,23 +127,25 @@ CREATE TABLE `adscripciones` (
 --
 
 CREATE TABLE `agentes` (
-  `age_id` bigint NOT NULL,
-  `age_gpe_id` bigint DEFAULT NULL,
-  `age_gem_id` bigint DEFAULT NULL,
-  `age_tipo` int NOT NULL DEFAULT '1',
-  `age_arrbienes` json DEFAULT NULL,
+  `age_id` bigint(20) NOT NULL,
+  `age_gpe_id` bigint(20) DEFAULT NULL,
+  `age_gem_id` bigint(20) DEFAULT NULL,
+  `age_tipo` int(11) NOT NULL DEFAULT 1,
+  `age_arrbienes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`age_arrbienes`)),
   `age_monto` decimal(12,6) DEFAULT NULL,
-  `age_status` int NOT NULL DEFAULT '1',
-  `age_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `age_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `age_marca` varchar(10) NOT NULL,
+  `age_status` int(11) NOT NULL DEFAULT 1,
+  `age_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `age_updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `agentes`
 --
 
-INSERT INTO `agentes` (`age_id`, `age_gpe_id`, `age_gem_id`, `age_tipo`, `age_arrbienes`, `age_monto`, `age_status`, `age_created`, `age_updated`) VALUES
-(1, 1, NULL, 1, NULL, NULL, 1, '2022-07-25 13:41:19', '2022-07-25 13:41:19');
+INSERT INTO `agentes` (`age_id`, `age_gpe_id`, `age_gem_id`, `age_tipo`, `age_arrbienes`, `age_monto`, `age_marca`, `age_status`, `age_created`, `age_updated`) VALUES
+(5, 4, NULL, 1, NULL, NULL, 'CRISTIAN', 1, '2023-02-10 21:20:02', '2023-02-10 21:20:02'),
+(6, 5, NULL, 1, NULL, NULL, 'MSR', 1, '2023-02-10 21:43:33', '2023-02-10 21:43:33');
 
 -- --------------------------------------------------------
 
@@ -152,16 +154,16 @@ INSERT INTO `agentes` (`age_id`, `age_gpe_id`, `age_gem_id`, `age_tipo`, `age_ar
 --
 
 CREATE TABLE `almacenes` (
-  `alm_id` bigint NOT NULL,
-  `alm_gdi_id` bigint NOT NULL,
+  `alm_id` bigint(20) NOT NULL,
+  `alm_gdi_id` bigint(20) NOT NULL,
   `alm_nombre` varchar(20) NOT NULL,
   `alm_direccion` varchar(200) NOT NULL,
   `alm_imagen` varchar(100) DEFAULT NULL,
-  `alm_est_id` bigint NOT NULL,
-  `alm_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `alm_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `alm_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `alm_est_id` bigint(20) NOT NULL,
+  `alm_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `alm_updated` datetime NOT NULL DEFAULT current_timestamp(),
+  `alm_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `almacenes`
@@ -177,11 +179,11 @@ INSERT INTO `almacenes` (`alm_id`, `alm_gdi_id`, `alm_nombre`, `alm_direccion`, 
 --
 
 CREATE TABLE `areas` (
-  `gar_id` bigint NOT NULL,
+  `gar_id` bigint(20) NOT NULL,
   `gar_nombre` varchar(60) NOT NULL,
   `gar_descripcion` varchar(150) NOT NULL,
-  `gar_gar_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gar_gar_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `areas`
@@ -199,13 +201,13 @@ INSERT INTO `areas` (`gar_id`, `gar_nombre`, `gar_descripcion`, `gar_gar_id`) VA
 --
 
 CREATE TABLE `asistencias` (
-  `asi_id` bigint NOT NULL,
-  `asi_col_id` bigint NOT NULL,
-  `asi_ext` int DEFAULT NULL,
+  `asi_id` bigint(20) NOT NULL,
+  `asi_col_id` bigint(20) NOT NULL,
+  `asi_ext` int(11) DEFAULT NULL,
   `asi_horaE` datetime NOT NULL,
   `asi_horaS` datetime DEFAULT NULL,
-  `asi_obs` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `asi_obs` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -214,10 +216,10 @@ CREATE TABLE `asistencias` (
 --
 
 CREATE TABLE `batributos` (
-  `bat_id` bigint NOT NULL,
-  `bat_bie_id` bigint DEFAULT NULL,
-  `bat_val_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `bat_id` bigint(20) NOT NULL,
+  `bat_bie_id` bigint(20) DEFAULT NULL,
+  `bat_val_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -226,12 +228,12 @@ CREATE TABLE `batributos` (
 --
 
 CREATE TABLE `bbienes` (
-  `bbi_id` bigint NOT NULL,
-  `bbi_t5e_id` bigint NOT NULL,
-  `bbi_c70_id` bigint NOT NULL,
-  `bbi_c60_id` bigint NOT NULL,
-  `bbi_c61_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `bbi_id` bigint(20) NOT NULL,
+  `bbi_t5e_id` bigint(20) NOT NULL,
+  `bbi_c70_id` bigint(20) NOT NULL,
+  `bbi_c60_id` bigint(20) NOT NULL,
+  `bbi_c61_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `bbienes`
@@ -311,18 +313,18 @@ INSERT INTO `bbienes` (`bbi_id`, `bbi_t5e_id`, `bbi_c70_id`, `bbi_c60_id`, `bbi_
 --
 
 CREATE TABLE `bienes` (
-  `bie_id` bigint NOT NULL,
+  `bie_id` bigint(20) NOT NULL,
   `bie_codigo` varchar(12) NOT NULL,
   `bie_nombre` varchar(200) NOT NULL,
-  `bie_bbi_id` bigint DEFAULT NULL,
-  `bie_t6m_id` bigint DEFAULT NULL,
-  `bie_bie_id` bigint DEFAULT NULL,
-  `bie_alm_id` json NOT NULL,
-  `bie_p` decimal(12,6) NOT NULL DEFAULT '0.000000',
-  `bie_igv` tinyint(1) NOT NULL DEFAULT '0',
-  `bie_img` text,
-  `bie_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `bie_bbi_id` bigint(20) DEFAULT NULL,
+  `bie_t6m_id` bigint(20) DEFAULT NULL,
+  `bie_bie_id` bigint(20) DEFAULT NULL,
+  `bie_alm_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`bie_alm_id`)),
+  `bie_p` decimal(12,6) NOT NULL DEFAULT 0.000000,
+  `bie_igv` tinyint(1) NOT NULL DEFAULT 0,
+  `bie_img` text DEFAULT NULL,
+  `bie_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `bienes`
@@ -350,25 +352,25 @@ INSERT INTO `bienes` (`bie_id`, `bie_codigo`, `bie_nombre`, `bie_bbi_id`, `bie_t
 --
 
 CREATE TABLE `cajas` (
-  `caj_id` bigint NOT NULL,
-  `caj_tipo` int NOT NULL,
-  `caj_numero` bigint NOT NULL,
-  `caj_tga_id` bigint DEFAULT NULL,
-  `caj_responsable` text,
+  `caj_id` bigint(20) NOT NULL,
+  `caj_tipo` int(11) NOT NULL,
+  `caj_numero` bigint(20) NOT NULL,
+  `caj_tga_id` bigint(20) DEFAULT NULL,
+  `caj_responsable` text DEFAULT NULL,
   `caj_fecha` date NOT NULL,
-  `caj_col_id` bigint DEFAULT NULL,
-  `caj_age_id` bigint DEFAULT NULL,
-  `caj_observaciones` text,
-  `caj_cue_id` bigint DEFAULT NULL,
-  `caj_t1m_id` bigint DEFAULT NULL,
-  `caj_gt4_id` bigint DEFAULT '1',
+  `caj_col_id` bigint(20) DEFAULT NULL,
+  `caj_age_id` bigint(20) DEFAULT NULL,
+  `caj_observaciones` text DEFAULT NULL,
+  `caj_cue_id` bigint(20) DEFAULT NULL,
+  `caj_t1m_id` bigint(20) DEFAULT NULL,
+  `caj_gt4_id` bigint(20) DEFAULT 1,
   `caj_monto` decimal(24,4) NOT NULL,
-  `caj_gus_id` bigint DEFAULT NULL,
-  `caj_caj_id` bigint DEFAULT NULL,
-  `caj_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `caj_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `caj_status` int DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `caj_gus_id` bigint(20) DEFAULT NULL,
+  `caj_caj_id` bigint(20) DEFAULT NULL,
+  `caj_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `caj_updated` datetime NOT NULL DEFAULT current_timestamp(),
+  `caj_status` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -377,17 +379,17 @@ CREATE TABLE `cajas` (
 --
 
 CREATE TABLE `cdetalles` (
-  `cde_id` bigint NOT NULL,
-  `cde_bie_id` bigint DEFAULT NULL,
-  `cde_ser_id` bigint DEFAULT NULL,
-  `cde_t6m_id` bigint NOT NULL,
-  `cde_com_id` bigint NOT NULL,
-  `cde_gta_id` bigint NOT NULL,
+  `cde_id` bigint(20) NOT NULL,
+  `cde_bie_id` bigint(20) DEFAULT NULL,
+  `cde_ser_id` bigint(20) DEFAULT NULL,
+  `cde_t6m_id` bigint(20) NOT NULL,
+  `cde_com_id` bigint(20) NOT NULL,
+  `cde_gta_id` bigint(20) NOT NULL,
   `cde_q` decimal(12,6) NOT NULL,
   `cde_vu` decimal(12,6) NOT NULL,
   `cde_igv` tinyint(1) NOT NULL,
   `cde_importe` decimal(24,12) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -396,18 +398,18 @@ CREATE TABLE `cdetalles` (
 --
 
 CREATE TABLE `cierremeses` (
-  `cie_id` bigint NOT NULL,
+  `cie_id` bigint(20) NOT NULL,
   `cie_periodo` date NOT NULL,
-  `cie_alm_id` bigint NOT NULL,
-  `cie_bie_id` bigint NOT NULL,
-  `cie_qs` decimal(24,12) NOT NULL DEFAULT '0.000000000000',
-  `cie_mts` decimal(24,12) NOT NULL DEFAULT '0.000000000000',
-  `cie_qc` decimal(24,12) NOT NULL DEFAULT '0.000000000000',
-  `cie_mtc` decimal(24,12) NOT NULL DEFAULT '0.000000000000',
-  `cie_qv` decimal(24,12) NOT NULL DEFAULT '0.000000000000',
-  `cie_mtv` decimal(24,12) NOT NULL DEFAULT '0.000000000000',
-  `cie_start` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `cie_alm_id` bigint(20) NOT NULL,
+  `cie_bie_id` bigint(20) NOT NULL,
+  `cie_qs` decimal(24,12) NOT NULL DEFAULT 0.000000000000,
+  `cie_mts` decimal(24,12) NOT NULL DEFAULT 0.000000000000,
+  `cie_qc` decimal(24,12) NOT NULL DEFAULT 0.000000000000,
+  `cie_mtc` decimal(24,12) NOT NULL DEFAULT 0.000000000000,
+  `cie_qv` decimal(24,12) NOT NULL DEFAULT 0.000000000000,
+  `cie_mtv` decimal(24,12) NOT NULL DEFAULT 0.000000000000,
+  `cie_start` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -416,14 +418,14 @@ CREATE TABLE `cierremeses` (
 --
 
 CREATE TABLE `clientes` (
-  `gcl_id` bigint NOT NULL,
-  `gcl_gem_id` bigint DEFAULT NULL,
+  `gcl_id` bigint(20) NOT NULL,
+  `gcl_gem_id` bigint(20) DEFAULT NULL,
   `gcl_imagen` varchar(200) DEFAULT NULL,
   `gcl_correo` varchar(200) NOT NULL,
   `gcl_pweb` varchar(200) NOT NULL,
   `gcl_telefono` varchar(10) DEFAULT NULL,
-  `gcl_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gcl_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `clientes`
@@ -439,12 +441,12 @@ INSERT INTO `clientes` (`gcl_id`, `gcl_gem_id`, `gcl_imagen`, `gcl_correo`, `gcl
 --
 
 CREATE TABLE `colaboradores` (
-  `col_id` bigint NOT NULL,
-  `col_cod` int NOT NULL,
-  `col_gpe_id` bigint NOT NULL,
-  `col_gar_id` bigint NOT NULL,
+  `col_id` bigint(20) NOT NULL,
+  `col_cod` int(11) NOT NULL,
+  `col_gpe_id` bigint(20) NOT NULL,
+  `col_gar_id` bigint(20) NOT NULL,
   `col_puesto` varchar(250) NOT NULL,
-  `col_est_id` bigint NOT NULL,
+  `col_est_id` bigint(20) NOT NULL,
   `col_img` varchar(250) DEFAULT NULL,
   `col_ruc` varchar(11) DEFAULT NULL,
   `col_clavesol` varchar(50) DEFAULT NULL,
@@ -452,8 +454,8 @@ CREATE TABLE `colaboradores` (
   `col_viaja` tinyint(1) DEFAULT NULL,
   `col_sbase` decimal(12,2) DEFAULT NULL,
   `col_fechaIT` date DEFAULT NULL,
-  `col_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `col_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -462,29 +464,29 @@ CREATE TABLE `colaboradores` (
 --
 
 CREATE TABLE `componentes` (
-  `ico_id` bigint NOT NULL,
+  `ico_id` bigint(20) NOT NULL,
   `ico_procesador` varchar(30) NOT NULL,
   `ico_so` varchar(30) NOT NULL,
   `ico_bios` varchar(30) NOT NULL,
   `ico_perifericos` varchar(200) DEFAULT NULL,
   `ico_programas` varchar(200) DEFAULT NULL,
-  `ico_bie_mainboard` bigint DEFAULT NULL,
-  `ico_bie_monitor` bigint DEFAULT NULL,
-  `ico_bie_teclado` bigint DEFAULT NULL,
-  `ico_bie_mouse` bigint DEFAULT NULL,
-  `ico_bie_cpoder` bigint DEFAULT NULL,
-  `ico_bie_hdmi` bigint DEFAULT NULL,
-  `ico_bie_vga` bigint DEFAULT NULL,
-  `ico_bie_cotro` bigint DEFAULT NULL,
-  `ico_bie_ram` bigint DEFAULT NULL,
-  `ico_bie_ssd` bigint DEFAULT NULL,
-  `ico_bie_hhd` bigint DEFAULT NULL,
-  `ico_bie_fuentep` bigint DEFAULT NULL,
-  `ico_bie_tarjetag` bigint DEFAULT NULL,
-  `ico_bie_tarjetav` bigint DEFAULT NULL,
-  `ico_bie_tarjetar` bigint DEFAULT NULL,
-  `ico_bie_otroc` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `ico_bie_mainboard` bigint(20) DEFAULT NULL,
+  `ico_bie_monitor` bigint(20) DEFAULT NULL,
+  `ico_bie_teclado` bigint(20) DEFAULT NULL,
+  `ico_bie_mouse` bigint(20) DEFAULT NULL,
+  `ico_bie_cpoder` bigint(20) DEFAULT NULL,
+  `ico_bie_hdmi` bigint(20) DEFAULT NULL,
+  `ico_bie_vga` bigint(20) DEFAULT NULL,
+  `ico_bie_cotro` bigint(20) DEFAULT NULL,
+  `ico_bie_ram` bigint(20) DEFAULT NULL,
+  `ico_bie_ssd` bigint(20) DEFAULT NULL,
+  `ico_bie_hhd` bigint(20) DEFAULT NULL,
+  `ico_bie_fuentep` bigint(20) DEFAULT NULL,
+  `ico_bie_tarjetag` bigint(20) DEFAULT NULL,
+  `ico_bie_tarjetav` bigint(20) DEFAULT NULL,
+  `ico_bie_tarjetar` bigint(20) DEFAULT NULL,
+  `ico_bie_otroc` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -493,30 +495,30 @@ CREATE TABLE `componentes` (
 --
 
 CREATE TABLE `comprobantes` (
-  `com_id` bigint NOT NULL,
-  `com_age_id` bigint NOT NULL,
-  `com_gt4_id` bigint NOT NULL,
-  `com_est_id` bigint NOT NULL,
+  `com_id` bigint(20) NOT NULL,
+  `com_age_id` bigint(20) NOT NULL,
+  `com_gt4_id` bigint(20) NOT NULL,
+  `com_est_id` bigint(20) NOT NULL,
   `com_serie` varchar(4) NOT NULL,
-  `com_numero` int NOT NULL,
-  `com_t12_id` bigint NOT NULL,
-  `com_t10_id` bigint NOT NULL,
-  `com_gtc_id` bigint NOT NULL,
-  `com_t1m_id` bigint NOT NULL,
+  `com_numero` int(11) NOT NULL,
+  `com_t12_id` bigint(20) NOT NULL,
+  `com_t10_id` bigint(20) NOT NULL,
+  `com_gtc_id` bigint(20) NOT NULL,
+  `com_t1m_id` bigint(20) NOT NULL,
   `com_fechaE` date NOT NULL,
   `com_fechaR` date NOT NULL,
   `com_fechaV` date DEFAULT NULL,
   `com_subtotal` decimal(24,12) NOT NULL,
-  `com_igv_id` json NOT NULL,
+  `com_igv_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`com_igv_id`)),
   `com_total` decimal(24,12) NOT NULL,
   `com_observaciones` text NOT NULL,
-  `com_acr_id` bigint DEFAULT NULL,
-  `com_ncr_id` json DEFAULT NULL,
+  `com_acr_id` bigint(20) DEFAULT NULL,
+  `com_ncr_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`com_ncr_id`)),
   `com_ticket` varchar(50) DEFAULT NULL,
-  `com_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `com_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `com_cstatus` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `com_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `com_updated` datetime NOT NULL DEFAULT current_timestamp(),
+  `com_cstatus` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -525,10 +527,10 @@ CREATE TABLE `comprobantes` (
 --
 
 CREATE TABLE `configuraciones` (
-  `con_id` bigint NOT NULL,
+  `con_id` bigint(20) NOT NULL,
   `con_clave` varchar(15) NOT NULL,
   `con_valor` varchar(80) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -537,13 +539,13 @@ CREATE TABLE `configuraciones` (
 --
 
 CREATE TABLE `cuentas` (
-  `cue_id` bigint NOT NULL,
-  `cue_gem_id` bigint DEFAULT NULL,
+  `cue_id` bigint(20) NOT NULL,
+  `cue_gem_id` bigint(20) DEFAULT NULL,
   `cue_nombre` varchar(200) NOT NULL,
-  `cue_numero` int DEFAULT NULL,
-  `cue_gt4_id` bigint DEFAULT '1',
-  `cue_status` int DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `cue_numero` int(11) DEFAULT NULL,
+  `cue_gt4_id` bigint(20) DEFAULT 1,
+  `cue_status` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -552,9 +554,9 @@ CREATE TABLE `cuentas` (
 --
 
 CREATE TABLE `departamentos` (
-  `gde_id` bigint NOT NULL,
+  `gde_id` bigint(20) NOT NULL,
   `gde_departamento` varchar(60) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `departamentos`
@@ -590,14 +592,40 @@ INSERT INTO `departamentos` (`gde_id`, `gde_departamento`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `descuentos`
+--
+
+CREATE TABLE `descuentos` (
+  `des_id` bigint(20) NOT NULL,
+  `des_t6m_id` bigint(20) DEFAULT NULL,
+  `des_tga_id` bigint(20) NOT NULL,
+  `des_q` decimal(12,4) NOT NULL,
+  `des_p` decimal(12,4) NOT NULL,
+  `des_mt` decimal(12,4) NOT NULL,
+  `des_mov_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `descuentos`
+--
+
+INSERT INTO `descuentos` (`des_id`, `des_t6m_id`, `des_tga_id`, `des_q`, `des_p`, `des_mt`, `des_mov_id`) VALUES
+(1, 68, 1, '171.0000', '6.0000', '1026.0000', 7),
+(2, 65, 1, '14.0000', '4.5000', '63.0000', 7),
+(3, 68, 2, '180.0000', '3.7000', '666.0000', 7),
+(4, 65, 3, '10.0000', '2.7000', '27.0000', 7);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `distritos`
 --
 
 CREATE TABLE `distritos` (
-  `gdi_id` bigint NOT NULL,
+  `gdi_id` bigint(20) NOT NULL,
   `gdi_distrito` varchar(60) DEFAULT NULL,
-  `gdi_gpr_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gdi_gpr_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `distritos`
@@ -2446,14 +2474,14 @@ INSERT INTO `distritos` (`gdi_id`, `gdi_distrito`, `gdi_gpr_id`) VALUES
 --
 
 CREATE TABLE `empresas` (
-  `gem_id` bigint NOT NULL,
+  `gem_id` bigint(20) NOT NULL,
   `gem_ruc` varchar(11) NOT NULL,
   `gem_razonsocial` varchar(100) NOT NULL,
   `gem_direccion` text NOT NULL,
-  `gem_gdi_id` bigint NOT NULL DEFAULT '0',
+  `gem_gdi_id` bigint(20) NOT NULL DEFAULT 0,
   `gem_email` varchar(150) DEFAULT NULL,
-  `gem_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gem_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `empresas`
@@ -2469,23 +2497,23 @@ INSERT INTO `empresas` (`gem_id`, `gem_ruc`, `gem_razonsocial`, `gem_direccion`,
 --
 
 CREATE TABLE `establecimientos` (
-  `est_id` bigint NOT NULL,
+  `est_id` bigint(20) NOT NULL,
   `est_nombre` varchar(100) NOT NULL,
   `est_direccion` varchar(200) NOT NULL,
   `est_serie` varchar(2) NOT NULL,
   `est_logo` varchar(100) NOT NULL,
-  `est_gdi_id` bigint NOT NULL,
-  `est_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `est_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `est_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `est_gdi_id` bigint(20) NOT NULL,
+  `est_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `est_updated` datetime NOT NULL DEFAULT current_timestamp(),
+  `est_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `establecimientos`
 --
 
 INSERT INTO `establecimientos` (`est_id`, `est_nombre`, `est_direccion`, `est_serie`, `est_logo`, `est_gdi_id`, `est_created`, `est_updated`, `est_status`) VALUES
-(1, 'Puente Piedra', 'Mz A, lote 12, tambo Inga, Ref. km 27 Panam. Norte', '01', 'cacel.png', 150125, '2022-07-25 12:30:55', '2022-07-25 12:30:55', 1);
+(1, 'PUESTO 384', 'Mz A, lote 12, tambo Inga, Ref. km 27 Panam. Norte', '01', 'cacel.png', 150125, '2022-07-25 12:30:55', '2022-07-25 12:30:55', 1);
 
 -- --------------------------------------------------------
 
@@ -2494,12 +2522,12 @@ INSERT INTO `establecimientos` (`est_id`, `est_nombre`, `est_direccion`, `est_se
 --
 
 CREATE TABLE `liquidez` (
-  `liq_id` bigint NOT NULL,
+  `liq_id` bigint(20) NOT NULL,
   `liq_fecha` date NOT NULL,
-  `liq_age_id` bigint DEFAULT NULL,
+  `liq_age_id` bigint(20) DEFAULT NULL,
   `liq_monto` decimal(24,4) DEFAULT NULL,
-  `liq_status` int DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `liq_status` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -2508,19 +2536,28 @@ CREATE TABLE `liquidez` (
 --
 
 CREATE TABLE `mdetalles` (
-  `mde_id` bigint NOT NULL,
-  `mde_bie_id` bigint NOT NULL,
-  `mde_t6m_id` bigint NOT NULL,
-  `mde_gta_id` bigint NOT NULL,
-  `mde_mov_id` bigint NOT NULL,
+  `mde_id` bigint(20) NOT NULL,
+  `mde_bie_id` bigint(20) NOT NULL,
+  `mde_t6m_id` bigint(20) NOT NULL,
+  `mde_gta_id` bigint(20) NOT NULL,
+  `mde_mov_id` bigint(20) NOT NULL,
   `mde_q` decimal(12,6) NOT NULL,
   `mde_vu` decimal(12,6) NOT NULL,
   `mde_igv` tinyint(1) NOT NULL,
-  `mde_des` json DEFAULT NULL,
+  `mde_des` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`mde_des`)),
   `mde_desm` decimal(12,6) DEFAULT NULL,
   `mde_importe` decimal(24,12) NOT NULL,
-  `mde_detraccion` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `mde_detraccion` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `mdetalles`
+--
+
+INSERT INTO `mdetalles` (`mde_id`, `mde_bie_id`, `mde_t6m_id`, `mde_gta_id`, `mde_mov_id`, `mde_q`, `mde_vu`, `mde_igv`, `mde_des`, `mde_desm`, `mde_importe`, `mde_detraccion`) VALUES
+(6, 1, 68, 9, 7, '165.000000', '42.000000', 0, NULL, '0.000000', '6930.000000000000', 0),
+(7, 2, 68, 9, 7, '6.000000', '55.000000', 0, NULL, '0.000000', '330.000000000000', 0),
+(8, 1, 65, 9, 7, '14.000000', '22.000000', 0, NULL, '0.000000', '308.000000000000', 0);
 
 -- --------------------------------------------------------
 
@@ -2529,15 +2566,15 @@ CREATE TABLE `mdetalles` (
 --
 
 CREATE TABLE `mermas` (
-  `mer_id` bigint NOT NULL,
-  `mer_alm_id` bigint NOT NULL,
-  `mer_bie_id` bigint NOT NULL,
+  `mer_id` bigint(20) NOT NULL,
+  `mer_alm_id` bigint(20) NOT NULL,
+  `mer_bie_id` bigint(20) NOT NULL,
   `mer_fecha` date NOT NULL,
   `mer_descripcion` varchar(200) DEFAULT NULL,
   `mer_q` decimal(12,6) NOT NULL,
   `mer_vu` decimal(12,6) NOT NULL,
   `mer_mt` decimal(12,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -2546,16 +2583,16 @@ CREATE TABLE `mermas` (
 --
 
 CREATE TABLE `mkinternos` (
-  `mki_id` bigint NOT NULL,
+  `mki_id` bigint(20) NOT NULL,
   `mki_fecha` date NOT NULL,
-  `mki_alm_id` bigint NOT NULL,
-  `mki_i_bie_id` bigint NOT NULL,
-  `mki_f_bie_id` bigint NOT NULL,
+  `mki_alm_id` bigint(20) NOT NULL,
+  `mki_i_bie_id` bigint(20) NOT NULL,
+  `mki_f_bie_id` bigint(20) NOT NULL,
   `mki_descripcion` varchar(200) DEFAULT NULL,
   `mki_q` decimal(12,6) NOT NULL,
   `mki_vu` decimal(12,6) NOT NULL,
   `mki_mt` decimal(12,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -2564,14 +2601,14 @@ CREATE TABLE `mkinternos` (
 --
 
 CREATE TABLE `modulos` (
-  `gmo_id` bigint NOT NULL,
+  `gmo_id` bigint(20) NOT NULL,
   `gmo_titulo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
-  `gmo_descripcion` text,
-  `gmo_gmo_id` bigint DEFAULT NULL,
+  `gmo_descripcion` text DEFAULT NULL,
+  `gmo_gmo_id` bigint(20) DEFAULT NULL,
   `gmo_path` varchar(200) NOT NULL DEFAULT '#',
   `gmo_icon` varchar(100) DEFAULT NULL,
-  `gmo_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gmo_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `modulos`
@@ -2638,32 +2675,39 @@ INSERT INTO `modulos` (`gmo_id`, `gmo_titulo`, `gmo_descripcion`, `gmo_gmo_id`, 
 --
 
 CREATE TABLE `movimientos` (
-  `mov_id` bigint NOT NULL,
-  `mov_age_id` bigint DEFAULT NULL,
-  `mov_alm_id` bigint NOT NULL,
+  `mov_id` bigint(20) NOT NULL,
+  `mov_age_id` bigint(20) DEFAULT NULL,
+  `mov_alm_id` bigint(20) NOT NULL,
   `mov_serie` varchar(4) NOT NULL,
-  `mov_numero` bigint NOT NULL,
-  `mov_t12num` bigint NOT NULL,
-  `mov_gt4_id` bigint NOT NULL,
-  `mov_t12_id` bigint NOT NULL,
-  `mov_t10_id` bigint NOT NULL,
-  `mov_tce_id` bigint NOT NULL,
-  `mov_cue_id` bigint DEFAULT NULL,
+  `mov_numero` bigint(20) NOT NULL,
+  `mov_t12num` bigint(20) NOT NULL,
+  `mov_gt4_id` bigint(20) NOT NULL,
+  `mov_t12_id` bigint(20) NOT NULL,
+  `mov_t10_id` bigint(20) NOT NULL,
+  `mov_tce_id` bigint(20) NOT NULL,
+  `mov_cue_id` bigint(20) DEFAULT NULL,
   `mov_fechaE` date NOT NULL,
   `mov_fechaR` date NOT NULL,
   `mov_fechaV` date DEFAULT NULL,
-  `mov_tipo` int NOT NULL,
+  `mov_tipo` int(11) NOT NULL,
   `mov_subtotal` decimal(24,12) NOT NULL,
-  `mov_igv_id` json NOT NULL,
+  `mov_igv_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`mov_igv_id`)),
   `mov_total` decimal(24,12) NOT NULL,
-  `mov_ncr_id` json DEFAULT NULL,
-  `mov_observaciones` text,
-  `mov_gus_id` bigint DEFAULT NULL,
-  `mov_mov_id` bigint DEFAULT NULL,
-  `mov_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `mov_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `mov_mstatus` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `mov_ncr_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`mov_ncr_id`)),
+  `mov_observaciones` text DEFAULT NULL,
+  `mov_gus_id` bigint(20) DEFAULT NULL,
+  `mov_mov_id` bigint(20) DEFAULT NULL,
+  `mov_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `mov_updated` datetime NOT NULL DEFAULT current_timestamp(),
+  `mov_mstatus` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `movimientos`
+--
+
+INSERT INTO `movimientos` (`mov_id`, `mov_age_id`, `mov_alm_id`, `mov_serie`, `mov_numero`, `mov_t12num`, `mov_gt4_id`, `mov_t12_id`, `mov_t10_id`, `mov_tce_id`, `mov_cue_id`, `mov_fechaE`, `mov_fechaR`, `mov_fechaV`, `mov_tipo`, `mov_subtotal`, `mov_igv_id`, `mov_total`, `mov_ncr_id`, `mov_observaciones`, `mov_gus_id`, `mov_mov_id`, `mov_created`, `mov_updated`, `mov_mstatus`) VALUES
+(7, 6, 1, 'NE01', 1, 1, 1, 2, 49, 1, NULL, '2023-02-10', '2023-02-10', '2023-02-10', 2, '7568.000000000000', '{\"mov_exonerada\":\"7568.00\",\"mov_inafecta\":\"0.00\",\"mov_gravada\":\"0.00\",\"mov_des\":\"1026.01\",\"mov_igv\":\"0.00\",\"mov_neto\":\"6541.99\"}', '6541.990000000000', NULL, NULL, 2, NULL, '2023-02-10 21:52:16', '2023-02-10 21:52:16', 1);
 
 -- --------------------------------------------------------
 
@@ -2672,7 +2716,7 @@ CREATE TABLE `movimientos` (
 --
 
 CREATE TABLE `personas` (
-  `gpe_id` bigint NOT NULL,
+  `gpe_id` bigint(20) NOT NULL,
   `gpe_identificacion` varchar(20) NOT NULL,
   `gpe_nombre` varchar(60) NOT NULL,
   `gpe_apellidos` varchar(60) NOT NULL,
@@ -2683,11 +2727,11 @@ CREATE TABLE `personas` (
   `gpe_nacionalidad` varchar(60) DEFAULT NULL,
   `gpe_capacidad` varchar(50) DEFAULT NULL,
   `gpe_fechan` date DEFAULT NULL,
-  `gpe_gt2_id` bigint NOT NULL DEFAULT '2',
-  `gpe_gdi_id` bigint NOT NULL DEFAULT '150101',
+  `gpe_gt2_id` bigint(20) NOT NULL DEFAULT 2,
+  `gpe_gdi_id` bigint(20) NOT NULL DEFAULT 150101,
   `gpe_email` varchar(150) DEFAULT NULL,
-  `gpe_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gpe_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `personas`
@@ -2695,7 +2739,9 @@ CREATE TABLE `personas` (
 
 INSERT INTO `personas` (`gpe_id`, `gpe_identificacion`, `gpe_nombre`, `gpe_apellidos`, `gpe_direccion`, `gpe_telefono`, `gpe_celular`, `gpe_ecivil`, `gpe_nacionalidad`, `gpe_capacidad`, `gpe_fechan`, `gpe_gt2_id`, `gpe_gdi_id`, `gpe_email`, `gpe_status`) VALUES
 (1, '24091989', 'Eduardo', 'Eulogio Anquipa', 'Direccion Fiscal de persona', NULL, NULL, NULL, NULL, NULL, NULL, 1, 150142, NULL, 1),
-(2, '24091990', 'Mery', '***', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 150101, NULL, 1);
+(2, '24091990', 'Mery', '***', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 150101, NULL, 1),
+(4, '48025117', 'Segundo Cristian', 'Nasario', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 100604, NULL, 1),
+(5, '46231362', 'MISAEL', 'SIMON RAMOS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 150101, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -2704,13 +2750,13 @@ INSERT INTO `personas` (`gpe_id`, `gpe_identificacion`, `gpe_nombre`, `gpe_apell
 --
 
 CREATE TABLE `ppagos` (
-  `ppa_id` bigint NOT NULL,
-  `ppa_tipo` int NOT NULL DEFAULT '0',
-  `ppa_col_id` bigint NOT NULL,
-  `ppa_caj_id` bigint NOT NULL,
+  `ppa_id` bigint(20) NOT NULL,
+  `ppa_tipo` int(11) NOT NULL DEFAULT 0,
+  `ppa_col_id` bigint(20) NOT NULL,
+  `ppa_caj_id` bigint(20) NOT NULL,
   `ppa_fecha` date NOT NULL,
-  `ppa_gus_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `ppa_gus_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -2719,11 +2765,11 @@ CREATE TABLE `ppagos` (
 --
 
 CREATE TABLE `preliminares` (
-  `pre_id` bigint NOT NULL,
-  `pre_transaccion` int NOT NULL,
-  `pre_exportacion` int NOT NULL,
-  `pre_anticipo` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `pre_id` bigint(20) NOT NULL,
+  `pre_transaccion` int(11) NOT NULL,
+  `pre_exportacion` int(11) NOT NULL,
+  `pre_anticipo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -2732,11 +2778,11 @@ CREATE TABLE `preliminares` (
 --
 
 CREATE TABLE `propiedades` (
-  `pro_id` bigint NOT NULL,
+  `pro_id` bigint(20) NOT NULL,
   `pro_nombre` varchar(100) NOT NULL,
   `pro_type` varchar(20) NOT NULL DEFAULT 'varchar',
-  `pro_revalue` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `pro_revalue` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `propiedades`
@@ -2752,10 +2798,10 @@ INSERT INTO `propiedades` (`pro_id`, `pro_nombre`, `pro_type`, `pro_revalue`) VA
 --
 
 CREATE TABLE `provincias` (
-  `gpr_id` bigint NOT NULL,
+  `gpr_id` bigint(20) NOT NULL,
   `gpr_provincia` varchar(60) DEFAULT NULL,
-  `gpr_gde_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gpr_gde_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `provincias`
@@ -2965,11 +3011,11 @@ INSERT INTO `provincias` (`gpr_id`, `gpr_provincia`, `gpr_gde_id`) VALUES
 --
 
 CREATE TABLE `responsables` (
-  `res_id` bigint NOT NULL,
-  `res_tar_id` bigint NOT NULL,
-  `res_gus_gpe_id` bigint NOT NULL,
-  `res_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `res_id` bigint(20) NOT NULL,
+  `res_tar_id` bigint(20) NOT NULL,
+  `res_gus_gpe_id` bigint(20) NOT NULL,
+  `res_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -2978,9 +3024,9 @@ CREATE TABLE `responsables` (
 --
 
 CREATE TABLE `rlegal` (
-  `rle_id` bigint NOT NULL,
+  `rle_id` bigint(20) NOT NULL,
   `rle_ruc` varchar(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -2989,11 +3035,11 @@ CREATE TABLE `rlegal` (
 --
 
 CREATE TABLE `roles` (
-  `gro_id` bigint NOT NULL,
+  `gro_id` bigint(20) NOT NULL,
   `gro_nombrerol` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `gro_descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
-  `gro_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gro_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `roles`
@@ -3013,15 +3059,15 @@ INSERT INTO `roles` (`gro_id`, `gro_nombrerol`, `gro_descripcion`, `gro_status`)
 --
 
 CREATE TABLE `saldobienes` (
-  `sal_id` bigint NOT NULL,
-  `sal_alm_id` bigint NOT NULL,
-  `sal_bie_id` bigint NOT NULL,
+  `sal_id` bigint(20) NOT NULL,
+  `sal_alm_id` bigint(20) NOT NULL,
+  `sal_bie_id` bigint(20) NOT NULL,
   `sal_q` decimal(12,6) NOT NULL,
   `sal_p` decimal(12,6) NOT NULL,
   `sal_stockminimo` decimal(12,6) NOT NULL,
-  `sal_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `sal_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `sal_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `sal_updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -3030,10 +3076,10 @@ CREATE TABLE `saldobienes` (
 --
 
 CREATE TABLE `satributos` (
-  `sat_id` bigint NOT NULL,
-  `sat_ser_id` bigint DEFAULT NULL,
-  `sat_val_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `sat_id` bigint(20) NOT NULL,
+  `sat_ser_id` bigint(20) DEFAULT NULL,
+  `sat_val_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -3042,16 +3088,16 @@ CREATE TABLE `satributos` (
 --
 
 CREATE TABLE `servicios` (
-  `ser_id` bigint NOT NULL,
+  `ser_id` bigint(20) NOT NULL,
   `ser_codigo` varchar(12) NOT NULL,
   `ser_nombre` varchar(200) NOT NULL,
-  `ser_t6m_id` bigint DEFAULT NULL,
-  `ser_ser_id` bigint DEFAULT NULL,
+  `ser_t6m_id` bigint(20) DEFAULT NULL,
+  `ser_ser_id` bigint(20) DEFAULT NULL,
   `ser_alm_id` varchar(200) NOT NULL DEFAULT '[1]',
   `ser_p` decimal(12,6) NOT NULL,
   `ser_igv` tinyint(1) NOT NULL,
-  `ser_img` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `ser_img` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -3060,11 +3106,11 @@ CREATE TABLE `servicios` (
 --
 
 CREATE TABLE `t1mediopagos` (
-  `t1m_id` bigint NOT NULL,
+  `t1m_id` bigint(20) NOT NULL,
   `t1m_codigo` varchar(4) NOT NULL,
   `t1m_descripcion` text NOT NULL,
-  `t1m_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `t1m_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `t1mediopagos`
@@ -3099,11 +3145,11 @@ INSERT INTO `t1mediopagos` (`t1m_id`, `t1m_codigo`, `t1m_descripcion`, `t1m_stat
 --
 
 CREATE TABLE `t2identidades` (
-  `gt2_id` bigint NOT NULL,
+  `gt2_id` bigint(20) NOT NULL,
   `gt2_codigo` varchar(4) NOT NULL,
   `gt2_descripcion` text NOT NULL,
-  `gt2_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gt2_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `t2identidades`
@@ -3123,11 +3169,11 @@ INSERT INTO `t2identidades` (`gt2_id`, `gt2_codigo`, `gt2_descripcion`, `gt2_sta
 --
 
 CREATE TABLE `t3financieras` (
-  `t3f_id` bigint NOT NULL,
+  `t3f_id` bigint(20) NOT NULL,
   `t3f_codigo` varchar(4) NOT NULL,
   `t3f_descripcion` text NOT NULL,
-  `t3f_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `t3f_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -3136,13 +3182,13 @@ CREATE TABLE `t3financieras` (
 --
 
 CREATE TABLE `t4monedas` (
-  `gt4_id` bigint NOT NULL,
+  `gt4_id` bigint(20) NOT NULL,
   `gt4_codigo` varchar(4) NOT NULL,
   `gt4_sunat` varchar(4) NOT NULL,
   `gt4_simbolo` varchar(6) NOT NULL,
   `gt4_descripcion` text NOT NULL,
-  `gt4_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gt4_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `t4monedas`
@@ -3161,11 +3207,11 @@ INSERT INTO `t4monedas` (`gt4_id`, `gt4_codigo`, `gt4_sunat`, `gt4_simbolo`, `gt
 --
 
 CREATE TABLE `t5existencias` (
-  `t5e_id` bigint NOT NULL,
+  `t5e_id` bigint(20) NOT NULL,
   `t5e_codigo` varchar(4) NOT NULL,
   `t5e_descripcion` text NOT NULL,
-  `t5e_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `t5e_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `t5existencias`
@@ -3186,12 +3232,12 @@ INSERT INTO `t5existencias` (`t5e_id`, `t5e_codigo`, `t5e_descripcion`, `t5e_sta
 --
 
 CREATE TABLE `t6medidas` (
-  `t6m_id` bigint NOT NULL,
+  `t6m_id` bigint(20) NOT NULL,
   `t6m_codigo` varchar(4) NOT NULL,
   `t6m_sunat` varchar(4) NOT NULL,
   `t6m_descripcion` text NOT NULL,
-  `t6m_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `t6m_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `t6medidas`
@@ -3274,11 +3320,11 @@ INSERT INTO `t6medidas` (`t6m_id`, `t6m_codigo`, `t6m_sunat`, `t6m_descripcion`,
 --
 
 CREATE TABLE `t7intangibles` (
-  `t7i_id` bigint NOT NULL,
+  `t7i_id` bigint(20) NOT NULL,
   `t7i_codigo` varchar(4) NOT NULL,
   `t7i_descripcion` text NOT NULL,
-  `t7i_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `t7i_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -3287,11 +3333,11 @@ CREATE TABLE `t7intangibles` (
 --
 
 CREATE TABLE `t8libroregistros` (
-  `t8l_id` bigint NOT NULL,
+  `t8l_id` bigint(20) NOT NULL,
   `t8l_codigo` varchar(4) NOT NULL,
   `t8l_descripcion` text NOT NULL,
-  `t8l_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `t8l_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `t8libroregistros`
@@ -3337,12 +3383,12 @@ INSERT INTO `t8libroregistros` (`t8l_id`, `t8l_codigo`, `t8l_descripcion`, `t8l_
 --
 
 CREATE TABLE `t9plancontables` (
-  `t9p_id` bigint NOT NULL,
+  `t9p_id` bigint(20) NOT NULL,
   `t9p_elemento` varchar(4) NOT NULL,
-  `t9p_codigo` bigint NOT NULL,
+  `t9p_codigo` bigint(20) NOT NULL,
   `t9p_descripcion` text NOT NULL,
-  `t9p_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `t9p_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `t9plancontables`
@@ -5135,11 +5181,11 @@ INSERT INTO `t9plancontables` (`t9p_id`, `t9p_elemento`, `t9p_codigo`, `t9p_desc
 --
 
 CREATE TABLE `t10comprobantes` (
-  `t10_id` bigint NOT NULL,
+  `t10_id` bigint(20) NOT NULL,
   `t10_codigo` varchar(4) NOT NULL,
   `t10_descripcion` text NOT NULL,
-  `t10_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `t10_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `t10comprobantes`
@@ -5205,11 +5251,11 @@ INSERT INTO `t10comprobantes` (`t10_id`, `t10_codigo`, `t10_descripcion`, `t10_s
 --
 
 CREATE TABLE `t11aduanas` (
-  `t11_id` bigint NOT NULL,
+  `t11_id` bigint(20) NOT NULL,
   `t11_codigo` varchar(4) NOT NULL,
   `t11_descripcion` text NOT NULL,
-  `t11_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `t11_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -5218,11 +5264,11 @@ CREATE TABLE `t11aduanas` (
 --
 
 CREATE TABLE `t12operaciones` (
-  `t12_id` bigint NOT NULL,
+  `t12_id` bigint(20) NOT NULL,
   `t12_codigo` varchar(4) NOT NULL,
   `t12_descripcion` text NOT NULL,
-  `t12_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `t12_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `t12operaciones`
@@ -5255,11 +5301,11 @@ INSERT INTO `t12operaciones` (`t12_id`, `t12_codigo`, `t12_descripcion`, `t12_st
 --
 
 CREATE TABLE `tafectaciones` (
-  `gta_id` bigint NOT NULL,
+  `gta_id` bigint(20) NOT NULL,
   `gta_codigo` varchar(10) NOT NULL,
   `gta_descripcion` varchar(200) NOT NULL,
-  `gta_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gta_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `tafectaciones`
@@ -5292,20 +5338,20 @@ INSERT INTO `tafectaciones` (`gta_id`, `gta_codigo`, `gta_descripcion`, `gta_sta
 --
 
 CREATE TABLE `tareas` (
-  `tar_id` bigint NOT NULL,
-  `tar_gar_id` bigint NOT NULL,
+  `tar_id` bigint(20) NOT NULL,
+  `tar_gar_id` bigint(20) NOT NULL,
   `tar_nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `tar_descripcion` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `tar_imagen` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `tar_file` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `tar_comentario` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
-  `tar_inicio` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `tar_fin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `tar_ava_id` bigint NOT NULL,
-  `tar_pri_id` bigint NOT NULL,
+  `tar_inicio` datetime NOT NULL DEFAULT current_timestamp(),
+  `tar_fin` datetime NOT NULL DEFAULT current_timestamp(),
+  `tar_ava_id` bigint(20) NOT NULL,
+  `tar_pri_id` bigint(20) NOT NULL,
   `tar_baground` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `tar_colorText` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -5314,19 +5360,20 @@ CREATE TABLE `tareas` (
 --
 
 CREATE TABLE `tcambios` (
-  `gtc_id` bigint NOT NULL,
-  `gtc_gt4_id` bigint NOT NULL,
+  `gtc_id` bigint(20) NOT NULL,
+  `gtc_gt4_id` bigint(20) NOT NULL,
   `gtc_fecha` date NOT NULL,
   `gtc_tcompra` decimal(10,4) NOT NULL,
   `gtc_tventa` decimal(10,4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `tcambios`
 --
 
 INSERT INTO `tcambios` (`gtc_id`, `gtc_gt4_id`, `gtc_fecha`, `gtc_tcompra`, `gtc_tventa`) VALUES
-(1, 2, '2023-01-25', '3.8800', '3.8850');
+(1, 2, '2023-01-25', '3.8800', '3.8850'),
+(2, 2, '2023-02-10', '3.8630', '3.8690');
 
 -- --------------------------------------------------------
 
@@ -5335,18 +5382,19 @@ INSERT INTO `tcambios` (`gtc_id`, `gtc_gt4_id`, `gtc_fecha`, `gtc_tcompra`, `gtc
 --
 
 CREATE TABLE `tcespeciales` (
-  `tce_id` bigint NOT NULL,
-  `tce_gtc_id` bigint DEFAULT NULL,
+  `tce_id` bigint(20) NOT NULL,
+  `tce_gtc_id` bigint(20) DEFAULT NULL,
   `tce_compra` decimal(6,4) DEFAULT NULL,
   `tce_venta` decimal(6,4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `tcespeciales`
 --
 
 INSERT INTO `tcespeciales` (`tce_id`, `tce_gtc_id`, `tce_compra`, `tce_venta`) VALUES
-(1, 1, NULL, NULL);
+(1, 1, NULL, NULL),
+(2, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -5355,10 +5403,29 @@ INSERT INTO `tcespeciales` (`tce_id`, `tce_gtc_id`, `tce_compra`, `tce_venta`) V
 --
 
 CREATE TABLE `tgastos` (
-  `tga_id` bigint NOT NULL,
+  `tga_id` bigint(20) NOT NULL,
   `tga_nombre` varchar(200) DEFAULT NULL,
-  `tga_status` int DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `tga_status` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tgastos`
+--
+
+INSERT INTO `tgastos` (`tga_id`, `tga_nombre`, `tga_status`) VALUES
+(1, 'FLETE', 1),
+(2, 'CAJA 1', 1),
+(3, 'CAJA 2', 1),
+(4, 'CAJA 3', 1),
+(5, 'CAJA 4', 1),
+(6, 'BOLSA 1', 1),
+(7, 'BOLSA 2', 1),
+(8, 'BOLSA 3', 1),
+(9, 'COMISION', 1),
+(10, 'PAPEL 1', 1),
+(11, 'PAPEL 2', 1),
+(12, 'PAPEL 3', 1),
+(13, 'OTROS', 1);
 
 -- --------------------------------------------------------
 
@@ -5367,16 +5434,16 @@ CREATE TABLE `tgastos` (
 --
 
 CREATE TABLE `titulares` (
-  `iti_id` bigint NOT NULL,
+  `iti_id` bigint(20) NOT NULL,
   `iti_dispositivos` varchar(60) NOT NULL,
-  `iti_col_id` bigint NOT NULL,
+  `iti_col_id` bigint(20) NOT NULL,
   `iti_passold` varchar(250) NOT NULL,
   `iti_passnow` varchar(250) NOT NULL,
   `iti_imgdisp` varchar(250) NOT NULL,
-  `iti_bie_id` bigint DEFAULT NULL,
-  `iti_ico_id` bigint DEFAULT NULL,
-  `iti_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `iti_bie_id` bigint(20) DEFAULT NULL,
+  `iti_ico_id` bigint(20) DEFAULT NULL,
+  `iti_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -5385,14 +5452,14 @@ CREATE TABLE `titulares` (
 --
 
 CREATE TABLE `tpermisos` (
-  `gtp_id` bigint NOT NULL,
-  `gtp_r` int NOT NULL DEFAULT '1',
-  `gtp_w` int NOT NULL DEFAULT '1',
-  `gtp_u` int NOT NULL DEFAULT '1',
-  `gtp_d` int NOT NULL DEFAULT '1',
-  `gtp_gro_id` bigint NOT NULL,
-  `gtp_gmo_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gtp_id` bigint(20) NOT NULL,
+  `gtp_r` int(11) NOT NULL DEFAULT 1,
+  `gtp_w` int(11) NOT NULL DEFAULT 1,
+  `gtp_u` int(11) NOT NULL DEFAULT 1,
+  `gtp_d` int(11) NOT NULL DEFAULT 1,
+  `gtp_gro_id` bigint(20) NOT NULL,
+  `gtp_gmo_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `tpermisos`
@@ -5665,13 +5732,13 @@ INSERT INTO `tpermisos` (`gtp_id`, `gtp_r`, `gtp_w`, `gtp_u`, `gtp_d`, `gtp_gro_
 --
 
 CREATE TABLE `ubicaciones` (
-  `ubi_id` bigint NOT NULL,
-  `ubi_gdi_id` bigint NOT NULL,
-  `ubi_gar_id` bigint NOT NULL,
-  `ubi_est_id` bigint DEFAULT NULL,
-  `ubi_piso` int NOT NULL,
+  `ubi_id` bigint(20) NOT NULL,
+  `ubi_gdi_id` bigint(20) NOT NULL,
+  `ubi_gar_id` bigint(20) NOT NULL,
+  `ubi_est_id` bigint(20) DEFAULT NULL,
+  `ubi_piso` int(11) NOT NULL,
   `ubi_etrabajo` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -5680,20 +5747,20 @@ CREATE TABLE `ubicaciones` (
 --
 
 CREATE TABLE `usuarios` (
-  `gus_id` bigint NOT NULL,
-  `gus_gpe_id` bigint DEFAULT NULL,
+  `gus_id` bigint(20) NOT NULL,
+  `gus_gpe_id` bigint(20) DEFAULT NULL,
   `gus_imagen` varchar(200) DEFAULT NULL,
-  `gus_gro_id` bigint NOT NULL,
+  `gus_gro_id` bigint(20) NOT NULL,
   `gus_user` varchar(100) NOT NULL,
   `gus_password` varchar(250) NOT NULL,
   `gus_token` varchar(300) DEFAULT NULL,
-  `gus_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `gus_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `gus_create` datetime NOT NULL DEFAULT current_timestamp(),
+  `gus_update` datetime NOT NULL DEFAULT current_timestamp(),
   `gus_telefono` varchar(20) DEFAULT NULL,
-  `gus_gcl_id` bigint NOT NULL,
-  `gus_gar_id` bigint NOT NULL,
-  `gus_status` int NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='g';
+  `gus_gcl_id` bigint(20) NOT NULL,
+  `gus_gar_id` bigint(20) NOT NULL,
+  `gus_status` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='g';
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -5710,10 +5777,10 @@ INSERT INTO `usuarios` (`gus_id`, `gus_gpe_id`, `gus_imagen`, `gus_gro_id`, `gus
 --
 
 CREATE TABLE `valores` (
-  `val_id` bigint NOT NULL,
-  `val_pro_id` bigint NOT NULL,
+  `val_id` bigint(20) NOT NULL,
+  `val_pro_id` bigint(20) NOT NULL,
   `val_valor` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `valores`
@@ -5928,6 +5995,15 @@ ALTER TABLE `cuentas`
 --
 ALTER TABLE `departamentos`
   ADD PRIMARY KEY (`gde_id`);
+
+--
+-- Indices de la tabla `descuentos`
+--
+ALTER TABLE `descuentos`
+  ADD PRIMARY KEY (`des_id`),
+  ADD KEY `descuentos_t6medidas` (`des_t6m_id`),
+  ADD KEY `descuentos_tgastos` (`des_tga_id`),
+  ADD KEY `descuentos_movimientos` (`des_mov_id`);
 
 --
 -- Indices de la tabla `distritos`
@@ -6237,379 +6313,385 @@ ALTER TABLE `valores`
 -- AUTO_INCREMENT de la tabla `aatributos`
 --
 ALTER TABLE `aatributos`
-  MODIFY `aat_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `aat_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `accesos`
 --
 ALTER TABLE `accesos`
-  MODIFY `gac_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `gac_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `acreditos`
 --
 ALTER TABLE `acreditos`
-  MODIFY `acr_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `acr_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `activos`
 --
 ALTER TABLE `activos`
-  MODIFY `act_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `act_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `adetalles`
 --
 ALTER TABLE `adetalles`
-  MODIFY `ade_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `ade_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `adscripciones`
 --
 ALTER TABLE `adscripciones`
-  MODIFY `ads_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `ads_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `agentes`
 --
 ALTER TABLE `agentes`
-  MODIFY `age_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `age_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `almacenes`
 --
 ALTER TABLE `almacenes`
-  MODIFY `alm_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `alm_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `areas`
 --
 ALTER TABLE `areas`
-  MODIFY `gar_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `gar_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `asi_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `asi_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `batributos`
 --
 ALTER TABLE `batributos`
-  MODIFY `bat_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `bat_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `bbienes`
 --
 ALTER TABLE `bbienes`
-  MODIFY `bbi_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `bbi_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT de la tabla `bienes`
 --
 ALTER TABLE `bienes`
-  MODIFY `bie_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `bie_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `cajas`
 --
 ALTER TABLE `cajas`
-  MODIFY `caj_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `caj_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `cdetalles`
 --
 ALTER TABLE `cdetalles`
-  MODIFY `cde_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `cde_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `cierremeses`
 --
 ALTER TABLE `cierremeses`
-  MODIFY `cie_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `cie_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `gcl_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `gcl_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `colaboradores`
 --
 ALTER TABLE `colaboradores`
-  MODIFY `col_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `col_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `componentes`
 --
 ALTER TABLE `componentes`
-  MODIFY `ico_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `ico_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `comprobantes`
 --
 ALTER TABLE `comprobantes`
-  MODIFY `com_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `com_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `configuraciones`
 --
 ALTER TABLE `configuraciones`
-  MODIFY `con_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `con_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `cuentas`
 --
 ALTER TABLE `cuentas`
-  MODIFY `cue_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `cue_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `departamentos`
 --
 ALTER TABLE `departamentos`
-  MODIFY `gde_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `gde_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT de la tabla `descuentos`
+--
+ALTER TABLE `descuentos`
+  MODIFY `des_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `distritos`
 --
 ALTER TABLE `distritos`
-  MODIFY `gdi_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=250402;
+  MODIFY `gdi_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=250402;
 
 --
 -- AUTO_INCREMENT de la tabla `empresas`
 --
 ALTER TABLE `empresas`
-  MODIFY `gem_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `gem_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `establecimientos`
 --
 ALTER TABLE `establecimientos`
-  MODIFY `est_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `est_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `liquidez`
 --
 ALTER TABLE `liquidez`
-  MODIFY `liq_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `liq_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `mdetalles`
 --
 ALTER TABLE `mdetalles`
-  MODIFY `mde_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `mde_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `gmo_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `gmo_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT de la tabla `movimientos`
 --
 ALTER TABLE `movimientos`
-  MODIFY `mov_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `mov_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `gpe_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `gpe_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `ppagos`
 --
 ALTER TABLE `ppagos`
-  MODIFY `ppa_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `ppa_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `preliminares`
 --
 ALTER TABLE `preliminares`
-  MODIFY `pre_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `pre_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `propiedades`
 --
 ALTER TABLE `propiedades`
-  MODIFY `pro_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `pro_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `provincias`
 --
 ALTER TABLE `provincias`
-  MODIFY `gpr_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2505;
+  MODIFY `gpr_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2505;
 
 --
 -- AUTO_INCREMENT de la tabla `responsables`
 --
 ALTER TABLE `responsables`
-  MODIFY `res_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `res_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `rlegal`
 --
 ALTER TABLE `rlegal`
-  MODIFY `rle_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `rle_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `gro_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `gro_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `saldobienes`
 --
 ALTER TABLE `saldobienes`
-  MODIFY `sal_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `sal_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `satributos`
 --
 ALTER TABLE `satributos`
-  MODIFY `sat_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `sat_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `servicios`
 --
 ALTER TABLE `servicios`
-  MODIFY `ser_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `ser_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `t1mediopagos`
 --
 ALTER TABLE `t1mediopagos`
-  MODIFY `t1m_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `t1m_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `t2identidades`
 --
 ALTER TABLE `t2identidades`
-  MODIFY `gt2_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `gt2_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `t3financieras`
 --
 ALTER TABLE `t3financieras`
-  MODIFY `t3f_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `t3f_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `t4monedas`
 --
 ALTER TABLE `t4monedas`
-  MODIFY `gt4_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `gt4_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `t5existencias`
 --
 ALTER TABLE `t5existencias`
-  MODIFY `t5e_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `t5e_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `t6medidas`
 --
 ALTER TABLE `t6medidas`
-  MODIFY `t6m_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `t6m_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT de la tabla `t7intangibles`
 --
 ALTER TABLE `t7intangibles`
-  MODIFY `t7i_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `t7i_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `t8libroregistros`
 --
 ALTER TABLE `t8libroregistros`
-  MODIFY `t8l_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `t8l_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `t9plancontables`
 --
 ALTER TABLE `t9plancontables`
-  MODIFY `t9p_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1778;
+  MODIFY `t9p_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1778;
 
 --
 -- AUTO_INCREMENT de la tabla `t10comprobantes`
 --
 ALTER TABLE `t10comprobantes`
-  MODIFY `t10_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `t10_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT de la tabla `t11aduanas`
 --
 ALTER TABLE `t11aduanas`
-  MODIFY `t11_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `t11_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `t12operaciones`
 --
 ALTER TABLE `t12operaciones`
-  MODIFY `t12_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `t12_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `tafectaciones`
 --
 ALTER TABLE `tafectaciones`
-  MODIFY `gta_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `gta_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `tar_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `tar_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tcambios`
 --
 ALTER TABLE `tcambios`
-  MODIFY `gtc_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `gtc_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tcespeciales`
 --
 ALTER TABLE `tcespeciales`
-  MODIFY `tce_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `tce_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tgastos`
 --
 ALTER TABLE `tgastos`
-  MODIFY `tga_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `tga_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `titulares`
 --
 ALTER TABLE `titulares`
-  MODIFY `iti_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `iti_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tpermisos`
 --
 ALTER TABLE `tpermisos`
-  MODIFY `gtp_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=259;
+  MODIFY `gtp_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=259;
 
 --
 -- AUTO_INCREMENT de la tabla `ubicaciones`
 --
 ALTER TABLE `ubicaciones`
-  MODIFY `ubi_id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `ubi_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `gus_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `gus_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `valores`
 --
 ALTER TABLE `valores`
-  MODIFY `val_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `val_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
@@ -6775,6 +6857,14 @@ ALTER TABLE `comprobantes`
 ALTER TABLE `cuentas`
   ADD CONSTRAINT `cuentas_gempresas` FOREIGN KEY (`cue_gem_id`) REFERENCES `empresas` (`gem_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `cuentas_gt4monedas` FOREIGN KEY (`cue_gt4_id`) REFERENCES `t4monedas` (`gt4_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `descuentos`
+--
+ALTER TABLE `descuentos`
+  ADD CONSTRAINT `descuentos_movimientos` FOREIGN KEY (`des_mov_id`) REFERENCES `movimientos` (`mov_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `descuentos_t6medidas` FOREIGN KEY (`des_t6m_id`) REFERENCES `t6medidas` (`t6m_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `descuentos_tgastos` FOREIGN KEY (`des_tga_id`) REFERENCES `tgastos` (`tga_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `distritos`
