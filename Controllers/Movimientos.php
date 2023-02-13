@@ -523,6 +523,10 @@ class Movimientos extends Controllers{
             $res[$i]['sim_m'] = $res[$i]['sim_q']*$res[$i]['sim_p']*$res[$i]['sim_tce_id']['tce_gtc_id']['gtc_tcompra'];
             $res[$i]['sim_n'] = $res[$i]['sim_m']-$res[$i]['sim_g']*$res[$i]['sim_q'];
             $res[$i]['sim_pp'] = ($res[$i]['sim_p_1']+$res[$i]['sim_p_2']+$res[$i]['sim_p_3']+$res[$i]['sim_p_4'])/4;
+
+            // $res[$i]['sim_mr'] = $res[$i]['sim_n'];
+            // $res[$i]['sim_in'] = ;
+
             if($_SESSION['perMod']['gtp_w']){
                 $e = '<button class="btn btn-primary btn-sm" onClick="edit(`sim`,'.$res[$i]['sim_id'].')" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
             }
