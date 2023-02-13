@@ -80,15 +80,26 @@ class Movimientos extends Controllers{
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
         }
-        $this->newController('Main');
-        $tce = $this->Main->getTcambio(date('Y-m-d'),true);
-        unset($this->Main);
         $data['page_tag'] = "Estado de Ordenes de Ventas";
         $data['page_title'] = "Estado de Ordenes de Ventas";
         $data['page_name'] = "Estado de Ordenes de Ventas";
-        $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'per'=>$_SESSION['perMod'],'sim'=>array('sim_tce_id'=>$tce['tce_id'],'sim_gtc'=>$tce['tce_gtc_id']['gtc_tcompra'],'sim_tipo'=>1,'sim_gus_id'=>$_SESSION['gus']['gus_id'])); 
-        $data['page_functions_js'] = array("functions_eventas_copy.js","functions_movimientos.js");
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo']); 
+        $data['page_functions_js'] = array("functions_eventas.js","functions_volumen.js","functions_movimientos.js");
         $this->views->getView($this,"eventas",$data);
+    }
+    public function Simulaciones(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $this->newController('Main');
+        $tce = $this->Main->getTcambio(date('Y-m-d'),true);
+        unset($this->Main);
+        $data['page_tag'] = "Simulacion de Precios";
+        $data['page_title'] = "Simulacion de Precios";
+        $data['page_name'] = "Simulacion de Precios";
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'per'=>$_SESSION['perMod'],'sim'=>array('sim_tce_id'=>$tce['tce_id'],'sim_gtc'=>$tce['tce_gtc_id']['gtc_tcompra'],'sim_tipo'=>1,'sim_gus_id'=>$_SESSION['gus']['gus_id'])); 
+        $data['page_functions_js'] = array("functions_eventas.js");
+        $this->views->getView($this,"simulaciones",$data);
     }
     public function getEventas(){
         $eve = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>1,'mov_tipo'=>4));
@@ -117,6 +128,9 @@ class Movimientos extends Controllers{
             aria-haspopup="true" aria-expanded="false">DOC. REF.</button><div class="dropdown-menu" aria-labelledby="drop_'.$i.'">'.$ref.'</div></div>';
             $eve[$i]['mov_mstatus'] = '<span class="badge badge-'.OV_STATUS[$r['mov_mstatus']][1].'">'.OV_STATUS[$r['mov_mstatus']][0].'</span>';
         }
+        usort($eve, function($a, $b) {
+            return $b['mov_mstatus'] <=> $a['mov_mstatus'];
+        });
         echo json_encode($eve,JSON_UNESCAPED_UNICODE);
         die();
     }
