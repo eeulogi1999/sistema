@@ -227,9 +227,9 @@ class Movimientos extends Controllers{
                         $mde['mde_mov_id'] = $mov['mov_id'];
                         $mde['mde_igv'] = (isset($mde['mde_igv'])) ? $mde['mde_igv'] : 0 ;
                         if (intval($mde['mde_id'])>0) {
-                            $mde = $this->mdetalles->insertRegistro($mde);
-                        } else {
                             $mde = $this->mdetalles->updateRegistro($mde);
+                        } else {
+                            $mde = $this->mdetalles->insertRegistro($mde);
                         }
                     }
                     $mov_id['data']['mov_t12num'] = $mov['mov_tipo'].'-'.date( "m", strtotime($_POST['mov_fechaE'])).str_pad($mov['mov_t12num'],6,'0',STR_PAD_LEFT);
@@ -240,10 +240,10 @@ class Movimientos extends Controllers{
                         $des['des_tga_id'] = $des['des_tga_id']['tga_id'];
                         $des['des_t6m_id'] = $des['des_t6m_id']['t6m_id'];
                         $des['des_mov_id'] = $mov['mov_id'];
-                        if (intval($des['des_id']>0)) {
-                            $des = $this->descuentos->insertRegistro($des);
-                        } else {
+                        if (intval($des['des_id'])>0) {
                             $des = $this->descuentos->updateRegistro($des);
+                        } else {
+                            $des = $this->descuentos->insertRegistro($des);
                         }
                     }
                 } 
@@ -415,11 +415,12 @@ class Movimientos extends Controllers{
         }
         $data['mov']['des']['mov_1'] = formatMoney($this->descuentos->searchRegistro(array('des_mov_id'=>$mov_id,'des_tga_id'=>1),'SUM(des_mt) as sum')['sum']);
         $data['mov']['des']['mov_9'] = formatMoney($this->descuentos->searchRegistro(array('des_mov_id'=>$mov_id,'des_tga_id'=>9),'SUM(des_mt) as sum')['sum']);
-        
-
         $html = getFile("Movimientos/pdf",$data);  
+        // echo $html;
+        // die();
         $dompdf = new Dompdf\Dompdf();
         $options = new Dompdf\Options();
+        // $options->set('isRemoteEnabled', true);
         $options->set(array('isRemoteEnabled'=>true));
         $dompdf->setOptions($options);
         $dompdf->loadHtml($html);

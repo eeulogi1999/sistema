@@ -20,7 +20,23 @@
             font-size: 12px;
         }
         .fz-20{
+            font-size: 15px;
+        }
+        .fz-40{
             font-size: 20px;
+        }
+        .cz{
+            font-weight: 700 !important
+        }
+        .br td{
+            border: 1px solid;
+            border-radius: 0.25rem;
+            border-color: #28a745;
+        }
+        .br tr > *:nth-child(1){
+            background-color: #28a745;
+            color:#fff;
+            font-weight: 700 !important
         }
     </style>
 </head>
@@ -29,14 +45,14 @@
         <tr>
             <td >
                 <div class="card">
-                    <div class="card-header text-center">PUESTO</div>
-                    <div class="card-body text-center">384</div>
+                    <div class="card-header text-center fz-20 cz">PUESTO</div>
+                    <div class="card-body text-center fz-20 cz p-1">384</div>
                 </div>
             </td>
-            <td class="text-center"><img src="http://localhost/sistema/Assets/images/logo_platanal.png" alt="logo" width="80px"></td>
+            <td class="text-center"><img src="<?= media() ?>/images/logo_platanal.png" alt="logo" width="80px"></td>
             <td class="text-center">
                 <div class="card">
-                    <div class="card-body text-center fz-20">EL PLATANAL DE <br> GRACIELA</div>
+                    <div class="card-body text-center fz-40 cz">EL PLATANAL DE <br> GRACIELA</div>
                 </div>
                 </td>
         </tr>
@@ -45,31 +61,33 @@
         <tr>
             <td>
                 <div class="card">
-                    <div class="card-header text-center">DIA-MES-AÑO</div>
+                    <div class="card-header text-center fz-20 cz">AÑO-MES-DIA</div>
+                    <div class="card-body text-center fz-20 p-0 cz"><?= $mov['mov_fechaE']?> <br>
+                    <?= $mov['mov_fechaV']?></div>
                 </div>
             </td>
             <td>
                 <div class="card">
-                    <div class="card-header text-center">CONTACTO</div>
-                    <div class="card-body text-center">988 770 506 <br>
+                    <div class="card-header text-center fz-20 cz">CONTACTO</div>
+                    <div class="card-body text-center fz-20 cz p-0">988 770 506 <br>
                     936 585 176</div>
                 </div>
             </td> 
             <td>
                 <div class="card">
-                    <div class="card-header text-center">NUM LIQUIDACION</div>
-                    <div class="card-body text-center text-danger">N° 1</div>
+                    <div class="card-header text-center fz-20 cz">NUM LIQUIDACIÓN</div>
+                    <div class="card-body text-center text-danger p-2 fz-20 cz">N° <?= $mov['mov_numero']?></div>
                 </div>
             </td>
         </tr>
     </table>
-    <table class="table table-borderless table-sm fz-12" >
+    <table class="table table-borderless table-sm fz-12 br" style="border-collapse: separate;">
         <tr>
-            <td>PRODUCTOR</td>
+            <td width="50">PRODUCTOR</td>
             <td>
-                <?= $age['age_nombre']?>
+                    <?= $age['age_nombre']?>
             </td>
-            <td>MARCA</td>
+            <td width="15" class="bg-success text-white font-weight-bold" >MARCA</td>
             <td>
                 <?= $age['age_marca']??''?>
             </td>
@@ -103,7 +121,7 @@
     <table class="table table-borderless table-sm fz-12" >
         <tr>
             <td style="width:350px">
-                <table class="table table-borderless table-sm fz-12">
+                <table class="table table-borderless table-sm fz-12 br" style="border-collapse: separate;">
                     <tr>
                         <td>FLETE</td>
                         <td class="text-right"><?= $mov['des']['mov_1'] ?></td>
@@ -158,9 +176,9 @@
                     </tr>
                 </table>
             </td>
-            <td></td>
+            <td width="50"></td>
             <td>
-                <table class="table table-borderless table-sm fz-12">
+                <table class="table table-borderless table-sm fz-12 br" style="border-collapse: separate;">
                     <tr>
                         <td>SUBTOTAL</td>
                         <td class="text-right"><?= formatMoney($mov['mov_subtotal'])?></td>
@@ -190,7 +208,7 @@
                         <td class="text-right"><?= formatMoney($mov['mov_total'])?></td>
                     </tr>
                     <tr><td colspan="2">OBSERVACION</td></tr>
-                    <tr><td colspan="2" rowspan="2"></td></tr>
+                    <tr><td colspan="2" rowspan="2" class="bg-white" ></td></tr>
                 </table>
             </td>
         </tr>
