@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"sim_m",header:{t:"VENTA BRUTA",align:'right'},tipo:'money'},
                 {"data":"sim_tce_id.tce_gtc_id.gtc_tcompra",render:(r)=>{
                     return (r.sim_tce_id.tce_compra)?r.sim_tce_id.tce_compra:r.sim_tce_id.tce_gtc_id.gtc_tcompra}
-                ,header:{t:"T.C SUNAT",align:'right'},tipo:'float'},
+                ,header:{t:"T.C SUNAT",align:'right'},tipo:'string'},
                 {"data":"sim_g",header:{t:"GASTO",align:'right'},tipo:'float'},
                 {"data":"sim_n",header:{t:"VENTA NETA",align:'right'},tipo:'money'},
                 {"data":"sim_pp",header:{t:"P/KG MERCADO",align:'right'},tipo:'money'},
