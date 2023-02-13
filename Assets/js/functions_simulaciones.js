@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"sim_pp",header:{t:"P/KG MERCADO",align:'right'},tipo:'money'},
                 {"data":"sim_pc",header:{t:"P/KG COMPANY",align:'right'},tipo:'money'},
                 {"data":"sim_pm",header:{t:"P/KG MAXIMO",align:'right'},tipo:'money',style:{color:'danger'}},
+                {"data":"sim_mtn",render:(r)=>{},header:{t:"MARGEN",align:'right'},tipo:'money'},
+                {"data":"sim_itn",render:(r)=>{},header:{t:"INVERSION",align:'right'},tipo:'money'},
                 {"data":"sim_obs",header:{t:"OBSERV.",align:'center'},tipo:'string'},
                 {"data":"sim_opt",header:{t:"OPCIONES",align:'center'},tipo:'string'}
             ]
@@ -221,7 +223,7 @@ function reload() {
 
 function setPreSim(where,json,res) {
     if (val_json[0].sim_gtc != data.sim.sim_gtc) {
-       set('tce',{tce_id:data.sim.sim_tce_id,tce_compra:val_json[0].sim_gtc}) 
+       set('tce',null,{tce_id:data.sim.sim_tce_id,tce_compra:val_json[0].sim_gtc}) 
     }
     if (parseInt(val_json[0].sim_id)>0) {
         json.sim_obs = $('#sim_obs').val()
