@@ -98,7 +98,7 @@ class Movimientos extends Controllers{
         $data['page_title'] = "Simulacion de Precios";
         $data['page_name'] = "Simulacion de Precios";
         $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'per'=>$_SESSION['perMod'],'sim'=>array('sim_tce_id'=>$tce['tce_id'],'sim_gtc'=>$tce['tce_gtc_id']['gtc_tcompra'],'sim_tipo'=>1,'sim_gus_id'=>$_SESSION['gus']['gus_id'])); 
-        $data['page_functions_js'] = array("functions_eventas.js");
+        $data['page_functions_js'] = array("functions_simulaciones.js");
         $this->views->getView($this,"simulaciones",$data);
     }
     public function getEventas(){
