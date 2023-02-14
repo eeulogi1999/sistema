@@ -174,6 +174,10 @@
                         <td>OTROS</td>
                         <td class="text-right"><?= $mov['des']['mov_13'] ?></td>
                     </tr>
+                    <tr>
+                        <td>TOTAL</td>
+                        <td class="text-right text-danger"><?= formatMoney($mov['mov_igv_id']['mov_des']) ?></td>
+                    </tr>
                 </table>
             </td>
             <td width="50"></td>
@@ -189,7 +193,7 @@
                     </tr>
                     <tr>
                         <td>SALDO NETO PARCIAL S/</td>
-                        <td class="text-right"><?= formatMoney($mov['mov_igv_id']['mov_des'])?></td>
+                        <td class="text-right"><?= formatMoney($mov['mov_subtotal']-$mov['mov_igv_id']['mov_des'])?></td>
                     </tr>
                     <tr>
                         <td>ADELANTO S/</td>
@@ -198,10 +202,6 @@
                     <tr>
                         <td>AMORTIZACION DEUDA S/</td>
                         <td class="text-right"><?= formatMoney('0.00')?></td>
-                    </tr>
-                    <tr>
-                        <td>DESCUENTO S/</td>
-                        <td class="text-right"><?= formatMoney($mov['mov_igv_id']['mov_des'])?></td>
                     </tr>
                     <tr>
                         <td>IMPORTE FINAL S/</td>

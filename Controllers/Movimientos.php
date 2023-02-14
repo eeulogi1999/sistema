@@ -193,26 +193,26 @@ class Movimientos extends Controllers{
                 $b_des = $this->descuentos->selectRegistros(array('des_mov_id'=>$_POST['mov_id']),array('des_mov_id'));
                 foreach ($b_mde as $i => $b_md) {
                     $status = true;
-                    foreach ($arrMde as $i => $md) {
-                        if (isset($md['mov_id'])) {
-                            if($md['mov_id']==$b_md['mov_id']) {
-                                $status = false;
-                            }
-                        }
-                    }
+                    // foreach ($arrMde as $j => $md) {
+                    //     if (isset($md['mov_id'])) {
+                    //         if($md['mov_id']==$b_md['mov_id']) {
+                    //             $status = false;
+                    //         }
+                    //     }
+                    // }
                     if($status){
                         $del = $this->mdetalles->deleteRegistro($b_md['mde_id']);
                     }
                 }
                 foreach ($b_des as $i => $b_de) {
-                    $status = true;
-                    foreach ($arrDes as $i => $de) {
-                        if (isset($de['mov_id'])) {
-                            if($de['mov_id']==$b_de['mov_id']) {
-                                $status = false;
-                            }
-                        }
-                    }
+                    // $status = true;
+                    // foreach ($arrDes as $j => $de) {
+                    //     if (isset($de['mov_id'])) {
+                    //         if($de['mov_id']==$b_de['mov_id']) {
+                    //             $status = false;
+                    //         }
+                    //     }
+                    // }
                     if($status){
                         $del = $this->descuentos->deleteRegistro($b_de['des_id']);
                     }
@@ -226,11 +226,11 @@ class Movimientos extends Controllers{
                         $mde['mde_gta_id'] = $mde['mde_gta_id']['gta_id'];
                         $mde['mde_mov_id'] = $mov['mov_id'];
                         $mde['mde_igv'] = (isset($mde['mde_igv'])) ? $mde['mde_igv'] : 0 ;
-                        if (intval($mde['mde_id'])>0) {
-                            $mde = $this->mdetalles->updateRegistro($mde);
-                        } else {
+                        // if (intval($mde['mde_id'])>0) {
+                        //     $mde = $this->mdetalles->updateRegistro($mde);
+                        // } else {
                             $mde = $this->mdetalles->insertRegistro($mde);
-                        }
+                        // }
                     }
                     $mov_id['data']['mov_t12num'] = $mov['mov_tipo'].'-'.date( "m", strtotime($_POST['mov_fechaE'])).str_pad($mov['mov_t12num'],6,'0',STR_PAD_LEFT);
                     
@@ -240,11 +240,11 @@ class Movimientos extends Controllers{
                         $des['des_tga_id'] = $des['des_tga_id']['tga_id'];
                         $des['des_t6m_id'] = $des['des_t6m_id']['t6m_id'];
                         $des['des_mov_id'] = $mov['mov_id'];
-                        if (intval($des['des_id'])>0) {
-                            $des = $this->descuentos->updateRegistro($des);
-                        } else {
+                        // if (intval($des['des_id'])>0) {
+                        //     $des = $this->descuentos->updateRegistro($des);
+                        // } else {
                             $des = $this->descuentos->insertRegistro($des);
-                        }
+                        // }
                     }
                 } 
             }
