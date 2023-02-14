@@ -51,7 +51,11 @@
                         <div>
                             <h5 class="text-center text-uppercase">R.U.C. <?= $gcl['gcl_gem_id']['gem_ruc'] ?></h5>
                             <h5 class="text-center text-uppercase"><?= $mov['mov_t10_id']['t10_descripcion'];?></h5>
-                            <h1 class="text-center"><?= $mov['mov_serie'].'-'.str_pad($mov['mov_numero'],8,0,STR_PAD_LEFT) ?></h1>
+                            <?php if( $mov['mov_tipo'] == 4){ ?>
+                                <h1 class="text-center"><?= $mov['mov_serie'] ?></h1>
+                            <?php }else{?>
+                                <h1 class="text-center"><?= $mov['mov_serie'].'-'.str_pad($mov['mov_numero'],8,0,STR_PAD_LEFT) ?></h1>
+                            <?php } ?>
                             <h5 class="text-center text-danger" >N° OPERACION: <strong><?= $mov['mov_tipo'].'-'.date( "m", strtotime($mov['mov_fechaE'])).str_pad($mov['mov_t12num'],6,0,STR_PAD_LEFT) ?></strong></h5>
                         </div>
                     </div>
