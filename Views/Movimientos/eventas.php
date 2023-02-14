@@ -2,6 +2,8 @@
     headerAdmin($data); 
     getModal('modalSimulaciones',$data);
     getModal('modalMovimientos',$data);
+    $data['pre']='mov';
+    getModal('modalTable',$data);
 ?>
 <main class="app-content">
   <div class="app-title">
