@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
       <div class="tile">
         <h3 class="text-center">VOLUMEN VENTA NACIONAL</h3>
         <div class="tile-body">
@@ -45,9 +45,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
       <div class="tile">
       <h3 class="text-center">VOLUMEN VENTA EXPORTACIÓN</h3>
         <div class="tile-body">
