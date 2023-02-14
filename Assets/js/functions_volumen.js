@@ -46,10 +46,17 @@ function getExpDet(id) {
     }, 400);
 }
 
-function getDetView(id) {
+function getDetView(id,trim=null) {
     $('#modalTable_mov').modal('show');
-    mov_table.reload(base_url+"/Gerencial/getDetView/"+id);
+    mov_table.reload(base_url+"/Gerencial/getDetView/"+id+'?trim='+trim);
     setTimeout(() => {
         mov_table.rezise();
     }, 400);
+}
+
+function hisTrim(e) {
+    e.preventDefault();
+    if (e.target.value != '') {
+        det_table.reload(base_url+"/Liquidez/getDetracciones/"+e.target.value);
+    } 
 }

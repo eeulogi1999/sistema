@@ -172,7 +172,7 @@ async function setPorExp(id,e) {
     exp_table.reload()
 }
 
-function getExpDet(id) {
+function getExpDet(id,trim=null) {
     $('#modalTable_mov').modal('show');
     mov_table.reload(base_url+"/Gerencial/getExpDet/"+id);
     setTimeout(() => {

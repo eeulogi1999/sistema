@@ -21,26 +21,64 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="tile">
+  <div class="row" style="height:200px">
+    <div class="col-md-4">
+      <div class="tile" style="height: 85%;">
         <div class="tile-body">
-          <div id="dailyVersesWrapper" class="display-5"></div>
+          <div id="dailyVersesWrapper" class="display-6"></div>
           <!-- <div class="table-responsive">
             <table class="table table-hover table-bordered table-sm" id="ten_table" width="100%"></table>
           </div> -->
         </div>
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="tile" style="height: 85%;">
+        <div class="tile-body display-6">
+          El éxito no es la clave de la felicidad. La felicidad es la clave del éxito – Albert Schweitzer
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="tile" style="height:85%;overflow-y:auto;">
+        <h4 class="text-center">NOTICIAS</h4>
+        <div class="tile-body">
+          <a href="https://www.cochilco.cl/Paginas/Estudios/Mercados%20de%20metales%20e%20insumos%20estrat%C3%A9gicos/Informes-Semanales-2015.aspx"
+            target="_bank">COCHILCO</a><br>
+          <a href="https://www.lme.com/Metals/Non-ferrous/LME-Copper#Trading+day+summary" target="_bank">LME</a><br>
+          <a href="https://es.investing.com/commodities/copper?cid=959211" target="_bank">INVESTING</a><br>
+          <a href="https://www.expansion.com/mercados/cotizaciones/materias/cobre(londres)_MCU.html" target="_blank"
+            rel="noopener noreferrer">EXPANSIÓN</a>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-4">
       <div class="tile">
         <h3 class="text-center">NOTAS DE PRECIOS</h3>
         <div class="tile-body">
-          <div class="row">
-            <div class="col">
-              <h4 class="text-center">GENERAL</h4>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">GENERAL</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">.</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                aria-selected="false">..</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active p-3" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <table class="table table-bordered table-sm" id="gen_table" width="100%"></table>
+              <button class="btn btn-success" onClick="share(event)"><i class="fas fa-share"></i>Compartir</button>
+              <img src="" alt="foto" id="outImg">
+            </div>
+            <div class="tab-pane fade p-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <table class="table table-bordered table-sm">
                 <thead>
                   <th>MATERIAL</th>
@@ -54,23 +92,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="col">
-              <h4 class="text-center">FRECUENTE</h4>
-              <table class="table table-bordered table-sm">
-                <thead>
-                  <th>MATERIAL</th>
-                  <th>PRECIO</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>BRILLANTE</td>
-                    <td>30.10</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="col">
-              <h4 class="text-center">COMPLETA</h4>
+            <div class="tab-pane fade p-3" id="contact" role="tabpanel" aria-labelledby="contact-tab">
               <table class="table table-bordered table-sm">
                 <thead>
                   <th>MATERIAL</th>
@@ -88,22 +110,18 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-8">
       <div class="tile">
-        <h4 class="text-center">NOTICIAS</h4>
+        <h4 class="text-center">SUGERENCIAS</h4>
         <div class="tile-body">
-          <a href="https://www.cochilco.cl/Paginas/Estudios/Mercados%20de%20metales%20e%20insumos%20estrat%C3%A9gicos/Informes-Semanales-2015.aspx"
-           target="_bank" >COCHILCO</a><br>
-          <a href="https://www.lme.com/Metals/Non-ferrous/LME-Copper#Trading+day+summary" target="_bank">LME</a><br>
-          <a href="https://es.investing.com/commodities/copper?cid=959211" target="_bank">EXPANCIÓN</a>
+          <div>- Ayudanos a reducir errores y ser mas eficientes.</div>
+          <div>- Para bien de nuestra Empresa y sistema, Actualizar los datos en el menor tiempo posible.</div>
+          <div></div>
         </div>
-
-        <!-- <figure class="highcharts-figure">
-            <div id="ten_usd"></div>
-            <p class="highcharts-description"></p>
-          </figure> -->
       </div>
     </div>
   </div>
 </main>
 <?php footerAdmin($data); ?>
+<script async defer src="https://dailyverses.net/get/random.js?language=nvi"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

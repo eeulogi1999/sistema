@@ -222,7 +222,8 @@ class Gerencial extends Controllers{
         die();
     }
     public function getDetView($id){
-        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_cue_id'=>$id,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
+        $trm = (isset($_GET['trim']))?$_GET['trim']:'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'];
+        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_cue_id'=>$id,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND  '.$trm));
         for ($i=0; $i < count($arrData); $i++) {
             $btnEdit = '';
             $btnView = '';

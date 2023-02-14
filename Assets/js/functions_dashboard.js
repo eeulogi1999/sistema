@@ -1,4 +1,5 @@
-var ten_table,tbi_table;
+var ten_table,tbi_table,gen_table;
+var gen_json = {0:{gen_bie_id:{bie_nombre:'COBRE BRILLANTE'},gen_p:30.31,gen_opt:`<button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>`}}
 var url_ten = base_url+"/Utilitarios/getTendencias";
 var url_tbi = base_url+"/Utilitarios/getBienesPorc";
 document.addEventListener('DOMContentLoaded',function () {
@@ -48,6 +49,19 @@ document.addEventListener('DOMContentLoaded',function () {
         $('#gtc_dol').val(parseFloat(this.value))
         $('#gtc_sol').val((parseFloat(this.value)*data.gtc).toFixed(2))
     })
+    if (document.querySelector("#gen_table")) {
+        gen_table = $('#gen_table').autoTable({
+            "src": gen_json,
+            "cell":true,
+            "export":false,
+            "thid":'gen_p',
+            "columns":[
+                {"data":"gen_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
+                {"data":"gen_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
+                {"data":"gen_opt",header:`<button class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i></button>`,tipo:'string'},
+            ]
+        });
+    }
 });
 window.addEventListener('load', async () => {
     if (document.querySelector("#ten_table")) {
@@ -55,6 +69,9 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#tbi_table")) {
         tbi_table = await tbi_table;
+    }
+    if (document.querySelector("#gen_table")) {
+        gen_table = await gen_table;
     }
     divLoading.style.display = "none";
 });
@@ -125,6 +142,14 @@ function setTenTgaBas(a,b,e) {
         }
     })
     .catch(error => swal("Atención", "Error en el proceso: " + error, "error"))
-
-    
 }
+
+function share(e) {
+    e.preventDefault();
+    html2canvas(document.querySelector("#gen_table")).then(canvas => {
+        const img    = canvas.toDataURL('image/png');   
+        document.getElementById('outImg').src = img
+    });
+}
+
+
