@@ -37,6 +37,9 @@
     <script type="text/javascript" language="javascript" src="<?= media(); ?>/js/plugins/pdfmake.min.js"></script>
     <script type="text/javascript" language="javascript" src="<?= media(); ?>/js/plugins/vfs_fonts.js"></script>
     <script type="text/javascript" language="javascript" src="<?= media(); ?>/js/plugins/buttons.html5.min.js"></script>
+
+    <script async defer src="https://dailyverses.net/get/random.js?language=nvi"></script>
+
     <script src="<?= media(); ?>/js/plugins/highcharts.js"></script>
     <script src="<?= media(); ?>/js/plugins/exporting.js"></script>
     <script src="<?= media(); ?>/js/plugins/export-data.js"></script>

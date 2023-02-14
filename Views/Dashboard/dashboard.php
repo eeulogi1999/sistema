@@ -25,79 +25,83 @@
     <div class="col-md-12">
       <div class="tile">
         <div class="tile-body">
-          <div class="table-responsive">
+          <div id="dailyVersesWrapper" class="display-5"></div>
+          <!-- <div class="table-responsive">
             <table class="table table-hover table-bordered table-sm" id="ten_table" width="100%"></table>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="tile">
+        <h3 class="text-center">NOTAS DE PRECIOS</h3>
+        <div class="tile-body">
+          <div class="row">
+            <div class="col">
+              <h4 class="text-center">GENERAL</h4>
+              <table class="table table-bordered table-sm">
+                <thead>
+                  <th>MATERIAL</th>
+                  <th>PRECIO</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>BRILLANTE</td>
+                    <td>30.10</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col">
+              <h4 class="text-center">FRECUENTE</h4>
+              <table class="table table-bordered table-sm">
+                <thead>
+                  <th>MATERIAL</th>
+                  <th>PRECIO</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>BRILLANTE</td>
+                    <td>30.10</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col">
+              <h4 class="text-center">COMPLETA</h4>
+              <table class="table table-bordered table-sm">
+                <thead>
+                  <th>MATERIAL</th>
+                  <th>PRECIO</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>BRILLANTE</td>
+                    <td>30.10</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
     <div class="col-md-4">
       <div class="tile">
+        <h4 class="text-center">NOTICIAS</h4>
         <div class="tile-body">
-          <!-- <h5 class="text-center">NOTAS</h5> -->
-          <!-- PRECIOS ACTUALIZADOS 
-            Brillo 31.50
-            Grueso 30
-            Delgado 29
-            Grupo 5.10 
-            Bronce 19.50
-            Rad.bronce 17
-            Viruta de bronce 14
-            Duro 5.40
-            Perfil 6.20
-            Acero 4
-            Rad. Aluminio 4
-            Olla sucia 4.50
-            Olla limpia 5.50
-            Oxee 6
-            Batería 67
-            Chata 57
-            Tierra bateria 3.90
-            Cocalata 3.80
-            Cable 6.50
-            Cable grasa 6
-            Cable sulfatado 5.5
-            Carrocería 4.50
-            Antimonio 8
-            Chapa 2 -->
-          <figure class="highcharts-figure">
-            <div id="ten_copper"></div>
-            <p class="highcharts-description"></p>
-          </figure>
+          <a href="https://www.cochilco.cl/Paginas/Estudios/Mercados%20de%20metales%20e%20insumos%20estrat%C3%A9gicos/Informes-Semanales-2015.aspx"
+           target="_bank" >COCHILCO</a><br>
+          <a href="https://www.lme.com/Metals/Non-ferrous/LME-Copper#Trading+day+summary" target="_bank">LME</a><br>
+          <a href="https://es.investing.com/commodities/copper?cid=959211" target="_bank">EXPANCIÓN</a>
         </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="tile">
-        <div class="tile-body">
-          <figure class="highcharts-figure">
-            <div id="ten_plomo"></div>
-            <p class="highcharts-description"></p>
-          </figure>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="tile">
-        <div class="tile-body">
-          <figure class="highcharts-figure">
+
+        <!-- <figure class="highcharts-figure">
             <div id="ten_usd"></div>
             <p class="highcharts-description"></p>
-          </figure>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="tile">
-        <div class="tile-body">
-          <h4>NOTICIAS</h4>
-          <a href="https://www.cochilco.cl/Paginas/Estudios/Mercados%20de%20metales%20e%20insumos%20estrat%C3%A9gicos/Informes-Semanales-2015.aspx"
-            target="_bank">COCHILCO</a>
-        </div>
+          </figure> -->
       </div>
     </div>
   </div>
