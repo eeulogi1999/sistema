@@ -62,15 +62,25 @@
             <td>
                 <div class="card">
                     <div class="card-header text-center fz-20 cz">FECHA</div>
-                    <div class="card-body text-center fz-20 p-0 cz">EMISIÓN: <?= $mov['mov_fechaE']?> <br>
-                    PAGO: <?= $mov['mov_fechaV']?></div>
+                    <div class="card-body  text-center fz-20 p-0 cz pt-1 px-1">
+                        <table class="table mt-3 table-borderless table-sm fz-12 text-success">
+                            <tr>
+                                <td class="col bg-success text-white rounded">EMISIÓN</td>
+                                <td class="col"><?= $mov['mov_fechaE']?></td>
+                            </tr>
+                            <tr>
+                                <td class="col bg-success text-white rounded">PAGO</td>
+                                <td class="col"><?= $mov['mov_fechaV']?></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </td>
             <td>
                 <div class="card">
                     <div class="card-header text-center fz-20 cz">CONTACTO</div>
                     <div class="card-body text-center fz-20 cz p-0">988 770 506 <br>
-                    936 585 176</div>
+                    936 585 176 <br> 957 755 341 <br> 925 061 971</div>
                 </div>
             </td> 
             <td>
@@ -130,50 +140,95 @@
                         <td>COMISION</td>
                         <td class="text-right"><?= $mov['des']['mov_9'] ?></td>
                     </tr>
+                    <?php 
+                    if($mov['des']['mov_2']!=0){ 
+                    ?>
                     <tr>
                         <td>CAJA 1</td>
                         <td class="text-right"><?= $mov['des']['mov_2'] ?></td>
                     </tr>
+                    <?php 
+                    }
+                     if($mov['des']['mov_3']!=0){ 
+                    ?>
+
                     <tr>
                         <td>CAJA 2</td>
                         <td class="text-right"><?= $mov['des']['mov_3'] ?></td>
                     </tr>
+                    <?php 
+                    }
+                     if($mov['des']['mov_4']!=0){ 
+                    ?>
                     <tr>
                         <td>CAJA 3</td>
                         <td class="text-right"><?= $mov['des']['mov_4'] ?></td>
                     </tr>
+                    <?php 
+                    }
+                     if($mov['des']['mov_5']!=0){ 
+                    ?>
                     <tr>
                         <td>CAJA 4</td>
                         <td class="text-right"><?= $mov['des']['mov_5'] ?></td>
                     </tr>
+                    <?php 
+                    }
+                     if($mov['des']['mov_6']!=0){ 
+                    ?>
                     <tr>
                         <td>BOLSA 1</td>
                         <td class="text-right"><?= $mov['des']['mov_6'] ?></td>
                     </tr>
+                    <?php 
+                    }
+                     if($mov['des']['mov_7']!=0){ 
+                    ?>
                     <tr>
                         <td>BOLSA 2</td>
                         <td class="text-right"><?= $mov['des']['mov_7'] ?></td>
                     </tr>
+                    <?php 
+                    }
+                     if($mov['des']['mov_8']!=0){ 
+                    ?>
                     <tr>
                         <td>BOLSA 3</td>
                         <td class="text-right"><?= $mov['des']['mov_8'] ?></td>
                     </tr>
+                    <?php 
+                    }
+                     if($mov['des']['mov_10']!=0){ 
+                    ?>
                     <tr>
                         <td>PAPEL 1</td>
                         <td class="text-right"><?= $mov['des']['mov_10'] ?></td>
                     </tr>
+                    <?php 
+                    }
+                     if($mov['des']['mov_11']!=0){ 
+                    ?>
                     <tr>
                         <td>PAPEL 2</td>
                         <td class="text-right"><?= $mov['des']['mov_11'] ?></td>
                     </tr>
+                    <?php 
+                    }
+                     if($mov['des']['mov_12']!=0){ 
+                    ?>
                     <tr>
                         <td>BOLSA</td>
                         <td class="text-right"><?= $mov['des']['mov_12'] ?></td>
                     </tr>
+                    <?php 
+                    }
+                     if($mov['des']['mov_13']!=0){ 
+                    ?>
                     <tr>
                         <td>OTROS</td>
                         <td class="text-right"><?= $mov['des']['mov_13'] ?></td>
                     </tr>
+                    <?php } ?>
                     <tr>
                         <td>TOTAL</td>
                         <td class="text-right text-danger"><?= formatMoney($mov['mov_igv_id']['mov_des']) ?></td>
