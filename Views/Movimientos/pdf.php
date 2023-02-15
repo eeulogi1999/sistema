@@ -141,7 +141,7 @@
                         <td class="text-right"><?= $mov['des']['mov_9'] ?></td>
                     </tr>
                     <?php 
-                    if($mov['des']['mov_2']!=0){ 
+                    if($mov['des']['mov_2']!='0'){ 
                     ?>
                     <tr>
                         <td>CAJA 1</td>
@@ -149,7 +149,7 @@
                     </tr>
                     <?php 
                     }
-                     if($mov['des']['mov_3']!=0){ 
+                     if($mov['des']['mov_3']!='0'){ 
                     ?>
 
                     <tr>
@@ -158,7 +158,7 @@
                     </tr>
                     <?php 
                     }
-                     if($mov['des']['mov_4']!=0){ 
+                     if($mov['des']['mov_4']!='0'){ 
                     ?>
                     <tr>
                         <td>CAJA 3</td>
@@ -166,7 +166,7 @@
                     </tr>
                     <?php 
                     }
-                     if($mov['des']['mov_5']!=0){ 
+                     if($mov['des']['mov_5']!='0'){ 
                     ?>
                     <tr>
                         <td>CAJA 4</td>
@@ -174,7 +174,7 @@
                     </tr>
                     <?php 
                     }
-                     if($mov['des']['mov_6']!=0){ 
+                     if($mov['des']['mov_6']!='0'){ 
                     ?>
                     <tr>
                         <td>BOLSA 1</td>
@@ -182,7 +182,7 @@
                     </tr>
                     <?php 
                     }
-                     if($mov['des']['mov_7']!=0){ 
+                     if($mov['des']['mov_7']!='0'){ 
                     ?>
                     <tr>
                         <td>BOLSA 2</td>
@@ -190,7 +190,7 @@
                     </tr>
                     <?php 
                     }
-                     if($mov['des']['mov_8']!=0){ 
+                     if($mov['des']['mov_8']!='0'){ 
                     ?>
                     <tr>
                         <td>BOLSA 3</td>
@@ -198,7 +198,7 @@
                     </tr>
                     <?php 
                     }
-                     if($mov['des']['mov_10']!=0){ 
+                     if($mov['des']['mov_10']!='0'){ 
                     ?>
                     <tr>
                         <td>PAPEL 1</td>
@@ -206,7 +206,7 @@
                     </tr>
                     <?php 
                     }
-                     if($mov['des']['mov_11']!=0){ 
+                     if($mov['des']['mov_11']!='0'){ 
                     ?>
                     <tr>
                         <td>PAPEL 2</td>
@@ -214,7 +214,7 @@
                     </tr>
                     <?php 
                     }
-                     if($mov['des']['mov_12']!=0){ 
+                     if($mov['des']['mov_12']!='0'){ 
                     ?>
                     <tr>
                         <td>BOLSA</td>
@@ -222,7 +222,7 @@
                     </tr>
                     <?php 
                     }
-                     if($mov['des']['mov_13']!=0){ 
+                     if($mov['des']['mov_13']!='0'){ 
                     ?>
                     <tr>
                         <td>OTROS</td>
