@@ -61,9 +61,9 @@
         <tr>
             <td>
                 <div class="card">
-                    <div class="card-header text-center fz-20 cz">AÑO-MES-DIA</div>
-                    <div class="card-body text-center fz-20 p-0 cz"><?= $mov['mov_fechaE']?> <br>
-                    <?= $mov['mov_fechaV']?></div>
+                    <div class="card-header text-center fz-20 cz">FECHA</div>
+                    <div class="card-body text-center fz-20 p-0 cz">EMISIÓN: <?= $mov['mov_fechaE']?> <br>
+                    PAGO: <?= $mov['mov_fechaV']?></div>
                 </div>
             </td>
             <td>
@@ -198,10 +198,6 @@
                     <tr>
                         <td>ADELANTO S/</td>
                         <td class="text-right"><?= formatMoney('0.00')?> </td>
-                    </tr>
-                    <tr>
-                        <td>AMORTIZACION DEUDA S/</td>
-                        <td class="text-right"><?= formatMoney('0.00')?></td>
                     </tr>
                     <tr>
                         <td>IMPORTE FINAL S/</td>
