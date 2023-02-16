@@ -539,5 +539,4 @@ class Movimientos extends Controllers{
         echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
     }
-
 }

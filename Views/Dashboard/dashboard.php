@@ -79,32 +79,14 @@
               <img src="" alt="foto" id="outImg">
             </div>
             <div class="tab-pane fade p-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-              <table class="table table-bordered table-sm">
-                <thead>
-                  <th>MATERIAL</th>
-                  <th>PRECIO</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>BRILLANTE</td>
-                    <td>30.10</td>
-                  </tr>
-                </tbody>
-              </table>
+              <table class="table table-bordered table-sm" id="fre_table" width="100%"></table>
+              <button class="btn btn-success" onClick="share(event)"><i class="fas fa-share"></i>Compartir</button>
+              <img src="" alt="foto" id="outImg">
             </div>
             <div class="tab-pane fade p-3" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-              <table class="table table-bordered table-sm">
-                <thead>
-                  <th>MATERIAL</th>
-                  <th>PRECIO</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>BRILLANTE</td>
-                    <td>30.10</td>
-                  </tr>
-                </tbody>
-              </table>
+              <table class="table table-bordered table-sm" id="con_table" width="100%"></table>
+              <button class="btn btn-success" onClick="share(event)"><i class="fas fa-share"></i>Compartir</button>
+              <img src="" alt="foto" id="outImg">
             </div>
           </div>
         </div>

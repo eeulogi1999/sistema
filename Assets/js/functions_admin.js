@@ -389,6 +389,19 @@ function previewFiles(th,content) {
                                 d='';
                             } 
                         }
+                        if (o.cell) {
+                            $(cell).dblclick(function(){
+                                ne = o.columns[$(this).index()].data
+                                if (ne.split('.')[0].split('_')[1]!='opt') {
+                                    if (ne.split('.').length>1) {
+                                        let selec = $(this).html('<select class="form-control" id="c_'+ne.split('.')[0]+'" name="c_'+ne.split('.')[0]+'" onChange="'+$(table).attr('id')+'.editCell('+$(this).parent().index()+',`'+o.columns[$(this).index()].data+'`,event)"></select>')
+                                        $(selec).children('select').loadOptions('bienes',['bie_nombre'],{'bie_status':1});
+                                    } else {
+                                        $(this).html('<input type="text" class="form-control" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+$(this).parent().index()+',`'+o.columns[$(this).index()].data+'`,event)">')
+                                    }
+                                }
+                            })
+                        }
                         if (typeof o.columns[j].footer === 'object') {
                             if (o.columns[j].footer.c == 'sum') {
                                 d = (d=='' ||d==null )?0:parseFloat(d);
@@ -494,17 +507,6 @@ function previewFiles(th,content) {
                 $(tbody).html('<tr><td colspan="'+(numerate?o.columns.length+1:o.columns.length)+'" class="text-center">Ningún dato disponible en esta tabla =(</td></tr>');
                 $(tfoot).children('tr').html('');
             }
-
-            if (typeof o.cell != undefined) {
-                if (o.cell) {
-                    $(table[0].getElementsByTagName("td")).dblclick(function(){
-                        $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+0+',`'+o.columns[$(this).index()].data+'`,event)">')
-                        //$(this).addClass('edit').siblings().removeClass('edit');  
-                    })
-                } else {
-                    $(table).children('td').unbind();
-                }
-            }
         };
         var zise = function(){
             if (typeof o.rezise == 'undefined' ) {
@@ -513,7 +515,7 @@ function previewFiles(th,content) {
                     w = (!o.export)?205:230;
                 }
                 if ((window.innerHeight-w)>table[0].offsetHeight) {
-                    table[0].parentNode.style.height = (table[0].offsetHeight)+'px';
+                    table[0].parentNode.style.height = 'auto';
                 }else{
                     table[0].parentNode.style.height = (window.innerHeight-w)+'px';
                 }
@@ -576,16 +578,6 @@ function previewFiles(th,content) {
                         $(table).children('tr').unbind();
                     }
                 }
-                if (typeof o.cell != undefined) {
-                    if (o.cell) {
-                        $(table[0].getElementsByTagName("td")).dblclick(function(){
-                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+0+',`'+o.columns[$(this).index()-1].data+'`,event)">')
-                            //$(this).addClass('edit').siblings().removeClass('edit');  
-                        })
-                    } else {
-                        $(table).children('td').unbind();
-                    }
-                }
                 setTimeout(() => {
                     zise();
                 }, 100);
@@ -639,48 +631,32 @@ function previewFiles(th,content) {
             },
             editCell : async function(r,d,e){
                 e.preventDefault();
-                if (o.copyCellEditOrigin) {
-                    window[o.src][r][d] = parseFloat(e.target.value);
-                    o.copyCellEditOrigin();
+                let ne = d.split('.')
+                if (ne.length>1) {
+                    window[o.src][r][ne[0]] = {bie_id:parseFloat(e.target.value),bie_nombre:$(e.target).find('option:selected').text()};
+                }else{
+                    window[o.src][r][ne[0]] = parseFloat(e.target.value);
                 }
-                await draw();
-                zise();
-                listenTree();
-                if (typeof o.select != undefined) {
-                    if (o.select) {
-                        $(table[0].getElementsByTagName("tr")).click(function(){
-                            $(this).addClass('selected').siblings().removeClass('selected');  
-                        })
-                    } else {
-                        $(table).children('tr').unbind();
-                    }
-                }
-                if (typeof o.cell != undefined) {   //parseInt($(this).parent().attr('id')) -> 0
-                    if (o.cell) {
-                        $(table[0].getElementsByTagName("td")).dblclick(function(){
-                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+0+',`'+o.columns[$(this).index()-1].data+'`,event)">')
-                           // $(this).addClass('edit').siblings().removeClass('edit');  
-                        })
-                    } else {
-                        $(table).children('td').unbind();
-                    }
-                }
-                return true;
+                this.reload();
             },
             newRow: async function() {
-                let r = {};
-                for (const i in o.columns) {
-                    let ne = o.columns[i].data.split('.');
-                    let ix = null;
-                    for (let n = 0; n < ne.length; n++) { 
-                            ix[ne[n]] = '';                  
-                    }
-                    r[ne[0]] = ix;
-                }
                 let pin = 0;
                 for (const i in window[o.src]) {
                     if (pin<=parseInt(i)) {
                         pin = parseInt(i)+1;
+                    }
+                }
+                let r = {};
+                for (const i in o.columns) {
+                    let ne = o.columns[i].data.split('.');
+                    if (ne.length>1) {
+                        r[ne[0]] = {[ne[1]]:''};
+                    }else{
+                        if (ne[0].split('_')[1]=='opt') {
+                            r[ne[0]] = `<button class="btn btn-danger btn-sm" onClick="delete window['`+o.src+`'][`+pin+`];gen_table.reload()"><i class="fas fa-trash"></i></button>`;
+                        } else {
+                            r[ne[0]] = '';
+                        }
                     }
                 }
                 window[o.src][pin] = r;

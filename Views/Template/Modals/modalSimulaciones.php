@@ -74,14 +74,17 @@
               <table class="table table-hover table-bordered table-sm" id="ten_table" width="100%">
                   <thead class="bg-dark-lite sticky-top" style="padding-right: 17px; margin-right: -17px;">
                     <tr>
+                      <th colspan="5" class="text-center">COTIZACIÓN DE BOLSA</th>
+                    </tr>
+                    <tr>
                       <th>
-                        <div class="text-center"> PRECIO BASE/TN</div>
+                        <div class="text-center"> PRECIO LME</div>
                       </th>
                       <th>
                         <div class="text-center"> USD-SUNAT</div>
                       </th>
                       <th>
-                        <div class="text-center"> %</div>
+                        <div class="text-center">%</div>
                       </th>
                       <th>
                         <div class="text-center"> USD/TN</div>

@@ -1,5 +1,5 @@
 var ten_table,tbi_table,gen_table;
-var gen_json = {0:{gen_bie_id:{bie_nombre:'COBRE BRILLANTE'},gen_p:30.31,gen_opt:`<button class="btn btn-danger btn-sm" ><i class="fas fa-trash"></i></button>`}}
+var gen_json = {0:{gen_bie_id:{bie_nombre:'COBRE BRILLANTE'},gen_p:30.31,gen_opt:`<button class="btn btn-danger btn-sm" onClick="delete window['gen_json'][0];gen_table.reload()"><i class="fas fa-trash"></i></button>`}}
 var url_ten = base_url+"/Utilitarios/getTendencias";
 var url_tbi = base_url+"/Utilitarios/getBienesPorc";
 document.addEventListener('DOMContentLoaded',function () {
@@ -58,9 +58,34 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"gen_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
                 {"data":"gen_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
-                {"data":"gen_opt",header:`<button class="btn btn-primary btn-sm" onclick="gen_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,tipo:'string'},
-            ],
-            copyCellEditOrigin:()=>{}
+                {"data":"gen_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="gen_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
+            ]
+        });
+    }
+    if (document.querySelector("#fre_table")) {
+        fre_table = $('#fre_table').autoTable({
+            "src": 'gen_json',
+            "cell":true,
+            "gen_id":true,
+            "export":false,
+            "columns":[
+                {"data":"gen_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
+                {"data":"gen_pf",header:{t:"PRECIO",align:'right'},tipo:'float'},
+                {"data":"gen_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="gen_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
+            ]
+        });
+    }
+    if (document.querySelector("#con_table")) {
+        con_table = $('#con_table').autoTable({
+            "src": 'gen_json',
+            "cell":true,
+            "gen_id":true,
+            "export":false,
+            "columns":[
+                {"data":"gen_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
+                {"data":"gen_pc",header:{t:"PRECIO",align:'right'},tipo:'float'},
+                {"data":"gen_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="gen_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
+            ]
         });
     }
 });
@@ -73,7 +98,12 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#gen_table")) {
         gen_table = await gen_table;
-        $('#gen_table').parent().height('auto');
+    }
+    if (document.querySelector("#fre_table")) {
+        fre_table = await fre_table;
+    }
+    if (document.querySelector("#con_table")) {
+        con_table = await con_table;
     }
     divLoading.style.display = "none";
 });
