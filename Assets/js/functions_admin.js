@@ -494,6 +494,17 @@ function previewFiles(th,content) {
                 $(tbody).html('<tr><td colspan="'+(numerate?o.columns.length+1:o.columns.length)+'" class="text-center">Ningún dato disponible en esta tabla =(</td></tr>');
                 $(tfoot).children('tr').html('');
             }
+
+            if (typeof o.cell != undefined) {
+                if (o.cell) {
+                    $(table[0].getElementsByTagName("td")).dblclick(function(){
+                        $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+0+',`'+o.columns[$(this).index()].data+'`,event)">')
+                        //$(this).addClass('edit').siblings().removeClass('edit');  
+                    })
+                } else {
+                    $(table).children('td').unbind();
+                }
+            }
         };
         var zise = function(){
             if (typeof o.rezise == 'undefined' ) {
@@ -656,6 +667,25 @@ function previewFiles(th,content) {
                 }
                 return true;
             },
+            newRow: async function() {
+                let r = {};
+                for (const i in o.columns) {
+                    let ne = o.columns[i].data.split('.');
+                    let ix = null;
+                    for (let n = 0; n < ne.length; n++) { 
+                            ix[ne[n]] = '';                  
+                    }
+                    r[ne[0]] = ix;
+                }
+                let pin = 0;
+                for (const i in window[o.src]) {
+                    if (pin<=parseInt(i)) {
+                        pin = parseInt(i)+1;
+                    }
+                }
+                window[o.src][pin] = r;
+                this.reload();
+            },
             getTotales: function(){
                 return o.tf;
             }
@@ -790,5 +820,10 @@ function getTable(prefijo) {
 
 function btn(o={bg:'success',fn:'fn',id:1,title:'Registrar',icon:'fa-user-lock'}){
     return `<button class="btn btn-${o.bg} btn-sm" onClick="${o.fn}(${o.id})" title="${o.title}"><i class="fas ${o.icon}"></i></button>`; 
+}
+
+function gt4(mt,id=1) {
+    let r = data.gt4.find(e => e.gt4_id == id);
+    return Intl.NumberFormat(r.gt4_locale, { style: 'currency', currency: r.gt4_sunat }).format(Math.ceil10(mt,-2).toFixed(2))
 }
 

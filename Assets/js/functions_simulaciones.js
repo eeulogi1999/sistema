@@ -94,7 +94,15 @@ function openModalC(t) {
     r.sim_imp = (t==1)?3.5:2.5;
     r.sim_cadm = 55
     r.sim_plus = 0
+
+    r.cus_pre= 8205
+    r.cus_tce= 3.83
+    r.cus_por= 87
+
     val_json[0] = r;
+
+
+
     reload()
 }
 
@@ -105,6 +113,10 @@ function editCell(i,e) {
     reload()
 }
 function reload() {
+
+    val_json[0].cus_usd= ((r)=>{return r.cus_pre*(r.cus_por/100)})(val_json[0])
+    val_json[0].cus_sol= ((r)=>{return r.cus_pre*r.cus_tce*(r.cus_por/100)})(val_json[0])
+
     val_json[0].sim_pkg = ((r)=>{
         if (r.sim_tipo == 1) {
             return r.sim_ptn/1000
@@ -126,8 +138,10 @@ function reload() {
             return r.sim_pkg*1000*r.sim_qtn
         }
     })(val_json[0])
+    val_json[0].sim_gtn = ((r)=>{return r.sim_g*1000*r.sim_qtn})(val_json[0])
     val_json[0].sim_mntn = ((r)=>{return r.sim_mbtn-(r.sim_g*1000*r.sim_qtn)})(val_json[0])
     val_json[0].sim_mnkg = ((r)=>{return r.sim_mbkg-(r.sim_g*r.sim_qkg)})(val_json[0])
+
     val_json[0].sim_mxtn = ((r)=>{ return r.sim_mbtn*r.sim_exp/100})(val_json[0])
     val_json[0].sim_mxkg = ((r)=>{ return r.sim_mbkg*r.sim_exp/100})(val_json[0])
     val_json[0].sim_migtn = ((r)=>{ return r.sim_mxtn*r.sim_igv/100})(val_json[0])
@@ -171,7 +185,6 @@ function reload() {
         } else {
             $('#'+i).text(Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(Math.ceil10(val_json[0][i],-2).toFixed(2)))
         }
-        
     }
     $('#sim_exp').text(val_json[0].sim_exp)
     $('#sim_igv').text(val_json[0].sim_igv)
@@ -187,17 +200,21 @@ function reload() {
     $('.sim_gtc').text(val_json[0].sim_gtc)
     $('.sim_g').text(val_json[0].sim_g)
 
-    var es = ['#sim_qtn','#sim_qkg','#sim_ptn','#sim_pkg','.sim_gtc','.sim_g','#sim_p_1','#sim_p_2','#sim_p_3','#sim_p_4','#sim_pc','#sim_exp','#sim_igv','#sim_imp','#sim_cadm','#sim_plus','.sim_mbkg']
+    var es = ['#sim_qtn','#sim_qkg','#sim_ptn','#sim_pkg','.sim_gtc','.sim_g','#sim_p_1',
+    '#sim_p_2','#sim_p_3','#sim_p_4','#sim_pc','#sim_exp','#sim_igv','#sim_imp','#sim_cadm','#sim_plus','.sim_mbkg',
+    '#cus_pre','#cus_tce','#cus_por']
+
     for (const i in es) {
-        $(es[i]).dblclick(function(){
-            let e =  es[i].substring(1, es[i].length)
-            if (e == 'sim_mbkg') { 
-                $(this).html('<input type="text" value="'+val_json[0][e]+'" size="10" onChange="editCell(`sim_pkg`,event)">') 
-            } else {
-                $(this).html('<input type="text" value="'+val_json[0][e]+'" size="10" onChange="editCell(`'+e+'`,event)">')  
-            }
-        })
+        let e =  es[i].substring(1, es[i].length)
+        if (e == 'sim_mbkg') { 
+            $(es[i]).html('<input type="text" value="'+val_json[0][e]+'" size="10" onChange="editCell(`sim_pkg`,event)">') 
+        } else {
+            $(es[i]).html('<input type="text" value="'+val_json[0][e]+'" size="10" onChange="editCell(`'+e+'`,event)">')  
+        }
     }
+    $('#sim_qkg').text(val_json[0].sim_qkg);
+    $('#out_table .sim_mbkg').text(gt4(val_json[0].sim_mbkg,1));
+    $('#cus_usd').text(gt4(val_json[0].cus_usd,2));
     if (data.sim.sim_tipo == 2) {
         $('#inp_table tr > *:nth-child(3)').hide();
         $('#inp_table tr > *:nth-child(4)').hide();
@@ -214,6 +231,8 @@ function reload() {
         $('#por_table thead tr > *:nth-child(2)').text('% IGV');
         $('#out_table thead tr > *:nth-child(4)').text('IGV');
         $('#inp_table .sim_mbkg').addClass('bg-dark-lite');
+        $('#inp_table .sim_mbkg').text(gt4(val_json[0].sim_mbkg,1));
+        $('#sim_pkg').text(gt4(val_json[0].sim_pkg,2));
     }
     if (!parseInt(data.per.gtp_u)) {
         $('#por_table').hide()

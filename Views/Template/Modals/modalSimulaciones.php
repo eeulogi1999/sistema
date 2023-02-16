@@ -69,7 +69,40 @@
             </div>
           </div><br>
           <div class="row">
-            <div class="col-md-8"></div>
+            <div class="col-md-8">
+              <div class="table-responsive">
+              <table class="table table-hover table-bordered table-sm" id="ten_table" width="100%">
+                  <thead class="bg-dark-lite sticky-top" style="padding-right: 17px; margin-right: -17px;">
+                    <tr>
+                      <th>
+                        <div class="text-center"> PRECIO BASE/TN</div>
+                      </th>
+                      <th>
+                        <div class="text-center"> USD-SUNAT</div>
+                      </th>
+                      <th>
+                        <div class="text-center"> %</div>
+                      </th>
+                      <th>
+                        <div class="text-center"> USD/TN</div>
+                      </th>
+                      <th>
+                        <div class="text-center"> SOL/TN</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td id="cus_pre" class="text-center text-danger"></td>
+                      <td id="cus_tce" class="text-center text-danger"></td>
+                      <td id="cus_por" class="text-center"></td>
+                      <td id="cus_usd" class="text-center text-danger"></td>
+                      <td id="cus_sol" class="text-center text-danger"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
             <div class="col-md-4">
               <div class="table-responsive">
                 <table class="table table-hover table-bordered table-sm " id="res_table" width="100%">
@@ -117,7 +150,7 @@
                     <td id="sim_ptn" class="text-right" >8205.00</td>
                     <td class="sim_gtc text-right" >3.86</td>
                     <td class="sim_mbtn text-right bg-dark-lite" >632113.20</td>
-                    <td class="sim_g text-right bg-danger" >0.56</td>
+                    <td id="sim_gtn" class="text-right bg-danger" ></td>
                     <td id="sim_mntn" class="text-right bg-dark-lite" >620913.20</td>
                   </tr>
                   <tr>

@@ -25,7 +25,6 @@
 			$data['page_functions_js'] = array("functions_dashboard.js");
 			$anio = date('Y');
 			$mes = date('m');
-
 			$this->views->getView($this,"dashboard",$data);
 		}
 		public function CumpleañosMes(){

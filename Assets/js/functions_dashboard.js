@@ -1,5 +1,5 @@
 var ten_table,tbi_table,gen_table;
-var gen_json = {0:{gen_bie_id:{bie_nombre:'COBRE BRILLANTE'},gen_p:30.31,gen_opt:`<button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>`}}
+var gen_json = {0:{gen_bie_id:{bie_nombre:'COBRE BRILLANTE'},gen_p:30.31,gen_opt:`<button class="btn btn-danger btn-sm" ><i class="fas fa-trash"></i></button>`}}
 var url_ten = base_url+"/Utilitarios/getTendencias";
 var url_tbi = base_url+"/Utilitarios/getBienesPorc";
 document.addEventListener('DOMContentLoaded',function () {
@@ -51,15 +51,16 @@ document.addEventListener('DOMContentLoaded',function () {
     })
     if (document.querySelector("#gen_table")) {
         gen_table = $('#gen_table').autoTable({
-            "src": gen_json,
+            "src": 'gen_json',
             "cell":true,
+            "gen_id":true,
             "export":false,
-            "thid":'gen_p',
             "columns":[
                 {"data":"gen_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
                 {"data":"gen_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
-                {"data":"gen_opt",header:`<button class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i></button>`,tipo:'string'},
-            ]
+                {"data":"gen_opt",header:`<button class="btn btn-primary btn-sm" onclick="gen_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,tipo:'string'},
+            ],
+            copyCellEditOrigin:()=>{}
         });
     }
 });
@@ -72,6 +73,7 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#gen_table")) {
         gen_table = await gen_table;
+        $('#gen_table').parent().height('auto');
     }
     divLoading.style.display = "none";
 });
