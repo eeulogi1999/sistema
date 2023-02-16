@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"pri_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
                 {"data":"pri_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
+                {"data":"pri_fecha",header:"ULT. ACTUL.",tipo:'string'},
                 {"data":"pri_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="gen_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
             ]
         });
@@ -81,6 +82,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"pri_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
                 {"data":"pri_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
+                {"data":"pri_fecha",header:"ULT. ACTUL.",tipo:'string'},
                 {"data":"pri_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="fre_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
             ]
         });
@@ -96,6 +98,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"pri_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
                 {"data":"pri_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
+                {"data":"pri_fecha",header:"ULT. ACTUL.",tipo:'string'},
                 {"data":"pri_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="con_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
             ]
         });
