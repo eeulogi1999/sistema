@@ -96,7 +96,13 @@ async function off(node,prefijo,id,res=false) {
 async function set(prefijo,where= null,json = null,res = false) {
     var table = capitalize(getTable(prefijo));
     if (typeof window['setPre'+capitalize(prefijo)]==='function') {
-        var arr = await window['setPre'+capitalize(prefijo)](where,Object.fromEntries(new FormData(document.querySelector('#form_'+prefijo))),res);
+        if (document.querySelector('#form_'+prefijo)) {
+            var arr = await window['setPre'+capitalize(prefijo)](where,Object.fromEntries(new FormData(document.querySelector('#form_'+prefijo))),res);
+        }
+        if (json) {
+            var arr = await window['setPre'+capitalize(prefijo)](where,json,res);
+        }
+        
         where = arr.where??where;
         json = arr.json??json;
         res = arr.res??res;

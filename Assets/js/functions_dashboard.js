@@ -1,9 +1,15 @@
-var ten_table,tbi_table,gen_table;
-var gen_json = {0:{gen_bie_id:{bie_nombre:'COBRE BRILLANTE'},gen_p:30.31,gen_opt:`<button class="btn btn-danger btn-sm" onClick="delete window['gen_json'][0];gen_table.reload()"><i class="fas fa-trash"></i></button>`}}
+var ten_table,tbi_table,gen_table,fre_table,con_table;
+var gen_json = {}
+var fre_json = {}
+var con_json = {}
+
 var url_ten = base_url+"/Utilitarios/getTendencias";
 var url_tbi = base_url+"/Utilitarios/getBienesPorc";
+
+var url_gen = base_url+"/Main/getAll/pri";
+var url_fre = base_url+"/Main/getAll/pri";
+var url_con = base_url+"/Main/getAll/pri";
 document.addEventListener('DOMContentLoaded',function () {
-    
     divLoading.style.display = "flex";
     if (document.querySelector("#ten_table")) {
         ten_table = $('#ten_table').autoTable({
@@ -51,40 +57,46 @@ document.addEventListener('DOMContentLoaded',function () {
     })
     if (document.querySelector("#gen_table")) {
         gen_table = $('#gen_table').autoTable({
-            "src": 'gen_json',
+            "url": url_gen,
+            "where":{pri_tipo:1},
             "cell":true,
+            'thid':'pri_id',
             "gen_id":true,
             "export":false,
             "columns":[
-                {"data":"gen_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
-                {"data":"gen_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
-                {"data":"gen_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="gen_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
+                {"data":"pri_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
+                {"data":"pri_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
+                {"data":"pri_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="gen_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
             ]
         });
     }
     if (document.querySelector("#fre_table")) {
         fre_table = $('#fre_table').autoTable({
-            "src": 'gen_json',
+            "url": url_fre,
+            "where":{pri_tipo:2},
             "cell":true,
+            'thid':'pri_id',
             "gen_id":true,
             "export":false,
             "columns":[
-                {"data":"gen_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
-                {"data":"gen_pf",header:{t:"PRECIO",align:'right'},tipo:'float'},
-                {"data":"gen_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="gen_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
+                {"data":"pri_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
+                {"data":"pri_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
+                {"data":"pri_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="fre_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
             ]
         });
     }
     if (document.querySelector("#con_table")) {
         con_table = $('#con_table').autoTable({
-            "src": 'gen_json',
+            "url": url_con,
             "cell":true,
+            "where":{pri_tipo:3},
+            'thid':'pri_id',
             "gen_id":true,
             "export":false,
             "columns":[
-                {"data":"gen_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
-                {"data":"gen_pc",header:{t:"PRECIO",align:'right'},tipo:'float'},
-                {"data":"gen_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="gen_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
+                {"data":"pri_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
+                {"data":"pri_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
+                {"data":"pri_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="con_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
             ]
         });
     }
@@ -176,12 +188,23 @@ function setTenTgaBas(a,b,e) {
     .catch(error => swal("Atención", "Error en el proceso: " + error, "error"))
 }
 
-function share(e) {
+function share(pre,e) {
     e.preventDefault();
-    html2canvas(document.querySelector("#gen_table")).then(canvas => {
+    $("#"+pre+"_table tr>*:nth-child(3)").hide()
+    html2canvas(document.querySelector("#"+pre+"_table")).then(canvas => {
         const img    = canvas.toDataURL('image/png');   
-        document.getElementById('outImg').src = img
+        document.getElementById(pre+'_img').src = img
     });
+    $("#"+pre+"_table tr>*:nth-child(3)").show()
 }
 
+function setPrePri(where,json,res) {
+    if (json.pri_id) {
+        
+    } else {
+        json.pri_bie_id = 4
+        json.pri_fecha = new Date().toISOString().replace('T',' ').slice(0,19)
+    }
+    return {json}
+}
 

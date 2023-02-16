@@ -25,3 +25,12 @@ CREATE TABLE `company5_bd_cacel`.`logs` (
     `log_datetime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , 
     PRIMARY KEY (`log_id`)) ENGINE = InnoDB;
 
+
+CREATE TABLE `company5_bd_20602849172`.`prices` (`pri_id` BIGINT NOT NULL AUTO_INCREMENT ,
+ `pri_bie_id` BIGINT NOT NULL , 
+ `pri_tipo` INT NOT NULL ,
+ `pri_p` DECIMAL(7,4) NOT NULL , 
+ `pri_fecha` DATETIME NOT NULL ,
+  PRIMARY KEY (`pri_id`)) ENGINE = InnoDB;
+
+  ALTER TABLE `prices` ADD CONSTRAINT `prices_bienes` FOREIGN KEY (`pri_bie_id`) REFERENCES `bienes`(`bie_id`) ON DELETE CASCADE ON UPDATE CASCADE;

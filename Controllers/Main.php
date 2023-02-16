@@ -108,7 +108,7 @@ class Main extends Controllers{
     public function getAll($pre){
         $tabla = $this->getTable($pre);
         $this->newModel($tabla);
-        $arrData = $this->{$tabla}->selectRegistros();
+        $arrData = $this->{$tabla}->selectRegistros((isset($_POST['where']))?json_decode($_POST['where'],true):array());
         for ($i=0; $i < count($arrData); $i++) {
             $btnView = '';
             $btnEdit = '';
@@ -158,7 +158,7 @@ class Main extends Controllers{
         }
         $this->newModel($tabla);
         if ($_POST) {
-            if (intval($_POST[$prefijo.'_id'])==0) {
+            if ((isset($_POST[$prefijo.'_id']))?intval($_POST[$prefijo.'_id'])==0:true) {
                 $arrData = $this->{$tabla}->insertRegistro($_POST,$where);
             }else{
                 $arrData = $this->{$tabla}->updateRegistro($_POST);

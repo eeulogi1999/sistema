@@ -276,7 +276,9 @@ function previewFiles(th,content) {
             o.data = window[o.src];
         }
         if (o.url != undefined) {
-            o.data = await fetch(o.url)
+            var formData = new FormData();  
+            formData.append('where',JSON.stringify(o.where??{}));
+            o.data = await fetch(o.url,{method: "POST",body: formData})
             .then(r => r.json())
             .then(r => {return r})
             .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
@@ -383,10 +385,14 @@ function previewFiles(th,content) {
                         var ix = ne[ne.length-1];
                         var d = r;
                         for (let n = 0; n < ne.length; n++) { 
-                            if (d != null) {
+                            if (d[ne[n]]) {
                                 d = d[ne[n]];                         
                             } else {
-                                d='';
+                                if (ne[0].split('_')[1]=='opt' && !o.src) {
+                                    d=`<button class="btn btn-danger btn-sm" onClick="(async ()=>{await del('pri',`+r[ne[0].split('_')[0]+'_id']+`,true);`+$(table).attr('id')+`.reload()})()"><i class="fas fa-trash"></i></button>`;
+                                } else {
+                                    d=''; 
+                                }
                             } 
                         }
                         if (o.cell) {
@@ -562,7 +568,9 @@ function previewFiles(th,content) {
                 }
                 if (typeof o.url != 'undefined') {
                     var url = (url)?url:o.url;
-                    o.data = await fetch(url)
+                    var formData = new FormData();  
+                    formData.append('where',JSON.stringify(o.where??{}));
+                    o.data = await fetch(o.url,{method: "POST",body: formData})
                     .then(r => r.json())
                     .then(r => {return r})
                     .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
@@ -632,10 +640,19 @@ function previewFiles(th,content) {
             editCell : async function(r,d,e){
                 e.preventDefault();
                 let ne = d.split('.')
-                if (ne.length>1) {
-                    window[o.src][r][ne[0]] = {bie_id:parseFloat(e.target.value),bie_nombre:$(e.target).find('option:selected').text()};
-                }else{
-                    window[o.src][r][ne[0]] = parseFloat(e.target.value);
+                if (o.src) {
+                    if (ne.length>1) {
+                        window[o.src][r][ne[0]] = {bie_id:parseFloat(e.target.value),bie_nombre:$(e.target).find('option:selected').text()};
+                    }else{
+                        window[o.src][r][ne[0]] = parseFloat(e.target.value);
+                    }
+                }
+                if (o.url) {
+                    if (ne.length>1) {
+                        await set(ne[0].split('_')[0],null,{[ne[0]]:parseInt(e.target.value),[ne[0].split('_')[0]+'_id']:$(e.target.parentElement.parentElement).attr('id')},true);
+                    }else{
+                        await set(ne[0].split('_')[0],null,{[ne[0]]:parseFloat(e.target.value),[ne[0].split('_')[0]+'_id']:$(e.target.parentElement.parentElement).attr('id')},true);
+                    }
                 }
                 this.reload();
             },
@@ -659,7 +676,14 @@ function previewFiles(th,content) {
                         }
                     }
                 }
-                window[o.src][pin] = r;
+                r.pri_tipo = o.where.pri_tipo
+                if (o.src) {
+                    window[o.src][pin] = r;
+                }
+
+                if (o.url){
+                    await set('pri',null,r,true);
+                }
                 this.reload();
             },
             getTotales: function(){
