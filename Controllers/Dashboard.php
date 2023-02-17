@@ -45,6 +45,17 @@
 			echo json_encode(array('status'=>true),JSON_UNESCAPED_UNICODE);
             die();
 		}
+		public function saveImg(){
+			$img_name = 'img_'.md5(date('d-m-Y H:m:s')).'.png';
+            $upload = uploadImage($_FILES['file'],$img_name);
+            if ($upload) {
+				echo json_encode(array('status'=>true,'img'=>$img_name),JSON_UNESCAPED_UNICODE);
+            }else{
+				echo json_encode(array('status'=>false),JSON_UNESCAPED_UNICODE);
+			}
+			die();
+
+		}
 
 	}
  ?>

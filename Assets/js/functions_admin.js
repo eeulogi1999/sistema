@@ -567,7 +567,7 @@ function previewFiles(th,content) {
                     o.data = window[o.src];
                 }
                 if (typeof o.url != 'undefined') {
-                    var url = (url)?url:o.url;
+                    o.url = url??o.url;
                     var formData = new FormData();  
                     formData.append('where',JSON.stringify(o.where??{}));
                     o.data = await fetch(o.url,{method: "POST",body: formData})

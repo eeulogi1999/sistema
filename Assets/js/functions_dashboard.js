@@ -195,8 +195,21 @@ function share(pre,e) {
     e.preventDefault();
     $("#"+pre+"_table tr>*:nth-child(3)").hide()
     html2canvas(document.querySelector("#"+pre+"_table")).then(canvas => {
-        const img    = canvas.toDataURL('image/png');   
-        document.getElementById(pre+'_img').src = img
+        // const img    = canvas.toDataURL('image/png');   
+        // document.getElementById(pre+'_img').src = img
+        canvas.toBlob(function(blob) {
+            const formData = new FormData();
+            formData.append('file', blob, 'filename.png'); 
+            fetch(base_url+'/Dashboard/saveImg',{method: "POST",body: formData})
+            .then(r => r.json())
+            .then(r => {
+                if (r.status) {
+                    document.getElementById(pre+'_img').src = base_url+'/.uploads/'+r.img
+                }
+            })
+            .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
+          });
+
     });
     $("#"+pre+"_table tr>*:nth-child(3)").show()
 }
