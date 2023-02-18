@@ -221,6 +221,14 @@ async function view(prefijo,id,res=false) {
         return response.data;
     }
 }
+async function get(prefijo,id) {
+    var response = await fetch(base_url + '/Main/get/'+prefijo+','+id)
+    .then(response => response.json())
+    .then(response => {return response;})
+    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+    return response.data;
+}
+
 function resetModal(prefijo) {
     document.querySelector("#form_"+prefijo).reset();
     $('#modal_'+prefijo).modal('hide');

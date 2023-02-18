@@ -237,10 +237,18 @@ function share(pre,e) {
     $("#"+pre+"_table tr>*:nth-child(5)").show()
 }
 
-function setPrePri(where,json,res) {
-    if (json.pri_id) {
-        json.pri_fecha = new Date().toLocaleString('af-ZA')
-        json.pri_gus_id = data.pri.pri_gus_id
+async function setPrePri(where,json,res) {
+
+    if (json.pri_id) {  
+        let bd = await get('pri',json.pri_id);
+        if (bd.pri_fecha.split(' ')[0] == new Date().toLocaleString('af-ZA').split(' ')[0]) {
+            json.pri_fecha = new Date().toLocaleString('af-ZA')
+            json.pri_gus_id = data.pri.pri_gus_id
+        } else {
+            delete json.pri_id;
+            json.pri_bie_id = 52
+            json.pri_fecha = new Date().toLocaleString('af-ZA')
+        }
     } else {
         where = ['pri_bie_id','pri_tipo']
         json.pri_bie_id = 52
