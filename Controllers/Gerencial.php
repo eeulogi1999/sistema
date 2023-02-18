@@ -111,8 +111,17 @@ class Gerencial extends Controllers{
         $res[0]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resEfectivo()"><i class="far fa-eye"></i></button>';
 
         $res[1]['res_descripcion']='CUENTAS';
-        $res[1]['res_total'] = $this->cajas->searchRegistro(
-            array('custom'=>'caj_cue_id != 22 AND caj_cue_id IS NOT NULL AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),' SUM(caj_monto) AS saldo ')['saldo'];
+
+        $s = $this->cajas->searchRegistro(
+            array('caj_gt4_id'=>1,'custom'=>'caj_cue_id != 22 AND caj_cue_id IS NOT NULL AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),' SUM(caj_monto) AS saldo ')['saldo'];
+        $d = $this->cajas->searchRegistro(
+            array('caj_gt4_id'=>2,'custom'=>'caj_cue_id != 22 AND caj_cue_id IS NOT NULL AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),' SUM(caj_monto) AS saldo ')['saldo'];
+
+        $this->newController('Main');
+        $tce = $this->Main->getTcambio(date('Y-m-d'),true);
+        unset($this->Main);
+        $res[1]['res_total'] = $s+($d*$tce['tce_gtc_id']['gtc_tcompra']);
+
         $res[1]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resCuentas()"><i class="far fa-eye"></i></button>';
 
         $res[2]['res_descripcion']='INVENTARIO';
