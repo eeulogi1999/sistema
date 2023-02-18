@@ -120,7 +120,7 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#gen_table")) {
         gen_table = await gen_table;
-        $('#gen_table').css('background-image','url(http://localhost/sistema/.uploads/recurso1.png)')
+        $('#gen_table').css('background-image','url('+base_url+'/.uploads/recurso1.png)')
     }
     if (document.querySelector("#fre_table")) {
         fre_table = await fre_table;
@@ -206,15 +206,21 @@ function share(pre,e) {
     $("#"+pre+"_table tr>*:nth-child(4)").hide()
     $("#"+pre+"_table tr>*:nth-child(5)").hide()
     $("#"+pre+"_table tr>*:nth-child(5)").parent().css('height','auto');
-    html2canvas(document.querySelector("#"+pre+"_table")).then(canvas => {
+    html2canvas(document.querySelector("#"+pre+"_table")).then(async canvas => {
         // var dataURL = canvas.toDataURL();
         var ctx = canvas.getContext("2d");
-        ctx.font = "12px Arial";
-        // ctx.textBaseline = 'middle'; 
-        // ctx.textAlign = 'center'; 
-        // ctx.rotate(-Math.PI/4);
-        ctx.fillText('2022-06-15', 0, canvas.height/2+20);
-        ctx.save(); 
+        // ctx.font = "12px Arial";
+        // // ctx.textBaseline = 'middle'; 
+        // // ctx.textAlign = 'center'; 
+        // // ctx.rotate(-Math.PI/4);
+        // ctx.fillText('2022-06-15', 0, canvas.height/2+20);
+        // ctx.save(); 
+
+        var background = new Image();
+        background.src = base_url+"/.uploads/recurso1.png";
+        background.onload = function(){
+            ctx.drawImage(background,0,0);   
+        }
         canvas.toBlob(function(blob) {
             const formData = new FormData();
             formData.append('file', blob, 'filename.png'); 
