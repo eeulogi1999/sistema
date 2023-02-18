@@ -206,40 +206,42 @@ function share(pre,e) {
     $("#"+pre+"_table tr>*:nth-child(4)").hide()
     $("#"+pre+"_table tr>*:nth-child(5)").hide()
     $("#"+pre+"_table tr>*:nth-child(5)").removeClass('table-responsive');
-    html2canvas(document.querySelector("#"+pre+"_table")).then(async canvas => {
-        // var dataURL = canvas.toDataURL();
-        var ctx = canvas.getContext("2d");
-        // ctx.font = "12px Arial";
-        // // ctx.textBaseline = 'middle'; 
-        // // ctx.textAlign = 'center'; 
-        // // ctx.rotate(-Math.PI/4);
-        // ctx.fillText('2022-06-15', 0, canvas.height/2+20);
-        // ctx.save(); 
-
-        var background = new Image();
-        background.src = base_url+"/.uploads/recurso1.png";
-        background.onload = function(){
-            ctx.drawImage(background,0,0);   
-        }
-        canvas.toBlob(function(blob) {
-            const formData = new FormData();
-            formData.append('file', blob, 'filename.png'); 
-            fetch(base_url+'/Dashboard/saveImg',{method: "POST",body: formData})
-            .then(r => r.json())
-            .then(r => {
-                if (r.status) {
-                    data.wp = window.open('https://wa.me/?text='+base_url+'/.uploads/'+r.img, '_blank');
-
-                    // data.wp = window.open('https://wa.me/+51916075889');
-                    // setTimeout(() => {
-                    //     data.wp.document.title = 'COSTOM';
-                    // }, 100);
-                }
-            })
-            .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
-          });
-
-    });
+    setTimeout(() => {
+        html2canvas(document.querySelector("#"+pre+"_table")).then(async canvas => {
+            // var dataURL = canvas.toDataURL();
+            var ctx = canvas.getContext("2d");
+            // ctx.font = "12px Arial";
+            // // ctx.textBaseline = 'middle'; 
+            // // ctx.textAlign = 'center'; 
+            // // ctx.rotate(-Math.PI/4);
+            // ctx.fillText('2022-06-15', 0, canvas.height/2+20);
+            // ctx.save(); 
+    
+            var background = new Image();
+            background.src = base_url+"/.uploads/recurso1.png";
+            background.onload = function(){
+                ctx.drawImage(background,0,0);   
+            }
+            canvas.toBlob(function(blob) {
+                const formData = new FormData();
+                formData.append('file', blob, 'filename.png'); 
+                fetch(base_url+'/Dashboard/saveImg',{method: "POST",body: formData})
+                .then(r => r.json())
+                .then(r => {
+                    if (r.status) {
+                        data.wp = window.open('https://wa.me/?text='+base_url+'/.uploads/'+r.img, '_blank');
+    
+                        // data.wp = window.open('https://wa.me/+51916075889');
+                        // setTimeout(() => {
+                        //     data.wp.document.title = 'COSTOM';
+                        // }, 100);
+                    }
+                })
+                .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
+              });
+    
+        });
+    }, 100);
     $("#"+pre+"_table tr>*:nth-child(3)").show()
     $("#"+pre+"_table tr>*:nth-child(4)").show()
     $("#"+pre+"_table tr>*:nth-child(5)").show()
