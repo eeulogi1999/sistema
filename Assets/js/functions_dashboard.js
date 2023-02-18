@@ -207,6 +207,8 @@ async function share(pre,e) {
     $("#"+pre+"_table tr>*:nth-child(5)").hide()
     $("#"+pre+"_table").parent().removeClass('table-responsive');
     $("#"+pre+"_table tfoot").hide();
+    $('#gen_table').parent().parent().removeClass('col-md-4')
+    $('#gen_table').parent().parent().addClass('col-md-2')
     setTimeout(() => { }, 100);
         html2canvas(document.querySelector("#"+pre+"_table")).then(async canvas => {
             // var dataURL = canvas.toDataURL();
@@ -245,6 +247,8 @@ async function share(pre,e) {
     $("#"+pre+"_table tr>*:nth-child(3)").show()
     $("#"+pre+"_table tr>*:nth-child(4)").show()
     $("#"+pre+"_table tr>*:nth-child(5)").show()
+    $('#gen_table').parent().parent().removeClass('col-md-2')
+    $('#gen_table').parent().parent().addClass('col-md-4')
     $("#"+pre+"_table").parent().addClass('table-responsive');
 }
 
