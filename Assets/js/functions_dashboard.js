@@ -241,7 +241,7 @@ async function setPrePri(where,json,res) {
 
     if (json.pri_id) {  
         let bd = await get('pri',json.pri_id);
-        if (bd.pri_fecha.split(' ')[0] == new Date().toLocaleString('af-ZA').split(' ')[0]) {
+        if (bd.pri_fecha.split(' ')[0] == new Date().toLocaleString('af-ZA').split(' ')[0] && bd.pri_gus_id.gus_id == data.pri.pri_gus_id) {
             json.pri_fecha = new Date().toLocaleString('af-ZA')
             json.pri_gus_id = data.pri.pri_gus_id
         } else {
