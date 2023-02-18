@@ -200,7 +200,7 @@ function setTenTgaBas(a,b,e) {
     .catch(error => swal("Atención", "Error en el proceso: " + error, "error"))
 }
 
-function share(pre,e) {
+async function share(pre,e) {
     e.preventDefault();
     $("#"+pre+"_table tr>*:nth-child(3)").hide()
     $("#"+pre+"_table tr>*:nth-child(4)").hide()
@@ -266,4 +266,3 @@ async function setPrePri(where,json,res) {
     }
     return {where,json}
 }
-
