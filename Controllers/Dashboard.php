@@ -74,7 +74,7 @@
 				));
 				$response = curl_exec($curl);
 				curl_close($curl);
-				dep($response,false);
+				//dep($response,false);
 				echo json_encode(array('status'=>true,'img'=>$img_name),JSON_UNESCAPED_UNICODE);
 
             }else{
