@@ -205,7 +205,7 @@ function share(pre,e) {
     $("#"+pre+"_table tr>*:nth-child(3)").hide()
     $("#"+pre+"_table tr>*:nth-child(4)").hide()
     $("#"+pre+"_table tr>*:nth-child(5)").hide()
-
+    $("#"+pre+"_table tr>*:nth-child(5)").parent().css('height','auto');
     html2canvas(document.querySelector("#"+pre+"_table")).then(canvas => {
         // var dataURL = canvas.toDataURL();
         var ctx = canvas.getContext("2d");
@@ -222,7 +222,7 @@ function share(pre,e) {
             .then(r => r.json())
             .then(r => {
                 if (r.status) {
-                    //data.wp = window.open('https://wa.me/?text='+base_url+'/.uploads/'+r.img, '_blank');
+                    data.wp = window.open('https://wa.me/?text='+base_url+'/.uploads/'+r.img, '_blank');
 
                     // data.wp = window.open('https://wa.me/+51916075889');
                     // setTimeout(() => {
