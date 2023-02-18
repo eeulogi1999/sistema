@@ -205,7 +205,7 @@ function share(pre,e) {
     $("#"+pre+"_table tr>*:nth-child(3)").hide()
     $("#"+pre+"_table tr>*:nth-child(4)").hide()
     $("#"+pre+"_table tr>*:nth-child(5)").hide()
-    $("#"+pre+"_table tr>*:nth-child(5)").removeClass('table-responsive');
+    $("#"+pre+"_table").parent().removeClass('table-responsive');
     setTimeout(() => {
         html2canvas(document.querySelector("#"+pre+"_table")).then(async canvas => {
             // var dataURL = canvas.toDataURL();
@@ -245,7 +245,7 @@ function share(pre,e) {
     $("#"+pre+"_table tr>*:nth-child(3)").show()
     $("#"+pre+"_table tr>*:nth-child(4)").show()
     $("#"+pre+"_table tr>*:nth-child(5)").show()
-    $("#"+pre+"_table tr>*:nth-child(5)").addClass('table-responsive');
+    $("#"+pre+"_table").parent().addClass('table-responsive');
 }
 
 async function setPrePri(where,json,res) {
