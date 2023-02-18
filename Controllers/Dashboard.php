@@ -9,7 +9,6 @@
 		}
 
 		public function dashboard(){
-
 			$this->newController('Main');
 			$tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tventa'];
 			unset($this->Main);
@@ -21,7 +20,7 @@
 			$data['page_tag'] = "Tendencias del Mercado";
 			$data['page_title'] = "Tendencias del Mercado";
 			$data['page_name'] = "Tendencias del Mercado";
-			$data['page_data'] = array('gtc'=>$tga);
+			$data['page_data'] = array('gtc'=>$tga,'pri'=>array('pri_gus_id'=>$_SESSION['gus']['gus_id']));
 			$data['page_functions_js'] = array("functions_dashboard.js");
 			$anio = date('Y');
 			$mes = date('m');
@@ -55,6 +54,42 @@
 			}
 			die();
 
+		}
+		public function getAll($pre){
+			$tabla = $this->getTable($pre);
+			$this->newModel($tabla);
+			$arrData = array();
+			$where = json_decode($_POST['where'],true);
+			$un = $this->{$tabla}->selectCustoms('pri_bie_id,MAX(pri_fecha) AS pri_fecha',array('custom'=>'pri_tipo = '.$where['pri_tipo'].' GROUP BY pri_bie_id'),array('pri_bie_id'));
+			foreach ($un as $i => $r) {
+				$where['pri_bie_id'] = $r['pri_bie_id'];
+				$where['pri_fecha'] = $r['pri_fecha'];
+				$p = $this->{$tabla}->searchRegistro($where);
+				array_push($arrData,$p);
+			}
+			// $arrData = $this->{$tabla}->selectRegistros((isset($_POST['where']))?json_decode($_POST['where'],true):array());
+			for ($i=0; $i < count($arrData); $i++) {
+				// dep($arrData[$i],false);
+				$btnView = '';
+				$btnEdit = '';
+				$btnDelete = '';
+				if (isset($arrData[$i][$pre.'_status'])) {
+					$arrData[$i][$pre.'_status'] = '<span class="badge badge-'.STATUS[array_keys(STATUS)[$arrData[$i][$pre.'_status']]].'">'.array_keys(STATUS)[$arrData[$i][$pre.'_status']].'</span>';
+				}
+				if((isset($_SESSION['perMod']['gtp_r']))?$_SESSION['perMod']['gtp_r']:0){
+					$btnView = '<button class="btn btn-info btn-sm" onClick="view('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Ver '.$tabla.'"><i class="far fa-eye"></i></button>';
+				}
+				if((isset($_SESSION['perMod']['gtp_u']))?$_SESSION['perMod']['gtp_r']:0){
+					$btnEdit = '<button class="btn btn-primary  btn-sm" onClick="edit('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Editar '.$tabla.'"><i class="fas fa-pencil-alt"></i></button>';
+				}
+				if((isset($_SESSION['perMod']['gtp_d']))?$_SESSION['perMod']['gtp_r']:0){
+					$btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="far fa-trash-alt"></i></button>';
+				}
+				$arrData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
+			}
+			unset($this->{$tabla});
+			echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+			die();
 		}
 
 	}

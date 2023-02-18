@@ -6,9 +6,13 @@ var con_json = {}
 var url_ten = base_url+"/Utilitarios/getTendencias";
 var url_tbi = base_url+"/Utilitarios/getBienesPorc";
 
-var url_gen = base_url+"/Main/getAll/pri";
-var url_fre = base_url+"/Main/getAll/pri";
-var url_con = base_url+"/Main/getAll/pri";
+// var url_gen = base_url+"/Main/getAll/pri";
+// var url_fre = base_url+"/Main/getAll/pri";
+// var url_con = base_url+"/Main/getAll/pri";
+
+var url_gen = base_url+"/Dashboard/getAll/pri";
+var url_fre = base_url+"/Dashboard/getAll/pri";
+var url_con = base_url+"/Dashboard/getAll/pri";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#ten_table")) {
@@ -67,6 +71,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"pri_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
                 {"data":"pri_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
                 {"data":"pri_fecha",header:"ULT. ACTUL.",tipo:'string'},
+                {"data":"pri_gus_id.gus_gpe_id.gpe_nombre",header:"USER",tipo:'string'},
                 {"data":"pri_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="gen_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
             ]
         });
@@ -83,6 +88,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"pri_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
                 {"data":"pri_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
                 {"data":"pri_fecha",header:"ULT. ACTUL.",tipo:'string'},
+                {"data":"pri_gus_id.gus_gpe_id.gpe_nombre",header:"USER",tipo:'string'},
                 {"data":"pri_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="fre_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
             ]
         });
@@ -99,6 +105,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"pri_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
                 {"data":"pri_p",header:{t:"PRECIO",align:'right'},tipo:'float'},
                 {"data":"pri_fecha",header:"ULT. ACTUL.",tipo:'string'},
+                {"data":"pri_gus_id.gus_gpe_id.gpe_nombre",header:"USER",tipo:'string'},
                 {"data":"pri_opt",header:{t:`<button class="btn btn-primary btn-sm" onclick="con_table.newRow()"><i class="fas fa-plus-circle"></i></button>`,align:'center'},tipo:'string'},
             ]
         });
@@ -194,9 +201,18 @@ function setTenTgaBas(a,b,e) {
 function share(pre,e) {
     e.preventDefault();
     $("#"+pre+"_table tr>*:nth-child(3)").hide()
+    $("#"+pre+"_table tr>*:nth-child(4)").hide()
+    $("#"+pre+"_table tr>*:nth-child(5)").hide()
+
     html2canvas(document.querySelector("#"+pre+"_table")).then(canvas => {
-        // const img    = canvas.toDataURL('image/png');   
-        // document.getElementById(pre+'_img').src = img
+        // var dataURL = canvas.toDataURL();
+        var ctx = canvas.getContext("2d");
+        ctx.font = "12px Arial";
+        // ctx.textBaseline = 'middle'; 
+        // ctx.textAlign = 'center'; 
+        // ctx.rotate(-Math.PI/4);
+        ctx.fillText('2022-06-15', 0, canvas.height/2+20);
+        ctx.save(); 
         canvas.toBlob(function(blob) {
             const formData = new FormData();
             formData.append('file', blob, 'filename.png'); 
@@ -204,7 +220,11 @@ function share(pre,e) {
             .then(r => r.json())
             .then(r => {
                 if (r.status) {
-                    document.getElementById(pre+'_img').src = base_url+'/.uploads/'+r.img
+                    data.wp = window.open('https://wa.me/?text='+base_url+'/.uploads/'+r.img, '_blank');
+                    // data.wp = window.open('https://wa.me/+51916075889');
+                    // setTimeout(() => {
+                    //     data.wp.document.title = 'COSTOM';
+                    // }, 100);
                 }
             })
             .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
@@ -212,14 +232,17 @@ function share(pre,e) {
 
     });
     $("#"+pre+"_table tr>*:nth-child(3)").show()
+    $("#"+pre+"_table tr>*:nth-child(4)").show()
+    $("#"+pre+"_table tr>*:nth-child(5)").show()
 }
 
 function setPrePri(where,json,res) {
-    if (json.pri_id) {
-        
+    if (json.pri_id && json.pri_p==0) {
+        json.pri_fecha = new Date().toLocaleString('af-ZA')
+        json.pri_gus_id = data.pri.pri_gus_id
     } else {
-        json.pri_bie_id = 4
-        json.pri_fecha = new Date().toISOString().replace('T',' ').slice(0,19)
+        json.pri_bie_id = 24
+        json.pri_fecha = new Date().toLocaleString('af-ZA')
     }
     return {json}
 }

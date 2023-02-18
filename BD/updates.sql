@@ -34,3 +34,11 @@ CREATE TABLE `company5_bd_20602849172`.`prices` (`pri_id` BIGINT NOT NULL AUTO_I
   PRIMARY KEY (`pri_id`)) ENGINE = InnoDB;
 
   ALTER TABLE `prices` ADD CONSTRAINT `prices_bienes` FOREIGN KEY (`pri_bie_id`) REFERENCES `bienes`(`bie_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+  ALTER TABLE `prices` ADD `pri_gus_id` BIGINT NOT NULL AFTER `pri_fecha`;
+  ALTER TABLE `prices` ADD  CONSTRAINT `prices_gusuarios` FOREIGN KEY (`pri_gus_id`) REFERENCES `company5_bd_cacel`.`usuarios`(`gus_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+  SELECT MAX(`pri_fecha`) FROM `prices` WHERE `pri_bie_id`= 4;
+(SELECT DISTINCT `pri_bie_id` from `prices` WHERE `pri_tipo` = 1);
+SELECT max(`pri_fecha`) FROM `prices` WHERE `pri_tipo`=1 and `pri_bie_id`= 4;
+
