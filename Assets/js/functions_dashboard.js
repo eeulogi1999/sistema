@@ -220,7 +220,8 @@ function share(pre,e) {
             .then(r => r.json())
             .then(r => {
                 if (r.status) {
-                    data.wp = window.open('https://wa.me/?text='+base_url+'/.uploads/'+r.img, '_blank');
+                    //data.wp = window.open('https://wa.me/?text='+base_url+'/.uploads/'+r.img, '_blank');
+
                     // data.wp = window.open('https://wa.me/+51916075889');
                     // setTimeout(() => {
                     //     data.wp.document.title = 'COSTOM';
@@ -237,13 +238,14 @@ function share(pre,e) {
 }
 
 function setPrePri(where,json,res) {
-    if (json.pri_id && json.pri_p==0) {
+    if (json.pri_id) {
         json.pri_fecha = new Date().toLocaleString('af-ZA')
         json.pri_gus_id = data.pri.pri_gus_id
     } else {
-        json.pri_bie_id = 24
+        where = ['pri_bie_id','pri_tipo']
+        json.pri_bie_id = 10
         json.pri_fecha = new Date().toLocaleString('af-ZA')
     }
-    return {json}
+    return {where,json}
 }
 

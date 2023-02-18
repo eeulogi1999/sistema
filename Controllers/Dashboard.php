@@ -48,7 +48,35 @@
 			$img_name = 'img_'.md5(date('d-m-Y H:m:s')).'.png';
             $upload = uploadImage($_FILES['file'],$img_name);
             if ($upload) {
+				$curl = curl_init();
+				curl_setopt_array($curl, array(
+				CURLOPT_URL => 'https://graph.facebook.com/v15.0/110407845309879/messages',
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => 'POST',
+				CURLOPT_POSTFIELDS =>'{
+					"messaging_product": "whatsapp",
+					"recipient_type": "individual",
+					"to": "51916075889",
+					"type": "image",
+					"image": {
+						"link": "'.BASE_URL.'/.uploads/'.$img_name.'"
+					}
+				}',
+				CURLOPT_HTTPHEADER => array(
+					'Content-Type: application/json',
+					'Authorization: Bearer EAAHmlcHCEWIBADndcRED2msEAio5nQ8U0h1UmZAbPNiRprOtS0vPV53Q6agRJPJgO9SLnTDNRrBtUaIMFpttLxureTp0C8pYcEAexZBVkeZAp95jZAQa4uVVreLbCYod8IXHOYZBotryZBqMHTCfeEZALNUbF9lVjcFJrVjS8zBZA9nAT5cbEq0VT3pf0gScTQSO5faeiE9KbAZDZD'
+				),
+				));
+				$response = curl_exec($curl);
+				curl_close($curl);
+				dep($response,false);
 				echo json_encode(array('status'=>true,'img'=>$img_name),JSON_UNESCAPED_UNICODE);
+
             }else{
 				echo json_encode(array('status'=>false),JSON_UNESCAPED_UNICODE);
 			}
