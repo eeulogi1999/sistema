@@ -243,7 +243,7 @@ function setPrePri(where,json,res) {
         json.pri_gus_id = data.pri.pri_gus_id
     } else {
         where = ['pri_bie_id','pri_tipo']
-        json.pri_bie_id = 10
+        json.pri_bie_id = 52
         json.pri_fecha = new Date().toLocaleString('af-ZA')
     }
     return {where,json}
