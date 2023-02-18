@@ -206,6 +206,7 @@ async function share(pre,e) {
     $("#"+pre+"_table tr>*:nth-child(4)").hide()
     $("#"+pre+"_table tr>*:nth-child(5)").hide()
     $("#"+pre+"_table").parent().removeClass('table-responsive');
+    setTimeout(() => { }, 100);
         html2canvas(document.querySelector("#"+pre+"_table")).then(async canvas => {
             // var dataURL = canvas.toDataURL();
             var ctx = canvas.getContext("2d");
