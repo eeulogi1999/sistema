@@ -246,6 +246,7 @@ async function setPrePri(where,json,res) {
             json.pri_gus_id = data.pri.pri_gus_id
         } else {
             delete json.pri_id;
+            json.pri_bie_id = bd.pri_bie_id;
             json.pri_fecha = new Date().toLocaleString('af-ZA')
         }
     } else {
