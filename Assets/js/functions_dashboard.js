@@ -120,12 +120,14 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#gen_table")) {
         gen_table = await gen_table;
+        $('#gen_table').css('background-image','url(http://localhost/sistema/.uploads/recurso1.png)')
     }
     if (document.querySelector("#fre_table")) {
         fre_table = await fre_table;
     }
     if (document.querySelector("#con_table")) {
         con_table = await con_table;
+        
     }
     divLoading.style.display = "none";
 });
