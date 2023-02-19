@@ -213,6 +213,9 @@ async function share(pre,e) {
     $(".update").text(new Date().toLocaleString('af-ZA'));
     // $("#"+pre+"_table").parent().parent().removeClass('col-md-4')
     // $("#"+pre+"_table").parent().parent().addClass('col-md-2')
+    setTimeout(() => {
+        
+    }, 100);
         html2canvas(document.querySelector("#"+pre+"_table").parentElement).then(async canvas => {
             // var dataURL = canvas.toDataURL();
             var ctx = canvas.getContext("2d");
