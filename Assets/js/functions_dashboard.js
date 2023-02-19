@@ -128,7 +128,6 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#con_table")) {
         con_table = await con_table;
-        $('#con_table').parent().css('background-image','url('+base_url+'/.uploads/recurso1.png)')
         
     }
     divLoading.style.display = "none";
