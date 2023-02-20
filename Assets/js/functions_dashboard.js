@@ -239,8 +239,8 @@ async function share(pre,e) {
                 .then(r => r.json())
                 .then(r => {
                     if (r.status) {
-                        data.wp = window.open('https://wa.me/?text='+base_url+'/.uploads/'+r.img, '_blank');
-    
+                        // window.open('https://wa.me/?text='+base_url+'/.uploads/'+r.img, '_blank');
+                        window.open(base_url+'/.uploads/'+r.img, '_blank');
                         // data.wp = window.open('https://wa.me/+51916075889');
                         // setTimeout(() => {
                         //     data.wp.document.title = 'COSTOM';
