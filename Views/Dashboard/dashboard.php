@@ -77,7 +77,7 @@
               <div class="table-responsive">
                 <div class="tex px-2 text-uppercase" style="display:none;font-size: 16px;">Buen día envío precios,<br>
                 Cualquier variación en los precios se les estará informando.</div>
-                <div class="px-2 text-right" style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div>
+                <div class="px-2" style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div>
                 <table class="table table-bordered table-sm" id="gen_table" width="100%"></table>
               </div>
               <button class="btn btn-success" onClick="share('gen',event)"><i
@@ -87,7 +87,7 @@
               <div class="table-responsive">
                 <div class="tex px-2 text-uppercase" style="display:none;font-size: 16px;">Buen día envío precios,<br>
                 Cualquier variación en los precios se les estará informando.</div>
-                <div class="px-2 text-right" style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div>
+                <div class="px-2" style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div>
                 <table class="table table-bordered table-sm" id="fre_table" width="100%"></table>
               </div>
               <button class="btn btn-success" onClick="share('fre',event)"><i
@@ -97,7 +97,7 @@
               <div class="table-responsive">
                 <div class="tex px-2 text-uppercase" style="display:none; font-size: 16px;">Buen día envío precios,<br>
                 Cualquier variación en los precios se les estará informando.</div>
-                <div class="px-2 text-right" style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div>
+                <div class="px-2" style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div>
                 <table class="table table-bordered table-sm" id="con_table" width="100%"></table>
               </div>
               <button class="btn btn-success" onClick="share('con',event)"><i
