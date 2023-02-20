@@ -75,21 +75,27 @@
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active p-3" id="home" role="tabpanel" aria-labelledby="home-tab">
               <div class="table-responsive">
-                <h7 style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></h7>
+                <p class="tex" style="display:none">Buenos días, envio los precios.
+Cualquier variación en los precios se les estará informando.</p>
+                <div style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div><br>
                 <table class="table table-bordered table-sm" id="gen_table" width="100%"></table>
               </div>
               <button class="btn btn-success" onClick="share('gen',event)"><i class="fas fa-share"></i>Compartir</button>
             </div>
             <div class="tab-pane fade p-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <div class="table-responsive">
-              <h7 style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></h7>
+              <p class="tex" style="display:none">Buenos días, envio los precios.
+Cualquier variación en los precios se les estará informando.</p>
+              <div style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div><br>
                 <table class="table table-bordered table-sm" id="fre_table" width="100%"></table>
               </div>
               <button class="btn btn-success" onClick="share('fre',event)"><i class="fas fa-share"></i>Compartir</button>
             </div>
             <div class="tab-pane fade p-3" id="contact" role="tabpanel" aria-labelledby="contact-tab">
               <div class="table-responsive">
-              <h7 style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></h7><br>
+              <p class="tex" style="display:none">Buenos días, envio los precios.
+Cualquier variación en los precios se les estará informando.</p>
+              <div style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div><br>
                 <table class="table table-bordered table-sm" id="con_table" width="100%"></table>
               </div>
               <button class="btn btn-success" onClick="share('con',event)"><i class="fas fa-share"></i>Compartir</button>

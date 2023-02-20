@@ -209,6 +209,7 @@ async function share(pre,e) {
     $("#"+pre+"_table").parent().removeClass('table-responsive');
     $("#"+pre+"_table tfoot").hide();
     $(".update").parent().show();
+    $(".tex").show();
     $(".update").text(new Date().toLocaleString('af-ZA'));
     // $("#"+pre+"_table").parent().parent().removeClass('col-md-4')
     // $("#"+pre+"_table").parent().parent().addClass('col-md-2')
@@ -254,6 +255,7 @@ async function share(pre,e) {
     $("#"+pre+"_table tr>*:nth-child(4)").show()
     $("#"+pre+"_table tr>*:nth-child(5)").show()
     $(".update").parent().hide()
+    $(".tex").hide();
     // $("#"+pre+"_table").parent().parent().removeClass('col-md-2')
     // $("#"+pre+"_table").parent().parent().addClass('col-md-4')
     $("#"+pre+"_table").parent().addClass('table-responsive');
