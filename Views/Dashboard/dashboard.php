@@ -109,6 +109,12 @@
     </div>
     <div class="col-md-8">
       <div class="tile">
+        <h4 class="text-center">DOCUMENTOS</h4>
+          <?php 
+            $files = scandir(__DIR__.'/../../Assets/public');
+            for ($i=2; $i < count($files) ; $i++) { ?>
+              <?= $i-1 ?>- <a target="_bank" href="<?= media().'/public/'.$files[$i] ?>"><?= $files[$i] ?></a><br>
+           <?php } ?>
         <h4 class="text-center">SUGERENCIAS</h4>
         <div class="tile-body">
           <div>- Ayudanos a reducir errores y ser mas eficientes.</div>
