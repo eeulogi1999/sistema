@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"caj_responsable",header:{t:"RESPONSABLE",c:'text'},tipo:'string'},
                 {"data":"caj_cue_id.cue_nombre",header:{t:"CUENTA",c:'text'},tipo:'string'},
                 {"data":"caj_t1m_id.t1m_descripcion",header:{t:"MEDIO DE PAGO",c:'text'},tipo:'string'},
-                {"data":"caj_tce_id.tce_compra",header:{t:"T. C. SUNAT"},tipo:'float'},
+                {"data":"caj_tce_id.tce_compra",header:{t:"T. C. SUNAT"}},
                 {"data":"caj_observaciones",header:{t:"OBSERVACIONES"},tipo:'text'},
                 {"data":"caj_monto",header:{t:"MONTO",align:'right'},tipo:'money',chr:'caj_gt4_id',footer:{ c:"sum" }},
                 {"data":"caj_status",header:{t:"ESTADO"},tipo:'string'},
