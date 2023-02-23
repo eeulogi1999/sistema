@@ -185,6 +185,9 @@ async function edit(prefijo,id,res=false,php=false) {
                         $('#'+i).val(response.data[i]); 
                     }
                 }
+                if (i.split('_')[1]=='created' && response.data[i] != null) {
+                    document.getElementById(i).valueAsDate = new Date(response.data[i])
+                }
             }
             if (typeof window['getPos'+capitalize(prefijo)]==='function') {
                 window['getPos'+capitalize(prefijo)]();

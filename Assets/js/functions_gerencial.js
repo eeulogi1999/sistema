@@ -172,7 +172,7 @@ async function setPorExp(id,e) {
     exp_table.reload()
 }
 
-function getExpDet(id,trim=null) {
+function getExpDet(id) {
     $('#modalTable_mov').modal('show');
     mov_table.reload(base_url+"/Gerencial/getExpDet/"+id);
     setTimeout(() => {
@@ -180,7 +180,7 @@ function getExpDet(id,trim=null) {
     }, 400);
 }
 
-function getDetView(id) {
+function getDetView(id,trim=null) {
     $('#modalTable_mov').modal('show');
     mov_table.reload(base_url+"/Gerencial/getDetView/"+id);
     setTimeout(() => {

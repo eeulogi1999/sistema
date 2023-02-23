@@ -428,7 +428,7 @@ class Liquidez extends Controllers{
         die();
     }
     public function getDetracciones($out=false){
-        $trim = 'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'];
+        $trim = "DATE_FORMAT(mov_fechaE, '%Y-%m') = '".str_replace('"','',$_SESSION['periodo'])."'";
         if (gettype($out)=='string' && $out != '') {
             $trim = 'mov_fechaE BETWEEN '.$out;
             $out = false;
