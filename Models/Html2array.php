@@ -29,6 +29,14 @@ class Html2array{
 		$rw = $xpath->query('div/div/div/div/span["'.$dt.'" = "instrument-price-last"]', $items);
 		return $rw[0]->nodeValue;
 	}
+	static function getElemetByQuery2($contents,$dt){
+		$DOM = new DOMDocument;
+		$DOM->loadHTML($contents);
+		$xpath = new DomXPath($DOM);
+		$items = $DOM->getElementsByTagName('main')->item(0);
+		$rw = $xpath->query('div/div/div/div/span["'.$dt.'" = "instrument-price-last"]', $items);
+		return $rw[0]->nodeValue;
+	}
 	static function getElemetByQueryExp($contents){
 		$DOM = new DOMDocument;
 		$DOM->loadHTML($contents);

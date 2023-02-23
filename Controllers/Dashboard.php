@@ -4,6 +4,7 @@
 		public function __construct(){
 			parent::__construct("usuarios");
 			$this->newModel('personas');
+			$this->customModel('Html2array');
 			//session_regenerate_id(true);
 			$_SESSION['asi']['asi_week']=(new DateTime())->format("Y").'-W'.(new DateTime())->format("W");
 		}
@@ -15,7 +16,9 @@
 			$_SESSION['por'] = array('CO'=>80,'PB'=>80,'AL'=>80);
 			$_SESSION['tga'] = array('CO'=>$tga,'PB'=>$tga,'AL'=>$tga);
 			$_SESSION['bas'] = array('CO'=>0,'PB'=>0,'AL'=>0);
-
+			$html = $this->curlGet('https://phrases-random-generator-js.netlify.app');
+			$text = $this->Html2array->getElemetByQuery($html,'cite');
+			dep($text);
 			$data['page_id'] = 2;
 			$data['page_tag'] = "Tendencias del Mercado";
 			$data['page_title'] = "Tendencias del Mercado";
@@ -43,6 +46,22 @@
 			$_SESSION[$_POST['a']][$_POST['b']] = $_POST['e'];
 			echo json_encode(array('status'=>true),JSON_UNESCAPED_UNICODE);
             die();
+		}
+		public function curlGet($url){
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+			CURLOPT_URL => $url,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'GET',
+			));
+			$response = curl_exec($curl);
+			curl_close($curl);
+			return $response;
 		}
 		public function saveImg(){
 			$img_name = 'img_'.md5(date('d-m-Y H:m:s')).'.png';
