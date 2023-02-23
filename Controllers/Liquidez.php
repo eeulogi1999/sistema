@@ -384,7 +384,6 @@ class Liquidez extends Controllers{
         die();
     }
     public function getXlsx($age_id){
-        ob_end_clean();
         $age = $this->agentes->selectRegistro($age_id);
         $ing['data'] = $this->getIng($age_id,true);
         $ing['columns'] = array(array('data'=>'ing_fecha'),array('data'=>'ing_tipo'),array('data'=>'ing_cuenta'),array('data'=>'ing_descripcion'),array('data'=>'ing_monto'));
@@ -424,15 +423,8 @@ class Liquidez extends Controllers{
             }
         }
         $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="export.xlsx"');
-        header('Cache-Control: max-age=0');
-        header('Cache-Control: max-age=1');
-        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-        header('Cache-Control: cache, must-revalidate');
-        header('Pragma: public');
-        $writer->save('php://output');
+        $writer->save('Assets/excel/format.xlsx');
+        echo json_encode(array('name'=>'format.xlsx'),JSON_UNESCAPED_UNICODE);
         die();
     }
     public function getDetracciones($out=false){
