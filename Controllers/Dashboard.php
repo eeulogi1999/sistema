@@ -16,14 +16,28 @@
 			$_SESSION['por'] = array('CO'=>80,'PB'=>80,'AL'=>80);
 			$_SESSION['tga'] = array('CO'=>$tga,'PB'=>$tga,'AL'=>$tga);
 			$_SESSION['bas'] = array('CO'=>0,'PB'=>0,'AL'=>0);
-			$html = $this->curlGet('https://phrases-random-generator-js.netlify.app');
-			$text = $this->Html2array->getElemetByQuery($html,'cite');
-			dep($text);
+			$bf = array('Qué maravilloso es que nadie necesita un solo momento antes de comenzar a mejorar el mundo.',
+			 	'La muerte destroza al hombre: la idea de la muerte le salva.',
+			  	'Adentro del Vaticano está todo forrado de oro y afuera los pibes se están muriendo de hambre.',
+			  	'De todos los animales de la creación el hombre es …in tener hambre y habla sin tener nada que decir.',
+			   	'Educación es lo que queda después de olvidar lo que se ha aprendido en la escuela.',
+			   	'La gente se rie de mi por que soy diferente, yo me rio de ellos por que son todos iguales.',
+			    'Solo hay una felicidad en la vida – amar y ser amado.',
+				'El placer y la acción hacen que las horas parezcan cortas.',
+				'El éxito depende del esfuerzo.', 'No busques los errores, busca un remedio.',
+				'Todos somos muy ignorantes. Lo que ocurre es que no todos ignoramos las mismas cosas.',
+				'Quien tiene paciencia, obtendrá lo que desea.', 'No malgastes tu tiempo, pues de esa materia está formada la vida.',
+				'La confianza en sí mismo es el primer secreto del éxito.', 'La ocasión hay que crearla, no esperar a que llegue.',
+				'Cuando el hombre no se encuentra a sí mismo, no encuentra nada.',
+				'El fracaso es simplemente una nueva oportunidad de…ezar de nuevo, esta vez de forma más inteligente.',
+				'Una buena cabeza y un buen corazón son siempre combinaciones formidables.',
+				'La envidia es una declaración de inferioridad.',
+				'La inteligencia es la habilidad de adaptarse al cambio.');
 			$data['page_id'] = 2;
 			$data['page_tag'] = "Tendencias del Mercado";
 			$data['page_title'] = "Tendencias del Mercado";
 			$data['page_name'] = "Tendencias del Mercado";
-			$data['page_data'] = array('gtc'=>$tga,'pri'=>array('pri_gus_id'=>$_SESSION['gus']['gus_id']));
+			$data['page_data'] = array('gtc'=>$tga,'pri'=>array('pri_gus_id'=>$_SESSION['gus']['gus_id']),'frase'=>$bf[random_int(0, count($bf))]);
 			$data['page_functions_js'] = array("functions_dashboard.js");
 			$anio = date('Y');
 			$mes = date('m');

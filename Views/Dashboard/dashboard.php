@@ -21,9 +21,9 @@
       </div>
     </div>
   </div>
-  <div class="row pb-3" style="height:300px">
+  <div class="row pb-3" style="height:250px">
     <div class="col-md-4">
-      <div class="tile h-100" >
+      <div class="tile h-100  d-flex align-items-md-center" >
         <div class="tile-body">
           <div id="dailyVersesWrapper" class="display-6"></div>
           <!-- <div class="table-responsive">
@@ -33,16 +33,8 @@
       </div>
     </div>
     <div class="col-md-6">
-      <div class="tile h-100" >
-        <div class="tile-body ">
-        "Imagina la vida como un juego en el que estás malabareando cinco pelotas en el aire".
-Estas son: - Tu Trabajo, - Tu Familia, - Tu Salud, - Tus Amigos y - Tu Vida Espiritual, Y tú las mantienes todas éstas en el aire.
-Pronto te darás cuenta que el Trabajo es como una pelota de goma. Si la dejas caer, rebotará y regresará. Pero las otras cuatro pelotas: Familia, Salud, Amigos y Espiritu son frágiles, como de cristal. Si dejas caer una de estas, irrevocablemente saldrá astillada, marcada, mellada, dañada e incluso rota. Nunca volverá a ser lo mismo.<span class="display-6">
-        Vive intensamente y recuerda: Antes de hablar... ¡Escucha ! Antes de escribir. ¡ Piensa! Antes de criticar.. ¡Examinate!
-Antes de herir.. ¡ Siente ! Antes de orar. ¡ Perdona ! Antes de gastar.. ¡ Gana ! Antes de rendirte.. i Intenta !
-ANTES DE MORIR... ¡I VIVE !!
-        </span>
-        </div>
+      <div class="tile h-100 d-flex align-items-md-center" >
+        <div class="tile-body display-6 "><?= $data['page_data']['frase']; ?></div>
       </div>
     </div>
     <div class="col-md-2">
