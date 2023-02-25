@@ -9,6 +9,7 @@ class Gerencial extends Controllers{
         $this->newModel('t2identidades');
         $this->newModel('movimientos');
         $this->newModel('configuraciones');
+        $this->newModel('rcomisiones');
         $this->newModel('cajas');
         $this->newModel('mdetalles');
         $this->newController('Reportes');
@@ -304,14 +305,34 @@ class Gerencial extends Controllers{
     public function getComisiones($age_id){
         $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].' '),array());
         $mov = !empty(implode(',', array_column($arrData, 'mov_id')))?implode(',', array_column($arrData, 'mov_id')):0;
-        $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS mde_q,AVG(mde_vu) AS mde_vu,SUM(mde_importe) AS mde_importe',array(
-            'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,23,24,19) GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id'));
-        foreach ($mde as $i => $r) {
-            $mde[$i]['mde_opt'] = '<div class="text-center">'.'<button class="btn btn-info btn-sm" onclick="getComView('.$age_id.',`mov_id in ('.$mov.')`)" title="Ver Registro" > <i class="far fa-eye"></i> </button>'.'</div>';
-        }
-        echo json_encode($mde,JSON_UNESCAPED_UNICODE);
-        die();
+        $mde = $this->mdetalles->selectCustoms('mde_bie_id as rco_bie_id ,SUM(mde_q) AS rco_q,SUM(mde_importe) AS rco_st',array(
+            'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,23,24,19) GROUP BY mde_bie_id'),array('mde_bie_id','mde_mov_id','mde_t6m_id','mde_gta_id'));
         
+        foreach ($mde as $i => $r) {
+            $r['rco_fecha'] = str_replace('"','',$_SESSION['periodo']).'-01';
+            $r['rco_age_id'] = $age_id;
+            $rco = $this->rcomisiones->searchRegistro(array('rco_fecha'=>$r['rco_fecha'],'rco_bie_id'=>$r['rco_bie_id'],'rco_age_id'=>$r['rco_age_id']));
+            if (!empty($rco)) {
+                $r['rco_id']=$rco['rco_id'];
+                $r['rco_porc']=$rco['rco_porc'];
+                $rco = $this->rcomisiones->updateRegistro($r);
+            } else {
+                $rco = $this->rcomisiones->insertRegistro($r,array('rco_fecha','rco_bie_id','rco_age_id'));
+            }
+            // $mde[$i]['mde_opt'] = '<div class="text-center">'.'<button class="btn btn-info btn-sm" onclick="getComView('.$age_id.',`mov_id in ('.$mov.')`)" title="Ver Registro" > <i class="far fa-eye"></i> </button>'.'</div>';
+        }
+        $arrRco = array();
+        if (intval($age_id)>0) {
+            $arrRco = $this->rcomisiones->selectRegistros(array('rco_age_id'=>intval($age_id),'rco_fecha'=>str_replace('"','',$_SESSION['periodo']).'-01'));
+        }
+        foreach ($arrRco as $i => $r) {
+            $arrRco[$i]['rco_pp'] = ($arrRco[$i]['rco_q']>0)?$arrRco[$i]['rco_st']/$arrRco[$i]['rco_q']:0;
+            $arrRco[$i]['rco_pt'] = $arrRco[$i]['rco_st']*$arrRco[$i]['rco_porc'];
+            $arrRco[$i]['rco_porc'] = '<input type="text" value="'.$arrRco[$i]['rco_porc'].'" size="4" onChange="setPocRco('.$arrRco[$i]['rco_id'].',event)">'; 
+            $arrRco[$i]['rco_opt'] = '<div class="text-center">'.'<button class="btn btn-info btn-sm" onclick="getComView('.$age_id.',`mov_id in ('.$mov.')`)" title="Ver Registro" > <i class="far fa-eye"></i> </button>'.'</div>';
+        }
+        echo json_encode($arrRco,JSON_UNESCAPED_UNICODE);
+        die();
     }
 }
 

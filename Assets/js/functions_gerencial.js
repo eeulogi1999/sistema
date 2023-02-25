@@ -85,11 +85,13 @@ document.addEventListener('DOMContentLoaded',function () {
             "url": url_com,
             "numerate": true,
             "columns":[
-                {"data":"mde_bie_id.bie_nombre",header:"MATERIAL",tipo:'string',footer:"TOTALES"},
-                {"data":"mde_q",header:{t:"CANTIDAD TOTAL",align:'right'},tipo:'float',footer:{ c:"sum" }},
-                {"data":"mde_vu",header:{t:"PRECIO PROMEDIO",align:'right'},tipo:'money'},
-                {"data":"mde_importe",header:{t:"TOTAL SOLES",align:'right'},tipo:'money',footer:{ c:"sum" }},
-                {"data":"mde_opt",header:{t:"VER",align:'center'},tipo:'string'}
+                {"data":"rco_bie_id.bie_nombre",header:"MATERIAL",tipo:'string',footer:"TOTALES"},
+                {"data":"rco_q",header:{t:"CANTIDAD TOTAL",align:'right'},tipo:'float',footer:{ c:"sum" }},
+                {"data":"rco_pp",header:{t:"PRECIO PROMEDIO",align:'right'},tipo:'money'},
+                {"data":"rco_st",header:{t:"TOTAL SOLES",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"rco_opt",header:{t:"VER",align:'center'},tipo:'string'},
+                {"data":"rco_porc",header:{t:"PORCENTAJE %",align:'center'},tipo:'string'},
+                {"data":"rco_pt",header:{t:"SOLES %",align:'right'},tipo:'money',footer:{ c:"sum" }}
             ]
         });
     }
@@ -218,4 +220,9 @@ function getComView(id,trim=null) {
     setTimeout(() => {
         mov_table.rezise();
     }, 400);
+}
+async function setPocRco(id,e) {
+    e.preventDefault();
+    await set(`rco`,null,{rco_id:id,rco_porc:e.target.value},true); 
+    com_table.reload()
 }

@@ -42,3 +42,13 @@ CREATE TABLE `company5_bd_20602849172`.`prices` (`pri_id` BIGINT NOT NULL AUTO_I
 (SELECT DISTINCT `pri_bie_id` from `prices` WHERE `pri_tipo` = 1);
 SELECT max(`pri_fecha`) FROM `prices` WHERE `pri_tipo`=1 and `pri_bie_id`= 4;
 
+CREATE TABLE `company5_bd_20602849172`.`rcomisiones` (`rco_id` 
+BIGINT NOT NULL AUTO_INCREMENT , `rco_bie_id` BIGINT NOT NULL , `rco_q` 
+DECIMAL(12,4) NOT NULL , `rco_st` DECIMAL(12,4) NOT NULL , `rco_porc` 
+DECIMAL(12,4) NOT NULL , `rco_fecha` DATE NOT NULL , PRIMARY KEY (`rco_id`)) ENGINE = InnoDB;
+
+ALTER TABLE `rcomisiones` ADD CONSTRAINT `rcomisiones_bienes` FOREIGN KEY (`rco_bie_id`) REFERENCES `bienes`(`bie_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `rcomisiones` ADD `rco_age_id` BIGINT NOT NULL AFTER `rco_bie_id`;
+ALTER TABLE `rcomisiones` ADD CONSTRAINT `rcomisiones_agentes` FOREIGN KEY (`rco_age_id`) REFERENCES `agentes`(`age_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `rcomisiones` CHANGE `rco_porc` `rco_porc` DECIMAL(12,4) NOT NULL DEFAULT '0';
+
