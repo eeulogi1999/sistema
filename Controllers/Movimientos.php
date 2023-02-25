@@ -144,7 +144,7 @@ class Movimientos extends Controllers{
             'mov_tipo'=>$_SESSION['mov']['mov_tipo']));
         } else {
             $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>$mov_t12_id,
-            'mov_tipo'=>$_SESSION['mov']['mov_tipo'],'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
+            'mov_tipo'=>$_SESSION['mov']['mov_tipo'],'custom'=>`DATE_FORMAT(mov_fechaE, '%Y-%m') = '`.$_SESSION['periodo'].`'`));
         }
         for ($i=0; $i < count($arrData); $i++) {
             $btnEdit = '';
@@ -230,7 +230,7 @@ class Movimientos extends Controllers{
                 $t12num =  $this->movimientos->searchRegistro(
                                 array('mov_alm_id'=>(isset($mov['mov_alm_id']))?$mov['mov_alm_id']:$_SESSION['alm']['alm_id'],
                                         'mov_tipo'=>$_SESSION['mov']['mov_tipo'],
-                                        'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = "'.date( "Y-m", strtotime($_POST['mov_fechaE'])).'"',
+                                        'custom'=>'DATE_FORMAT(mov_fechaE, '%Y-%m') = "'.date( "Y-m", strtotime($_POST['mov_fechaE'])).'"',
                                         'mov_t12_id'=>$_POST['mov_t12_id']),' MAX(mov_t12num) AS num ');
                 $mov = $_POST;
                 if (intval($mov['mov_t10_id']) == 53) {

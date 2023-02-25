@@ -8,7 +8,7 @@ class ReportesModel{
 		$alm_id = $_SESSION['alm']['alm_id'];
 		$where = '';
 		if(empty($f_fin)){
-			$where = "AND DATE_FORMAT(mov.mov_fechaE, '%Y-%m') = $f_inicio";
+			$where = "AND DATE_FORMAT(mov.mov_fechaE, '%Y-%m') = '$f_inicio'";
 		}
 		$sql = "SELECT mde.*,mov.mov_tipo AS mde_tipo
 				FROM ( mdetalles AS mde

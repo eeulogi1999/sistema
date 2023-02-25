@@ -113,7 +113,7 @@ class Gerencial extends Controllers{
         $data['cue'] = $this->Cuentas->getCuentas(2,true);
         $data['sbi'] = $this->Reportes->getHistorico(null,true);
         $data['liq'] = $this->Liquidez->getLiquidez('todo');
-        $data['gas'] = $this->cajas->selectCustoms('caj_tga_id,SUM(caj_monto) as caj_monto',array('caj_tipo'=>3,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' GROUP BY caj_tga_id'));
+        $data['gas'] = $this->cajas->selectCustoms('caj_tga_id,SUM(caj_monto) as caj_monto',array('caj_tipo'=>3,'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`.' GROUP BY caj_tga_id'));
         $data['cve'] = $this->Reportes->getCventas(true);
         //$this->views->getView($this,"pdf",$data);
     }
@@ -121,15 +121,15 @@ class Gerencial extends Controllers{
         $res = array();
         $res[0]['res_descripcion']='EFECTIVO';
         $res[0]['res_total'] = $this->cajas->searchRegistro(
-            array('caj_cue_id'=>22,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),' SUM(caj_monto) AS saldo ')['saldo'];
+            array('caj_cue_id'=>22,'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`),' SUM(caj_monto) AS saldo ')['saldo'];
         $res[0]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resEfectivo()"><i class="far fa-eye"></i></button>';
 
         $res[1]['res_descripcion']='CUENTAS';
 
         $s = $this->cajas->searchRegistro(
-            array('caj_gt4_id'=>1,'custom'=>'caj_cue_id != 22 AND caj_cue_id IS NOT NULL AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),' SUM(caj_monto) AS saldo ')['saldo'];
+            array('caj_gt4_id'=>1,'custom'=>`caj_cue_id != 22 AND caj_cue_id IS NOT NULL AND DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`),' SUM(caj_monto) AS saldo ')['saldo'];
         $d = $this->cajas->searchRegistro(
-            array('caj_gt4_id'=>2,'custom'=>'caj_cue_id != 22 AND caj_cue_id IS NOT NULL AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),' SUM(caj_monto) AS saldo ')['saldo'];
+            array('caj_gt4_id'=>2,'custom'=>`caj_cue_id != 22 AND caj_cue_id IS NOT NULL AND DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`),' SUM(caj_monto) AS saldo ')['saldo'];
 
         $this->newController('Main');
         $tce = $this->Main->getTcambio(date('Y-m-d'),true);
@@ -153,7 +153,7 @@ class Gerencial extends Controllers{
         $res[4]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resPagar()"><i class="far fa-eye"></i></button>';
 
         // $res[5]['res_descripcion']='INGRESOS ADICIONALES';
-        // $res[5]['res_total'] = $this->cajas->searchRegistro(array('caj_tipo'=>4,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),'SUM(caj_monto) as total')['total'];
+        // $res[5]['res_total'] = $this->cajas->searchRegistro(array('caj_tipo'=>4,'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`),'SUM(caj_monto) as total')['total'];
         // $res[5]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resAdd()"><i class="far fa-eye"></i></button>';
         if ($out) {
             return $res;
@@ -167,19 +167,19 @@ class Gerencial extends Controllers{
         $res[0]['sfi_des']='Ingreso por Ventas';
         $res[0]['sfi_sum']=$this->Reportes->getCventas(true,true);
         $res[1]['sfi_des']='Merma de Materiales';
-        $mer = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>13,'mov_tipo'=>1,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
+        $mer = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>13,'mov_tipo'=>1,'custom'=>`DATE_FORMAT(mov_fechaE, '%Y-%m') = '`.$_SESSION['periodo'].`'`));
         $res[1]['sfi_sum']=-array_sum(array_column($mer,'mov_total'));
         
         $res[2]['sfi_des']='Nota de Creditos';
-        $cas = $this->cajas->selectRegistros(array('caj_tipo'=>6,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+        $cas = $this->cajas->selectRegistros(array('caj_tipo'=>6,'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`));
         $res[2]['sfi_sum']=array_sum(array_column($cas,'caj_monto'));
         
         $res[3]['sfi_des']='Nota de Debitos';
-        $cas = $this->cajas->selectRegistros(array('caj_tipo'=>7,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+        $cas = $this->cajas->selectRegistros(array('caj_tipo'=>7,'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`));
         $res[3]['sfi_sum']=array_sum(array_column($cas,'caj_monto'));
         
         $res[4]['sfi_des']='Gastos General';
-        $gas = $this->cajas->selectRegistros(array('caj_tipo'=>3,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+        $gas = $this->cajas->selectRegistros(array('caj_tipo'=>3,'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`));
         $res[4]['sfi_sum']=array_sum(array_column($gas,'caj_monto'));
         if ($out) {
             return $res;
@@ -196,7 +196,7 @@ class Gerencial extends Controllers{
         $data['cue'] = $this->Cuentas->getCuentas(2,true);
         $data['sbi'] = $this->Reportes->getHistorico(null,true);
         $data['liq'] = $this->Liquidez->getLiquidez('todo');
-        $data['gas'] = $this->cajas->selectCustoms('caj_tga_id,SUM(caj_monto) as caj_monto',array('caj_tipo'=>3,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' GROUP BY caj_tga_id'));
+        $data['gas'] = $this->cajas->selectCustoms('caj_tga_id,SUM(caj_monto) as caj_monto',array('caj_tipo'=>3,'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`.' GROUP BY caj_tga_id'));
         $data['cve'] = $this->Reportes->getCventas(true);
         $dompdf = new Dompdf\Dompdf();
         ob_end_clean();
@@ -217,7 +217,7 @@ class Gerencial extends Controllers{
         dep($nm);
     }
     public function getExpDet($id){
-        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_t10_id'=>51,'mov_cue_id'=>$id,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']));
+        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_t10_id'=>51,'mov_cue_id'=>$id,'custom'=>`mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, '%Y-%m') = '`.$_SESSION['periodo'].`'`));
         for ($i=0; $i < count($arrData); $i++) {
             $btnEdit = '';
             $btnView = '';
@@ -245,7 +245,7 @@ class Gerencial extends Controllers{
         die();
     }
     public function getDetView($id){
-        $trm = (isset($_GET['trim']))?$_GET['trim']:'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'];
+        $trm = (isset($_GET['trim']))?$_GET['trim']:`DATE_FORMAT(mov_fechaE, '%Y-%m') = '`.$_SESSION['periodo'].`'`;
         $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_cue_id'=>$id,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND  '.$trm));
         for ($i=0; $i < count($arrData); $i++) {
             $btnEdit = '';
@@ -275,7 +275,7 @@ class Gerencial extends Controllers{
     }
     public function getComView($id){
         $trm = $_GET['trim'];
-        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>2,'mov_age_id'=>$id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].' AND '.$trm));
+        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>2,'mov_age_id'=>$id,'custom'=>`DATE_FORMAT(mov_fechaE, '%Y-%m') = '`.$_SESSION['periodo'].`'`.' AND '.$trm));
         for ($i=0; $i < count($arrData); $i++) {
             $btnEdit = '';
             $btnView = '';
@@ -303,7 +303,7 @@ class Gerencial extends Controllers{
         die();
     }
     public function getComisiones($age_id){
-        $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].' '),array());
+        $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$age_id,'custom'=>`DATE_FORMAT(mov_fechaE, '%Y-%m') = '`.$_SESSION['periodo'].`'`.' '),array());
         $mov = !empty(implode(',', array_column($arrData, 'mov_id')))?implode(',', array_column($arrData, 'mov_id')):0;
         $mde = $this->mdetalles->selectCustoms('mde_bie_id as rco_bie_id ,SUM(mde_q) AS rco_q,SUM(mde_importe) AS rco_st',array(
             'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,23,24,19) GROUP BY mde_bie_id'),array('mde_bie_id','mde_mov_id','mde_t6m_id','mde_gta_id'));

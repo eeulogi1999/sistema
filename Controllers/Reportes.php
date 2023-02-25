@@ -140,7 +140,7 @@ class Reportes extends Controllers{
     public function ventas(){
         $bie = $this->bienes->selectRegistros(null,array('bie_bbi_id'));
         for ($i=0; $i < count($bie) ; $i++) { 
-            $mde = $this->mdetalles->selectRegistros(array('mde_bie_id'=>$bie[0]['bie_id'],'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+            $mde = $this->mdetalles->selectRegistros(array('mde_bie_id'=>$bie[0]['bie_id'],'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`),
             array('mde_bie_id','mov_age_id','mov_alm_id','mov_tce_id'));
             for ($j=0; $j < count($mde) ; $j++) { 
                 if ($mde[$j]['mde_mov_id']['mov_tipo']==1) {

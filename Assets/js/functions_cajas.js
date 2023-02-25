@@ -90,8 +90,6 @@ document.addEventListener('DOMContentLoaded',function () {
             $('#caj_gt4_id').val(age_table.getSelectedItem().age_gt4_id.gt4_id);
         })
     }
-
-    //document.querySelector("#periodo").valueAsDate = new Date();
     if (data.caj.caj_tipo==3) {
         $('#caj_tga_id').loadOptions('tgastos',['tga_nombre']);
     }

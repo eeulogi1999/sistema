@@ -86,24 +86,24 @@ class Liquidez extends Controllers{
                     $age['age_email'] =       $ageData[$i]['age_gpe_id']['gpe_email'];
                     $age['age_gt4_id'] =       $ageData[$i]['age_gt4_id'];
                 }
-                $id = $this->liquidez->searchRegistro(array('liq_age_id'=>$ageData[$i]['age_id'],'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']));
+                $id = $this->liquidez->searchRegistro(array('liq_age_id'=>$ageData[$i]['age_id'],'custom'=>`DATE_FORMAT(liq_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`));
                 $id = (!empty($id)) ? $id['liq_id'] : 0 ;
                 $liqData[$i][$pre.'_nro'] = $i+1;
                 $liqData[$i][$pre.'_age_id']=$age;
                 $liqData[$i][$pre.'_si']=$this->liquidez->searchRegistro(
-                    array('liq_age_id'=>$ageData[$i]['age_id'],'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                    array('liq_age_id'=>$ageData[$i]['age_id'],'custom'=>`DATE_FORMAT(liq_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`),
                     'liq_age_id,IFNULL(SUM(liq_monto), 0) AS liq_total_sum',
                     array('liq_age_id'))['liq_total_sum'];
 
                 $mtc=$this->movimientos->searchRegistro(
-                    array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_tipo'=>2,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']),
+                    array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_tipo'=>2,'custom'=>`DATE_FORMAT(mov_fechaE, '%Y-%m') = '`.$_SESSION['periodo'].`'`),
                     'mov_age_id,IFNULL(SUM(mov_total), 0) AS mov_total_sum',
                     array('mov_age_id'))['mov_total_sum'];
                 $liqData[$i][$pre.'_mtc']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$mtc*floatval($tga):$mtc;
                 $liqData[$i][$pre.'_mtcn'] = $mtc;
     
                 $mtv =  $this->movimientos->searchRegistro(
-                    array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_tipo'=>1,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']),
+                    array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_tipo'=>1,'custom'=>`DATE_FORMAT(mov_fechaE, '%Y-%m') = '`.$_SESSION['periodo'].`'`),
                     'mov_age_id,IFNULL(SUM(CAST(JSON_EXTRACT(mov_igv_id, "$.mov_neto")  AS DECIMAL(12,3))), 0) AS mov_total_sum')['mov_total_sum'];
 
                 $liqData[$i][$pre.'_mtv']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$mtv*floatval($tga):$mtv;
@@ -122,28 +122,28 @@ class Liquidez extends Controllers{
 
                 }
                 $mti=$this->cajas->searchRegistro(
-                    array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                    array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>1,'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`),
                     'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
                     array('caj_age_id'))['caj_total_sum'];
                 $liqData[$i][$pre.'_mti']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$mti*floatval($tga):$mti;
                 $liqData[$i][$pre.'_mtin'] = $mti;
 
                 $mte=-$this->cajas->searchRegistro(
-                    array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>2,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                    array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>2,'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`),
                     'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
                     array('caj_age_id'))['caj_total_sum'];
                 $liqData[$i][$pre.'_mte']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$mte*floatval($tga):$mte;
                 $liqData[$i][$pre.'_mten'] = $mte;
     
                 $castigo=$this->cajas->searchRegistro(
-                        array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>6,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                        array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>6,'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`),
                         'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
                         array('caj_age_id'))['caj_total_sum'];
                 $liqData[$i][$pre.'_castigo']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$castigo*floatval($tga):$castigo;
                 $liqData[$i][$pre.'_castigon'] = $castigo;
         
                 $premio=$this->cajas->searchRegistro(
-                        array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>7,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                        array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>7,'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`),
                         'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
                         array('caj_age_id'))['caj_total_sum'];
                 $liqData[$i][$pre.'_premio']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$premio*floatval($tga):$premio;
@@ -217,9 +217,9 @@ class Liquidez extends Controllers{
             $str_caj = 'caj_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
             $str_liq = 'liq_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
         } else {
-            $str_mov = 'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'];
-            $str_caj = 'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'];
-            $str_liq = 'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo'];
+            $str_mov = `DATE_FORMAT(mov_fechaE, '%Y-%m') = '`.$_SESSION['periodo'].`'`;
+            $str_caj = `DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`;
+            $str_liq = `DATE_FORMAT(liq_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`;
         }
         $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>2,'mov_age_id'=>$age_id,'custom'=>$str_mov));
         $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>1,'custom'=>$str_caj));
@@ -288,9 +288,9 @@ class Liquidez extends Controllers{
             $str_caj = 'caj_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
             $str_liq = 'liq_fecha  BETWEEN "'.$_GET['f_start'].'" AND "'.$_GET['f_end'].'"';
         } else {
-            $str_mov = 'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'];
-            $str_caj = 'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'];
-            $str_liq = 'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo'];
+            $str_mov = `DATE_FORMAT(mov_fechaE, '%Y-%m') = '`.$_SESSION['periodo'].`'`;
+            $str_caj = `DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`;
+            $str_liq = `DATE_FORMAT(liq_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`;
         }
         $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>1,'mov_age_id'=>$age_id,'custom'=>$str_mov));
         $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>2,'custom'=>$str_caj));
@@ -428,12 +428,12 @@ class Liquidez extends Controllers{
         die();
     }
     public function getDetracciones($out=false){
-        $trim = "DATE_FORMAT(mov_fechaE, '%Y-%m') = '".str_replace('"','',$_SESSION['periodo'])."'";
+        $trim = "DATE_FORMAT(mov_fechaE, '%Y-%m') = '".$_SESSION['periodo']."'";
         if (gettype($out)=='string' && $out != '') {
             $trim = 'mov_fechaE BETWEEN '.$out;
             $out = false;
         }
-        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND '.$trim.'  GROUP BY mov_cue_id'));
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>"mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND ".$trim."  GROUP BY mov_cue_id"));
         $this->newController('Main');
         $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
         unset($this->Main);
@@ -459,7 +459,7 @@ class Liquidez extends Controllers{
         }
     }
     public function getExportaciones($out=false){
-        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>"mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, '%Y-%m') = '".$_SESSION['periodo']."'  GROUP BY mov_cue_id"));
         $this->newController('Main');
         $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
         unset($this->Main);

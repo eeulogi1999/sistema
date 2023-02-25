@@ -37,7 +37,7 @@ class Cuentas extends Controllers{
             $btnDelete = '';
             $btnStatus = '';
             $arrData[$i][$pre.'_nro'] = $i+1;
-            $saldo = $this->cajas->searchRegistro(array('caj_cue_id'=>$arrData[$i][$pre.'_id'],'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),' SUM(caj_monto) AS saldo ')['saldo'];
+            $saldo = $this->cajas->searchRegistro(array('caj_cue_id'=>$arrData[$i][$pre.'_id'],'custom'=>`DATE_FORMAT(caj_fecha, '%Y-%m') = '`.$_SESSION['periodo'].`'`),' SUM(caj_monto) AS saldo ')['saldo'];
             $arrData[$i][$pre.'_saldo'] = ($arrData[$i]['cue_gt4_id']['gt4_id']==2)?$saldo*floatval($tga):$saldo;
             $arrData[$i][$pre.'_saldon'] = $saldo;
             $arrData[$i][$pre.'_status'] = '<span class="badge badge-'.STATUS[array_keys(STATUS)[$arrData[$i][$pre.'_status']]].'">'.array_keys(STATUS)[$arrData[$i][$pre.'_status']].'</span>';

@@ -18,7 +18,7 @@
 					$_SESSION['gus'] = $gus;
 					$_SESSION['login'] = true;
 					$_SESSION['gcl'] = $this->clientes->selectRegistro($h['gcl_id']);
-					$_SESSION['periodo'] = (isset($h['periodo']))?'"'.$h['periodo'].'"':'"'.date("Y-m").'"';
+					$_SESSION['periodo'] = (isset($h['periodo']))?$h['periodo']:date("Y-m");
 					$_SESSION['tree'] = 1;
 				}
 			}
@@ -31,7 +31,7 @@
 					$_SESSION['gus'] = $gus;
 					$_SESSION['login'] = true;
 					$_SESSION['gcl'] = $this->clientes->selectRegistro(intval($_GET['gcl_id']));
-					$_SESSION['periodo'] = (isset($h['periodo']))?'"'.$h['periodo'].'"':'"'.date("Y-m").'"';
+					$_SESSION['periodo'] = (isset($h['periodo']))?$h['periodo']:date("Y-m");
 					$_SESSION['tree'] = 1;
 				}
 			}
