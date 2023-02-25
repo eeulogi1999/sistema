@@ -328,7 +328,7 @@ class Gerencial extends Controllers{
         foreach ($arrRco as $i => $r) {
             $arrRco[$i]['rco_pp'] = ($arrRco[$i]['rco_q']>0)?$arrRco[$i]['rco_st']/$arrRco[$i]['rco_q']:0;
             $arrRco[$i]['rco_pt'] = $arrRco[$i]['rco_st']*($arrRco[$i]['rco_porc']/100);
-            $arrRco[$i]['rco_porc'] = '<input type="text" value="'.number_format($arrRco[$i]['rco_porc'],2,'.').'" size="4" onChange="setPocRco('.$arrRco[$i]['rco_id'].',event)">'; 
+            $arrRco[$i]['rco_porc'] = '<input type="text" value="'.number_format($arrRco[$i]['rco_porc'],2,'.',',').'" size="4" onChange="setPocRco('.$arrRco[$i]['rco_id'].',event)">'; 
             $arrRco[$i]['rco_opt'] = '<div class="text-center">'.'<button class="btn btn-info btn-sm" onclick="getComView('.$age_id.',`mov_id in ('.$mov.')`)" title="Ver Registro" > <i class="far fa-eye"></i> </button>'.'</div>';
         }
         echo json_encode($arrRco,JSON_UNESCAPED_UNICODE);
