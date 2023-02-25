@@ -562,7 +562,10 @@ function previewFiles(th,content) {
                 $(tbody).html('<tr><td colspan="'+(numerate?o.columns.length+1:o.columns.length)+'" class="text-center">Ningún dato disponible en esta tabla =(</td></tr>');
                 return true;
             },
-            reload: async function(url=null){
+            reload: async function(url=null,where=null){
+                if (where) {
+                    o.where = where;
+                }
                 if (typeof o.src != 'undefined') {
                     o.data = window[o.src];
                 }

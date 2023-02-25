@@ -10,6 +10,7 @@ class Gerencial extends Controllers{
         $this->newModel('movimientos');
         $this->newModel('configuraciones');
         $this->newModel('cajas');
+        $this->newModel('mdetalles');
         $this->newController('Reportes');
         $this->newController('Liquidez');
         $this->newController('Cuentas');
@@ -35,6 +36,18 @@ class Gerencial extends Controllers{
         $data['page_data'] = array('age_tipo'=>0,'periodo'=>$_SESSION['periodo']);
         $data['page_functions_js'] = array("functions_gerencial.js","functions_reportes.js");
         $this->views->getView($this,"resultados",$data);
+    }
+    public function Comisiones(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $_SESSION['mov']['mov_tipo']= 2;
+        $data['page_tag'] = "Resumen y Comisiones";
+        $data['page_title'] = "Resumen y Comisiones";
+        $data['page_name'] = "Resumen y Comisiones";
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo']);
+        $data['page_functions_js'] = array("functions_gerencial.js","functions_movimientos.js");
+        $this->views->getView($this,"comisiones",$data);
     }
     public function Exportaciones(){
         if(empty($_SESSION['perMod']['gtp_r'])){
@@ -258,6 +271,47 @@ class Gerencial extends Controllers{
         }
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();
+    }
+    public function getComView($id){
+        $trm = $_GET['trim'];
+        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>2,'mov_age_id'=>$id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].' AND '.$trm));
+        for ($i=0; $i < count($arrData); $i++) {
+            $btnEdit = '';
+            $btnView = '';
+            $btnDelete = '';
+            $btnPdf = '';
+            $arrData[$i]['mov_nro'] = $i+1;
+            if (!is_null($arrData[$i]['mov_age_id'])) {
+                $arrData[$i]['mov_age_ide'] = (!empty($arrData[$i]['mov_age_id']['age_gem_id'])) ? $arrData[$i]['mov_age_id']['age_gem_id']['gem_razonsocial'] : $arrData[$i]['mov_age_id']['age_gpe_id']['gpe_nombre'].', '.$arrData[$i]['mov_age_id']['age_gpe_id']['gpe_apellidos'] ;
+            }else{
+                $arrData[$i]['mov_age_ide'] = '<span class="badge badge-warning">nulo</span>';
+            }
+            $arrData[$i]['mov_serie'] = $arrData[$i]['mov_serie'].'-'.str_pad($arrData[$i]['mov_numero'],8,0,STR_PAD_LEFT);
+            $arrData[$i]['mov_subtotal'] = formatMoney($arrData[$i]['mov_subtotal']);
+            $arrData[$i]['mov_igv'] = formatMoney(json_decode($arrData[$i]['mov_igv_id'],true)['mov_igv']);
+            $arrData[$i]['mov_total'] = $arrData[$i]['mov_total'];
+            $arrData[$i]['mov_t12num'] = $arrData[$i]['mov_tipo'].'-'.date( "m", strtotime($arrData[$i]['mov_fechaE'])).str_pad($arrData[$i]['mov_t12num'],6,'0',STR_PAD_LEFT);
+            $arrData[$i]['mov_mstatus'] = '<span class="badge badge-'.MSTATUS[$arrData[$i]['mov_mstatus']][1].'">'.MSTATUS[$arrData[$i]['mov_mstatus']][0].'</span>';
+            if($_SESSION['perMod']['gtp_r']){	
+                $btnView = '<button class="btn btn-info btn-sm" onclick="getViewMov('.$arrData[$i]['mov_id'].')" title="Ver '.$arrData[$i]['mov_t10_id']['t10_descripcion'].'" > <i class="far fa-eye"></i> </button>';
+                $btnPdf = '<a class="btn btn-danger btn-sm" href="'.base_url().'/Movimientos/getPdf/'.$arrData[$i]['mov_id'].'" target="_blanck" title="Pdf '.$arrData[$i]['mov_t10_id']['t10_descripcion'].'" ><i class="far fa-file-pdf"></i></a>';
+            }
+            $arrData[$i]['mov_options'] = '<div class="text-center">'.$btnView.' '.$btnPdf.'</div>';
+        }
+        echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+        die();
+    }
+    public function getComisiones($age_id){
+        $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].' '),array());
+        $mov = !empty(implode(',', array_column($arrData, 'mov_id')))?implode(',', array_column($arrData, 'mov_id')):0;
+        $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS mde_q,AVG(mde_vu) AS mde_vu,SUM(mde_importe) AS mde_importe',array(
+            'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,23,24,19) GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id'));
+        foreach ($mde as $i => $r) {
+            $mde[$i]['mde_opt'] = '<div class="text-center">'.'<button class="btn btn-info btn-sm" onclick="getComView('.$age_id.',`mov_id in ('.$mov.')`)" title="Ver Registro" > <i class="far fa-eye"></i> </button>'.'</div>';
+        }
+        echo json_encode($mde,JSON_UNESCAPED_UNICODE);
+        die();
+        
     }
 }
 

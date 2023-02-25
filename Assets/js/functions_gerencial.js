@@ -1,9 +1,10 @@
-var res_table,cve_table,sfi_table,exp_table,det_table;
+var res_table,cve_table,sfi_table,exp_table,det_table,com_table;
 var url_res = base_url+"/Gerencial/getGerencial";
 var url_cve = base_url+"/Reportes/getCventas";
 var url_sfi = base_url+"/Gerencial/getResultados";
 var url_exp = base_url+"/Liquidez/getExportaciones";
 var url_det = base_url+"/Liquidez/getDetracciones";
+var url_com = base_url+"/Gerencial/getComisiones";
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#res_table")) {
@@ -79,6 +80,26 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
+    if (document.querySelector("#com_table")) {
+        com_table = $('#com_table').autoTable({
+            "url": url_com,
+            "numerate": true,
+            "columns":[
+                {"data":"mde_bie_id.bie_nombre",header:"MATERIAL",tipo:'string',footer:"TOTALES"},
+                {"data":"mde_q",header:{t:"CANTIDAD TOTAL",align:'right'},tipo:'float',footer:{ c:"sum" }},
+                {"data":"mde_vu",header:{t:"PRECIO PROMEDIO",align:'right'},tipo:'money'},
+                {"data":"mde_importe",header:{t:"TOTAL SOLES",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mde_opt",header:{t:"VER",align:'center'},tipo:'string'}
+            ]
+        });
+    }
+    if (document.querySelector("#cms_age_id")) {
+        $('#cms_age_id').loadOptions('agentes',['age_gpe_id.gpe_nombre','age_gpe_id.gpe_apellidos'],{'custom':'age_gpe_id IS NOT NULL'});
+        $('#cms_age_id').change(function(e) {
+            e.preventDefault()
+            com_table.reload(base_url+"/Gerencial/getComisiones/"+e.target.value);
+        })
+    }
 });
 
 window.addEventListener('load', async () => {
@@ -96,6 +117,9 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#det_table")) {
         det_table = await det_table;
+    }
+    if (document.querySelector("#com_table")) {
+        com_table = await com_table;
     }
     divLoading.style.display = "none";
 });
@@ -183,6 +207,14 @@ function getExpDet(id) {
 function getDetView(id,trim=null) {
     $('#modalTable_mov').modal('show');
     mov_table.reload(base_url+"/Gerencial/getDetView/"+id);
+    setTimeout(() => {
+        mov_table.rezise();
+    }, 400);
+}
+
+function getComView(id,trim=null) {
+    $('#modalTable_mov').modal('show');
+    mov_table.reload(base_url+"/Gerencial/getComView/"+id+'?trim='+trim);
     setTimeout(() => {
         mov_table.rezise();
     }, 400);
