@@ -309,7 +309,7 @@ class Gerencial extends Controllers{
             'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,23,24,19) GROUP BY mde_bie_id'),array('mde_bie_id','mde_mov_id','mde_t6m_id','mde_gta_id'));
         
         foreach ($mde as $i => $r) {
-            $r['rco_fecha'] = str_replace("'","",$_SESSION['periodo']).'-01';
+            $r['rco_fecha'] = str_replace('"','',$_SESSION['periodo']).'-01';
             $r['rco_age_id'] = $age_id;
             $rco = $this->rcomisiones->searchRegistro(array('rco_fecha'=>$r['rco_fecha'],'rco_bie_id'=>$r['rco_bie_id'],'rco_age_id'=>$r['rco_age_id']));
             if (!empty($rco)) {
@@ -323,7 +323,7 @@ class Gerencial extends Controllers{
         }
         $arrRco = array();
         if (intval($age_id)>0) {
-            $arrRco = $this->rcomisiones->selectRegistros(array('rco_age_id'=>intval($age_id),'rco_fecha'=>str_replace("'","",$_SESSION['periodo']).'-01'));
+            $arrRco = $this->rcomisiones->selectRegistros(array('rco_age_id'=>intval($age_id),'rco_fecha'=>str_replace('"','',$_SESSION['periodo']).'-01'));
         }
         foreach ($arrRco as $i => $r) {
             $arrRco[$i]['rco_pp'] = ($arrRco[$i]['rco_q']>0)?$arrRco[$i]['rco_st']/$arrRco[$i]['rco_q']:0;

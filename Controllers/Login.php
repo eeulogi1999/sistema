@@ -65,7 +65,7 @@
 						$alm = $this->almacenes->selectRegistros(array('alm_est_id'=>1));
                 		$_SESSION['alm'] = $this->almacenes->selectRegistro($alm[0]['alm_id']);
 						//$_SESSION['periodo'] = "'2022-08'";
-						$_SESSION['periodo'] = "'".date("Y-m")."'";
+						$_SESSION['periodo'] = '"'.date("Y-m").'"';
 						$_SESSION['tree'] = 1;
 						$arrResponse = array('status' => false, 'msg' => 'Lo hiciste', 'gcl'=>$_SESSION['gcl']['gcl_gem_id']['gem_ruc']);
 					} else {
@@ -87,7 +87,7 @@
 					$_SESSION['est'] = $this->establecimientos->selectRegistro($intId);
 					$alm = $this->almacenes->selectRegistros(array('alm_est_id'=>$intId));
             		$_SESSION['alm'] = $this->almacenes->selectRegistro($alm[0]['alm_id']);
-					$_SESSION['periodo'] = "'".date("Y-m")."'";
+					$_SESSION['periodo'] = '"'.date("Y-m").'"';
 					$_SESSION['tree'] = 1;
 					$arrResponse = array('status' => true, 'msg' => 'Lo hiciste' );
 				}

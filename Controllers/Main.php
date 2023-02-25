@@ -192,7 +192,7 @@ class Main extends Controllers{
         die();
     }
     public function setPeriodo(){
-        $_SESSION['periodo'] = "'".$_POST['periodo']."'";
+        $_SESSION['periodo'] = '"'.$_POST['periodo'].'"';
         $arrResponse = array('status' => true);
         echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         die();
