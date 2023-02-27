@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8">
   <meta name="description" content="Sistema CompanyCacel">
@@ -13,7 +14,7 @@
   <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/style.css">
   <title>RESUMEN</title>
   <style>
-    .header{
+    .header {
       position: absolute;
       right: 0 !important;
       top: 0 !important;
@@ -26,26 +27,31 @@
       <img src="<?= base_url() ?>/.uploads/<?= $_SESSION['alm']['alm_est_id']['est_logo'] ?>" alt="Logo" width="70">
     </div>
   </div>
-  <table class="table table-borderless table-sm" width="100%">
+  <table class="table table-borderless table-sm " width="100%">
     <tr>
-      <td colspan="2" class='text-center'><h2>RESUMEN Y COMISIONES</h2></td>
+      <td colspan="2" class='text-center'>
+        <h2>RESUMEN Y COMISIONES</h2>
+      </td>
     </tr>
     <tr>
-      <td><strong>AGENTE: </strong><?=$data['age']['age_gpe_id']['gpe_nombre'].', '.$data['age']['age_gpe_id']['gpe_apellidos']?></td>
+      <td><strong class="text-white bg-danger py-2 pl-2 mr-2 border rounded">AGENTE:
+        </strong><?=$data['age']['age_gpe_id']['gpe_nombre'].', '.$data['age']['age_gpe_id']['gpe_apellidos']?></td>
       <td></td>
     </tr>
     <tr>
-      <td><strong>DIRECCION: </strong><?=$data['age']['age_gpe_id']['gpe_direccion'].'- '.$data['age']['age_gpe_id']['gpe_gdi_id']['gdi_distrito']?></td>
+      <td><strong class="text-white bg-danger py-2 pl-2 mr-2 border rounded">DIRECCION:
+        </strong><?=$data['age']['age_gpe_id']['gpe_direccion'].'- '.$data['age']['age_gpe_id']['gpe_gdi_id']['gdi_distrito']?>
+      </td>
       <td></td>
     </tr>
     <tr>
-      <td><strong>Periodo: </strong><?=$_SESSION['periodo']?></td>
+      <td><strong class="text-white bg-danger py-2 pl-2 mr-2 border rounded">PERIODO: </strong><?=$_SESSION['periodo']?></td>
       <td class="text-right"><?=date('Y-m-d h:m')?></td>
     </tr>
   </table>
   <div class="table-responsive">
     <table class="table table-hover table-bordered table-sm " id="res" width="100%">
-      <thead>
+      <thead class="text-white bg-danger">
         <th>#</th>
         <th>MATERIAL</th>
         <th class="text-right">CANTIDAD</th>
@@ -69,7 +75,7 @@
         </tr>
         <?php } ?>
       </tbody>
-      <tfoot>
+      <tfoot class="text-danger">
         <tr>
           <td colspan="6">SUBTOTAL RESULTADO</td>
           <td class="text-right"><?= formatMoney($res_sum)?></td>

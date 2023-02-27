@@ -365,6 +365,18 @@ class Gerencial extends Controllers{
         $dompdf->loadHtml($html);
         $dompdf->setPaper('letter', 'potrait');
         $dompdf->render();
+        $canvas = $dompdf->getCanvas(); 
+        $fontMetrics = new Dompdf\FontMetrics($canvas, $options); 
+        $w = $canvas->get_width(); 
+        $h = $canvas->get_height(); 
+        $font = $fontMetrics->getFont('times'); 
+        $text = "CONFIDENTIAL"; 
+        $txtHeight = $fontMetrics->getFontHeight($font, 75); 
+        $textWidth = $fontMetrics->getTextWidth($text, $font, 75); 
+        $canvas->set_opacity(.2); 
+        $x = (($w-($textWidth-80))); 
+        $y = (((2*$h/3)-$txtHeight)); 
+        $canvas->text($x, $y, $text, $font, 75,array(0,0,0),0,0,315); 
         $dompdf->stream('my.pdf',array('Attachment'=>0));
         die();
     }
