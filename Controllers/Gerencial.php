@@ -275,7 +275,7 @@ class Gerencial extends Controllers{
     }
     public function getComView($id){
         $trm = $_GET['trim'];
-        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>2,'mov_age_id'=>$id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].' AND '.$trm));
+        $arrData = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>2,'mov_age_id'=>$id,'custom'=>$trm));
         for ($i=0; $i < count($arrData); $i++) {
             $btnEdit = '';
             $btnView = '';
@@ -302,8 +302,8 @@ class Gerencial extends Controllers{
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function getComisiones($age_id){
-        $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$age_id,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].' '),array());
+    public function getComisiones($age_id,$ret=false){
+        $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$age_id,'mov_tipo'=>2,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].' '),array());
         $mov = !empty(implode(',', array_column($arrData, 'mov_id')))?implode(',', array_column($arrData, 'mov_id')):0;
         $mde = $this->mdetalles->selectCustoms('mde_bie_id as rco_bie_id ,SUM(mde_q) AS rco_q,SUM(mde_importe) AS rco_st',array(
             'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,23,24,19) GROUP BY mde_bie_id'),array('mde_bie_id','mde_mov_id','mde_t6m_id','mde_gta_id'));
@@ -328,19 +328,35 @@ class Gerencial extends Controllers{
         foreach ($arrRco as $i => $r) {
             $arrRco[$i]['rco_pp'] = ($arrRco[$i]['rco_q']>0)?$arrRco[$i]['rco_st']/$arrRco[$i]['rco_q']:0;
             $arrRco[$i]['rco_pt'] = $arrRco[$i]['rco_st']*($arrRco[$i]['rco_porc']/100);
+            $arrRco[$i]['rco_porc_b'] = $arrRco[$i]['rco_porc'];
             $arrRco[$i]['rco_porc'] = '<input type="text" value="'.number_format($arrRco[$i]['rco_porc'],2,'.',',').'" size="4" onChange="setPocRco('.$arrRco[$i]['rco_id'].',event)">'; 
             $arrRco[$i]['rco_opt'] = '<div class="text-center">'.'<button class="btn btn-info btn-sm" onclick="getComView('.$age_id.',`mov_id in ('.$mov.')`)" title="Ver Registro" > <i class="far fa-eye"></i> </button>'.'</div>';
         }
-        echo json_encode($arrRco,JSON_UNESCAPED_UNICODE);
+        if ($ret) {
+            return $arrRco;
+        } else {
+            echo json_encode($arrRco,JSON_UNESCAPED_UNICODE); 
+        }
         die();
     }
-    public function getRcoPDF(){
-        $_POST = json_decode(file_get_contents("php://input"),true);
+    public function getTriView($id){
+        $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$id,'mov_tipo'=>2,'custom'=>"mov_fechaE BETWEEN '".$_GET['fecha_i']."' AND '".$_GET['fecha_f']."'"));
+        $mov = !empty(implode(',', array_column($arrData, 'mov_id')))?implode(',', array_column($arrData, 'mov_id')):0;
+        $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS rco_q,SUM(mde_importe) AS rco_st',array(
+            'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,23,24,19) GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id'));
+        foreach ($mde as $i => $r) {
+            $mde[$i]['rco_opt'] = '<div class="text-center">'.'<button class="btn btn-info btn-sm" onclick="getComView('.$id.',`mov_id in ('.$mov.')`)" title="Ver Registro" > <i class="far fa-eye"></i> </button>'.'</div>';
+        }
+        echo json_encode($mde,JSON_UNESCAPED_UNICODE);
+        die();
+    }
+    public function getRcoPDF($age_id){
+        // $_POST = json_decode(file_get_contents("php://input"),true);
         ob_end_clean();
         $data['gcl'] = $_SESSION['gcl'];
         $data['alm'] = $_SESSION['alm'];
-        $data['rco'] =  $this->rcomisiones->selectRegistro($_POST['age_id']);
-        $data['age'] = $this->getComisiones($_POST['age_id']);
+        $data['rco'] =  $this->getComisiones($age_id,true);
+        $data['age'] = $this->agentes->selectRegistro($age_id);
         $dompdf = new Dompdf\Dompdf();
         $options = new Dompdf\Options();
         $options->set(array('isRemoteEnabled'=>true));
