@@ -24,17 +24,12 @@
   <div class="row pb-3" style="height:250px">
     <div class="col-md-4">
       <div class="tile h-100  d-flex align-items-md-center" >
-        <div class="tile-body">
-          <div id="dailyVersesWrapper" class="display-6"></div>
-          <!-- <div class="table-responsive">
-            <table class="table table-hover table-bordered table-sm" id="ten_table" width="100%"></table>
-          </div> -->
-        </div>
+        <div class="tile-body display-6 "><?= $data['page_data']['frase']; ?></div>
       </div>
     </div>
     <div class="col-md-6">
       <div class="tile h-100 d-flex align-items-md-center" >
-        <div class="tile-body display-6 "><?= $data['page_data']['frase']; ?></div>
+        <div class="tile-body display-6" id="dailyVersesWrapper"></div>
       </div>
     </div>
     <div class="col-md-2">

@@ -334,6 +334,24 @@ class Gerencial extends Controllers{
         echo json_encode($arrRco,JSON_UNESCAPED_UNICODE);
         die();
     }
+    public function getRcoPDF(){
+        $_POST = json_decode(file_get_contents("php://input"),true);
+        ob_end_clean();
+        $data['gcl'] = $_SESSION['gcl'];
+        $data['alm'] = $_SESSION['alm'];
+        $data['rco'] =  $this->rcomisiones->selectRegistro($_POST['age_id']);
+        $data['age'] = $this->getComisiones($_POST['age_id']);
+        $dompdf = new Dompdf\Dompdf();
+        $options = new Dompdf\Options();
+        $options->set(array('isRemoteEnabled'=>true));
+        $dompdf->setOptions($options);
+        $html = getFile("Gerencial/pdfRco",$data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('letter', 'potrait');
+        $dompdf->render();
+        $dompdf->stream('my.pdf',array('Attachment'=>0));
+        die();
+    }
 }
 
 ?>

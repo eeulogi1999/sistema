@@ -124,7 +124,7 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#fre_table")) {
         fre_table = await fre_table;
-        $('#fre_table').parent().css('background-image','url('+base_url+'/.uploads/recurso1.png)')
+        $('#fre_table').parent().css('background-image','url('+base_url+'/.uploads/recurso2.png)')
     }
     if (document.querySelector("#con_table")) {
         con_table = await con_table;

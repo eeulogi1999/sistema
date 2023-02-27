@@ -249,3 +249,18 @@ function openModal(pre) {
     $('#modal_'+pre).modal('show');
 }
 
+function getPDF(url,parm={}) {
+    fetch(base_url + url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(parm)
+    })
+    .then(r => r.json())
+    .then(r => {
+        if (r.status) {
+            window.open(base_url+'/pdf/'+r.name,'_blank')
+        }
+    })
+    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+
+}
