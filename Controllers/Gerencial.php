@@ -306,7 +306,7 @@ class Gerencial extends Controllers{
         $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$age_id,'mov_tipo'=>2,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].' '),array());
         $mov = !empty(implode(',', array_column($arrData, 'mov_id')))?implode(',', array_column($arrData, 'mov_id')):0;
         $mde = $this->mdetalles->selectCustoms('mde_bie_id as rco_bie_id ,SUM(mde_q) AS rco_q,SUM(mde_importe) AS rco_st',array(
-            'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,23,24,19) GROUP BY mde_bie_id'),array('mde_bie_id','mde_mov_id','mde_t6m_id','mde_gta_id'));
+            'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,11,23,24,19) GROUP BY mde_bie_id'),array('mde_bie_id','mde_mov_id','mde_t6m_id','mde_gta_id'));
         
         foreach ($mde as $i => $r) {
             $r['rco_fecha'] = str_replace('"','',$_SESSION['periodo']).'-01';
@@ -343,7 +343,7 @@ class Gerencial extends Controllers{
         $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$id,'mov_tipo'=>2,'custom'=>"mov_fechaE BETWEEN '".$_GET['fecha_i']."' AND '".$_GET['fecha_f']."'"));
         $mov = !empty(implode(',', array_column($arrData, 'mov_id')))?implode(',', array_column($arrData, 'mov_id')):0;
         $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS rco_q,SUM(mde_importe) AS rco_st',array(
-            'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,23,24,19) GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id'));
+            'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,11,23,24,19) GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id'));
         foreach ($mde as $i => $r) {
             $mde[$i]['rco_opt'] = '<div class="text-center">'.'<button class="btn btn-info btn-sm" onclick="getComView('.$id.',`mov_id in ('.$mov.')`)" title="Ver Registro" > <i class="far fa-eye"></i> </button>'.'</div>';
         }
