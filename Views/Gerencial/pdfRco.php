@@ -24,7 +24,7 @@
 <body>
   <div class='position-relative'>
     <div class="header">
-      <img src="<?= base_url() ?>/.uploads/<?= $_SESSION['alm']['alm_est_id']['est_logo'] ?>" alt="Logo" width="70">
+      <img src="<?= base_url() ?>/.uploads/<?= $_SESSION['alm']['alm_est_id']['est_logo'] ?>" alt="Logo" width="120">
     </div>
   </div>
   <table class="table table-borderless table-sm " width="100%">
@@ -34,24 +34,24 @@
       </td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-danger py-2 pl-2 mr-2 border rounded">AGENTE:
+      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">AGENTE:
         </strong><?=$data['age']['age_gpe_id']['gpe_nombre'].', '.$data['age']['age_gpe_id']['gpe_apellidos']?></td>
       <td></td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-danger py-2 pl-2 mr-2 border rounded">DIRECCION:
+      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">DIRECCION:
         </strong><?=$data['age']['age_gpe_id']['gpe_direccion'].'- '.$data['age']['age_gpe_id']['gpe_gdi_id']['gdi_distrito']?>
       </td>
       <td></td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-danger py-2 pl-2 mr-2 border rounded">PERIODO: </strong><?=$_SESSION['periodo']?></td>
+      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">PERIODO: </strong><?=$_SESSION['periodo']?></td>
       <td class="text-right"><?=date('Y-m-d h:m')?></td>
     </tr>
   </table>
   <div class="table-responsive">
     <table class="table table-hover table-bordered table-sm " id="res" width="100%">
-      <thead class="text-white bg-danger">
+      <thead class="text-white bg-secondary">
         <th>#</th>
         <th>MATERIAL</th>
         <th class="text-right">CANTIDAD</th>

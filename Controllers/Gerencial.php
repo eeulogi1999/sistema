@@ -373,7 +373,7 @@ class Gerencial extends Controllers{
         $text = "CONFIDENTIAL"; 
         $txtHeight = $fontMetrics->getFontHeight($font, 75); 
         $textWidth = $fontMetrics->getTextWidth($text, $font, 75); 
-        $canvas->set_opacity(.2); 
+        $canvas->set_opacity(.06); 
         $x = (($w-($textWidth-80))); 
         $y = (((2*$h/3)-$txtHeight)); 
         $canvas->text($x, $y, $text, $font, 75,array(0,0,0),0,0,315); 
