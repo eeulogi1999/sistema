@@ -34,24 +34,24 @@
       </td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">AGENTE:
+      <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">AGENTE:
         </strong><?=$data['age']['age_gpe_id']['gpe_nombre'].', '.$data['age']['age_gpe_id']['gpe_apellidos']?></td>
       <td></td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">DIRECCION:
+      <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">DIRECCION:
         </strong><?=$data['age']['age_gpe_id']['gpe_direccion'].'- '.$data['age']['age_gpe_id']['gpe_gdi_id']['gdi_distrito']?>
       </td>
       <td></td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">PERIODO: </strong><?=$_SESSION['periodo']?></td>
+      <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">PERIODO: </strong><?=$_SESSION['periodo']?></td>
       <td class="text-right"><?=date('Y-m-d h:m')?></td>
     </tr>
   </table>
   <div class="table-responsive">
     <table class="table table-hover table-bordered table-sm " id="res" width="100%">
-      <thead class="text-white bg-secondary">
+      <thead class="text-white bg-info">
         <th>#</th>
         <th>MATERIAL</th>
         <th class="text-right">CANTIDAD</th>
