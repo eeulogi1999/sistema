@@ -392,7 +392,7 @@ class Gerencial extends Controllers{
                 'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,11,23,24,19) GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id','mde_bie_id'));
             $de = array_column($mde,'mde_q','mde_bie_id');
             if (!empty($de)) {
-                $de['mde_bie_id'] = $r;
+                $de['age_id'] = $r;
                 array_push($res,$de);
             }
         }
