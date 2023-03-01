@@ -146,6 +146,10 @@ window.addEventListener('load', async () => {
         tri_table = await tri_table;
     }
     divLoading.style.display = "none";
+    if (data.per==='0') {
+        new bootstrap.Tab(document.querySelector('#historico-tab')).show()
+        document.querySelector('#resumen-tab').classList.add('disabled')
+    }
 });
 function resEfectivo() {
     $("#modalTableCue").modal('show');

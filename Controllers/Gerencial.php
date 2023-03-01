@@ -46,7 +46,7 @@ class Gerencial extends Controllers{
         $data['page_tag'] = "Resumen y Comisiones";
         $data['page_title'] = "Resumen y Comisiones";
         $data['page_name'] = "Resumen y Comisiones";
-        $data['page_data'] = array('periodo'=>$_SESSION['periodo']);
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'per'=>$_SESSION['perMod']['gtp_u']);
         $data['page_functions_js'] = array("functions_gerencial.js","functions_movimientos.js");
         $this->views->getView($this,"comisiones",$data);
     }
