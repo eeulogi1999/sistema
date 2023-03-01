@@ -28,6 +28,10 @@
               <a class="nav-link" id="historico-tab" data-toggle="tab" href="#historico" role="tab"
                 aria-controls="historico" aria-selected="false">HISTORICO</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" id="maximos-tab" data-toggle="tab" href="#maximos" role="tab"
+                aria-controls="maximos" aria-selected="false">MAXIMOS</a>
+            </li>
           </ul>
           <div class="tab-content m-3">
             <div class="tab-pane fade show active" id="resumen" role="tabpanel" aria-labelledby="resumen-tab">
@@ -45,6 +49,9 @@
               <div class="table-responsive">
                 <table class="table table-hover table-bordered table-sm " id="tri_table" width="100%"></table>
               </div>
+            </div>
+            <div class="tab-pane fade" id="maximos" role="tabpanel" aria-labelledby="maximos-tab">
+                <div id="root"></div>
             </div>
           </div>
         </div>
