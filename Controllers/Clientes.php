@@ -17,3 +17,4 @@ class Clientes extends Controllers{
         $this->views->getView($this,"clientes",$data);
     }
 }
+?>
