@@ -182,17 +182,21 @@ document.addEventListener('DOMContentLoaded', function () {
         openMde();
         $('#mde_bie_id').children().attr('value',sbi_table.getSelectedItem().sbi_bie_id.bie_id);
         $('#mde_bie_id').children().text(sbi_table.getSelectedItem().sbi_bie_id.bie_codigo+' - '+sbi_table.getSelectedItem().sbi_bie_id.bie_nombre);
+        $('#mde_q').val(1.00);
+        $('#mde_igv').prop('checked',parseInt(sbi_table.getSelectedItem().sbi_bie_id.bie_igv))
+        $('#mde_gta_id').val(9);
         if (sbi_table.getSelectedItem().sbi_bie_id.bie_t6m_id != null) {
             $('#mde_t6m_id').val(sbi_table.getSelectedItem().sbi_bie_id.bie_t6m_id.t6m_id);
         }
         if ($('#mov_gt4_id').val() == 2 && $('#gtc_compra').val()>0) {
             $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p/$('#gtc_compra').val()).toFixed(2));
         }else{
-            $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p).toFixed(2));
+            fetch(base_url+'/Dashboard/getBieGen/'+sbi_table.getSelectedItem().sbi_bie_id.bie_id)
+            .then(r=>r.json())
+            .then(r=>{$('#mde_vu').val(parseFloat(r.pri_p).toFixed(2));
+            mdeProducto();})
+            // $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p).toFixed(2));
         }
-        $('#mde_q').val(1.00);
-        $('#mde_igv').prop('checked',parseInt(sbi_table.getSelectedItem().sbi_bie_id.bie_igv))
-        $('#mde_gta_id').val(9);
         mdeProducto();
     });
     $("#new_bien").click(function(e) {
