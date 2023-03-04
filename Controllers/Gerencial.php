@@ -380,13 +380,11 @@ class Gerencial extends Controllers{
         $dompdf->stream('my.pdf',array('Attachment'=>0));
         die();
     }
-    public function getListComisiones($id){
-        $_GET['fecha_i'] = '2023-01-01';
-        $_GET['fecha_f'] = '2023-03-01';
+    public function getListComisiones(){
         $res = array();
         $age = $this->agentes->selectCustoms('age_id,age_gpe_id',array('custom'=>'age_gpe_id IS NOT NULL'),array('gpe_gt2_id','gpe_gdi_id'));
         foreach ($age as $i => $r) {
-            $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$r['age_id'],'mov_tipo'=>2,'custom'=>"mov_fechaE BETWEEN '".$_GET['fecha_i']."' AND '".$_GET['fecha_f']."'"));
+            $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$r['age_id'],'mov_tipo'=>2,'custom'=>"mov_fechaE BETWEEN '".$_GET['fi']."' AND '".$_GET['ff']."'"));
             $mov = !empty(implode(',', array_column($arrData, 'mov_id')))?implode(',', array_column($arrData, 'mov_id')):0;
             $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS mde_q',array(
                 'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,11,23,24,19) GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id','mde_bie_id'));
