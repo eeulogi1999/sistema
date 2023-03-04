@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "th1d": 'cue_id',
             "columns":[
                 {"data":"cue_nombre",header:{t:"NOMBRE",c:'text'},tipo:'string',footer:"TOTALES"},
+                {"data":"cue_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
                 {"data":"cue_saldo",header:{t:"SALDO",align:'right'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"cue_status",header:{t:"ESTADO"},tipo:'string'},
                 {"data":"cue_options",header:"ACCIONES",tipo:'string'}
