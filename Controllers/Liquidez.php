@@ -114,6 +114,7 @@ class Liquidez extends Controllers{
                     if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
                         $rpt1 = $this->getDetracciones(true);
                         $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt1,'mov_dscg'));
+                        $liqData[$i][$pre.'_mtvn'] = array_sum(array_column($rpt1,'mov_dscg'));
                     }
                     if ($liqData[$i][$pre.'_age_id']['age_id'] == 5) {
                         $rpt2 = $this->getExportaciones(true);
