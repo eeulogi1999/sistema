@@ -36,9 +36,23 @@ async function setPpa() {
     formCaj.caj_monto = -formCaj.caj_monto;
     formCaj.caj_responsable = $('#ppa_col_id').find('option:selected').text();
     formCaj.caj_gus_id = data.ppa.ppa_gus_id;
+    if (data.ppaId) {
+        formCaj.caj_id = data.ppaId.ppa_caj_id.caj_id
+    }
     var caj = await set('caj',null,formCaj,true);
     formData.ppa_caj_id = caj.caj_id;
+    if (data.ppaId) {
+        formData.ppa_caj_id = data.ppaId.ppa_caj_id.caj_id;
+    }
     set('ppa',null,formData);
+    data.ppaId = null
+
+}
+
+function getPosPpa() {
+    $('#caj_cue_id').val(data.ppaId.ppa_caj_id.caj_cue_id.cue_id)
+    $('#caj_t1m_id').val(data.ppaId.ppa_caj_id.caj_t1m_id.t1m_id)
+    $('#caj_monto').val(Math.abs(data.ppaId.ppa_caj_id.caj_monto))
 }
 
 function delPpa(id) {
@@ -52,4 +66,8 @@ function delPpa(id) {
         }
     })
     .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+}
+
+function openModalPpa() {
+    data.ppaId = null
 }
