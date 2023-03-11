@@ -41,6 +41,35 @@ class Main extends Controllers{
         echo $htmlOptions;
         die();
     }
+    public function getApiSelect(){
+        if (!$_POST) {
+            $_POST = json_decode(file_get_contents("php://input"),true);
+        }
+        $this->newModel(''.$_POST['tabla']);
+        if (!empty($_POST['where'])){
+            $arrData = $this->{$_POST['tabla']}->selectRegistros($_POST['where']);
+        }else{
+            $arrData = $this->{$_POST['tabla']}->selectRegistros();
+        }
+        $array = array();
+        if(count($arrData) > 0 ){
+            for ($i=0; $i < count($arrData); $i++) {
+                $val = '';
+                foreach ($_POST['descripcion'] as $k => $des) {
+                    $arrDes = explode('.',$des);
+                    $res = $arrData[$i];
+                    foreach ($arrDes as $j => $d) {
+                        $res = $res[$d];
+                    }
+                    $val .= ($k === array_key_last($_POST['descripcion'])) ? $res :$res." - ";
+                }
+                array_push($array,array('value'=>$arrData[$i][$_POST['id']],'label'=>$val));
+            }
+        }
+        unset($this->{$_POST['tabla']});
+        echo json_encode($array,JSON_UNESCAPED_UNICODE);
+        die();
+    }
     public function setNav(){
         if ($_POST) {
             $_SESSION['tree'] = $_POST['tree'];
