@@ -192,6 +192,9 @@ class Movimientos extends Controllers{
         die();
     }
     public function getNumMovimiento(){
+        if (!$_POST) {
+            $_POST = json_decode(file_get_contents("php://input"),true);
+        }
         $_POST['mov_alm_id'] = $_SESSION['alm']['alm_id'];
         $_POST['custom'] = 'DATE_FORMAT(mov_fechaE, "%Y") = 2023';  //$_SESSION['periodo']
         if ($_POST['mov_t10_id']==50 || $_POST['mov_t10_id']==2) {
@@ -208,6 +211,9 @@ class Movimientos extends Controllers{
         die();
     }
     public function setMovimiento($data = null){
+        if (!$_POST) {
+            $_POST = json_decode(file_get_contents("php://input"),true);
+        }
         if ($_POST) { 
             if (!empty($data)) {
                 $_POST = $data;
@@ -229,9 +235,10 @@ class Movimientos extends Controllers{
             if (intval($_POST['mov_id'])==0) {
                 $t12num =  $this->movimientos->searchRegistro(
                                 array('mov_alm_id'=>(isset($mov['mov_alm_id']))?$mov['mov_alm_id']:$_SESSION['alm']['alm_id'],
-                                        'mov_tipo'=>$_SESSION['mov']['mov_tipo'],
+                                        'mov_tipo'=>$_POST['mov_tipo']??$_SESSION['mov']['mov_tipo'],
                                         'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = "'.date( "Y-m", strtotime($_POST['mov_fechaE'])).'"',
                                         'mov_t12_id'=>$_POST['mov_t12_id']),' MAX(mov_t12num) AS num ');
+                
                 $mov = $_POST;
                 if (intval($mov['mov_t10_id']) == 53) {
                     $mov['mov_serie'] = $mov['mov_serie'].'-'.$mov['mov_numero'];
@@ -242,7 +249,7 @@ class Movimientos extends Controllers{
                 $mov['mov_tipo'] = (isset($mov['mov_tipo']))?$mov['mov_tipo']:$_SESSION['mov']['mov_tipo'];
                 $mov['mov_fechaR'] = $_POST['mov_fechaE'];
                 $mov['mov_fechaV'] = (isset($_POST['mov_fechaV']))?$_POST['mov_fechaV']:$_POST['mov_fechaE'];
-                $mov['mov_gus_id'] = $_SESSION['gus']['gus_id'];
+                $mov['mov_gus_id'] = $_POST['mov_gus_id']??$_SESSION['gus']['gus_id'];
                 $mov_id = $this->movimientos->insertRegistro($mov,array('mov_serie','mov_numero','mov_alm_id','mov_tipo','mov_fechaE')); 
                 if (isset($mov_id['exist'])) {
                     if ($mov_id['exist']) {
@@ -538,6 +545,13 @@ class Movimientos extends Controllers{
         }
         echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
+    }
+
+    //integraciones
+    public function apiSetMov(){
+        $_POST = json_decode(file_get_contents("php://input"),true);
+        echo json_encode($_POST,JSON_UNESCAPED_UNICODE);
+        die(); 
     }
 }
 ?>
