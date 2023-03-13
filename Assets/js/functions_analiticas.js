@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "url": url_ana,
             "numerate": true,
             "columns":[
-                {"data":"ana_nombre",header:{t:"MATERIAL",align:'center'},tipo:'string',footer:"TOTALES"},
+                {"data":"ana_nombre",header:{t:"MATERIAL",align:'center',c:'text'},tipo:'string',footer:"TOTALES"},
                 {"data":"ana_si",header:{t:"SALDO INICIAL",align:'right'},tipo:'float'},
                 {"data":"ana_co",header:{t:"COMPRAS",align:'right'},tipo:'float'},
                 {"data":"ana_in",header:{t:"COMPRA TOTAL",align:'right'},style:{bg:'info',color:'white'},render:(r)=>{return parseFloat(r.ana_si) + parseFloat(r.ana_co)},tipo:'float'},
