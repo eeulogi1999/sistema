@@ -408,13 +408,6 @@ function previewFiles(th,content) {
                                 }
                             })
                         }
-                        if (typeof o.columns[j].footer === 'object') {
-                            if (o.columns[j].footer.c == 'sum') {
-                                d = (d=='' ||d==null )?0:parseFloat(d);
-                                o.tf[ix] = (typeof o.tf[ix] === 'undefined')?d:o.tf[ix]+d;
-                                
-                            }
-                        }
                         if (typeof o.columns[j].header === 'object') {
                             if (typeof o.columns[j].header.align != 'undefined') {
                                 cell.classList.add('text-'+o.columns[j].header.align);
@@ -446,7 +439,13 @@ function previewFiles(th,content) {
                                 window[o.src][i][o.columns[j].data] = d;
                             }
                         }
-
+                        if (typeof o.columns[j].footer === 'object') {
+                            if (o.columns[j].footer.c == 'sum') {
+                                d = (d=='' ||d==null )?0:parseFloat(d);
+                                o.tf[ix] = (typeof o.tf[ix] === 'undefined')?d:o.tf[ix]+d;
+                                
+                            }
+                        }
                         switch (o.columns[j].tipo) {
                             case 'btn':
                                 cell.innerHTML = d +' '+btn;

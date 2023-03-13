@@ -21,50 +21,34 @@ class Analiticas extends Controllers{
         if(empty($_SESSION['perMod']['gtp_r'])){
             header("Location:".base_url().'/dashboard');
         }
-        $data['page_tag'] = "Porcentaje de Ventas";
-        $data['page_title'] = "Porcentaje de Ventas";
-        $data['page_name'] = "Porcentaje de Ventas";
+        $data['page_tag'] = "Resumen";
+        $data['page_title'] = "Resumen";
+        $data['page_name'] = "Resumen";
         $data['page_data'] = array('periodo'=>$_SESSION['periodo']); 
         $data['page_functions_js'] = array("functions_analiticas.js");
         $this->views->getView($this,"analiticas",$data);
     }
 
-    public function listc($fecha){
-        $mov = $this->movimientos->selectCustoms('mov_id',array('mov_tipo'=>2,'custom'=>'mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$fecha));
+    public function list($array){
+        $mov = $this->movimientos->selectCustoms('mov_id',$array);
         $mov = !empty(implode(',', array_column($mov, 'mov_id')))?implode(',', array_column($mov, 'mov_id')):0;
         $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS mde_q,SUM(mde_importe) as mde_importe',array(
                 'custom'=>'mde_mov_id in ('.$mov.') GROUP BY mde_bie_id'),array('mde_bie_id'));
         return $mde;
-        die();
     }
-    public function liste($fecha){
-        $mov = $this->movimientos->selectCustoms('mov_id',array('mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL and mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$fecha));
-        $mov = !empty(implode(',', array_column($mov, 'mov_id')))?implode(',', array_column($mov, 'mov_id')):0;
-        $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS mde_q,SUM(mde_importe) as mde_importe',array(
-                'custom'=>'mde_mov_id in ('.$mov.') GROUP BY mde_bie_id'),array('mde_bie_id'));
-        return $mde;
-        die();
-    }
-    public function listn($fecha){
-        $mov = $this->movimientos->selectCustoms('mov_id',array('mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND  mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$fecha));
-        $mov = !empty(implode(',', array_column($mov, 'mov_id')))?implode(',', array_column($mov, 'mov_id')):0;
-        $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS mde_q,SUM(mde_importe) as mde_importe',array(
-                'custom'=>'mde_mov_id in ('.$mov.') GROUP BY mde_bie_id'),array('mde_bie_id'));
-        return $mde;
-        die();
-    }
+
     public function getAnaliticas($mes){
         $mov = $this->movimientos->searchRegistro(array('mov_fechaE'=>str_replace('"','',$mes).'-01','mov_t12_id'=>16),'mov_id');
         $mde = $this->mdetalles->selectCustoms('mde_bie_id,mde_q,mde_importe',array('mde_mov_id'=>$mov['mov_id']),array('mde_bie_id'));
         $si = array_column($mde,'mde_q','mde_bie_id');
         $msi = array_column($mde,'mde_importe','mde_bie_id');
-        $pco = $this->listc($mes);
+        $pco = $this->list(array('mov_tipo'=>2,'custom'=>'mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$mes));
         $co = array_column($pco,'mde_q','mde_bie_id');
         $mco = array_column($pco,'mde_importe','mde_bie_id');
-        $pvn = $this->listn($mes);
+        $pvn = $this->list(array('mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND  mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$mes));
         $vn = array_column($pvn,'mde_q','mde_bie_id');
         $mvn = array_column($pvn,'mde_importe','mde_bie_id');
-        $pve = $this->liste($mes);
+        $pve = $this->list(array('mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL and mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$mes));
         $ve = array_column($pve,'mde_q','mde_bie_id');
         $mve = array_column($pve,'mde_importe','mde_bie_id');
         $array = array();

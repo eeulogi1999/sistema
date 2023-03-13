@@ -9,14 +9,15 @@ document.addEventListener('DOMContentLoaded',function () {
             "columns":[
                 {"data":"ana_nombre",header:{t:"MATERIAL",align:'center',c:'text'},tipo:'string',footer:"TOTALES"},
                 {"data":"ana_si",header:{t:"SALDO INICIAL",align:'right'},tipo:'float'},
-                {"data":"ana_co",header:{t:"COMPRAS",align:'right'},tipo:'float'},
-                {"data":"ana_in",header:{t:"COMPRA TOTAL",align:'right'},style:{bg:'info',color:'white'},render:(r)=>{return parseFloat(r.ana_si) + parseFloat(r.ana_co)},tipo:'float'},
-                {"data":"ana_min",header:{t:"INVERSION COMPRAS",align:'right'},tipo:'float'},
-                {"data":"ana_vn",header:{t:"VENTAS",align:'right'},tipo:'float'},
-                {"data":"ana_ve",header:{t:"EXPORTACION",align:'right'},tipo:'float'},
-                {"data":"ana_ou",header:{t:"VENTAS TOTALES",align:'right'},style:{bg:'success',color:'white'},render:(r)=>{return parseFloat(r.ana_vn) + parseFloat(r.ana_ve)},tipo:'float'},
-                {"data":"ana_mou",header:{t:"SOLES VENTAS",align:'right'},tipo:'float'},
+                {"data":"ana_co",header:{t:"COMPRAS",align:'right'},tipo:'float',footer:{c:'sum'}},
+                {"data":"ana_in",header:{t:"COMPRA TOTAL",align:'right'},style:{bg:'info',color:'white'},render:(r)=>{return parseFloat(r.ana_si) + parseFloat(r.ana_co)},tipo:'float',footer:{c:'sum'}},
+                {"data":"ana_min",header:{t:"INVERSION COMPRAS",align:'right'},tipo:'float',footer:{c:'sum'}},
+                {"data":"ana_vn",header:{t:"VENTAS",align:'right'},tipo:'float',footer:{c:'sum'}},
+                {"data":"ana_ve",header:{t:"EXPORTACION",align:'right'},tipo:'float',footer:{c:'sum'}},
+                {"data":"ana_ou",header:{t:"VENTAS TOTALES",align:'right'},style:{bg:'success',color:'white'},render:(r)=>{return parseFloat(r.ana_vn) + parseFloat(r.ana_ve)},tipo:'float',footer:{c:'sum'}},
+                {"data":"ana_mou",header:{t:"SOLES VENTAS",align:'right'},tipo:'float',footer:{c:'sum'}},
                 {"data":"ana_po",header:{t:"% C/V",align:'right'},render:(r)=>{return parseFloat(r.ana_ou) / parseFloat(r.ana_in) *100 },tipo:'float'},
+                {"data":"ana_sa",header:{t:"SALDO",align:'right'},style:{bg:'danger',color:'white'},render:(r)=>{return parseFloat(r.ana_in) - parseFloat(r.ana_ou)},tipo:'float'},
 
             ]
         });
