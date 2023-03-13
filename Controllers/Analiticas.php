@@ -26,7 +26,7 @@ class Analiticas extends Controllers{
         $data['page_name'] = "Porcentaje de Ventas";
         $data['page_data'] = array('periodo'=>$_SESSION['periodo']); 
         $data['page_functions_js'] = array("functions_analiticas.js");
-        $this->views->getView($this,"Analiticas",$data);
+        $this->views->getView($this,"analiticas",$data);
     }
 
     public function listc($fecha){
