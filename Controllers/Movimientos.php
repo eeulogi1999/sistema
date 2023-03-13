@@ -562,47 +562,7 @@ class Movimientos extends Controllers{
         echo json_encode($mde,JSON_UNESCAPED_UNICODE);
         die();  
     }
-    public function listc($fecha){
-        $mov = $this->movimientos->selectCustoms('mov_id',array('mov_tipo'=>2,'custom'=>'mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = "'.$fecha.'"'));
-        $mov = !empty(implode(',', array_column($mov, 'mov_id')))?implode(',', array_column($mov, 'mov_id')):0;
-        $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS mde_q',array(
-                'custom'=>'mde_mov_id in ('.$mov.') GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id','bie_bbi_id','bie_t6m_id'));
-        foreach ($mde as $i => $r) {
-            $mde[$i]['mde_bie_id'] = $r['mde_bie_id']['bie_nombre'];
-        }
-        usort($mde, function($a, $b) {
-            return $a['mde_q'] <=> $b['mde_q'];
-        });
-        echo json_encode($mde,JSON_UNESCAPED_UNICODE);
-        die();
-    }
-    public function liste($fecha){
-        $mov = $this->movimientos->selectCustoms('mov_id',array('mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL and mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = "'.$fecha.'"'));
-        $mov = !empty(implode(',', array_column($mov, 'mov_id')))?implode(',', array_column($mov, 'mov_id')):0;
-        $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS mde_q',array(
-                'custom'=>'mde_mov_id in ('.$mov.') GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id','bie_bbi_id','bie_t6m_id'));
-        foreach ($mde as $i => $r) {
-            $mde[$i]['mde_bie_id'] = $r['mde_bie_id']['bie_nombre'];
-        }
-        usort($mde, function($a,$b) {
-            return $a['mde_q'] <=> $b['mde_q'];
-        });
-        echo json_encode($mde,JSON_UNESCAPED_UNICODE);
-        die();
-    }
-    public function listd($fecha){
-        $mov = $this->movimientos->selectCustoms('mov_id',array('mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL and  mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = "'.$fecha.'"'));
-        $mov = !empty(implode(',', array_column($mov, 'mov_id')))?implode(',', array_column($mov, 'mov_id')):0;
-        $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS mde_q',array(
-                'custom'=>'mde_mov_id in ('.$mov.') GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id','bie_bbi_id','bie_t6m_id'));
-        foreach ($mde as $i => $r) {
-            $mde[$i]['mde_bie_id'] = $r['mde_bie_id']['bie_nombre'];
-        }
-        usort($mde, function($a, $b) {
-            return $b['mde_q'] <=> $a['mde_q'];
-        });
-        echo json_encode($mde,JSON_UNESCAPED_UNICODE);
-        die();
-    }
+    
+
 }
 ?>
