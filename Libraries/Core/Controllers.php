@@ -1,4 +1,5 @@
 <?php 
+	header('Access-Control-Allow-Origin: *');
 	class Controllers{
 		protected $xp;
 		protected $xd;
