@@ -1,5 +1,8 @@
 <?php 
 	
+	echo json_encode($_SERVER,JSON_UNESCAPED_UNICODE);
+    die();
+
 	require_once("Config.php");
 	require_once("Helpers/Helpers.php");
 	
