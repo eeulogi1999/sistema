@@ -2,7 +2,7 @@
 	$gcl = $data['gcl'];
 	$mov = $data['mov']; 
 	$alm = $data['alm']; 
-    $theme = !empty($gcl['gcl_theme'])?json_decode($gcl['gcl_theme'] ,true):array();
+    $theme = (!empty($gcl['gcl_theme']))?json_decode($gcl['gcl_theme'] ,true):array();
  ?>
 <!DOCTYPE html>
 <html lang="es">
