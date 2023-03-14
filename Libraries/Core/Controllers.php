@@ -1,5 +1,6 @@
 <?php 
-
+	echo json_encode(apache_request_headers(),JSON_UNESCAPED_UNICODE);
+	die();
 	class Controllers{
 		protected $xp;
 		protected $xd;
@@ -10,8 +11,6 @@
 			}
 			$this->views = new Views();
 			$this->xp = new Mysql(DB_NAME);
-			echo json_encode(apache_request_headers(),JSON_UNESCAPED_UNICODE);
-			die();
 			if (!empty($_SERVER['PHP_AUTH_USER'])) {
 				$this->newModel("usuarios");
 				$this->newModel("clientes");
