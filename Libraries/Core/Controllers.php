@@ -1,5 +1,5 @@
 <?php 
-	echo json_encode(apache_request_headers(),JSON_UNESCAPED_UNICODE);
+	echo json_encode('asdgf',JSON_UNESCAPED_UNICODE);
 	die();
 	class Controllers{
 		protected $xp;
