@@ -37,18 +37,19 @@ class Analiticas extends Controllers{
         return $mde;
     }
 
-    public function getAnaliticas($mes){
-        $mov = $this->movimientos->searchRegistro(array('mov_fechaE'=>str_replace('"','',$mes).'-01','mov_t12_id'=>16),'mov_id');
+    public function getAnaliticas(){
+        $dates = (isset($_GET['mes_f']))?'mov_fechaE BETWEEN "'.$_GET['mes_i'].'-01" AND "'.$_GET['mes_f'].'-01"':'DATE_FORMAT(mov_fechaE, "%Y-%m") = "'.$_GET['mes_i'].'"';
+        $mov = $this->movimientos->searchRegistro(array('mov_fechaE'=>$_GET['mes_i'].'-01','mov_t12_id'=>16),'mov_id');
         $mde = $this->mdetalles->selectCustoms('mde_bie_id,mde_q,mde_importe',array('mde_mov_id'=>$mov['mov_id']),array('mde_bie_id'));
         $si = array_column($mde,'mde_q','mde_bie_id');
         $msi = array_column($mde,'mde_importe','mde_bie_id');
-        $pco = $this->list(array('mov_tipo'=>2,'custom'=>'mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$mes));
+        $pco = $this->list(array('mov_tipo'=>2,'custom'=>'mov_age_id is not null AND '.$dates));
         $co = array_column($pco,'mde_q','mde_bie_id');
         $mco = array_column($pco,'mde_importe','mde_bie_id');
-        $pvn = $this->list(array('mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND  mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$mes));
+        $pvn = $this->list(array('mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND  mov_age_id is not null AND '.$dates));
         $vn = array_column($pvn,'mde_q','mde_bie_id');
         $mvn = array_column($pvn,'mde_importe','mde_bie_id');
-        $pve = $this->list(array('mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL and mov_age_id is not null and DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$mes));
+        $pve = $this->list(array('mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL AND mov_age_id is not null AND '.$dates));
         $ve = array_column($pve,'mde_q','mde_bie_id');
         $mve = array_column($pve,'mde_importe','mde_bie_id');
         $array = array();

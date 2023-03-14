@@ -33,11 +33,11 @@
             </div>
             </div>
             <div class="tab-pane fade" id="historico" role="tabpanel" aria-labelledby="historico-tab">
-              <input class="form-control w-auto d-inline" type="date" id="fecha_i" name="fecha_i" placeholder="FECHA INICIO">
-              <input class="form-control w-auto d-inline" type="date" id="fecha_f" name="fecha_f" placeholder="FECHA FIN">
+              <input class="form-control w-auto d-inline" type="month" id="mes_i" name="mes_i" placeholder="MES INICIO">
+              <input class="form-control w-auto d-inline" type="month" id="mes_f" name="mes_f" placeholder="MES FIN">
               <button class="btn btn-sm btn-danger w-auto d-inline" onClick="filterTriCom()"><i class="fas fa-search"></i></button>
               <div class="table-responsive">
-                <table class="table table-hover table-bordered table-sm " id="tri_table" width="100%"></table>
+                <table class="table table-hover table-bordered table-sm " id="tre_table" width="100%"></table>
               </div>
             </div>
           </div>
