@@ -40,6 +40,8 @@
 		}
 	}
 	require_once("Libraries/Core/Autoload.php");
+	echo json_encode('asdgf',JSON_UNESCAPED_UNICODE);
+	die();
 	require_once("Libraries/Core/Load.php");
 
 ?>
