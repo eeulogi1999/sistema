@@ -1,8 +1,5 @@
 <?php 
-	header('Access-Control-Allow-Origin: *');
-	header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-	header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-	
+
 	class Controllers{
 		protected $xp;
 		protected $xd;
@@ -51,17 +48,17 @@
 					$_SESSION['alm'] = $this->almacenes->selectRegistro(1);
 				}
 			}
-			
-			if(empty($_SESSION['login']) && get_class($this) !='Login' ){
-				header('Location: '.base_url().'/login');
-				die();
+			if ($_SERVER['HTTP_SEC_FETCH_MODE']=='navigate') {
+				if(empty($_SESSION['login']) && get_class($this) !='Login' ){
+					header('Location: '.base_url().'/login');
+					exit;
+				}
 			}
 			$this->loadModel($name_table);
 			if (!empty($_SESSION['tree'])) {
 				$g = explode('.',strval($_SESSION['tree']));
 				$_SESSION['perMod'] = getPermisos(intVal($g[array_key_last($g)]));
 			}
-			
 		}
 		public function newController(string $controller){    //para agregar controladores 
 			$routClass = "Controllers/".$controller.".php";
