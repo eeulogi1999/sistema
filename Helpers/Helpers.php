@@ -53,8 +53,6 @@
         $file = ob_get_clean();
         return $file;        
     }
-    echo json_encode('asdgf',JSON_UNESCAPED_UNICODE);
-	die();
     //Envio de correos
     function sendEmail($data,$template){
         $asunto = $data['asunto'];
@@ -89,7 +87,8 @@
         $arrData = $modulos->selectRegistros(array('custom'=>$parms));
         return $arrData;
     }
-
+    echo json_encode('asdgf',JSON_UNESCAPED_UNICODE);
+	die();
     function uploadImage(array $data, string $name){
         $url_temp = $data['tmp_name'];
         $destino    = '.uploads/'.$name;        
