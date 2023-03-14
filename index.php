@@ -1,7 +1,5 @@
 <?php 
 	require_once("Config.php");
-	echo json_encode('asdgf',JSON_UNESCAPED_UNICODE);
-	die();
 	require_once("Helpers/Helpers.php");
 	//$url = !empty($_GET['url']) ? $_GET['url'] : 'modulos';
 	$url = !empty($_GET['url']) ? $_GET['url'] : 'login';
