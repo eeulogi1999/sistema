@@ -1,7 +1,8 @@
 <?php 
 	$gcl = $data['gcl'];
 	$mov = $data['mov']; 
-	$alm = $data['alm']; 	 		
+	$alm = $data['alm']; 
+    $theme = !empty($gcl['gcl_theme'])?json_decode($gcl['gcl_theme'] ,true):array();
  ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -106,7 +107,7 @@
 
         .tbl-detalle thead th {
             padding: 5px;
-            background-color:#f2767f;
+            background-color: <?= $theme['bg']??'#f2767f'?>;
             color: #FFF;
         }
 
@@ -128,7 +129,7 @@
         }
 
         .tblfoot {
-            background-color: #f2767f;
+            background-color: <?= $theme['bg']??'#f2767f'?>;
             /* #009688 */
             border-radius: 7px;
             padding: 5px;
@@ -140,7 +141,7 @@
         }
 
         .tblfoot_Final {
-            background-color: #f2767f;
+            background-color: <?= $theme['bg']??'#f2767f'?>;
             border-radius: 7px;
             border-top: black;
             border-bottom: black;
