@@ -1,7 +1,8 @@
 <?php 
 	require_once("Config.php");
 	require_once("Helpers/Helpers.php");
-
+	echo json_encode('asdgf',JSON_UNESCAPED_UNICODE);
+	die();
 	//$url = !empty($_GET['url']) ? $_GET['url'] : 'modulos';
 	$url = !empty($_GET['url']) ? $_GET['url'] : 'login';
 	$arrUrl = explode("/", $url);
@@ -39,9 +40,6 @@
 			$params = trim($params,',');
 		}
 	}
-	echo json_encode('asdgf',JSON_UNESCAPED_UNICODE);
-	die();
-	
 	require_once("Libraries/Core/Autoload.php");
 	require_once("Libraries/Core/Load.php");
 
