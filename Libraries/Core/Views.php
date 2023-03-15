@@ -2,8 +2,6 @@
 	class Views{
 		function getView($controller,$view,$data=""){
 			$controller = get_class($controller);
-			echo json_encode($controller,JSON_UNESCAPED_UNICODE);
-			die();
 			if($controller == "Home"){
 				$view = "Views/".$view.".php";
 			}else{
@@ -12,5 +10,6 @@
 			require_once ($view);
 		}
 	}
-
+	echo json_encode('sdfgsd',JSON_UNESCAPED_UNICODE);
+	die();
  ?>
