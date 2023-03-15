@@ -400,8 +400,7 @@
         }
         return false;
     }
-    echo json_encode('asdgf 12',JSON_UNESCAPED_UNICODE);
-	die();
+    
     function Meses(){
         $meses = array("Enero", 
                       "Febrero", 
@@ -457,4 +456,6 @@
         curl_close($curl);
         return $response;
     }
+    echo json_encode('asdgf 13',JSON_UNESCAPED_UNICODE);
+	die();
  ?>
