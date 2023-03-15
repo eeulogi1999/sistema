@@ -6,9 +6,9 @@
 	// 	}
 	// });
 	require_once("Libraries/Core/Controllers.php");
+	require_once("Libraries/Core/Views.php");
 	echo json_encode('hola',JSON_UNESCAPED_UNICODE);
 	die();
-	require_once("Libraries/Core/Views.php");
 	require_once("Libraries/Core/Mysql.php");
 	require_once("Libraries/Core/Conexion.php");
  ?>
