@@ -1,5 +1,5 @@
 <?php
-@ob_start();
+//@ob_start();
 require 'Libraries/phpspreadsheet/vendor/autoload.php';
 require_once 'Libraries/dompdf/vendor/autoload.php';
 class Main extends Controllers{
