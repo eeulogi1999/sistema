@@ -9,8 +9,6 @@
 			}
 			$this->views = new Views();
 			$this->xp = new Mysql(DB_NAME);
-			echo json_encode('hola',JSON_UNESCAPED_UNICODE);
-			die();
 			if (!empty($_SERVER['PHP_AUTH_USER'])) {
 				$this->newModel("usuarios");
 				$this->newModel("clientes");
