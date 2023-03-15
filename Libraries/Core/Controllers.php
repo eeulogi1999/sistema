@@ -7,12 +7,12 @@
 				session_name(PHPID);
 				session_start();
 			}
+			$h = array_change_key_case(apache_request_headers());
 			$this->views = new Views();
 			$this->xp = new Mysql(DB_NAME);
 			if (!empty($_SERVER['PHP_AUTH_USER'])) {
 				$this->newModel("usuarios");
 				$this->newModel("clientes");
-				$h = apache_request_headers();
 				$gus = $this->usuarios->searchRegistro(array('gus_user'=>$_SERVER['PHP_AUTH_USER'],'gus_password'=>hash("SHA256",$_SERVER['PHP_AUTH_PW'])));
 				if(!empty($gus)){
 					$_SESSION['gus'] = $gus;
@@ -25,7 +25,6 @@
 			if (isset($_GET['gcl_id'])) {
 				$this->newModel("usuarios");
 				$this->newModel("clientes");
-				$h = apache_request_headers();
 				$gus = $this->usuarios->selectRegistro(1);
 				if(!empty($gus)){
 					$_SESSION['gus'] = $gus;
@@ -39,7 +38,6 @@
 				$this->xd = new Mysql(DB_SUBNAME.$_SESSION['gcl']['gcl_gem_id']['gem_ruc']);
 				if (!empty($_SERVER['PHP_AUTH_USER'])) {
 					$this->newModel("almacenes");
-					$h = apache_request_headers();
 					$_SESSION['alm'] = $this->almacenes->selectRegistro($h['alm_id']);
 				}
 				if (isset($_GET['gcl_id'])) {
