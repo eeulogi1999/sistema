@@ -456,6 +456,4 @@
         curl_close($curl);
         return $response;
     }
-    echo json_encode('asdgf 13',JSON_UNESCAPED_UNICODE);
-	die();
  ?>
