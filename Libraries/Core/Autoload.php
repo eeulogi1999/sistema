@@ -7,6 +7,8 @@
 	// });
 	require_once("Libraries/Core/Controllers.php");
 	require_once("Libraries/Core/Views.php");
+	echo json_encode('sdfgsd',JSON_UNESCAPED_UNICODE);
+	die();
 	require_once("Libraries/Core/Mysql.php");
 	require_once("Libraries/Core/Conexion.php");
  ?>

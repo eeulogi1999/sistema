@@ -10,6 +10,4 @@
 			require_once ($view);
 		}
 	}
-	echo json_encode('sdfgsd',JSON_UNESCAPED_UNICODE);
-	die();
  ?>
