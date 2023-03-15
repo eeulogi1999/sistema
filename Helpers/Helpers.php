@@ -87,8 +87,6 @@
         $arrData = $modulos->selectRegistros(array('custom'=>$parms));
         return $arrData;
     }
-    echo json_encode('asdgf',JSON_UNESCAPED_UNICODE);
-	die();
     function uploadImage(array $data, string $name){
         $url_temp = $data['tmp_name'];
         $destino    = '.uploads/'.$name;        
@@ -321,7 +319,8 @@
         }
         return $arrData;
     }
-
+    echo json_encode('asdgf 11',JSON_UNESCAPED_UNICODE);
+	die();
     function document($token,$nombre,$content){
         $delimiter = uniqid();
         $postData = "--$delimiter\r\n"
