@@ -1,7 +1,5 @@
 <?php 
 	$controller = ucwords($controller);
-	echo json_encode($_SERVER,JSON_UNESCAPED_UNICODE);
-	die();
 	$controllerFile = "Controllers/".$controller.".php";
 	if(file_exists($controllerFile))
 	{
