@@ -47,10 +47,11 @@
 					$_SESSION['alm'] = $this->almacenes->selectRegistro(1);
 				}
 			}
-			
-			if(empty($_SESSION['login']) && get_class($this) !='Login' ){
-				header('Location: '.base_url().'/login');
-				die();
+			if ($_SERVER['HTTP_SEC_FETCH_MODE']=='navigate') {
+				if(empty($_SESSION['login']) && get_class($this) !='Login' ){
+					header('Location: '.base_url().'/login');
+					exit;
+				}
 			}
 			$this->loadModel($name_table);
 			if (!empty($_SESSION['tree'])) {
