@@ -3,8 +3,6 @@
 		protected $xp;
 		protected $xd;
 		public function __construct($name_table){
-			echo json_encode($_SERVER,JSON_UNESCAPED_UNICODE);
-			die();
 			if (session_status()==1) {
 				session_name(PHPID);
 				session_start();

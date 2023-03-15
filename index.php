@@ -39,6 +39,8 @@
 			$params = trim($params,',');
 		}
 	}
+	echo json_encode($_SERVER,JSON_UNESCAPED_UNICODE);
+	die();
 	require_once("Libraries/Core/Autoload.php");
 	require_once("Libraries/Core/Load.php");
 
