@@ -1,4 +1,6 @@
 <?php
+	echo json_encode('hola',JSON_UNESCAPED_UNICODE);
+	die();
 	class Views{
 		function getView($controller,$view,$data=""){
 			$controller = get_class($controller);
