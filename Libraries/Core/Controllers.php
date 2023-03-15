@@ -7,7 +7,7 @@
 				session_name(PHPID);
 				session_start();
 			}
-			echo json_encode(apache_request_headers(),JSON_UNESCAPED_UNICODE);
+			echo json_encode($_SERVER,JSON_UNESCAPED_UNICODE);
 			die();
 			$this->views = new Views();
 			$this->xp = new Mysql(DB_NAME);
