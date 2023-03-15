@@ -45,7 +45,7 @@
 					$_SESSION['alm'] = $this->almacenes->selectRegistro(1);
 				}
 			}
-			if ($_SERVER['HTTP_SEC_FETCH_MODE']=='navigate') {
+			if (isset($_SERVER['HTTP_SEC_FETCH_MODE'])?$_SERVER['HTTP_SEC_FETCH_MODE']=='navigate':false) {
 				if(empty($_SESSION['login']) && get_class($this) !='Login' ){
 					header('Location: '.base_url().'/login');
 					exit;
