@@ -319,8 +319,6 @@
         }
         return $arrData;
     }
-    echo json_encode('asdgf 11',JSON_UNESCAPED_UNICODE);
-	die();
     function document($token,$nombre,$content){
         $delimiter = uniqid();
         $postData = "--$delimiter\r\n"
@@ -401,8 +399,9 @@
             }
         }
         return false;
-      }
-      
+    }
+    echo json_encode('asdgf 12',JSON_UNESCAPED_UNICODE);
+	die();
     function Meses(){
         $meses = array("Enero", 
                       "Febrero", 
