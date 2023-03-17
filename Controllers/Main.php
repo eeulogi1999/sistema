@@ -135,6 +135,12 @@ class Main extends Controllers{
         die();
     }
     public function getAll($pre){
+        if (!$_POST) {
+            $_POST = json_decode(file_get_contents("php://input"),true);
+            if (!empty($_POST)) {
+                $_POST['where'] = json_encode($_POST['where'],JSON_UNESCAPED_UNICODE);
+            }
+        }
         $tabla = $this->getTable($pre);
         $this->newModel($tabla);
         $arrData = $this->{$tabla}->selectRegistros((isset($_POST['where']))?json_decode($_POST['where'],true):array());
