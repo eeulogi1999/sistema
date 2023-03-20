@@ -268,7 +268,7 @@
                 <th class="wd10 text-center">CODIGO</th>
                 <th class="wd10 text-center">CANT</th>
                 <th class="wd15 text-center">UNID.</th>
-                <th class="wd25" style="max-width: 150px;">DESCRIPCIÓN</th>
+                <th class="wd25">DESCRIPCIÓN</th>
                 <th class="wd10 text-right">V. UNT.</th>
                 <th class="wd10 text-center">DSCTO</th>
                 <th class="wd20 text-right">V. VENTA</th>
@@ -283,7 +283,7 @@
                 <td class="text-center"><?= $mde['mde_bie_id']['bie_codigo'] ?></td>
                 <td class="text-center"><?= number_format($mde['mde_q'], 2,'.','') ?></td>
                 <td class="text-center"><?= $mde['mde_t6m_id']['t6m_descripcion'] ?></td>
-                <td style="max-width: 150px;"><?= $mde['mde_bie_id']['bie_nombre'] ?></td>
+                <td style="width: 150px;"><?= $mde['mde_bie_id']['bie_nombre'] ?></td>
                 <td class="text-right"><?= formatMoney($mde['mde_vu']) ?></td>
                 <td class="text-center"><?= "0.00" ?></td>
                 <td class="text-right"><?= formatMoney($mde['mde_importe']) ?></td>
