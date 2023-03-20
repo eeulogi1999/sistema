@@ -621,7 +621,7 @@ function openModalMov() {
             $('#mov_t10_id').val(data.mov_t10_id??49);
             $('#mde_gta_id').val(9);
             ftnSetMov_numero(data.mov_t10_id?'OC01':'NE01',2,$('#mov_t10_id').val());
-            if (data.mov_t10_id) {
+            if (data.mov_t10_id||data.mov_tipo == 3) {
                 $('#mde_gta_id').parent().show();
                 $('thead tr th:nth-child('+($('#mde_gta_id').parent().index()+1)+')',$('#mde_gta_id').parent().parent().parent().parent()[0]).show()
             }
