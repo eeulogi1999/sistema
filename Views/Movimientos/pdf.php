@@ -268,7 +268,7 @@
                 <th class="wd10 text-center">CODIGO</th>
                 <th class="wd10 text-center">CANT</th>
                 <th class="wd15 text-center">UNID.</th>
-                <th class="wd25" style="max-width: 200px">DESCRIPCIÓN</th>
+                <th class="wd25" style="max-width: 100px;">DESCRIPCIÓN</th>
                 <th class="wd10 text-right">V. UNT.</th>
                 <th class="wd10 text-center">DSCTO</th>
                 <th class="wd20 text-right">V. VENTA</th>
