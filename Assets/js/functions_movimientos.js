@@ -624,7 +624,7 @@ function openModalMov() {
             if (data.mov_t10_id||data.mov_tipo == 3) {
                 $('#mde_gta_id').parent().show();
                 $('thead tr th:nth-child('+($('#mde_gta_id').parent().index()+1)+')',$('#mde_gta_id').parent().parent().parent().parent()[0]).show()
-            }
+            }   
             break;
         case 1:
             $('#mov_t12_id').val(1);
