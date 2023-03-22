@@ -122,7 +122,7 @@ class Movimientos extends Controllers{
             }
             $eve[$i]['mov_qe'] = $qe; 
             $eve[$i]['mov_qs'] = $eve[$i]['mov_mde_id'][0]['mde_q']-$qe; 
-            if ($eve[$i]['mov_qs'] < 10 && $r['mov_mstatus'] == 1) {
+            if ($eve[$i]['mov_qs'] < 501 && $r['mov_mstatus'] == 1) {
                 $r['mov_mstatus'] = 2;
             }
             $eve[$i]['mov_qeref'] = '<div class="dropdown"><button class="btn btn-info dropdown-toggle" type="button" id="drop_'.$i.'" data-toggle="dropdown" 
