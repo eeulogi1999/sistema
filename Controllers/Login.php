@@ -33,7 +33,7 @@
 								$arrDatatwo = $this->clientes->selectRegistros();
 							} else {
 								$arrDatatwo = array();
-								$gac = $this->accesos->selectRegistros(array('gac_gus_id'=>$_SESSION['gus']['gus_id']));
+								$gac = $this->accesos->selectRegistros(array('gac_gus_id'=>$_SESSION['gus']['gus_id'],'gac_use'=>1));
 								foreach ($gac as $i => $r) {
 									$gcl = $this->clientes->selectRegistro($r['gac_gcl_id']['gcl_id']);
 									array_push($arrDatatwo, $gcl);
