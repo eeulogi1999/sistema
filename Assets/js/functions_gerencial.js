@@ -1,9 +1,10 @@
-var res_table,cve_table,sfi_table,exp_table,det_table,com_table,tri_table;
+var res_table,cve_table,sfi_table,exp_table,det_table,com_table,tri_table,sum_table;
 var url_res = base_url+"/Gerencial/getGerencial";
 var url_cve = base_url+"/Reportes/getCventas";
 var url_sfi = base_url+"/Gerencial/getResultados";
 var url_exp = base_url+"/Liquidez/getExportaciones";
 var url_det = base_url+"/Liquidez/getDetracciones";
+var url_sum = base_url+"/Liquidez/getDetracciones";
 var url_com = base_url+"/Gerencial/getComisiones";
 var url_tri = base_url+"/Gerencial/getComisiones";
 document.addEventListener('DOMContentLoaded',function () {
@@ -76,8 +77,6 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"mov_porc",header:{t:"PORCENTAJE",align:'center'},tipo:'string'},
                 {"data":"mov_dscg",header:{t:"DSCG",align:'center'},tipo:'money',footer:{ c:"sum" }}, 
                 {"data":"mov_sald",header:{t:"SALDO",align:'center'},tipo:'money',footer:{ c:"sum" }}
-                
-
             ]
         });
     }
@@ -106,6 +105,20 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"rco_pp",header:{t:"PRECIO PROMEDIO",align:'right'},render:(r)=>{return (r.rco_st/r.rco_q).toFixed(2)},tipo:'money'},
                 {"data":"rco_st",header:{t:"TOTAL SOLES",align:'right'},tipo:'money',footer:{ c:"sum" }},
                 {"data":"rco_opt",header:{t:"VER",align:'center'},tipo:'string'}
+            ]
+        });
+    }
+    if (document.querySelector("#sum_table")) {
+        sum_table = $('#sum_table').autoTable({
+            "url": url_sum,
+            "numerate": true,
+            "columns":[
+                {"data":"mov_cue_id.cue_nombre",header:"SOCIOS",tipo:'string',footer:"TOTALES"},
+                {"data":"mov_sum",header:{t:"SUB TOTAL",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_options",header:{t:"OPCIONES",align:'center'},tipo:'string'},
+                {"data":"mov_detraccion",header:{t:"DETRACCION",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_impuesto",header:{t:"IMPUESTO",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"mov_det_liq",header:{t:"RETORNO",align:'right'},tipo:'money',footer:{ c:"sum" }}, 
             ]
         });
     }
@@ -144,6 +157,9 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#tri_table")) {
         tri_table = await tri_table;
+    }
+    if (document.querySelector("#sum_table")) {
+        sum_table = await sum_table;
     }
     divLoading.style.display = "none";
     if (data.per==='0') {
@@ -234,7 +250,12 @@ function getExpDet(id) {
 
 function getDetView(id,trim=null) {
     $('#modalTable_mov').modal('show');
-    mov_table.reload(base_url+"/Gerencial/getDetView/"+id);
+    if (trim) {
+        mov_table.reload(base_url+"/Gerencial/getDetView/"+id+'?trim='+trim);
+    }else{
+        mov_table.reload(base_url+"/Gerencial/getDetView/"+id);
+    }
+    
     setTimeout(() => {
         mov_table.rezise();
     }, 400);
@@ -255,4 +276,8 @@ async function setPocRco(id,e) {
 
 function filterTriCom() {
     tri_table.reload(base_url+"/Gerencial/getTriView/"+$('#his_age_id').val()+'?fecha_i='+$('#fecha_i').val()+'&fecha_f='+$('#fecha_f').val());
+}
+
+function sumDetracciones() {
+    sum_table.reload(base_url+"/Liquidez/getDetracciones/'"+$('#fecha_i').val()+"' AND '"+$('#fecha_f').val()+"'");
 }
