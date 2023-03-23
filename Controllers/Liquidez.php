@@ -430,8 +430,8 @@ class Liquidez extends Controllers{
     }
     public function getDetracciones($out=false){
         $trim = "DATE_FORMAT(mov_fechaE, '%Y-%m') = '".str_replace('"','',$_SESSION['periodo'])."'";
-        if (isset($_POST['where'])) {
-            $_POST['where'] = json_decode($_POST['where'],true);
+        $_POST['where'] = json_decode($_POST['where'],true);
+        if (isset($_POST['where']['trim'])) {
             $trim = 'mov_fechaE BETWEEN '.$_POST['where']['trim'];
             $out = false;
         }
