@@ -430,10 +430,12 @@ class Liquidez extends Controllers{
     }
     public function getDetracciones($out=false){
         $trim = "DATE_FORMAT(mov_fechaE, '%Y-%m') = '".str_replace('"','',$_SESSION['periodo'])."'";
-        if (gettype($out)=='string' && $out != '') {
-            $trim = 'mov_fechaE BETWEEN '.$out;
+        if (isset($_POST['where'])) {
+            $_POST['where'] = json_decode($_POST['where'],true);
+            $trim = 'mov_fechaE BETWEEN '.$_POST['where']['trim'];
             $out = false;
         }
+        
         $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND '.$trim.'  GROUP BY mov_cue_id'));
         $this->newController('Main');
         $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];

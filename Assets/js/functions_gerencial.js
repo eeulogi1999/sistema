@@ -279,5 +279,5 @@ function filterTriCom() {
 }
 
 function sumDetracciones() {
-    sum_table.reload(base_url+"/Liquidez/getDetracciones/'"+$('#fecha_i').val()+"' AND '"+$('#fecha_f').val()+"'");
+    sum_table.reload(base_url+"/Liquidez/getDetracciones",{trim:"'"+$('#fecha_i').val()+"' AND '"+$('#fecha_f').val()+"'"});
 }
