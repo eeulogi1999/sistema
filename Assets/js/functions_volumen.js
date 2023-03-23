@@ -57,6 +57,6 @@ function getDetView(id,trim=null) {
 function hisTrim(e) {
     e.preventDefault();
     if (e.target.value != '') {
-        det_table.reload(base_url+"/Liquidez/getDetracciones/"+e.target.value);
+        det_table.reload(base_url+"/Liquidez/getDetracciones",{trim:e.target.value});
     } 
 }
