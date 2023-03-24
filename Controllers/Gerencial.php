@@ -12,6 +12,7 @@ class Gerencial extends Controllers{
         $this->newModel('rcomisiones');
         $this->newModel('cajas');
         $this->newModel('mdetalles');
+        $this->newModel('nrcomisiones');
         $this->newController('Reportes');
         $this->newController('Liquidez');
         $this->newController('Cuentas');
@@ -46,7 +47,7 @@ class Gerencial extends Controllers{
         $data['page_tag'] = "Resumen y Comisiones";
         $data['page_title'] = "Resumen y Comisiones";
         $data['page_name'] = "Resumen y Comisiones";
-        $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'per'=>$_SESSION['perMod']['gtp_u']);
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo'],'per'=>$_SESSION['perMod']['gtp_u'],'gus_id'=>$_SESSION['gus']['gus_id']);
         $data['page_functions_js'] = array("functions_gerencial.js","functions_movimientos.js");
         $this->views->getView($this,"comisiones",$data);
     }
@@ -356,9 +357,11 @@ class Gerencial extends Controllers{
         $arrData = $this->movimientos->selectCustoms('mov_id',array('mov_age_id'=>$id,'mov_tipo'=>2,'custom'=>"mov_fechaE BETWEEN '".$_GET['fecha_i']."' AND '".$_GET['fecha_f']."'"));
         $mov = !empty(implode(',', array_column($arrData, 'mov_id')))?implode(',', array_column($arrData, 'mov_id')):0;
         $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS rco_q,SUM(mde_importe) AS rco_st',array(
-            'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,11,23,24,19) GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id'));
+            'custom'=>'mde_mov_id in ('.$mov.') AND mde_bie_id in (6,8,5,4,11,23,24,19) GROUP BY mde_bie_id'),array('mde_mov_id','mde_t6m_id','mde_gta_id','bie_bbi_id','bie_t6m_id'));
         foreach ($mde as $i => $r) {
-            $mde[$i]['rco_opt'] = '<div class="text-center">'.'<button class="btn btn-info btn-sm" onclick="getComView('.$id.',`mov_id in ('.$mov.')`)" title="Ver Registro" > <i class="far fa-eye"></i> </button>'.'</div>';
+            $mde[$i]['rco_porc'] = 0;
+            $mde[$i]['rco_opt'] = '<div class="text-center">'.'<button class="btn btn-info btn-sm" onclick="event.preventDefault();getComView('.$id.',`mov_id in ('.$mov.')`)" title="Ver Registro" > <i class="far fa-eye"></i> </button>'.'</div>';
+            $mde[$i]['rco_pt'] = $mde[$i]['rco_st']*($mde[$i]['rco_porc']/100);
         }
         echo json_encode($mde,JSON_UNESCAPED_UNICODE);
         die();
@@ -375,6 +378,34 @@ class Gerencial extends Controllers{
         $options->set(array('isRemoteEnabled'=>true));
         $dompdf->setOptions($options);
         $html = getFile("Gerencial/pdfRco",$data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('letter', 'potrait');
+        $dompdf->render();
+        $canvas = $dompdf->getCanvas(); 
+        $fontMetrics = new Dompdf\FontMetrics($canvas, $options); 
+        $w = $canvas->get_width(); 
+        $h = $canvas->get_height(); 
+        $font = $fontMetrics->getFont('times'); 
+        $text = "CONFIDENTIAL"; 
+        $txtHeight = $fontMetrics->getFontHeight($font, 75); 
+        $textWidth = $fontMetrics->getTextWidth($text, $font, 75); 
+        $canvas->set_opacity(.06); 
+        $x = (($w-($textWidth-80))); 
+        $y = (((2*$h/3)-$txtHeight)); 
+        $canvas->text($x, $y, $text, $font, 75,array(0,0,0),0,0,315); 
+        $dompdf->stream('my.pdf',array('Attachment'=>0));
+        die();
+    }
+    public function getNrcPDF($id){
+        ob_end_clean();
+        $data['gcl'] = $_SESSION['gcl'];
+        $data['alm'] = $_SESSION['alm'];
+        $data['nrc'] =  $this->nrcomisiones->selectRegistro($id);
+        $dompdf = new Dompdf\Dompdf();
+        $options = new Dompdf\Options();
+        $options->set(array('isRemoteEnabled'=>true));
+        $dompdf->setOptions($options);
+        $html = getFile("Gerencial/pdfNrc",$data);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('letter', 'potrait');
         $dompdf->render();

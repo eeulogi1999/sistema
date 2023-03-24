@@ -52,3 +52,18 @@ ALTER TABLE `rcomisiones` ADD `rco_age_id` BIGINT NOT NULL AFTER `rco_bie_id`;
 ALTER TABLE `rcomisiones` ADD CONSTRAINT `rcomisiones_agentes` FOREIGN KEY (`rco_age_id`) REFERENCES `agentes`(`age_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `rcomisiones` CHANGE `rco_porc` `rco_porc` DECIMAL(12,4) NOT NULL DEFAULT '0';
 
+
+
+CREATE TABLE `nrcomisiones` (
+  `nrc_id` bigint PRIMARY KEY AUTO_INCREMENT,
+  `nrc_fechai` date NOT NULL,
+  `nrc_fechaf` date NOT NULL,
+  `nrc_age_id` bigint NOT NULL,
+  `nrc_monto` decimal(12,4) NOT NULL,
+  `nrc_gus_id` bigint NOT NULL,
+  `rco_json` json NOT NULL,
+  `rco_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `rco_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+ALTER TABLE `nrcomisiones` ADD CONSTRAINT `nrc_age` FOREIGN KEY (`nrc_age_id`) REFERENCES `agentes`(`age_id`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `nrcomisiones` ADD CONSTRAINT `nrc_gus` FOREIGN KEY (`nrc_gus_id`) REFERENCES `company5_bd_cacel`.`usuarios`(`gus_id`) ON DELETE CASCADE ON UPDATE CASCADE;

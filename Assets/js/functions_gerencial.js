@@ -1,4 +1,4 @@
-var res_table,cve_table,sfi_table,exp_table,det_table,com_table,tri_table,sum_table;
+var res_table,cve_table,sfi_table,exp_table,det_table,com_table,tri_table,sum_table,nrc_table;
 var url_res = base_url+"/Gerencial/getGerencial";
 var url_cve = base_url+"/Reportes/getCventas";
 var url_sfi = base_url+"/Gerencial/getResultados";
@@ -6,7 +6,11 @@ var url_exp = base_url+"/Liquidez/getExportaciones";
 var url_det = base_url+"/Liquidez/getDetracciones";
 var url_sum = base_url+"/Liquidez/getDetracciones";
 var url_com = base_url+"/Gerencial/getComisiones";
+var url_nrc = base_url+"/Main/getAll/nrc";
 var url_tri = base_url+"/Gerencial/getComisiones";
+
+var drc_table;
+var drc_json = [];
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
     if (document.querySelector("#res_table")) {
@@ -108,6 +112,41 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
+    if (document.querySelector("#nrc_table")) {
+       nrc_table = $('#nrc_table').autoTable({
+            "url": url_nrc,
+            "numerate": true,
+            "columns":[
+                {"data":"nrc_age_id.age_gpe_id.gpe_nombre",header:"AGENTE",tipo:'string',footer:"TOTALES"},
+                {"data":"nrc_fechai",header:{t:"FECHA INICIO",align:'right'},tipo:'string'},
+                {"data":"nrc_fechaf",header:{t:"FECHA FIN",align:'right'},tipo:'string'},
+                {"data":"nrc_monto",header:{t:"MONTO",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"nrc_gus_id.gus_gpe_id.gpe_nombre",header:{t:"USER",align:'center'},tipo:'string'},
+                {"data":"nrc_ver",header:{t:"VER",align:'center'},render:(r)=>{
+                    return '<a class="btn btn-sm btn-danger" target="_blank" href="'+base_url+'/Gerencial/getNrcPDF/'+r.nrc_id+'"><i class="far fa-file-pdf"></i></a> '+
+                        '<button class="btn btn-sm btn-danger" target="_blank" onClick="del(`nrc`,'+r.nrc_id+')"><i class="fas fa-trash"></i></button> '+
+                        '<button class="btn btn-sm btn-warning" onClick="edit(`nrc`,'+r.nrc_id+')"><i class="fa fa-pencil"></i></button>'
+                },tipo:'string'}
+            ]
+        });
+        $('#nrc_age_id').loadOptions('agentes',['age_gpe_id.gpe_nombre','age_gpe_id.gpe_apellidos'],{'custom':'age_gpe_id IS NOT NULL'});
+    }
+    if (document.querySelector("#drc_table")) {
+        drc_table = $('#drc_table').autoTable({
+            "src": 'drc_json',
+            "cell":true,
+            'thid':'drc_id',
+            "columns":[
+                {"data":"mde_bie_id.bie_nombre",header:"MATERIAL",tipo:'string',footer:"TOTALES"},
+                {"data":"rco_q",header:{t:"CANTIDAD TOTAL",align:'right'},tipo:'float',footer:{ c:"sum" }},
+                {"data":"rco_pp",header:{t:"PRECIO PROMEDIO",align:'right'},render:(r)=>{return (r.rco_st/r.rco_q).toFixed(2)},tipo:'money'},
+                {"data":"rco_st",header:{t:"TOTAL SOLES",align:'right'},tipo:'money',footer:{ c:"sum" }},
+                {"data":"rco_opt",header:{t:"VER",align:'center'},tipo:'string'},
+                {"data":"rco_porc",header:{t:"PORCENTAJE %",align:'center'},tipo:'float',style:{bg:'success',color:'white'}},
+                {"data":"rco_pt",header:{t:"SOLES %",align:'right'},render:(r)=>{return r.rco_st*(r.rco_porc/100)},tipo:'money',footer:{ c:"sum" }}
+            ]
+        });
+     }
     if (document.querySelector("#sum_table")) {
         sum_table = $('#sum_table').autoTable({
             "url": url_sum,
@@ -160,6 +199,12 @@ window.addEventListener('load', async () => {
     }
     if (document.querySelector("#sum_table")) {
         sum_table = await sum_table;
+    }
+    if (document.querySelector("#nrc_table")) {
+        nrc_table = await nrc_table;
+    }
+    if (document.querySelector("#drc_table")) {
+        drc_table = await drc_table;
     }
     divLoading.style.display = "none";
     if (data.per==='0') {
@@ -230,7 +275,6 @@ async function cierre() {
     .catch(error => console.log(error))
     divLoading.style.display = "none";
 }
-
 async function setPorcentaje(id,e) {
     await set(`cue`,null,{cue_id:id,cue_porcentaje:e.target.value},true); 
     window[e.target.name+'_table'].reload()
@@ -239,7 +283,6 @@ async function setPorExp(id,e) {
     await set(`cue`,null,{cue_id:id,cue_por_exp:e.target.value},true); 
     exp_table.reload()
 }
-
 function getExpDet(id) {
     $('#modalTable_mov').modal('show');
     mov_table.reload(base_url+"/Gerencial/getExpDet/"+id);
@@ -247,7 +290,6 @@ function getExpDet(id) {
         mov_table.rezise();
     }, 400);
 }
-
 function getDetView(id,trim=null) {
     $('#modalTable_mov').modal('show');
     if (trim) {
@@ -260,7 +302,6 @@ function getDetView(id,trim=null) {
         mov_table.rezise();
     }, 400);
 }
-
 function getComView(id,trim=null) {
     $('#modalTable_mov').modal('show');
     mov_table.reload(base_url+"/Gerencial/getComView/"+id+'?trim='+trim);
@@ -273,11 +314,35 @@ async function setPocRco(id,e) {
     await set(`rco`,null,{rco_id:id,rco_porc:e.target.value},true); 
     com_table.reload()
 }
-
 function filterTriCom() {
     tri_table.reload(base_url+"/Gerencial/getTriView/"+$('#his_age_id').val()+'?fecha_i='+$('#fecha_i').val()+'&fecha_f='+$('#fecha_f').val());
 }
-
 function sumDetracciones() {
     sum_table.reload(base_url+"/Liquidez/getDetracciones",{trim:"'"+$('#fecha_i').val()+"' AND '"+$('#fecha_f').val()+"'"});
+}
+function openModalNrc() {
+    drc_json = [];
+    drc_table.reload()
+}
+async function filterTriNrc(e) {
+    e.preventDefault()
+    drc_json = await fetch(base_url+"/Gerencial/getTriView/"+$('#nrc_age_id').val()+'?fecha_i='+$('#nrc_fechai').val()+'&fecha_f='+$('#nrc_fechaf').val()).then(r=>r.json()).then(r=>{return r})
+    drc_table.reload()
+}
+
+function setPreNrc(where,json,res) {
+    let total = 0;
+    for (const i in drc_json) {
+        delete drc_json[i].rco_opt
+        total+=drc_json[i].rco_pt
+    }
+    json.nrc_json = JSON.stringify(drc_json);
+    json.nrc_monto = total;
+    json.nrc_gus_id = data.gus_id
+    return {json}
+}
+
+function getPosNrc() {
+    drc_json = JSON.parse(data.nrcId.nrc_json) 
+    drc_table.reload()
 }

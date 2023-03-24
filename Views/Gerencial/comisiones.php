@@ -1,5 +1,6 @@
 <?php 
     headerAdmin($data); 
+    getModal('modalNrcomisiones',$data);
     $data['pre']='mov';
     getModal('modalTable',$data);
     getModal('modalMovimientos',$data);
@@ -30,7 +31,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" id="maximos-tab" data-toggle="tab" href="#maximos" role="tab"
-                aria-controls="maximos" aria-selected="false">MAXIMOS</a>
+                aria-controls="maximos" aria-selected="false">CUADRE</a>
             </li>
           </ul>
           <div class="tab-content m-3">
@@ -51,7 +52,10 @@
               </div>
             </div>
             <div class="tab-pane fade" id="maximos" role="tabpanel" aria-labelledby="maximos-tab">
-                <div id="root"></div>
+              <button class="btn btn-md btn-primary w-auto d-inline" onClick="openModal('nrc')">NUEVO <i class="fas fa-plus-circle"></i></button>
+              <div class="table-responsive">
+                <table class="table table-hover table-bordered table-sm " id="nrc_table" width="100%"></table>
+              </div>
             </div>
           </div>
         </div>
