@@ -88,6 +88,10 @@
         </tr>
       </tfoot>
     </table>
+    <hr>
+    <div>
+    Observaciones: <?= $data['nrc']['nrc_obs'] ?>
+    </div>
   </div>
 </body>
 

@@ -15,6 +15,7 @@
                 <div class="col">AGENTE: <select class="form-control" name="nrc_age_id" id="nrc_age_id"></select></div>
                 <div class="col">FECHA INICIO: <input type="date" class="form-control" name="nrc_fechai" id="nrc_fechai"></div>
                 <div class="col">FECHA FIN: <input type="date" class="form-control" name="nrc_fechaf" id="nrc_fechaf"></div>
+                <div class="col">OBSERVACIÓN<input type="text" class="form-control" name="nrc_obs" id="nrc_obs"></div>
                 <div class="col">FILTRAR <button class="btn btn-sm btn-success" onClick="filterTriNrc(event)"><i class="fas fa-search"></i></button></div>
             </div>
             <div class="table-responsive">

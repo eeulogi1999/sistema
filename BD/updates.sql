@@ -66,4 +66,10 @@ CREATE TABLE `nrcomisiones` (
   `nrc_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-ALTER TABLE `nrcomisiones` ADD CONSTRAINT `nrc_age` FOREIGN KEY (`nrc_age_id`) REFERENCES `agentes`(`age_id`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `nrcomisiones` ADD CONSTRAINT `nrc_gus` FOREIGN KEY (`nrc_gus_id`) REFERENCES `company5_bd_cacel`.`usuarios`(`gus_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `nrcomisiones` ADD CONSTRAINT `nrc_age` FOREIGN KEY (`nrc_age_id`) 
+REFERENCES `agentes`(`age_id`) ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `nrcomisiones` 
+ADD CONSTRAINT `nrc_gus` FOREIGN KEY (`nrc_gus_id`) 
+REFERENCES `company5_bd_cacel`.`usuarios`(`gus_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `nrcomisiones` ADD `nrc_obs` TEXT NULL AFTER `nrc_json`;
