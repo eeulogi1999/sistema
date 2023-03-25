@@ -2,6 +2,7 @@
 
 @ob_start();
 require_once 'Libraries/dompdf/vendor/autoload.php';
+require_once 'Libraries/qr-code/vendor/autoload.php';
 class Gerencial extends Controllers{
     public function __construct(){
         parent::__construct('mdetalles');
@@ -400,6 +401,21 @@ class Gerencial extends Controllers{
         ob_end_clean();
         $data['gcl'] = $_SESSION['gcl'];
         $data['alm'] = $_SESSION['alm'];
+        $data['qr'] = Endroid\QrCode\Builder\Builder::create()
+                        ->writer(new Endroid\QrCode\Writer\PngWriter())
+                        ->writerOptions([])
+                        ->data(BASE_URL.'/Assets/pdf/brochure.pdf')
+                        ->encoding(new Endroid\QrCode\Encoding\Encoding('UTF-8'))
+                        ->errorCorrectionLevel(new Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh())
+                        ->size(100)
+                        ->margin(1)
+                        ->roundBlockSizeMode(new Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin())
+                        ->labelText('Brochure')
+                        ->labelFont(new Endroid\QrCode\Label\Font\NotoSans(11))
+                        ->labelAlignment(new Endroid\QrCode\Label\Alignment\LabelAlignmentCenter())
+                        ->validateResult(false)
+                        ->build()
+                        ->getDataUri();
         $data['nrc'] =  $this->nrcomisiones->selectRegistro($id);
         $dompdf = new Dompdf\Dompdf();
         $options = new Dompdf\Options();

@@ -27,45 +27,45 @@
       <img src="<?= base_url() ?>/.uploads/<?= $_SESSION['alm']['alm_est_id']['est_logo'] ?>" alt="Logo" width="120">
     </div>
   </div>
-  <table class="table table-borderless table-sm " width="100%">
+  <table class="table table-borderless table-sm " width="100%"> 
     <tr>
       <td colspan="2" class='text-center'>
         <h2>REPORTE DE VENTAS (R/C)</h2>
       </td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">NRO:
+      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">NRO:
         </strong>RC01-<?=str_pad($data['nrc']['nrc_num'],8,0,STR_PAD_LEFT) ?></td>
       <td></td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">AGENTE:
+      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">AGENTE:
         </strong><?=$data['nrc']['nrc_age_id']['age_gpe_id']['gpe_nombre'].', '.$data['nrc']['nrc_age_id']['age_gpe_id']['gpe_apellidos']?></td>
       <td></td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">IDENTIFICACIÓN:
+      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">IDENTIFICACIÓN:
         </strong><?=$data['nrc']['nrc_age_id']['age_gpe_id']['gpe_identificacion']?></td>
       <td></td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">DIRECCION:
+      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">DIRECCION:
         </strong><?=$data['nrc']['nrc_age_id']['age_gpe_id']['gpe_direccion'].'- '.$data['nrc']['nrc_age_id']['age_gpe_id']['gpe_gdi_id']['gdi_distrito']?>
       </td>
       <td></td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">FECHA INICIO: </strong><?=$data['nrc']['nrc_fechai']?></td>
+      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">FECHA INICIO: </strong><?=$data['nrc']['nrc_fechai']?></td>
       <td class="text-right"></td>
     </tr>
     <tr>
-      <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">FECHA FIN: </strong><?=$data['nrc']['nrc_fechaf']?></td>
+      <td><strong class="text-white bg-secondary py-2 pl-2 mr-2 border rounded">FECHA FIN: </strong><?=$data['nrc']['nrc_fechaf']?></td>
       <td class="text-right"><?=date('Y-m-d h:m')?></td>
     </tr>
   </table>
   <div class="table-responsive">
     <table class="table table-hover table-bordered table-sm " id="res" width="100%">
-      <thead class="text-white bg-info">
+      <thead class="text-white bg-secondary">
         <th>#</th>
         <th>MATERIAL</th>
         <th class="text-right">CANTIDAD</th>
@@ -96,7 +96,7 @@
         </tr>
         <?php } ?>
       </tbody>
-      <tfoot class="text-danger">
+      <tfoot class="text-secondary">
         <tr>
           <td colspan="2">SUBTOTAL RESULTADO</td>
           <td class="text-right"><?= number_format($res_q,2,'.',',')?></td>
@@ -110,6 +110,9 @@
     <hr>
     <div>
     Observaciones: <?= $data['nrc']['nrc_obs'] ?>
+    </div>
+    <div class="mt-3">
+      <img src="<?= $data['qr'] ?>" alt="brochure">
     </div>
   </div>
 </body>

@@ -322,7 +322,7 @@ function sumDetracciones() {
 }
 async function openModalNrc() {
     const dt = await search('nrc',{},'MAX(nrc_num) AS max')
-    $('#nrc_num').val(parseInt(dt.max??0)+1)
+    $('#nrc_num').val(parseInt(dt.max??100)+1)
     drc_json = [];
     drc_table.reload()
 }
