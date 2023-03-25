@@ -141,7 +141,7 @@
           <?php 
             $files = scandir(__DIR__.'/../../Assets/pdf/private/blossdrey');
             for ($i=2; $i < count($files) ; $i++) { ?>
-              <?= $i-1 ?>- <a target="_bank" href="<?= media().'/pdf/private/'.$files[$i] ?>"><?= $files[$i] ?></a><br>
+              <?= $i-1 ?>- <a target="_bank" href="<?= media().'/pdf/private/blossdrey/'.$files[$i] ?>"><?= $files[$i] ?></a><br>
            <?php } ?>
           <h4 class="text-center">SUGERENCIAS</h4>
           <div>1 - No ingresar dinero libre a las cuentas soles o dolares / solo sera movientos con comprabantes (LEY BANCARIZACION).</div>
@@ -152,7 +152,6 @@
               <div>2. No mantener la sesión y/o ventana abierta si no se esta operando</div>
               <div>3. Ayudanos a proteger nuestros datos, ¡proteger los datos significa proteger a las personas!</div><br>
           <h4 class="text-center">CONFIDENCIALIDAD</h4>
-          <!-- - <a target="_bank" href="<?= media().'/pdf/private/PROYECCION_DE_LA_NUEVA_EMPRESA.pdf' ?>"><?= 'PROYECCION_DE_LA_NUEVA_EMPRESA.pdf' ?></a><br> -->
           <div>SE OBLIGA A NO REVELAR LA EXISTENCIA DE LA PRESENTE DECLARACIÓN, EMPRESA, SISTEMA Y/O PROYECTO. Las
             partes acuerdan que cualquier información intercambiada,
             facilitada o creada entre ellas durante el desarrollo del plan, <strong>será mantenida en estricta
