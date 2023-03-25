@@ -73,3 +73,4 @@ ADD CONSTRAINT `nrc_gus` FOREIGN KEY (`nrc_gus_id`)
 REFERENCES `company5_bd_cacel`.`usuarios`(`gus_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `nrcomisiones` ADD `nrc_obs` TEXT NULL AFTER `nrc_json`;
+ALTER TABLE `nrcomisiones` ADD `nrc_num` INT NOT NULL AFTER `nrc_id`;

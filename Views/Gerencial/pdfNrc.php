@@ -30,12 +30,22 @@
   <table class="table table-borderless table-sm " width="100%">
     <tr>
       <td colspan="2" class='text-center'>
-        <h2>RESUMEN Y COMISIONES</h2>
+        <h2>REPORTE DE VENTAS (R/C)</h2>
       </td>
+    </tr>
+    <tr>
+      <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">NRO:
+        </strong>RC01-<?=str_pad($data['nrc']['nrc_num'],8,0,STR_PAD_LEFT) ?></td>
+      <td></td>
     </tr>
     <tr>
       <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">AGENTE:
         </strong><?=$data['nrc']['nrc_age_id']['age_gpe_id']['gpe_nombre'].', '.$data['nrc']['nrc_age_id']['age_gpe_id']['gpe_apellidos']?></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><strong class="text-white bg-info py-2 pl-2 mr-2 border rounded">IDENTIFICACIÓN:
+        </strong><?=$data['nrc']['nrc_age_id']['age_gpe_id']['gpe_identificacion']?></td>
       <td></td>
     </tr>
     <tr>
@@ -67,9 +77,14 @@
       <tbody>
         <?php  
         $data['nrc']['nrc_json'] = json_decode($data['nrc']['nrc_json'],true);
-        $res_sum=0;
+        $res_pt=0;
+        $res_q=0;
+        $res_st=0;
         for ($i=0; $i <count($data['nrc']['nrc_json']) ; $i++) { 
-          $res_sum+=$data['nrc']['nrc_json'][$i]['rco_pt'];?>
+          $res_pt+=$data['nrc']['nrc_json'][$i]['rco_pt'];
+          $res_q+=$data['nrc']['nrc_json'][$i]['rco_q'];
+          $res_st+=$data['nrc']['nrc_json'][$i]['rco_st'];
+          ?>
         <tr>
           <td><?= $i+1 ?></td>
           <td><?= $data['nrc']['nrc_json'][$i]['mde_bie_id']['bie_nombre']?></td>
@@ -83,8 +98,12 @@
       </tbody>
       <tfoot class="text-danger">
         <tr>
-          <td colspan="6">SUBTOTAL RESULTADO</td>
-          <td class="text-right"><?= formatMoney($res_sum)?></td>
+          <td colspan="2">SUBTOTAL RESULTADO</td>
+          <td class="text-right"><?= number_format($res_q,2,'.',',')?></td>
+          <td class="text-right"></td>
+          <td class="text-right"><?= formatMoney($res_st)?></td>
+          <td class="text-right"></td>
+          <td class="text-right"><?= formatMoney($res_pt)?></td>
         </tr>
       </tfoot>
     </table>

@@ -320,7 +320,9 @@ function filterTriCom() {
 function sumDetracciones() {
     sum_table.reload(base_url+"/Liquidez/getDetracciones",{trim:"'"+$('#fecha_i').val()+"' AND '"+$('#fecha_f').val()+"'"});
 }
-function openModalNrc() {
+async function openModalNrc() {
+    const dt = await search('nrc',{},'MAX(nrc_num) AS max')
+    $('#nrc_num').val(parseInt(dt.max)+1)
     drc_json = [];
     drc_table.reload()
 }

@@ -231,6 +231,19 @@ async function get(prefijo,id) {
     .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
     return response.data;
 }
+async function search(prefijo,where,select='*') {
+    var formData = new FormData();
+    formData.append('where',JSON.stringify(where))
+    formData.append('select',select)
+    var response = await fetch(base_url + '/Main/search/'+prefijo, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(response => {return response})
+    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+    return response.data;
+}
 
 function resetModal(prefijo) {
     document.querySelector("#form_"+prefijo).reset();

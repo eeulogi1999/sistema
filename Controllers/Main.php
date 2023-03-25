@@ -226,6 +226,14 @@ class Main extends Controllers{
         echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
     }
+    public function search($prefijo){
+        $tabla = $this->getTable($prefijo);
+        $this->newModel($tabla);
+        $arrData = $this->{$tabla}->searchRegistro(json_decode($_POST['where'],true),$_POST['select']);
+        unset($this->{$tabla});
+        echo json_encode(array('status'=>true,'msg'=>'success','data'=>$arrData),JSON_UNESCAPED_UNICODE);
+        die();
+    }
     public function setPeriodo(){
         $_SESSION['periodo'] = '"'.$_POST['periodo'].'"';
         $arrResponse = array('status' => true);
