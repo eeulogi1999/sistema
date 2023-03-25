@@ -130,6 +130,44 @@
       </div>
     </div>
     <?php  } ?>
+    <?php if ($_SESSION['gcl']['gcl_gem_id']['gem_ruc'] == '20608036483') { ?>
+    <div class="col-md-8">
+      <div class="tile">
+        <div class="tile-body">
+          <h4 class="text-center">CUENTAS</h4>
+          <div><strong>CUENTA FIVADOYS S.A.C</strong></div>
+          <div>BCP SOLES: &nbsp;&nbsp; 191 9947336 0 39&nbsp;&nbsp;-&nbsp;&nbsp;</div><br>
+          <h4 class="text-center">DOCUMENTOS</h4>
+          <?php 
+            $files = scandir(__DIR__.'/../../Assets/pdf/private/blossdrey');
+            for ($i=2; $i < count($files) ; $i++) { ?>
+              <?= $i-1 ?>- <a target="_bank" href="<?= media().'/pdf/private/'.$files[$i] ?>"><?= $files[$i] ?></a><br>
+           <?php } ?>
+          <h4 class="text-center">SUGERENCIAS</h4>
+          <div>1 - No ingresar dinero libre a las cuentas soles o dolares / solo sera movientos con comprabantes (LEY BANCARIZACION).</div>
+          <div>2 - Mantener comunicacion fluida con nuestro equipo ayudara a no tener problemas futuros..</div>
+          <br>
+          <h4 class="text-center">SEGURIDAD</h4>
+              <div>1. No compartir con terceros ni guardar la contraseña del sistema en la Computadora</div>
+              <div>2. No mantener la sesión y/o ventana abierta si no se esta operando</div>
+              <div>3. Ayudanos a proteger nuestros datos, ¡proteger los datos significa proteger a las personas!</div><br>
+          <h4 class="text-center">CONFIDENCIALIDAD</h4>
+          <!-- - <a target="_bank" href="<?= media().'/pdf/private/PROYECCION_DE_LA_NUEVA_EMPRESA.pdf' ?>"><?= 'PROYECCION_DE_LA_NUEVA_EMPRESA.pdf' ?></a><br> -->
+          <div>SE OBLIGA A NO REVELAR LA EXISTENCIA DE LA PRESENTE DECLARACIÓN, EMPRESA, SISTEMA Y/O PROYECTO. Las
+            partes acuerdan que cualquier información intercambiada,
+            facilitada o creada entre ellas durante el desarrollo del plan, <strong>será mantenida en estricta
+              CONFIDENCIALIDAD.</strong> </div>
+              <div>La parte receptora correspondiente, <strong>sólo podrá revelar información confidencial
+              a quienes la necesiten y estén autorizados previamente por la parte de CUYA INFORMACION CONFIDENCIAL SE
+              TRATA.</strong> </div>
+          <!-- <figure class="highcharts-figure">
+            <div id="ten_usd"></div>
+            <p class="highcharts-description"></p>
+          </figure> -->
+        </div>
+      </div>
+    </div>
+    <?php  } ?>
   </div>
   <div class="row">
     <div class="col-md-12">
