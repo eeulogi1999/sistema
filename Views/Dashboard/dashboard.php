@@ -135,8 +135,8 @@
       <div class="tile">
         <div class="tile-body">
           <h4 class="text-center">CUENTAS</h4>
-          <div><strong>CUENTA FIVADOYS S.A.C</strong></div>
-          <div>BCP SOLES: &nbsp;&nbsp; 191 9947336 0 39&nbsp;&nbsp;-&nbsp;&nbsp;</div><br>
+          <div><strong>CUENTA BLOSSDREY E.I.R.L.</strong></div>
+          <div>BCP SOLES: &nbsp;&nbsp; 191 9947336 0 39&nbsp;&nbsp;&nbsp;&nbsp;</div><br>
           <h4 class="text-center">DOCUMENTOS</h4>
           <?php 
             $files = scandir(__DIR__.'/../../Assets/pdf/private/blossdrey');
