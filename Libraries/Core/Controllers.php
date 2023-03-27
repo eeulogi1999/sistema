@@ -1,4 +1,5 @@
 <?php 
+	header('Access-Control-Allow-Origin: *');
 	class Controllers{
 		protected $xp;
 		protected $xd;
@@ -56,7 +57,6 @@
 				$g = explode('.',strval($_SESSION['tree']));
 				$_SESSION['perMod'] = getPermisos(intVal($g[array_key_last($g)]));
 			}
-			
 		}
 		public function newController(string $controller){    //para agregar controladores 
 			$routClass = "Controllers/".$controller.".php";

@@ -16,3 +16,5 @@ class Almacenes extends Controllers{
         $this->views->getView($this,"almacenes",$data);
     }
 }
+
+?>

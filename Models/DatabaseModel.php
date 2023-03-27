@@ -16,7 +16,7 @@
 				$this->{$row['Field']} = null;
 			}
 		}	
-		public function selectRegistros(array $where = null,$select = array('','')){    
+		public function selectRegistros(array $where = null,$select = array('','')){  
 			$request = null;
 			$strWhere = '';
 			if (!empty($where)) {
@@ -33,7 +33,6 @@
 					}
 				}																
 			}
-			
 			$sql = "SELECT * FROM {$this->name_table} $strWhere";
 			//dep($sql,false);
 			$request = $this->x->select_all($sql);

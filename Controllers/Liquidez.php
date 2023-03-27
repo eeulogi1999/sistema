@@ -114,6 +114,7 @@ class Liquidez extends Controllers{
                     if ($liqData[$i][$pre.'_age_id']['age_id'] == 2) {
                         $rpt1 = $this->getDetracciones(true);
                         $liqData[$i][$pre.'_mtv'] = array_sum(array_column($rpt1,'mov_dscg'));
+                        $liqData[$i][$pre.'_mtvn'] = array_sum(array_column($rpt1,'mov_dscg'));
                     }
                     if ($liqData[$i][$pre.'_age_id']['age_id'] == 5) {
                         $rpt2 = $this->getExportaciones(true);
@@ -384,7 +385,6 @@ class Liquidez extends Controllers{
         die();
     }
     public function getXlsx($age_id){
-        ob_end_clean();
         $age = $this->agentes->selectRegistro($age_id);
         $ing['data'] = $this->getIng($age_id,true);
         $ing['columns'] = array(array('data'=>'ing_fecha'),array('data'=>'ing_tipo'),array('data'=>'ing_cuenta'),array('data'=>'ing_descripcion'),array('data'=>'ing_monto'));
@@ -424,19 +424,19 @@ class Liquidez extends Controllers{
             }
         }
         $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="export.xlsx"');
-        header('Cache-Control: max-age=0');
-        header('Cache-Control: max-age=1');
-        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-        header('Cache-Control: cache, must-revalidate');
-        header('Pragma: public');
-        $writer->save('php://output');
+        $writer->save('Assets/excel/format.xlsx');
+        echo json_encode(array('name'=>'format.xlsx'),JSON_UNESCAPED_UNICODE);
         die();
     }
     public function getDetracciones($out=false){
-        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND   DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo'].'  GROUP BY mov_cue_id'));
+        $trim = "DATE_FORMAT(mov_fechaE, '%Y-%m') = '".str_replace('"','',$_SESSION['periodo'])."'";
+        $_POST['where'] = json_decode($_POST['where'],true);
+        if (isset($_POST['where']['trim'])) {
+            $trim = 'mov_fechaE BETWEEN '.$_POST['where']['trim'];
+            $out = false;
+        }
+        
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND '.$trim.'  GROUP BY mov_cue_id'));
         $this->newController('Main');
         $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
         unset($this->Main);
@@ -451,7 +451,7 @@ class Liquidez extends Controllers{
             $res[$i]['mov_porc'] = '<input type="text" value="'.$res[$i]['mov_cue_id']['cue_porcentaje'].'" name="det" size="4" onChange="setPorcentaje('.$res[$i]['mov_cue_id']['cue_id'].',event)">'; 
             $res[$i]['mov_dscg'] = $res[$i]['mov_det_liq']*($res[$i]['mov_cue_id']['cue_porcentaje']/100);
             $res[$i]['mov_sald'] = $res[$i]['mov_det_liq']-$res[$i]['mov_dscg'];
-            $btnView = '<button class="btn btn-info btn-sm" onclick="getDetView('.$d['mov_cue_id']['cue_id'].')" title="Ver Registro" > <i class="far fa-eye"></i> </button>';
+            $btnView = '<button class="btn btn-info btn-sm" onclick="getDetView('.$d['mov_cue_id']['cue_id'].',`'.$trim.'`)" title="Ver Registro" > <i class="far fa-eye"></i> </button>';
             $res[$i]['mov_options'] = '<div class="text-center">'.$btnView.'</div>';
         }
         if ($out) {

@@ -276,7 +276,9 @@ function previewFiles(th,content) {
             o.data = window[o.src];
         }
         if (o.url != undefined) {
-            o.data = await fetch(o.url)
+            var formData = new FormData();  
+            formData.append('where',JSON.stringify(o.where??{}));
+            o.data = await fetch(o.url,{method: "POST",body: formData})
             .then(r => r.json())
             .then(r => {return r})
             .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
@@ -289,52 +291,62 @@ function previewFiles(th,content) {
             +'<button class="btn btn-secondary" onclick="'+$(table).attr('id')+'.toExcel(); "><i class="fas fa-download"></i></button>'
             +'</div>')
             }
-            $(table).append('<thead class="bg-dark-lite sticky-top"><tr></tr></thead>');
+            $(table).append('<thead class="bg-dark-lite sticky-top"><tr style="display:none;"></tr><tr></tr></thead>');
             $(table).append('<tbody></tbody>');
             $(table).append('<tfoot class="bg-dark-lite sticky-bottom"><tr></tr></tfoot>');
             thead = $(table).children('thead');
             tbody = $(table).children('tbody')[0];
             tfoot = $(table).children('tfoot');
+            var nh = 0;
             for (const i in o.columns) {
+                if (typeof o.columns[i].head === 'object') {
+                    nh = o.columns[i].head.colspan;
+                    $(thead).children('tr').eq(0).append('<th class="text-center" colspan="'+o.columns[i].head.colspan+'">'+o.columns[i].head.t+'</th>')
+                    $(thead).children('tr').eq(0).attr('style','display: table-row;')
+                }else{
+                    nh -= 1;
+                    if (nh <= 0) {
+                        $(thead).children('tr').eq(0).append('<th></th>')
+                    }
+                }
                 if (typeof o.columns[i].header === 'object') {
                     var ne = o.columns[i].data.split('.');
                     var ix = ne[ne.length-1];
-                    //let th = $(thead).children('tr').append('<th></th>');
                     let style = '';
                     if (typeof o.columns[i].header === 'object') {
                         if (typeof o.columns[i].header.style != 'undefined') {
                             if (typeof o.columns[i].header.style.miw != 'undefined') {
                                 style += o.columns[i].header.style.miw;
-                                //th.style.minWidth = o.columns[i].header.style.miw;
                             }
                         }
                     }
                     if ( typeof o.columns[i].header.c!= 'undefined') {
                         switch (o.columns[i].header.c) {
                             case 'text':
-                                var input = $(thead).children('tr').append('<th><div class="text-center">'+o.columns[i].header.t+'</div><input type="text" id="t_'+ix+'" class="form-control"></th>');
+                                var input = $(thead).children('tr').eq(1).append('<th><div class="text-center">'+o.columns[i].header.t+'</div><input type="text" id="t_'+ix+'" class="form-control"></th>');
                                 $('#t_'+ix)[0].addEventListener('input', textFilter);
                                 break;
                             case 'select':
-                                $(thead).children('tr').append('<th><div class="text-center">'+o.columns[i].header.t+'</div><select class="form-control"><option value="0">1</option></select></th>');
+                                $(thead).children('tr').eq(1).append('<th><div class="text-center">'+o.columns[i].header.t+'</div><select class="form-control"><option value="0">1</option></select></th>');
                                 break;
                             case 'date':
-                                $(thead).children('tr').append('<th><div class="text-center">'+o.columns[i].header.t+'</div><input type="date" class="form-control"></th>');
+                                $(thead).children('tr').eq(1).append('<th><div class="text-center">'+o.columns[i].header.t+'</div><input type="date" class="form-control"></th>');
                                 break;
                             default:
     
                                 break;
                         }
                     }else{
-                        $(thead).children('tr').append('<th>'+o.columns[i].header.t+'</th>');  
+                        $(thead).children('tr').eq(1).append('<th><div class="text-center"> '+o.columns[i].header.t+'</div></th>');  
                     }
 
                 }else{
-                    $(thead).children('tr').append('<th>'+o.columns[i].header+'</th>');
+                    $(thead).children('tr').eq(1).append('<th><div class="text-center"> '+o.columns[i].header+'</div></th>');
                 }
             }
             if (numerate) {
-                $(thead).children('tr').prepend('<th>N°</th>');
+                $(thead).children('tr').eq(1).prepend('<th>N°</th>');
+                $(thead).children('tr').eq(0).prepend('<th></th>')
             }
             draw();
             zise();
@@ -373,18 +385,28 @@ function previewFiles(th,content) {
                         var ix = ne[ne.length-1];
                         var d = r;
                         for (let n = 0; n < ne.length; n++) { 
-                            if (d != null) {
+                            if (d[ne[n]]) {
                                 d = d[ne[n]];                         
                             } else {
-                                d='';
+                                if (ne[0].split('_')[1]=='opt' && !o.src) {
+                                    d=`<button class="btn btn-danger btn-sm" onClick="(async ()=>{await del('pri',`+r[ne[0].split('_')[0]+'_id']+`,true);`+$(table).attr('id')+`.reload()})()"><i class="fas fa-trash"></i></button>`;
+                                } else {
+                                    d=''; 
+                                }
                             } 
                         }
-                        if (typeof o.columns[j].footer === 'object') {
-                            if (o.columns[j].footer.c == 'sum') {
-                                d = (d=='' ||d==null )?0:parseFloat(d);
-                                o.tf[ix] = (typeof o.tf[ix] === 'undefined')?d:o.tf[ix]+d;
-                                
-                            }
+                        if (o.cell) {
+                            $(cell).dblclick(function(){
+                                ne = o.columns[$(this).index()].data
+                                if (ne.split('.')[0].split('_')[1]!='opt') {
+                                    if (ne.split('.').length>1) {
+                                        let selec = $(this).html('<select class="form-control" id="c_'+ne.split('.')[0]+'" name="c_'+ne.split('.')[0]+'" onChange="'+$(table).attr('id')+'.editCell('+$(this).parent().index()+',`'+o.columns[$(this).index()].data+'`,event)"></select>')
+                                        $(selec).children('select').loadOptions('bienes',['bie_nombre'],{'bie_status':1});
+                                    } else {
+                                        $(this).html('<input type="text" class="form-control" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+$(this).parent().index()+',`'+o.columns[$(this).index()].data+'`,event)">')
+                                    }
+                                }
+                            })
                         }
                         if (typeof o.columns[j].header === 'object') {
                             if (typeof o.columns[j].header.align != 'undefined') {
@@ -417,7 +439,13 @@ function previewFiles(th,content) {
                                 window[o.src][i][o.columns[j].data] = d;
                             }
                         }
-
+                        if (typeof o.columns[j].footer === 'object') {
+                            if (o.columns[j].footer.c == 'sum') {
+                                d = (d=='' ||d==null )?0:parseFloat(d);
+                                o.tf[ix] = (typeof o.tf[ix] === 'undefined')?d:o.tf[ix]+d;
+                                
+                            }
+                        }
                         switch (o.columns[j].tipo) {
                             case 'btn':
                                 cell.innerHTML = d +' '+btn;
@@ -492,7 +520,7 @@ function previewFiles(th,content) {
                     w = (!o.export)?205:230;
                 }
                 if ((window.innerHeight-w)>table[0].offsetHeight) {
-                    table[0].parentNode.style.height = (table[0].offsetHeight)+'px';
+                    table[0].parentNode.style.height = 'auto';
                 }else{
                     table[0].parentNode.style.height = (window.innerHeight-w)+'px';
                 }
@@ -533,19 +561,23 @@ function previewFiles(th,content) {
                 $(tbody).html('<tr><td colspan="'+(numerate?o.columns.length+1:o.columns.length)+'" class="text-center">Ningún dato disponible en esta tabla =(</td></tr>');
                 return true;
             },
-            reload: async function(url=null){
+            reload: async function(url=null,where=null){
+                if (where) {
+                    o.where = where;
+                }
                 if (typeof o.src != 'undefined') {
                     o.data = window[o.src];
                 }
                 if (typeof o.url != 'undefined') {
-                    var url = (url)?url:o.url;
-                    o.data = await fetch(url)
+                    o.url = url??o.url;
+                    var formData = new FormData();  
+                    formData.append('where',JSON.stringify(o.where??{}));
+                    o.data = await fetch(o.url,{method: "POST",body: formData})
                     .then(r => r.json())
                     .then(r => {return r})
                     .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
                 }
-                draw();
-                zise();
+                await draw();
                 listenTree();
                 if (typeof o.select != undefined) {
                     if (o.select) {
@@ -556,16 +588,9 @@ function previewFiles(th,content) {
                         $(table).children('tr').unbind();
                     }
                 }
-                if (typeof o.cell != undefined) {
-                    if (o.cell) {
-                        $(table[0].getElementsByTagName("td")).dblclick(function(){
-                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+0+',`'+o.columns[$(this).index()-1].data+'`,event)">')
-                            //$(this).addClass('edit').siblings().removeClass('edit');  
-                        })
-                    } else {
-                        $(table).children('td').unbind();
-                    }
-                }
+                setTimeout(() => {
+                    zise();
+                }, 100);
                 return true;
             },
             rezise: function(){
@@ -614,35 +639,54 @@ function previewFiles(th,content) {
                 })
                 .catch(e => swal("Atención","Error en el proceso: "+e, "error"))
             },
-            editCell : function(r,d,e){
+            editCell : async function(r,d,e){
                 e.preventDefault();
-                if (o.copyCellEditOrigin) {
-                    window[o.src][r][d] = parseFloat(e.target.value);
-                    o.copyCellEditOrigin();
-                }
-                draw();
-                zise();
-                listenTree();
-                if (typeof o.select != undefined) {
-                    if (o.select) {
-                        $(table[0].getElementsByTagName("tr")).click(function(){
-                            $(this).addClass('selected').siblings().removeClass('selected');  
-                        })
-                    } else {
-                        $(table).children('tr').unbind();
+                let ne = d.split('.')
+                if (o.src) {
+                    if (ne.length>1) {
+                        window[o.src][r][ne[0]] = {bie_id:parseFloat(e.target.value),bie_nombre:$(e.target).find('option:selected').text()};
+                    }else{
+                        window[o.src][r][ne[0]] = parseFloat(e.target.value);
                     }
                 }
-                if (typeof o.cell != undefined) {   //parseInt($(this).parent().attr('id')) -> 0
-                    if (o.cell) {
-                        $(table[0].getElementsByTagName("td")).dblclick(function(){
-                            $(this).html('<input type="text" value="'+$(this).text()+'" size="10" onChange="'+$(table).attr('id')+'.editCell('+0+',`'+o.columns[$(this).index()-1].data+'`,event)">')
-                           // $(this).addClass('edit').siblings().removeClass('edit');  
-                        })
-                    } else {
-                        $(table).children('td').unbind();
+                if (o.url) {
+                    if (ne.length>1) {
+                        await set(ne[0].split('_')[0],null,{[ne[0]]:parseInt(e.target.value),[ne[0].split('_')[0]+'_id']:$(e.target.parentElement.parentElement).attr('id')},true);
+                    }else{
+                        await set(ne[0].split('_')[0],null,{[ne[0]]:parseFloat(e.target.value),[ne[0].split('_')[0]+'_id']:$(e.target.parentElement.parentElement).attr('id')},true);
                     }
                 }
-                return true;
+                this.reload();
+            },
+            newRow: async function() {
+                let pin = 0;
+                for (const i in window[o.src]) {
+                    if (pin<=parseInt(i)) {
+                        pin = parseInt(i)+1;
+                    }
+                }
+                let r = {};
+                for (const i in o.columns) {
+                    let ne = o.columns[i].data.split('.');
+                    if (ne.length>1) {
+                        r[ne[0]] = {[ne[1]]:''};
+                    }else{
+                        if (ne[0].split('_')[1]=='opt') {
+                            r[ne[0]] = `<button class="btn btn-danger btn-sm" onClick="delete window['`+o.src+`'][`+pin+`];gen_table.reload()"><i class="fas fa-trash"></i></button>`;
+                        } else {
+                            r[ne[0]] = '';
+                        }
+                    }
+                }
+                r.pri_tipo = o.where.pri_tipo
+                if (o.src) {
+                    window[o.src][pin] = r;
+                }
+
+                if (o.url){
+                    await set('pri',null,r,true);
+                }
+                this.reload();
             },
             getTotales: function(){
                 return o.tf;
@@ -778,5 +822,10 @@ function getTable(prefijo) {
 
 function btn(o={bg:'success',fn:'fn',id:1,title:'Registrar',icon:'fa-user-lock'}){
     return `<button class="btn btn-${o.bg} btn-sm" onClick="${o.fn}(${o.id})" title="${o.title}"><i class="fas ${o.icon}"></i></button>`; 
+}
+
+function gt4(mt,id=1) {
+    let r = data.gt4.find(e => e.gt4_id == id);
+    return Intl.NumberFormat(r.gt4_locale, { style: 'currency', currency: r.gt4_sunat }).format(Math.ceil10(mt,-2).toFixed(2))
 }
 

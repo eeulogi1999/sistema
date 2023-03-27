@@ -1,5 +1,5 @@
 <?php
-//@ob_start();
+// @ob_start();
 require 'Libraries/phpspreadsheet/vendor/autoload.php';
 require_once 'Libraries/dompdf/vendor/autoload.php';
 class Main extends Controllers{
@@ -39,6 +39,35 @@ class Main extends Controllers{
         }
         unset($this->{$_POST['tabla']});
         echo $htmlOptions;
+        die();
+    }
+    public function getApiSelect(){
+        if (!$_POST) {
+            $_POST = json_decode(file_get_contents("php://input"),true);
+        }
+        $this->newModel(''.$_POST['tabla']);
+        if (!empty($_POST['where'])){
+            $arrData = $this->{$_POST['tabla']}->selectRegistros($_POST['where']);
+        }else{
+            $arrData = $this->{$_POST['tabla']}->selectRegistros();
+        }
+        $array = array();
+        if(count($arrData) > 0 ){
+            for ($i=0; $i < count($arrData); $i++) {
+                $val = '';
+                foreach ($_POST['descripcion'] as $k => $des) {
+                    $arrDes = explode('.',$des);
+                    $res = $arrData[$i];
+                    foreach ($arrDes as $j => $d) {
+                        $res = $res[$d];
+                    }
+                    $val .= ($k === array_key_last($_POST['descripcion'])) ? $res :$res." - ";
+                }
+                array_push($array,array('value'=>$arrData[$i][$_POST['id']],'label'=>$val));
+            }
+        }
+        unset($this->{$_POST['tabla']});
+        echo json_encode($array,JSON_UNESCAPED_UNICODE);
         die();
     }
     public function setNav(){
@@ -106,23 +135,20 @@ class Main extends Controllers{
         die();
     }
     public function getAll($pre){
+        if (!$_POST) {
+            $_POST = json_decode(file_get_contents("php://input"),true);
+            if (!empty($_POST)) {
+                $_POST['where'] = json_encode($_POST['where'],JSON_UNESCAPED_UNICODE);
+            }
+        }
         $tabla = $this->getTable($pre);
         $this->newModel($tabla);
-        $arrData = $this->{$tabla}->selectRegistros();
-        if ($pre == 'gem') { 
-            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"JSON_EXTRACT(gem_gcl_id,'$[0]') = ".$_SESSION['gcl']['gcl_id']." OR JSON_EXTRACT(gem_gcl_id,'$[1]') = ".$_SESSION['gcl']['gcl_id']));
-        }
-        if ($pre == 'gpe') {
-            $arrData = $this->{$tabla}->selectRegistros(array("custom"=>"JSON_EXTRACT(gpe_gcl_id,'$[0]') = ".$_SESSION['gcl']['gcl_id']." OR JSON_EXTRACT(gpe_gcl_id,'$[1]') = ".$_SESSION['gcl']['gcl_id']));
-        }
+        $arrData = $this->{$tabla}->selectRegistros((isset($_POST['where']))?json_decode($_POST['where'],true):array());
         for ($i=0; $i < count($arrData); $i++) {
             $btnView = '';
             $btnEdit = '';
             $btnDelete = '';
             if (isset($arrData[$i][$pre.'_status'])) {
-                if ($arrData[$i][$pre.'_status'] == 0) {
-                    continue;
-                }
                 $arrData[$i][$pre.'_status'] = '<span class="badge badge-'.STATUS[array_keys(STATUS)[$arrData[$i][$pre.'_status']]].'">'.array_keys(STATUS)[$arrData[$i][$pre.'_status']].'</span>';
             }
             if((isset($_SESSION['perMod']['gtp_r']))?$_SESSION['perMod']['gtp_r']:0){
@@ -131,10 +157,8 @@ class Main extends Controllers{
             if((isset($_SESSION['perMod']['gtp_u']))?$_SESSION['perMod']['gtp_r']:0){
                 $btnEdit = '<button class="btn btn-primary  btn-sm" onClick="edit('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Editar '.$tabla.'"><i class="fas fa-pencil-alt"></i></button>';
             }
-            if (!($pre == 'gem' || $pre == 'gpe')) {
-                if((isset($_SESSION['perMod']['gtp_d']))?$_SESSION['perMod']['gtp_r']:0){
-                    $btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="far fa-trash-alt"></i></button>';
-                }
+            if((isset($_SESSION['perMod']['gtp_d']))?$_SESSION['perMod']['gtp_r']:0){
+                $btnDelete = '<button class="btn btn-danger btn-sm" onClick="del('."'".$pre."',".$arrData[$i][$pre.'_id'].')" title="Eliminar '.$tabla.'"><i class="far fa-trash-alt"></i></button>';
             }
             $arrData[$i][$pre.'_options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
         }
@@ -169,7 +193,7 @@ class Main extends Controllers{
         }
         $this->newModel($tabla);
         if ($_POST) {
-            if (intval($_POST[$prefijo.'_id'])==0) {
+            if ((isset($_POST[$prefijo.'_id']))?intval($_POST[$prefijo.'_id'])==0:true) {
                 $arrData = $this->{$tabla}->insertRegistro($_POST,$where);
             }else{
                 $arrData = $this->{$tabla}->updateRegistro($_POST);
@@ -202,8 +226,16 @@ class Main extends Controllers{
         echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
     }
+    public function search($prefijo){
+        $tabla = $this->getTable($prefijo);
+        $this->newModel($tabla);
+        $arrData = $this->{$tabla}->searchRegistro(json_decode($_POST['where'],true),$_POST['select']);
+        unset($this->{$tabla});
+        echo json_encode(array('status'=>true,'msg'=>'success','data'=>$arrData),JSON_UNESCAPED_UNICODE);
+        die();
+    }
     public function setPeriodo(){
-        $_SESSION['periodo'] = "'".$_POST['periodo']."'";
+        $_SESSION['periodo'] = '"'.$_POST['periodo'].'"';
         $arrResponse = array('status' => true);
         echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         die();

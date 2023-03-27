@@ -122,6 +122,9 @@ class Reportes extends Controllers{
             if ($out) {
                 return $arrbi;
             } else {
+                usort($arrbi, function($a, $b) {
+                    return $b['sbi_mts'] <=> $a['sbi_mts'];
+                });
                 echo json_encode($arrbi,JSON_UNESCAPED_UNICODE);
             }
         }else{

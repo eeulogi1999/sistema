@@ -15,6 +15,7 @@
 		require_once("Controllers/Error.php");
 		header('Location: '.base_url().'/dashboard');
 		exit;
+
 	}
 
  ?>

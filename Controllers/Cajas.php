@@ -66,7 +66,7 @@ class Cajas extends Controllers{
         $data['page_tag'] = "Gastos";
         $data['page_title'] = "Gastos";
         $data['page_name'] = "Gastos";
-        $data['page_data'] = array(); 
+        $data['page_data'] = array('caj'=>array('caj_tipo'=>0,'caj_numero'=>$num,'caj_gus_id'=>$_SESSION['gus']['gus_id'])); 
         $data['page_functions_js'] = array("functions_subgastos.js");
         $this->views->getView($this,"cajas",$data);
     }
@@ -214,11 +214,26 @@ class Cajas extends Controllers{
         echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function getGastos(){
-        $arrData = $this->cajas->selectCustoms('caj_tga_id,ABS(SUM(caj_monto)) as caj_monto',array('caj_tipo'=>3,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' GROUP BY caj_tga_id'));
-        echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+    public function getGastos($ret=false){
+        $this->newController('Main');
+        $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
+        unset($this->Main);
+        $arrData = $this->cajas->selectCustoms('caj_tga_id,ABS(SUM(caj_monto)) as caj_monto',array('caj_tipo'=>3,'caj_gt4_id'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' GROUP BY caj_tga_id'));
+        $arrUSD = $this->cajas->selectCustoms('caj_tga_id,ABS(SUM(caj_monto)) as caj_monto',array('caj_tipo'=>3,'caj_gt4_id'=>2,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo'].' GROUP BY caj_tga_id'),array('caj_tga_id'));
+        $arrUSD = array_column($arrUSD,'caj_monto','caj_tga_id');
+        foreach ($arrData as $i => $r) {
+            if (isset($arrUSD[$r['caj_tga_id']['tga_id']])) {
+                $arrData[$i]['caj_monto'] += $arrUSD[$r['caj_tga_id']['tga_id']]*$tga;
+            }
+        }
+        if ($ret) {
+            return $ret;
+        } else {
+            echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+        }
         die();
     }
     
 
 }
+?>

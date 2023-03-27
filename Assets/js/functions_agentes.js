@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded',function () {
                 {"data":"age_gdi_id.gdi_distrito",header:{t:"DISTRITO"},tipo:'string'},
                 {"data":"age_direccion",header:{t:"DIRECCION"},tipo:'string'},
                 {"data":"age_status",header:{t:"ESTADO"},tipo:'string'},
+                {"data":"age_created",header:{t:"INICIO DE OPERACIONES"},render:(r)=>{return r.age_created.split(' ')[0]}},
                 {"data":"age_options",header:"ACCION",tipo:'string'}
             ]
         }); //'JSON_OVERLAPS(gem_gcl_id,'+"'"+data.gcl_id+"'"+')'

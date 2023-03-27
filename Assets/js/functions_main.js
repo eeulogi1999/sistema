@@ -95,18 +95,25 @@ async function off(node,prefijo,id,res=false) {
 }
 async function set(prefijo,where= null,json = null,res = false) {
     var table = capitalize(getTable(prefijo));
-    if (!json) {
-        json = Object.fromEntries(new FormData(document.querySelector('#form_'+prefijo)));
-    }
     if (typeof window['setPre'+capitalize(prefijo)]==='function') {
-        var arr = await window['setPre'+capitalize(prefijo)](where,json,res);
+        if (document.querySelector('#form_'+prefijo)) {
+            var arr = await window['setPre'+capitalize(prefijo)](where,Object.fromEntries(new FormData(document.querySelector('#form_'+prefijo))),res);
+        }
+        if (json) {
+            var arr = await window['setPre'+capitalize(prefijo)](where,json,res);
+        }
+        
         where = arr.where??where;
         json = arr.json??json;
         res = arr.res??res;
     }
-    formData = new FormData();
-    for (const i in json) {
-        formData.append(i,json[i])
+    if (json != null) {
+        var formData = new FormData();
+        for (const i in json) {
+            formData.append(i,json[i])
+        }
+    } else {
+        var formData = new FormData(document.querySelector('#form_'+prefijo));
     }
     if (data[prefijo]) {
         for (const i in data[prefijo]) {
@@ -120,7 +127,7 @@ async function set(prefijo,where= null,json = null,res = false) {
             body: formData
         })
         .then(response => response.json())
-        .then(async response => {
+        .then(response => {
             if (response.status) {
                 if (res) {
                     return response;
@@ -132,16 +139,13 @@ async function set(prefijo,where= null,json = null,res = false) {
                         //$$(prefijo+'_table').load(base_url+"/Main/getAll/"+prefijo);
                         $$(prefijo+'_table').load(base_url+"/"+table+"/get"+table);
                     } else {
-                        if (typeof window['setPos'+capitalize(prefijo)]==='function') {
-                            await window['setPos'+capitalize(prefijo)](response);
-                        }
                         window[prefijo+'_table'].reload();
+                        if (typeof window['setPos'+capitalize(prefijo)]==='function') {
+                            window['setPos'+capitalize(prefijo)]();
+                        }
                     }
                 }
             } else {
-                if (typeof window['setPos'+capitalize(prefijo)]==='function') {
-                    await window['setPos'+capitalize(prefijo)](response);
-                }
                 swal({
                     title: "Atención",
                     text: response.msg + "</br><pre class='text-left'>" + JSON.stringify(response.data, null, 2) + "</pre>",
@@ -150,9 +154,7 @@ async function set(prefijo,where= null,json = null,res = false) {
                 });
             }
         })
-        .catch(error => {
-            console.error(error)
-            swal("Atención", "Error en el proceso: " + error, "error")})
+        .catch(error => swal("Atención", "Error en el proceso: " + error, "error"))
     if (res) {
         return response;
     }
@@ -181,6 +183,9 @@ async function edit(prefijo,id,res=false,php=false) {
                     }
                     if (document.querySelector('#'+i)) {
                         $('#'+i).val(response.data[i]); 
+                    }
+                    if (i.split('_')[1]=='created' && response.data[i] != null) {
+                        document.getElementById(i).valueAsDate = new Date(response.data[i])
                     }
                 }
             }
@@ -219,6 +224,27 @@ async function view(prefijo,id,res=false) {
         return response.data;
     }
 }
+async function get(prefijo,id) {
+    var response = await fetch(base_url + '/Main/get/'+prefijo+','+id)
+    .then(response => response.json())
+    .then(response => {return response;})
+    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+    return response.data;
+}
+async function search(prefijo,where,select='*') {
+    var formData = new FormData();
+    formData.append('where',JSON.stringify(where))
+    formData.append('select',select)
+    var response = await fetch(base_url + '/Main/search/'+prefijo, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(response => {return response})
+    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+    return response.data;
+}
+
 function resetModal(prefijo) {
     document.querySelector("#form_"+prefijo).reset();
     $('#modal_'+prefijo).modal('hide');
@@ -236,3 +262,18 @@ function openModal(pre) {
     $('#modal_'+pre).modal('show');
 }
 
+function getPDF(url,parm={}) {
+    fetch(base_url + url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(parm)
+    })
+    .then(r => r.json())
+    .then(r => {
+        if (r.status) {
+            window.open(base_url+'/pdf/'+r.name,'_blank')
+        }
+    })
+    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+
+}
