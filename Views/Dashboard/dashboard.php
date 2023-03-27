@@ -21,85 +21,103 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="tile">
+  <div class="row pb-3" style="height:250px">
+    <div class="col-md-4">
+      <div class="tile h-100  d-flex align-items-md-center" >
+        <div class="tile-body display-6 "><?= $data['page_data']['frase']; ?></div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="tile h-100 d-flex align-items-md-center" >
+        <div class="tile-body display-6" id="dailyVersesWrapper"></div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="tile h-100">
+        <h4 class="text-center">NOTICIAS</h4>
         <div class="tile-body">
-          <div class="table-responsive">
-            <table class="table table-hover table-bordered table-sm" id="ten_table" width="100%"></table>
+          <a href="https://www.cochilco.cl/Paginas/Estudios/Mercados%20de%20metales%20e%20insumos%20estrat%C3%A9gicos/Informes-Semanales-2015.aspx"
+            target="_bank">COCHILCO</a><br>
+          <a href="https://www.lme.com/Metals/Non-ferrous/LME-Copper#Trading+day+summary" target="_bank">LME</a><br>
+          <a href="https://es.investing.com/commodities/copper?cid=959211" target="_bank">INVESTING</a><br>
+          <a href="https://www.expansion.com/mercados/cotizaciones/materias/cobre(londres)_MCU.html" target="_blank"
+            rel="noopener noreferrer">EXPANSIÓN</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="tile">
+        <h3 class="text-center">NOTAS DE PRECIOS</h3>
+        <div class="tile-body">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">GENERAL</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">.</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                aria-selected="false">..</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active p-3" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <div class="table-responsive">
+                <div class="tex px-2 text-uppercase" style="display:none;font-size: 16px;">Buen día envío precios,<br>
+                Cualquier variación en los precios se les estará informando.</div>
+                <div class="px-2" style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div>
+                <table class="table table-bordered table-sm" id="gen_table" width="100%"></table>
+              </div>
+              <button class="btn btn-success" onClick="share('gen',event)"><i
+                  class="fas fa-share"></i>Compartir</button>
+            </div>
+            <div class="tab-pane fade p-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <div class="table-responsive">
+                <div class="tex px-2 text-uppercase" style="display:none;font-size: 16px;">Buen día envío precios,<br>
+                Cualquier variación en los precios se les estará informando.</div>
+                <div class="px-2" style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div>
+                <table class="table table-bordered table-sm" id="fre_table" width="100%"></table>
+              </div>
+              <button class="btn btn-success" onClick="share('fre',event)"><i
+                  class="fas fa-share"></i>Compartir</button>
+            </div>
+            <div class="tab-pane fade p-3" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              <div class="table-responsive">
+                <div class="tex px-2 text-uppercase" style="display:none; font-size: 16px;">Buen día envío precios,<br>
+                Cualquier variación en los precios se les estará informando.</div>
+                <div class="px-2" style="display:none">ULTIMA ACTUALIZACIÓN: <span class="update"></span></div>
+                <table class="table table-bordered table-sm" id="con_table" width="100%"></table>
+              </div>
+              <button class="btn btn-success" onClick="share('con',event)"><i
+                  class="fas fa-share"></i>Compartir</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
       <div class="tile">
+        <h4 class="text-center">DOCUMENTOS</h4>
+          <?php 
+            $files = scandir(__DIR__.'/../../Assets/public');
+            for ($i=2; $i < count($files) ; $i++) { ?>
+              <?= $i-1 ?>- <a target="_bank" href="<?= media().'/public/'.$files[$i] ?>"><?= $files[$i] ?></a><br>
+           <?php } ?>
+        <h4 class="text-center">SUGERENCIAS</h4>
         <div class="tile-body">
-          <!-- <h5 class="text-center">NOTAS</h5> -->
-          <!-- PRECIOS ACTUALIZADOS 
-            Brillo 31.50
-            Grueso 30
-            Delgado 29
-            Grupo 5.10 
-            Bronce 19.50
-            Rad.bronce 17
-            Viruta de bronce 14
-            Duro 5.40
-            Perfil 6.20
-            Acero 4
-            Rad. Aluminio 4
-            Olla sucia 4.50
-            Olla limpia 5.50
-            Oxee 6
-            Batería 67
-            Chata 57
-            Tierra bateria 3.90
-            Cocalata 3.80
-            Cable 6.50
-            Cable grasa 6
-            Cable sulfatado 5.5
-            Carrocería 4.50
-            Antimonio 8
-            Chapa 2 -->
-          <figure class="highcharts-figure">
-            <div id="ten_copper"></div>
-            <p class="highcharts-description"></p>
-          </figure>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="tile">
-        <div class="tile-body">
-          <figure class="highcharts-figure">
-            <div id="ten_plomo"></div>
-            <p class="highcharts-description"></p>
-          </figure>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="tile">
-        <div class="tile-body">
-          <figure class="highcharts-figure">
-            <div id="ten_usd"></div>
-            <p class="highcharts-description"></p>
-          </figure>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="tile">
-        <div class="tile-body">
-          <h4>NOTICIAS</h4>
-          <a href="https://www.cochilco.cl/Paginas/Estudios/Mercados%20de%20metales%20e%20insumos%20estrat%C3%A9gicos/Informes-Semanales-2015.aspx"
-            target="_bank">COCHILCO</a>
+          <div>- Ayudanos a reducir errores y ser mas eficientes.</div>
+          <div>- Para bien de nuestra Empresa y sistema, Actualizar los datos en el menor tiempo posible.</div>
+          <div></div>
         </div>
       </div>
     </div>
   </div>
 </main>
 <?php footerAdmin($data); ?>
+<script async defer src="https://dailyverses.net/get/random.js?language=nvi"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

@@ -367,3 +367,4 @@ class Bienes extends Controllers{
     }
 
 }
+?>

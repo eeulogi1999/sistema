@@ -106,3 +106,4 @@ class Adscripciones extends Controllers{
     }
 
 }
+?>

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     {"data":"mov_serie2",header:{t:"DOC-DESTINO",c:'text'},tipo:'string'},
                     {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
                     {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
-                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }}, //$arrData[$i]['mov_total']
+                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',chr:'mov_gt4_id',footer:{ c:"sum" }}, //$arrData[$i]['mov_total']
                     {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
                     {"data":"mov_options",header:"ACCIONES",tipo:'string'}
                 ]
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     {"data":"mov_age_ide",header:{t:"AGENTE",c:'text'},tipo:'string'},
                     {"data":"mov_gt4_id.gt4_descripcion",header:{t:"MONEDA"},tipo:'string'},
                     {"data":"mov_fechaE",header:{t:"FECHA"},tipo:'string'},
-                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',footer:{ c:"sum" }},
+                    {"data":"mov_total",header:{t:"TOTAL"},tipo:'money',chr:'mov_gt4_id',footer:{ c:"sum" }},
                     {"data":"mov_mstatus",header:{t:"ESTADO"},tipo:'string'},
                     {"data":"mov_options",header:"ACCIONES",tipo:'string'}
                 ]
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if ($('#mov_age_id').val()!='0') {
             var ref = $(this).prop('checked');
             if (ref) {
-                await $('#mde_ref_mov_id').loadOptions('movimientos',['mov_serie'],{'mov_age_id':$('#mov_age_id').val(),'mov_tipo':4});
+                await $('#mde_ref_mov_id').loadOptions('movimientos',['mov_serie'],{'mov_age_id':$('#mov_age_id').val(),'mov_tipo':4,'mov_mstatus':1});
                 $('#mde_ref_mov_id').parent().show();
                 $('thead tr th:nth-child('+($('#mde_ref_mov_id').parent().index()+1)+')',$('#mde_ref_mov_id').parent().parent().parent().parent()[0]).show()
             } else {
@@ -112,7 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
         var gtc = $(this).prop('checked');
         if (gtc) {
             $('#mde_detraccion').removeAttr("disabled");
-            
             $('#mov_cue_id').parent().parent().parent().show();
             $('#mov_t10_id').val(2);
             document.querySelector('#mov_cue_id').focus();
@@ -183,17 +182,21 @@ document.addEventListener('DOMContentLoaded', function () {
         openMde();
         $('#mde_bie_id').children().attr('value',sbi_table.getSelectedItem().sbi_bie_id.bie_id);
         $('#mde_bie_id').children().text(sbi_table.getSelectedItem().sbi_bie_id.bie_codigo+' - '+sbi_table.getSelectedItem().sbi_bie_id.bie_nombre);
+        $('#mde_q').val(1.00);
+        $('#mde_igv').prop('checked',parseInt(sbi_table.getSelectedItem().sbi_bie_id.bie_igv))
+        $('#mde_gta_id').val(9);
         if (sbi_table.getSelectedItem().sbi_bie_id.bie_t6m_id != null) {
             $('#mde_t6m_id').val(sbi_table.getSelectedItem().sbi_bie_id.bie_t6m_id.t6m_id);
         }
         if ($('#mov_gt4_id').val() == 2 && $('#gtc_compra').val()>0) {
             $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p/$('#gtc_compra').val()).toFixed(2));
         }else{
-            $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p).toFixed(2));
+            fetch(base_url+'/Dashboard/getBieGen/'+sbi_table.getSelectedItem().sbi_bie_id.bie_id)
+            .then(r=>r.json())
+            .then(r=>{$('#mde_vu').val(parseFloat(r.pri_p).toFixed(2));
+            mdeProducto();})
+            // $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p).toFixed(2));
         }
-        $('#mde_q').val(1.00);
-        $('#mde_igv').prop('checked',parseInt(sbi_table.getSelectedItem().sbi_bie_id.bie_igv))
-        $('#mde_gta_id').val(9);
         mdeProducto();
     });
     $("#new_bien").click(function(e) {
@@ -618,16 +621,16 @@ function openModalMov() {
             $('#mov_t10_id').val(data.mov_t10_id??49);
             $('#mde_gta_id').val(9);
             ftnSetMov_numero(data.mov_t10_id?'OC01':'NE01',2,$('#mov_t10_id').val());
-            if (data.mov_t10_id) {
+            if (data.mov_t10_id||data.mov_tipo == 3) {
                 $('#mde_gta_id').parent().show();
                 $('thead tr th:nth-child('+($('#mde_gta_id').parent().index()+1)+')',$('#mde_gta_id').parent().parent().parent().parent()[0]).show()
-            }
+            }   
             break;
         case 1:
             $('#mov_t12_id').val(1);
             $('#mov_t10_id').val(data.mov_t10_id??50);
             $('#mde_gta_id').val(9);
-            ftnSetMov_numero(data.mov_t10_id?'OV01':'NE01',1,$('#mov_t10_id').val());
+            ftnSetMov_numero(data.mov_t10_id?'OV01':'NS01',1,50);
             if (data.mov_t10_id) {
                 $('#mov_cue_id').parent().parent().parent().show();
             }

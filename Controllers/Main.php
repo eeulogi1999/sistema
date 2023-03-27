@@ -1,5 +1,5 @@
 <?php
-@ob_start();
+// @ob_start();
 require 'Libraries/phpspreadsheet/vendor/autoload.php';
 require_once 'Libraries/dompdf/vendor/autoload.php';
 class Main extends Controllers{
@@ -39,6 +39,35 @@ class Main extends Controllers{
         }
         unset($this->{$_POST['tabla']});
         echo $htmlOptions;
+        die();
+    }
+    public function getApiSelect(){
+        if (!$_POST) {
+            $_POST = json_decode(file_get_contents("php://input"),true);
+        }
+        $this->newModel(''.$_POST['tabla']);
+        if (!empty($_POST['where'])){
+            $arrData = $this->{$_POST['tabla']}->selectRegistros($_POST['where']);
+        }else{
+            $arrData = $this->{$_POST['tabla']}->selectRegistros();
+        }
+        $array = array();
+        if(count($arrData) > 0 ){
+            for ($i=0; $i < count($arrData); $i++) {
+                $val = '';
+                foreach ($_POST['descripcion'] as $k => $des) {
+                    $arrDes = explode('.',$des);
+                    $res = $arrData[$i];
+                    foreach ($arrDes as $j => $d) {
+                        $res = $res[$d];
+                    }
+                    $val .= ($k === array_key_last($_POST['descripcion'])) ? $res :$res." - ";
+                }
+                array_push($array,array('value'=>$arrData[$i][$_POST['id']],'label'=>$val));
+            }
+        }
+        unset($this->{$_POST['tabla']});
+        echo json_encode($array,JSON_UNESCAPED_UNICODE);
         die();
     }
     public function setNav(){
@@ -106,9 +135,15 @@ class Main extends Controllers{
         die();
     }
     public function getAll($pre){
+        if (!$_POST) {
+            $_POST = json_decode(file_get_contents("php://input"),true);
+            if (!empty($_POST)) {
+                $_POST['where'] = json_encode($_POST['where'],JSON_UNESCAPED_UNICODE);
+            }
+        }
         $tabla = $this->getTable($pre);
         $this->newModel($tabla);
-        $arrData = $this->{$tabla}->selectRegistros();
+        $arrData = $this->{$tabla}->selectRegistros((isset($_POST['where']))?json_decode($_POST['where'],true):array());
         for ($i=0; $i < count($arrData); $i++) {
             $btnView = '';
             $btnEdit = '';
@@ -158,7 +193,7 @@ class Main extends Controllers{
         }
         $this->newModel($tabla);
         if ($_POST) {
-            if (intval($_POST[$prefijo.'_id'])==0) {
+            if ((isset($_POST[$prefijo.'_id']))?intval($_POST[$prefijo.'_id'])==0:true) {
                 $arrData = $this->{$tabla}->insertRegistro($_POST,$where);
             }else{
                 $arrData = $this->{$tabla}->updateRegistro($_POST);
@@ -191,8 +226,16 @@ class Main extends Controllers{
         echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
     }
+    public function search($prefijo){
+        $tabla = $this->getTable($prefijo);
+        $this->newModel($tabla);
+        $arrData = $this->{$tabla}->searchRegistro(json_decode($_POST['where'],true),$_POST['select']);
+        unset($this->{$tabla});
+        echo json_encode(array('status'=>true,'msg'=>'success','data'=>$arrData),JSON_UNESCAPED_UNICODE);
+        die();
+    }
     public function setPeriodo(){
-        $_SESSION['periodo'] = "'".$_POST['periodo']."'";
+        $_SESSION['periodo'] = '"'.$_POST['periodo'].'"';
         $arrResponse = array('status' => true);
         echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         die();

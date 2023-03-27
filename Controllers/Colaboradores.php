@@ -38,3 +38,4 @@ class Colaboradores extends Controllers{
         die();
     }    
 }
+?>

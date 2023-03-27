@@ -1,7 +1,7 @@
 <?php 
 	require_once("Config.php");
 	require_once("Helpers/Helpers.php");
-
+	
 	//$url = !empty($_GET['url']) ? $_GET['url'] : 'modulos';
 	$url = !empty($_GET['url']) ? $_GET['url'] : 'login';
 	$arrUrl = explode("/", $url);

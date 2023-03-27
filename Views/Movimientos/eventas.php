@@ -1,6 +1,9 @@
 <?php 
     headerAdmin($data); 
     getModal('modalSimulaciones',$data);
+    getModal('modalMovimientos',$data);
+    $data['pre']='mov';
+    getModal('modalTable',$data);
 ?>
 <main class="app-content">
   <div class="app-title">
@@ -25,34 +28,29 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
       <div class="tile">
-        <h3 class="text-center">EXPORTACION</h3>
+        <h3 class="text-center">VOLUMEN VENTA NACIONAL</h3>
         <div class="tile-body">
-        <h4>
-          <?php if($_SESSION['perMod']['gtp_w']){ ?>
-            <button class=" ml-2 btn btn-primary" type="button" onclick="openModalC(1);"><i class="fas fa-plus-circle" aria-hidden="true"></i> Nuevo</button>
-          <?php } ?>
-        </h4>
+          <select name="vol_trim" id="vol_trim" class="form-control w-auto ml-2" onChange="hisTrim(event)">
+              <option value="">SELECCIONE</option>
+              <option value="'2022-12-01' AND '2023-02-28'">DICIEMBRE-FEBRERO</option>
+              <option value="'2023-03-01' AND '2023-05-31'">MARZO-MAYO</option>
+              <option value="'2023-06-01' AND '2023-07-31'">JUNIO-AGOSTO</option>
+              <option value="'2023-08-01' AND '2023-10-30'">SETIEMBRE-NOVIEMBRE</option>
+            </select>
           <div class="table-responsive">
-            <table class="table table-hover table-bordered table-sm " id="sim_table" width="100%"></table>
+            <table class="table table-hover table-bordered table-sm " id="det_table" width="100%"></table>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
       <div class="tile">
-      <h3 class="text-center">VENTA NACIONAL</h3>
+      <h3 class="text-center">VOLUMEN VENTA EXPORTACIÓN</h3>
         <div class="tile-body">
-        <h4>
-          <?php if($_SESSION['perMod']['gtp_w']){ ?>
-            <button class=" ml-2 btn btn-primary" type="button" onclick="openModalC(2);"><i class="fas fa-plus-circle" aria-hidden="true"></i> Nuevo</button>
-          <?php } ?>
-        </h4>
           <div class="table-responsive">
-            <table class="table table-hover table-bordered table-sm " id="nac_table" width="100%"></table>
+            <table class="table table-hover table-bordered table-sm " id="exp_table" width="100%"></table>
           </div>
         </div>
       </div>

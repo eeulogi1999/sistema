@@ -87,7 +87,6 @@
         $arrData = $modulos->selectRegistros(array('custom'=>$parms));
         return $arrData;
     }
-
     function uploadImage(array $data, string $name){
         $url_temp = $data['tmp_name'];
         $destino    = '.uploads/'.$name;        
@@ -320,7 +319,6 @@
         }
         return $arrData;
     }
-
     function document($token,$nombre,$content){
         $delimiter = uniqid();
         $postData = "--$delimiter\r\n"
@@ -401,8 +399,8 @@
             }
         }
         return false;
-      }
-      
+    }
+    
     function Meses(){
         $meses = array("Enero", 
                       "Febrero", 

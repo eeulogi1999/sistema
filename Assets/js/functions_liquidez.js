@@ -83,7 +83,7 @@ function viewLiq(id,a,b,tga) {
     $('#liq_actual').text()
     $('#modalViewLiq').modal('show');
     $("#liq_pdf").attr("href",base_url+"/Liquidez/getPdf/"+id);
-    $("#liq_xlsx").attr("href",base_url+"/Liquidez/getXlsx/"+id);
+    $("#liq_xlsx").attr("onclick","exportXlsx("+id+")");
     $('#fil_his').attr('onclick','buscarHistorico('+id+')')
     fetch(base_url + '/Main/get/age,'+id)
     .then(r => r.json())
@@ -128,7 +128,7 @@ function buscarHistorico(id) {
     let f_start =$('#f_start').val();
     let f_end =  $('#f_end').val();
     $("#liq_pdf").attr("href",base_url+"/Liquidez/getPdf/"+id+"&?f_start="+f_start+"&f_end="+f_end);
-    $("#liq_xlsx").attr("href",base_url+"/Liquidez/getXlsx/"+id+"&?f_start="+f_start+"&f_end="+f_end);
+    $("#liq_xlsx").attr("onClick",'exportXlsx(`'+id+'&?f_start='+f_start+'&f_end='+f_end+'`)');
     mvb_mov.reload(base_url+"/Liquidez/getIng/"+id+"&?f_start="+f_start+"&f_end="+f_end);
     setTimeout(() => {
         mvb_mov.rezise();
@@ -137,4 +137,14 @@ function buscarHistorico(id) {
     setTimeout(() => {
         mvb_caj.rezise();
     }, 400);
+}
+
+function exportXlsx(id) {
+    fetch(base_url+"/Liquidez/getXlsx/"+id)
+    .then(r => r.json())
+    .then(r => {
+        window.open(base_url+'/Assets/excel/'+r.name,'_blank');
+    })
+    .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+
 }
