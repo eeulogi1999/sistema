@@ -241,7 +241,7 @@
                 </tr>
                 <tr>
                     <td class="wd10"><?= ($mov['mov_tipo']==3)?'CONTACTO':'EMISOR'?></td>
-                    <td class="wd10"><?= !isset($mov['mov_gus_id'])? 'ELDER': $mov['mov_gus_id']['gus_gpe_id']['gpe_nombre']?></td>
+                    <td class="wd10"><?= ($mov['mov_tipo']==3)? ' ': $mov['mov_gus_id']['gus_gpe_id']['gpe_nombre']?></td>
                     <td class="wd10">FECHA VENC.:</td>
                     <td class="wd10"><?= $mov['mov_fechaV'] ?></td>
                 </tr>
