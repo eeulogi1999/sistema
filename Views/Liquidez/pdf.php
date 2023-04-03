@@ -44,8 +44,8 @@
                 <th>#</th>
                 <th>FECHA</th>
                 <th>TIPO</th>
-                <th>CUENTA</th>
-                <th style="width: 100px">DESCRIPCIÓN</th>
+                <th >CUENTA</th>
+                <th style="width: 250px">DESCRIPCIÓN</th>
                 <th>TOTAL</th>
             </tr>
         </thead>
@@ -81,7 +81,7 @@
                 <th>FECHA</th>
                 <th>TIPO</th>
                 <th>CUENTA</th>
-                <th style="width: 100px">DESCRIPCIÓN</th>
+                <th style="width: 250px">DESCRIPCIÓN</th>
                 <th>TOTAL</th>
             </tr>
         </thead>
