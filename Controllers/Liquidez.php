@@ -90,11 +90,12 @@ class Liquidez extends Controllers{
                 $id = (!empty($id)) ? $id['liq_id'] : 0 ;
                 $liqData[$i][$pre.'_nro'] = $i+1;
                 $liqData[$i][$pre.'_age_id']=$age;
-                $liqData[$i][$pre.'_si']=$this->liquidez->searchRegistro(
+                $si =$this->liquidez->searchRegistro(
                     array('liq_age_id'=>$ageData[$i]['age_id'],'custom'=>'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo']),
                     'liq_age_id,IFNULL(SUM(liq_monto), 0) AS liq_total_sum',
                     array('liq_age_id'))['liq_total_sum'];
-
+                $liqData[$i][$pre.'_si']= ($ageData[$i]['age_gt4_id']['gt4_id']==2)?$si*floatval($tga):$si;
+                $liqData[$i][$pre.'_sin'] = $si;
                 $mtc=$this->movimientos->searchRegistro(
                     array('mov_age_id'=>$ageData[$i]['age_id'],'mov_mstatus'=>1,'mov_tipo'=>2,'custom'=>'DATE_FORMAT(mov_fechaE, "%Y-%m") = '.$_SESSION['periodo']),
                     'mov_age_id,IFNULL(SUM(mov_total), 0) AS mov_total_sum',
@@ -151,7 +152,7 @@ class Liquidez extends Controllers{
                 $liqData[$i][$pre.'_premion'] = $premio;
 
                 $liqData[$i][$pre.'_actual']=$liqData[$i][$pre.'_si']-$liqData[$i][$pre.'_mtc']+$liqData[$i][$pre.'_mtv']-$liqData[$i][$pre.'_mti']+$liqData[$i][$pre.'_mte']+$liqData[$i][$pre.'_castigo']+$liqData[$i][$pre.'_premio'];
-                $liqData[$i][$pre.'_actualn']=$liqData[$i][$pre.'_si']-$liqData[$i][$pre.'_mtcn']+$liqData[$i][$pre.'_mtvn']-$liqData[$i][$pre.'_mtin']+$liqData[$i][$pre.'_mten']+$liqData[$i][$pre.'_castigon']+$liqData[$i][$pre.'_premion'];
+                $liqData[$i][$pre.'_actualn']=$liqData[$i][$pre.'_sin']-$liqData[$i][$pre.'_mtcn']+$liqData[$i][$pre.'_mtvn']-$liqData[$i][$pre.'_mtin']+$liqData[$i][$pre.'_mten']+$liqData[$i][$pre.'_castigon']+$liqData[$i][$pre.'_premion'];
                 $text = '';
                 switch (true) {
                     case $liqData[$i][$pre.'_actual']<-0.5:
