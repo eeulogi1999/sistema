@@ -29,6 +29,17 @@ class Analiticas extends Controllers{
         $this->views->getView($this,"analiticas",$data);
     }
 
+    public function comVentas(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $data['page_tag'] = "Resumen";
+        $data['page_title'] = "Resumen";
+        $data['page_name'] = "Resumen";
+        $data['page_data'] = array('periodo'=>$_SESSION['periodo']); 
+        $data['page_functions_js'] = array("functions_analiticas.js");
+        $this->views->getView($this,"comVentas",$data);
+    }
     public function list($array){
         $mov = $this->movimientos->selectCustoms('mov_id',$array);
         $mov = !empty(implode(',', array_column($mov, 'mov_id')))?implode(',', array_column($mov, 'mov_id')):0;
@@ -69,6 +80,20 @@ class Analiticas extends Controllers{
             
         }
         echo json_encode($array,JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    public function getComVentas($date){
+        $_GET['mes_i'] = $date;
+        $dates = (isset($_GET['mes_f']))?'mov_fechaE BETWEEN "'.$_GET['mes_i'].'-01" AND "'.$_GET['mes_f'].'-01"':'DATE_FORMAT(mov_fechaE, "%Y-%m") = "'.$_GET['mes_i'].'"';
+        $pve = $this->movimientos->selectCustoms('mov_id',array('mov_tipo'=>1,'mov_t10_id'=>51,'custom'=>'mov_cue_id IS NOT NULL AND mov_age_id is not null AND '.$dates));
+        $mov = !empty(implode(',', array_column($pve, 'mov_id')))?implode(',', array_column($pve, 'mov_id')):0;
+
+        $mde = $this->mdetalles->selectCustoms('mde_bie_id,SUM(mde_q) AS mde_q,SUM(mde_importe) as mde_importe',array(
+            'custom'=>'mde_mov_id in ('.$mov.') GROUP BY mde_bie_id'),array('mde_bie_id'));
+
+        dep($mde);
+        echo json_encode($pve,JSON_UNESCAPED_UNICODE);
         die();
     }
 }
