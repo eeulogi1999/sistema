@@ -19,7 +19,7 @@ class Planillas extends Controllers{
         $this->views->getView($this,"planillas",$data);
     }
     public function getPlanillas($res = false){
-        $rwcol = $this->colaboradores->selectRegistros();
+        $rwcol = $this->colaboradores->selectRegistros(array('col_status'=>1));
         $rw = array();
         for ($i=0; $i < count($rwcol); $i++) { 
             $week = intval(explode('W',$_SESSION['asi']['asi_week'])[1]);
@@ -46,7 +46,7 @@ class Planillas extends Controllers{
             $r['pla_hweek'] = $nh;
 
             $r['pla_sweek'] = $r['pla_col_id']['col_sbase']/4;
-            $hsbase = json_decode($r['pla_col_id']['col_hsbase'],true);
+            $hsbase = $r['pla_col_id']['col_hsbase']?json_decode($r['pla_col_id']['col_hsbase'],true):null;
             if (!empty($hsbase)) {
                 foreach ($hsbase as $k => $hsb) {
                     if (intval((new DateTime($hsb['col_fecha']))->format('W'))>$week) {
