@@ -233,6 +233,7 @@
                     <td class="wd10">DIRECCION:</td>
                     <td class="wd50"><?= !isset($mov['mov_age_id'])? '': $mov['mov_age_id']['age_direccion'] ?></td>
                 </tr>
+                <?php $mov['mov_igv_id'] = json_decode($mov['mov_igv_id'],true); ?>
                 <tr>
                     <td class="wd10">CIUDAD:</td>
                     <td class="wd50"><?= !isset($mov['mov_age_id'])? '': $mov['mov_age_id']['age_gdi_id']['gdi_gpr_id']['gpr_gde_id']['gde_departamento'].'-'.
@@ -288,9 +289,7 @@
                 <td class="text-center"><?= "0.00" ?></td>
                 <td class="text-right"><?= formatMoney($mde['mde_importe']) ?></td>
             </tr>
-            <?php }
-            $mov['mov_igv_id'] = json_decode($mov['mov_igv_id'],true);
-            ?>
+            <?php } ?>
         </tbody><br><br>
         <tfoot>
             <tr>
