@@ -526,6 +526,46 @@ class Movimientos extends Controllers{
         // $dompdf->stream('my.pdf',array('Attachment'=>0));
         die();
     }
+    public function getHtml($mov_id){
+        ob_end_clean();
+        $result = Endroid\QrCode\Builder\Builder::create()
+            ->writer(new Endroid\QrCode\Writer\PngWriter())
+            ->writerOptions([])
+            ->data(base_url().'/Movimientos/getPdf/'.$mov_id.'?gcl_id='.$_SESSION['gcl']['gcl_id'])
+            ->encoding(new Endroid\QrCode\Encoding\Encoding('UTF-8'))
+            ->errorCorrectionLevel(new Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh())
+            ->size(100)
+            ->margin(1)
+            ->roundBlockSizeMode(new Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin())
+            ->labelText('DOC. Vitual')
+            ->labelFont(new Endroid\QrCode\Label\Font\NotoSans(11))
+            ->labelAlignment(new Endroid\QrCode\Label\Alignment\LabelAlignmentCenter())
+            ->validateResult(false)
+            ->build();
+        $web = Endroid\QrCode\Builder\Builder::create()
+            ->writer(new Endroid\QrCode\Writer\PngWriter())
+            ->writerOptions([])
+            ->data(BASE_URL.'/Assets/pdf/brochure.pdf')
+            ->encoding(new Endroid\QrCode\Encoding\Encoding('UTF-8'))
+            ->errorCorrectionLevel(new Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh())
+            ->size(100)
+            ->margin(1)
+            ->roundBlockSizeMode(new Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin())
+            ->labelText('Brochure')
+            ->labelFont(new Endroid\QrCode\Label\Font\NotoSans(11))
+            ->labelAlignment(new Endroid\QrCode\Label\Alignment\LabelAlignmentCenter())
+            ->validateResult(false)
+            ->build();
+        $data['gcl'] = $_SESSION['gcl'];
+        $data['alm'] = $_SESSION['alm'];
+        $data['mov'] = $this->getMovimiento($mov_id,true)['data'];
+        $data['mov']['mov_letras_pen'] = $this->formatter->toInvoice($data['mov']['mov_total'], 2, "SOLES");
+        $data['mov']['mov_qr'] = $result->getDataUri();
+        $data['mov']['mov_qr_web'] = $web->getDataUri();
+        $html = getFile("Movimientos/pdf",$data);
+        echo $html;
+        die();
+    }
     public function getSimulaciones($tipo){
         $res = $this->simulaciones->selectRegistros(array('sim_tipo'=>$tipo));
         foreach ($res as $i => $r) {
