@@ -239,6 +239,9 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('mov_total', formMtx.mov_total);  delete formMtx.mov_total;
         formData.append('mov_mde_id', JSON.stringify(mde_json)); 
         formData.append('mov_igv_id', JSON.stringify(formMtx));
+        if (document.getElementById("mov_contacto")) {
+            formMtx.mov_contacto = $('#mov_contacto').val();
+        }
         formData.append('mov_observaciones', $('#mov_observaciones').val());  
         if(data.mov_t12_id == 1 || data.mov_t12_id == 2 ){
             if( parseInt(formData.get('mov_age_id')) == 0 ){
