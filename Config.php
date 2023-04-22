@@ -83,7 +83,7 @@
 	const RCLIENTES = 7;
 
 
-	const AGE_TIPO = array('MIXTO'=>'warning','PROVEEDOR'=>'primary','CLIENTE'=>'success');
+	const AGE_TIPO = array('MIXTO'=>'warning','PROVEEDOR'=>'primary','CLIENTE'=>'success','INVERSIONISTA'=>'cacel');
 	
 	const CAJ = array('scuentas','Ingresos','Egresos','Gastos','Iadicionales','Cinternos','Nota-Credito','Nota-Debito','Cambio-Dolares');
 	//Stados

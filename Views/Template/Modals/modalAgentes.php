@@ -27,6 +27,7 @@
             <select class="form-control" data-live-search="true" id="age_tipo" name="age_tipo" required>
               <option value="2">CLIENTE</option>
               <option value="1">PROVEEDOR</option>
+              <option value="3">INVERSIONISTA</option>
             </select>
           </div>
           <div class="datosform pb-1" id="gem_v">

@@ -28,6 +28,17 @@ class Agentes extends Controllers{
         $data['page_functions_js'] = array("functions_agentes.js","functions_empresas.js","functions_personas.js");
         $this->views->getView($this,"agentes",$data);
     }
+    public function Inversionistas(){
+        if(empty($_SESSION['perMod']['gtp_r'])){
+            header("Location:".base_url().'/dashboard');
+        }
+        $data['page_tag'] = "Inversionistas";
+        $data['page_title'] = "Inversionistas";
+        $data['page_name'] = "Inversionistas";
+        $data['page_data'] = array('age_tipo' => 3);
+        $data['page_functions_js'] = array("functions_agentes.js","functions_empresas.js","functions_personas.js");
+        $this->views->getView($this,"agentes",$data);
+    }
     public function getAgentes($age_tipo){
         if (intval($age_tipo)>0) {
             $arrData = $this->agentes->selectRegistros(array('age_tipo'=>$age_tipo));

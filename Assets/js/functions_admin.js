@@ -248,20 +248,23 @@ function previewFiles(th,content) {
         });
     };
     $.fn.loadOptions = async function(tabla,descripcion,where='') {
-        var inpt = this;
-        var formData = new FormData();
-        formData.append('id',$(this).attr('id'));
-        formData.append('tabla',tabla);
-        formData.append('descripcion',JSON.stringify(descripcion));
-        formData.append('where',JSON.stringify(where));
-        await fetch(base_url+'/Main/getSelect',{method: "POST",body: formData})
-        .then(response => response.text()) 
-        .then(response => {
-            response = '<option value="" disabled selected>'+capitalize(tabla)+'</option>'+response;
-            $(inpt).html(response);
-            //$(inpt).selectpicker('render');
-        })
-        .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+        if ($(this).attr('id')) {
+            var inpt = this;
+            var formData = new FormData();
+            formData.append('id',$(this).attr('id'));
+            formData.append('tabla',tabla);
+            formData.append('descripcion',JSON.stringify(descripcion));
+            formData.append('where',JSON.stringify(where));
+            await fetch(base_url+'/Main/getSelect',{method: "POST",body: formData})
+            .then(response => response.text()) 
+            .then(response => {
+                response = '<option value="" disabled selected>'+capitalize(tabla)+'</option>'+response;
+                $(inpt).html(response);
+                //$(inpt).selectpicker('render');
+            })
+            .catch(error => swal("Atención","Error en el proceso: "+error, "error"))
+        }
+
     }; 
 
     $.fn.autoTable = async function(o) { 

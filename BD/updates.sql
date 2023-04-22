@@ -74,3 +74,25 @@ REFERENCES `company5_bd_cacel`.`usuarios`(`gus_id`) ON DELETE CASCADE ON UPDATE 
 
 ALTER TABLE `nrcomisiones` ADD `nrc_obs` TEXT NULL AFTER `nrc_json`;
 ALTER TABLE `nrcomisiones` ADD `nrc_num` INT NOT NULL AFTER `nrc_id`;
+
+
+CREATE TABLE `company5_bd_20602849172`.`inversiones` 
+(`inv_id` BIGINT NOT NULL AUTO_INCREMENT , `inv_age_id` BIGINT NOT NULL ,
+ `inv_tipo` INT NOT NULL , `inv_fecha` DATETIME NOT NULL , `inv_obs` VARCHAR(200) NULL ,
+  `inv_json` JSON NULL , `inv_monto` DECIMAL(14,6) NOT NULL ,
+   `inv_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+    `inv_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+     PRIMARY KEY (`inv_id`)) ENGINE = InnoDB;
+     INSERT INTO `modulos` (`gmo_id`, `gmo_titulo`, `gmo_descripcion`, `gmo_gmo_id`, `gmo_path`, `gmo_icon`, `gmo_order`, `gmo_status`) VALUES 
+     (NULL, 'INVERSIONES', 'INVERSIONES', NULL, '#', 'fas fa-file-invoice-dollar', '9', '1');
+     INSERT INTO `modulos` (`gmo_id`, `gmo_titulo`, `gmo_descripcion`, `gmo_gmo_id`, `gmo_path`, `gmo_icon`, `gmo_order`, `gmo_status`) VALUES 
+     (NULL, 'CUADRO', 'CUADRO', '62', '/inversiones', 'fas fa-chart-pie', '1', '1');
+     ALTER TABLE `inversiones` ADD `inv_cue_id` BIGINT NULL AFTER `inv_fecha`;
+     ALTER TABLE `inversiones` ADD `inv_gt4_id` BIGINT NOT NULL AFTER `inv_fecha`;
+     ALTER TABLE `inversiones` ADD `inv_t1m_id` BIGINT NULL AFTER `inv_gt4_id`;
+
+     ALTER TABLE `inversiones` ADD CONSTRAINT `inv_cue` FOREIGN KEY (`inv_cue_id`) REFERENCES `cuentas`(`cue_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+     ALTER TABLE `inversiones` ADD CONSTRAINT `inv_t1m` FOREIGN KEY (`inv_t1m_id`) REFERENCES `t1mediopagos`(`t1m_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+     ALTER TABLE `inversiones` ADD CONSTRAINT `inv_gt4` FOREIGN KEY (`inv_gt4_id`) REFERENCES `company5_bd_cacel`.`t4monedas`(`gt4_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+     ALTER TABLE `inversiones` ADD CONSTRAINT `inv_age` FOREIGN KEY (`inv_age_id`) REFERENCES `agentes`(`age_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+     ALTER TABLE `agentes` ADD `age_json` JSON NULL AFTER `age_gt4_id`;
