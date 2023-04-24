@@ -19,25 +19,22 @@
           <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
               <a class="nav-link active" id="resumen-tab" data-toggle="tab" href="#resumen" role="tab"
-                aria-controls="resumen" aria-selected="true">MENSUAL</a>
+                aria-controls="resumen" aria-selected="true">VENTAS DE MATERIALES POR CLIENTES</a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" id="historico-tab" data-toggle="tab" href="#historico" role="tab"
-                aria-controls="historico" aria-selected="false">HISTORICO</a>
-            </li> -->
+            <li class="nav-item">
+              <a class="nav-link" id="lis-tab" data-toggle="tab" href="#lis" role="tab"
+                aria-controls="lis" aria-selected="true">CUADRE</a>
+            </li>
           </ul>
           <div class="tab-content m-3">
             <div class="tab-pane fade show active" id="resumen" role="tabpanel" aria-labelledby="resumen-tab">
               <div class="table-responsive">
-              <!-- <table class="table table-hover table-bordered table-sm " id="ana_table" width="100%"></table> -->
+                <table class="table table-hover table-bordered table-sm" id="com_table" width="100%"></table>
+              </div>
             </div>
-            </div>
-            <div class="tab-pane fade" id="historico" role="tabpanel" aria-labelledby="historico-tab">
-              <input class="form-control w-auto d-inline" type="month" id="mes_i" name="mes_i" placeholder="MES INICIO">
-              <input class="form-control w-auto d-inline" type="month" id="mes_f" name="mes_f" placeholder="MES FIN">
-              <button class="btn btn-sm btn-danger w-auto d-inline" onClick="filterTriCom()"><i class="fas fa-search"></i></button>
+            <div class="tab-pane fade" id="lis" role="tabpanel" aria-labelledby="lis-tab">
               <div class="table-responsive">
-                <table class="table table-hover table-bordered table-sm " id="tre_table" width="100%"></table>
+                <table class="table table-hover table-bordered table-sm" id="lis_table" width="100%"></table>
               </div>
             </div>
           </div>

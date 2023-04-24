@@ -1,5 +1,8 @@
-var ana_table;
-var tre_table;
+var ana_table,tre_table;
+var com_table,lis_table;
+var url_com = base_url+"/Analiticas/getComVentas"
+var url_lis = base_url+"/Analiticas/getLisComVentas"
+
 var url_ana = base_url+"/Analiticas/getAnaliticas/?mes_i="+ data.periodo.replaceAll('"','');
 var url_tre = base_url+"/Analiticas/getAnaliticas/?mes_i=2023-01&mes_f=2023-03";
 
@@ -43,6 +46,28 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
+    if (document.querySelector("#com_table")) {
+        com_table = $('#com_table').autoTable({
+            "url": url_com,
+            "numerate": true,
+            "columns":[
+                {"data":"mov_age_id",header:{t:"AGENTE",align:'center',c:'text'},
+                render:(r)=>r.mov_age_id.age_gpe_id?.gpe_nombre??r.mov_age_id.age_gem_id?.gem_razonsocial,
+                tipo:'string',footer:"TOTALES"},
+                {"data":"mov_total",header:{t:"TOTAL",align:'center'},tipo:'money',footer:{c:'sum'}}
+            ]
+        });
+    }
+    if (document.querySelector("#lis_table")) {
+        lis_table = $('#lis_table').autoTable({
+            "url": url_lis,
+            "numerate": true,
+            "columns":[
+                {"data":"mde_bie_id.bie_nombre",header:{t:"MATERIAL",align:'center',c:'text'}, tipo:'string',footer:"TOTALES"},
+                {"data":"mde_total",header:{t:"TOTAL",align:'center'},tipo:'money',footer:{c:'sum'}}
+            ]
+        });
+    }
 
 });
 
@@ -56,6 +81,14 @@ window.addEventListener('load', async () => {
     if (document.querySelector("#tre_table")) {
         tre_table = await tre_table;
         tre_table.rezise();
+    }
+    if (document.querySelector("#com_table")) {
+        com_table = await com_table;
+        com_table.rezise();
+    }
+    if (document.querySelector("#lis_table")) {
+        lis_table = await lis_table;
+        lis_table.rezise();
     }
     divLoading.style.display = "none";
 });

@@ -96,3 +96,6 @@ CREATE TABLE `company5_bd_20602849172`.`inversiones`
      ALTER TABLE `inversiones` ADD CONSTRAINT `inv_gt4` FOREIGN KEY (`inv_gt4_id`) REFERENCES `company5_bd_cacel`.`t4monedas`(`gt4_id`) ON DELETE CASCADE ON UPDATE CASCADE;
      ALTER TABLE `inversiones` ADD CONSTRAINT `inv_age` FOREIGN KEY (`inv_age_id`) REFERENCES `agentes`(`age_id`) ON DELETE CASCADE ON UPDATE CASCADE;
      ALTER TABLE `agentes` ADD `age_json` JSON NULL AFTER `age_gt4_id`;
+
+
+INSERT INTO `modulos` (`gmo_id`, `gmo_titulo`, `gmo_descripcion`, `gmo_gmo_id`, `gmo_path`, `gmo_icon`, `gmo_order`, `gmo_status`) VALUES (NULL, 'COMISIONES DE VENTAS', 'COMISIONES DE VENTAS', '37', '/Analiticas/comVentas', 'fas fa-tag', '1', '1');
