@@ -100,7 +100,7 @@ function viewInv(id,nombre,monto) {
     ing_table.reload(base_url+"/Inversiones/getIngreso/"+id);
     egr_table.reload(base_url+"/Inversiones/getEgreso/"+id);
     $('#h_age_id').text(nombre)
-    $('#inv_saldo').text(monto)
+    $('#inv_saldo').text(Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(monto))
 }
 
 async function setPoc(id,e) {
