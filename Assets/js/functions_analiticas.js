@@ -68,7 +68,6 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
-
 });
 
 window.addEventListener('load', async () => {
@@ -96,6 +95,8 @@ window.addEventListener('load', async () => {
 function filterTriCom() {
     tre_table.reload(base_url+"/Analiticas/getAnaliticas/?mes_i="+$('#mes_i').val()+'&mes_f='+$('#mes_f').val());
 }
+
+
 
 
 

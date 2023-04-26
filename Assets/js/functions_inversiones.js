@@ -1,4 +1,6 @@
 var inv_table,cua_table,ing_table,egr_table;
+var sim_table;
+var jsn_sim = [];
 var url_inv = base_url+"/Inversiones/getInversiones";
 var url_cua = base_url+"/Inversiones/getCuadre";
 document.addEventListener('DOMContentLoaded',function () {
@@ -66,6 +68,17 @@ document.addEventListener('DOMContentLoaded',function () {
             $('#inv_gt4_id').val(age_table.getSelectedItem().age_gt4_id.gt4_id);
         })
     }
+    if (document.querySelector("#sim_table")) {
+        sim_table = $('#sim_table').autoTable({
+            "src": 'jsn_sim',
+            "numerate": true,
+            "columns":[
+                {"data":"sim_ci",header:{t:"SUBTOTAL",align:'right'}, tipo:'money'},
+                {"data":"sim_i",header:{t:"INTERESES",align:'right'}, tipo:'money'},
+                {"data":"sim_cf",header:{t:"SALDO TOTAL",align:'right'}, tipo:'money'},
+            ]
+        });
+    }
     $('#inv_gt4_id').loadOptions('t4monedas',['gt4_descripcion']);
     $('#inv_cue_id').loadOptions('cuentas',['cue_nombre'],{'cue_status':1});
     $('#inv_t1m_id').loadOptions('t1mediopagos',['t1m_descripcion'],{'t1m_status':1});
@@ -92,6 +105,9 @@ window.addEventListener('load', async () => {
     if (document.querySelector("#egr_table")) {
         egr_table = await egr_table;
     }
+    if (document.querySelector("#sim_table")) {
+        sim_table = await sim_table;
+    }
     divLoading.style.display = "none";
 });
 
@@ -108,3 +124,17 @@ async function setPoc(id,e) {
     cua_table.reload()
 }
 
+async function setTrato(e) {
+    e.preventDefault()
+    let r = Object.fromEntries( new FormData(e.target))
+    jsn_sim = []
+    for (let i = 1; i < parseInt(r.tra_n)+1 ; i++) {
+        let tra_cf = parseFloat(r.tra_ci)*Math.pow(1+(parseFloat(r.tra_i)/100)/parseFloat(r.tra_c) ,i)
+        jsn_sim.push({sim_ci:parseFloat(r.tra_ci),sim_i:tra_cf-parseFloat(r.tra_ci),sim_cf:tra_cf})
+    }
+    sim_table.reload();
+    
+
+
+    
+}

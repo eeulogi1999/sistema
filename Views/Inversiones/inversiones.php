@@ -28,6 +28,10 @@
               <a class="nav-link" id="historico-tab" data-toggle="tab" href="#historico" role="tab"
                 aria-controls="historico" aria-selected="false">CUADRE</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" id="next-tab" data-toggle="tab" href="#next" role="tab"
+                aria-controls="next" aria-selected="false">SIMULACION</a>
+            </li>
           </ul>
           <div class="tab-content m-3">
             <div class="tab-pane fade show active" id="resumen" role="tabpanel" aria-labelledby="resumen-tab">
@@ -39,6 +43,38 @@
             <div class="tab-pane fade" id="historico" role="tabpanel" aria-labelledby="historico-tab">
               <div class="table-responsive">
                 <table class="table table-hover table-bordered table-sm " id="cua_table" width="100%"></table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="next" role="tabpanel" aria-labelledby="next-tab">
+            
+
+            <div class="card text-center">
+              <div class="card-header">
+                SIMULACION DE INVERSION
+              </div>
+                <div class="card-body">
+                <form onsubmit="setTrato(event)">
+                  <div class="row">
+                      <div class="col"><label for="tra_ci">CAPITAL</label><input class="form-control" type="number" name="tra_ci"></div>
+                      <div class="col"><label for="tra_i">TASA ANUAL %</label><input class="form-control" type="number" name="tra_i"></div>
+                      <div class="col"><label for="tra_c">CAPITALIZACION</label><select class="form-control" name="tra_c">
+                        <option value="52">SEMANAL</option>
+                        <option value="24">QUINCENAL</option>
+                        <option value="12">MENSUAL</option>
+                        <option value="4">TRIMESTRAL</option>
+                        <option value="2">SEMESTRAL</option>
+                        <option value="1">ANUAL</option>
+                            </select></div>
+                      <div class="col"><label for="tra_n">PERIODO</label><input class="form-control" type="number" name="tra_n"></div>
+                      <div class="col"><button type="submit" class="btn btn-sm btn-primary">GENERAR</button></div>
+                  </div>
+                  </form>
+                </div>
+              </div>
+              <div>
+                <div class="table-responsive">
+                  <table class="table table-hover table-bordered table-sm " id="sim_table" width="100%"></table>
+                </div>
               </div>
             </div>
           </div>
