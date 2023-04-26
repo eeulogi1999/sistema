@@ -46,27 +46,32 @@
               </div>
             </div>
             <div class="tab-pane fade" id="next" role="tabpanel" aria-labelledby="next-tab">
-            
-
             <div class="card text-center">
               <div class="card-header">
                 SIMULACION DE INVERSION
               </div>
                 <div class="card-body">
-                <form onsubmit="setTrato(event)">
+                <form onsubmit="setTrato(event)" id="from">
                   <div class="row">
                       <div class="col"><label for="tra_ci">CAPITAL</label><input class="form-control" type="number" name="tra_ci"></div>
-                      <div class="col"><label for="tra_i">TASA ANUAL %</label><input class="form-control" type="number" name="tra_i"></div>
-                      <div class="col"><label for="tra_c">CAPITALIZACION</label><select class="form-control" name="tra_c">
-                        <option value="52">SEMANAL</option>
-                        <option value="24">QUINCENAL</option>
-                        <option value="12">MENSUAL</option>
-                        <option value="4">TRIMESTRAL</option>
-                        <option value="2">SEMESTRAL</option>
-                        <option value="1">ANUAL</option>
+                      <div class="col"><label for="tra_i">TASA % <select name="tra_tp">
+                      <option value="12">ANUAL</option>  
+                      <option value="6">SEMESTRAL</option>
+                      <option value="3">TRIMESTRAL</option>
+                      <option value="1">MENSUAL</option>
+                      <option value="0.46">QUINCENAL</option>
+                      <option value="0.23">SEMANAL</option>
+                    </select></select></label><input class="form-control" type="number" name="tra_i"></div>
+                      <div class="col"><label for="tra_c">CAPITALIZACION</label><select class="form-control" name="tra_c" id="tra_c">
+                      <option value="12">ANUAL</option>  
+                      <option value="6">SEMESTRAL</option>
+                      <option value="3">TRIMESTRAL</option>
+                      <option value="1">MENSUAL</option>
+                      <option value="0.46">QUINCENAL</option>
+                      <option value="0.23">SEMANAL</option>
                             </select></div>
                       <div class="col"><label for="tra_n">PERIODO</label><input class="form-control" type="number" name="tra_n"></div>
-                      <div class="col"><button type="submit" class="btn btn-sm btn-primary">GENERAR</button></div>
+                      <div class="col d-flex flex-column"><button  type="submit" class="btn btn-sm btn-primary w-50">GENERAR</button><button class="btn btn-sm btn-danger w-50" onclick="formatPDF(event)">GUARDAR</button></div>
                   </div>
                   </form>
                 </div>

@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded',function () {
             "src": 'jsn_sim',
             "numerate": true,
             "columns":[
-                {"data":"sim_ci",header:{t:"SUBTOTAL",align:'right'}, tipo:'money'},
-                {"data":"sim_i",header:{t:"INTERESES",align:'right'}, tipo:'money'},
+                {"data":"sim_ci",header:{t:"SUBTOTAL",align:'right'}, tipo:'money',footer:"TOTALES"},
+                {"data":"sim_i",header:{t:"INTERESES",align:'right'}, tipo:'money',footer:{c:'sum'}},
                 {"data":"sim_cf",header:{t:"SALDO TOTAL",align:'right'}, tipo:'money'},
             ]
         });
@@ -129,12 +129,19 @@ async function setTrato(e) {
     let r = Object.fromEntries( new FormData(e.target))
     jsn_sim = []
     for (let i = 1; i < parseInt(r.tra_n)+1 ; i++) {
-        let tra_cf = parseFloat(r.tra_ci)*Math.pow(1+(parseFloat(r.tra_i)/100)/parseFloat(r.tra_c) ,i)
-        jsn_sim.push({sim_ci:parseFloat(r.tra_ci),sim_i:tra_cf-parseFloat(r.tra_ci),sim_cf:tra_cf})
+        let tra_bi = parseFloat(r.tra_ci)*Math.pow(1+(parseFloat(r.tra_i)/100)/(parseFloat(r.tra_tp)/parseFloat(r.tra_c)) ,i-1)
+        let tra_cf = parseFloat(r.tra_ci)*Math.pow(1+(parseFloat(r.tra_i)/100)/(parseFloat(r.tra_tp)/parseFloat(r.tra_c)) ,i)
+        jsn_sim.push({sim_ci:tra_bi,sim_i:tra_cf-tra_bi,sim_cf:tra_cf})
     }
-    sim_table.reload();
-    
-
-
-    
+    sim_table.reload(); 
+}
+function formatPDF(e) {
+    e.preventDefault()
+    let r = Object.fromEntries( new FormData(document.querySelector("#from")))
+    let jsn = []
+    for (let i = 1; i < parseInt(r.tra_n)+1 ; i++) {
+        let tra_bi = parseFloat(r.tra_ci)*Math.pow(1+(parseFloat(r.tra_i)/100)/(parseFloat(r.tra_tp)/parseFloat(r.tra_c)) ,i-1)
+        let tra_cf = parseFloat(r.tra_ci)*Math.pow(1+(parseFloat(r.tra_i)/100)/(parseFloat(r.tra_tp)/parseFloat(r.tra_c)) ,i)
+        jsn.push({sim_ci:tra_bi,sim_i:tra_cf-tra_bi,sim_cf:tra_cf})
+    }  
 }
