@@ -56,5 +56,19 @@
       </div>
     </div>
   </div>
+  <div class="row">
+  <div class="col">
+      <div class="tile">
+        
+      <h3 class="text-center">VENTAS POR USUARIO</h3>
+      <div class="tile-body">
+    
+      <div class="table-responsive">
+            <table class="table table-hover table-bordered table-sm " id="rgu_table" width="100%"></table>
+          </div>
+     </div>
+    </div>
+    </div>
+  </div>
 </main>
 <?php footerAdmin($data); ?>

@@ -1,5 +1,6 @@
-var eve_table;
+var eve_table,rgu_table;
 var url_eve = base_url+"/Movimientos/getEventas";
+var url_rgu = base_url+"/Movimientos/getRguventas";
 var val_json = {};
 document.addEventListener('DOMContentLoaded',function () {
     divLoading.style.display = "flex";
@@ -25,6 +26,17 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
+    if (document.querySelector("#rgu_table")) {
+        rgu_table = $('#rgu_table').autoTable({
+            "url": url_rgu,
+            "numerate": true,
+            "columns":[
+                {"data":"mov_gus_id.gus_gpe_id.gpe_nombre",header:{t:"USUARIO",align:'center'},tipo:'string'},
+                {"data":"mov_subtotal",header:"TOTAL",tipo:'money'},
+                {"data":"mov_subtotal",header:{t:"OPCIONES",align:'center'},tipo:'string',render:(r)=>{return '<button class="btn btn-warning btn-sm">VER</button>'}},
+            ]
+        });
+    }
     $('#sim_bie_id').loadOptions('bienes',['bie_nombre'],{'bie_status':1});
     document.querySelector("body").style.overflowY = 'auto';
 
@@ -33,6 +45,9 @@ document.addEventListener('DOMContentLoaded',function () {
 window.addEventListener('load', async () => {
     if (document.querySelector("#eve_table")) {
         eve_table = await eve_table;
+    }
+    if (document.querySelector("#rgu_table")) {
+        rgu_table = await rgu_table;
     }
     divLoading.style.display = "none";
 });

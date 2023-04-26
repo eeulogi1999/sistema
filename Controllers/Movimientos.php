@@ -103,7 +103,7 @@ class Movimientos extends Controllers{
         $this->views->getView($this,"simulaciones",$data);
     }
     public function getEventas(){
-        $eve = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>1,'mov_tipo'=>4));
+        $eve = $this->movimientos->selectRegistros(array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_t12_id'=>1,'mov_tipo'=>4,'custom'=>'mov_fechaE > "2023-03-01" '));
         foreach ($eve as $i => $r) {
             $eve[$i]['mov_doc'] = '<a href="#" onclick="getViewMov('.$r['mov_id'].')">'.$r['mov_serie'].'</a>' ;
             $eve[$i]['mov_mde_id'] = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$r['mov_id']),array('mde_mov_id')); 
@@ -591,7 +591,13 @@ class Movimientos extends Controllers{
         echo json_encode($res,JSON_UNESCAPED_UNICODE);
         die();
     }
-
+    public function getRguventas(){
+        $eve = $this->movimientos->selectCustoms('mov_gus_id,SUM(mov_subtotal) AS mov_subtotal',
+        array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,
+        'custom'=>'mov_gus_id>1 AND mov_mov_id is not null  GROUP BY mov_gus_id'));
+        echo json_encode($eve,JSON_UNESCAPED_UNICODE);
+        die();
+    }
     //integraciones
     public function apiSetMov(){
         $_POST = json_decode(file_get_contents("php://input"),true);
