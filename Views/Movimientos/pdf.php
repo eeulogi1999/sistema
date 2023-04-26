@@ -227,7 +227,7 @@
                     <td class="wd10">FECHA :</td>
                     <td class="wd10"><?= $mov['mov_fechaE'] ?></td>
                     <td class="wd10">PAGO:</td>
-                    <td class="wd10"><?= ($mov['mov_tipo']==3) ? 'credito': 'Contado'; ?></td>
+                    <td class="wd10"><?= ($mov['mov_tipo']==3) ? 'Contado': 'Credito'; ?></td>
                 </tr>
                 <tr>
                     <td class="wd10">DIRECCION:</td>
