@@ -7,6 +7,7 @@ class Liquidez extends Controllers{
         $this->newModel('agentes');
         $this->newModel('t2identidades');
         $this->newModel('movimientos');
+        $this->newModel('t4monedas');
         $this->newModel('cajas');
         $this->newController('Reportes');
     }
@@ -131,11 +132,17 @@ class Liquidez extends Controllers{
                 $liqData[$i][$pre.'_mtin'] = $mti;
 
                 $mte=-$this->cajas->searchRegistro(
-                    array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>2,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                    array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>2,'caj_gt4_id'=>1,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
                     'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
                     array('caj_age_id'))['caj_total_sum'];
-                $liqData[$i][$pre.'_mte']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$mte*floatval($tga):$mte;
-                $liqData[$i][$pre.'_mten'] = $mte;
+                $mte_d=-$this->cajas->searchRegistro(
+                    array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>2,'caj_gt4_id'=>2,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
+                    'caj_age_id,IFNULL(SUM(caj_monto), 0) AS caj_total_sum',
+                    array('caj_age_id'))['caj_total_sum'];
+
+                
+                $liqData[$i][$pre.'_mte']=($ageData[$i]['age_gt4_id']['gt4_id']==2)?$mte_d*floatval($tga)+$mte:$mte;
+                $liqData[$i][$pre.'_mten'] = ($ageData[$i]['age_gt4_id']['gt4_id']==2)?$mte_d+$mte/floatval($tga):$mte;
     
                 $castigo=$this->cajas->searchRegistro(
                         array('caj_age_id'=>$ageData[$i]['age_id'],'caj_tipo'=>6,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),
@@ -282,6 +289,9 @@ class Liquidez extends Controllers{
         die();
     }
     public function getEgr($age_id,$res=false){
+        $this->newController('Main');
+        $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
+        unset($this->Main);
         $str_caj = '';
         $str_mov = '';
         $str_liq = '';
@@ -295,7 +305,8 @@ class Liquidez extends Controllers{
             $str_liq = 'DATE_FORMAT(liq_fecha, "%Y-%m") = '.$_SESSION['periodo'];
         }
         $arrMov = $this->movimientos->selectRegistros(array('mov_mstatus'=>1,'mov_tipo'=>1,'mov_age_id'=>$age_id,'custom'=>$str_mov));
-        $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>2,'custom'=>$str_caj));
+        $arrCaj = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>2,'caj_gt4_id'=>1,'custom'=>$str_caj));
+        $arrCaj_d = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>2,'caj_gt4_id'=>2,'custom'=>$str_caj));
         $nc = $this->cajas->selectRegistros(array('caj_age_id'=>$age_id,'caj_tipo'=>7,'custom'=>$str_caj));
         $sl = $this->liquidez->searchRegistro(array('liq_age_id'=>$age_id,'custom'=>$str_liq));
         $age = $this->agentes->selectRegistro($age_id);
@@ -322,16 +333,54 @@ class Liquidez extends Controllers{
             $r['egr_monto'] =  floatval(json_decode($arrMov[$i]['mov_igv_id'],true)['mov_neto']);
             array_push($egr,$r);
         }
-        for ($i=0; $i < count($arrCaj); $i++) {
-            $r = array();
-            $r['egr_gt4_id'] = $arrCaj[$i]['caj_gt4_id'];
-            $r['egr_fecha'] = $arrCaj[$i]['caj_fecha'];
-            $r['egr_tipo'] = CAJ[$arrCaj[$i]['caj_tipo']];
-            $r['egr_cuenta'] = $arrCaj[$i]['caj_cue_id']['cue_nombre'];
-            $r['egr_descripcion'] = '<a href="#" onclick="viewCaj('.$arrCaj[$i]['caj_id'].','.$arrCaj[$i]['caj_tipo'].')">'.$arrCaj[$i]['caj_observaciones'].'</a>' ; 
-            $r['egr_monto'] = abs($arrCaj[$i]['caj_monto']);
-            array_push($egr,$r);
-        }
+
+        if ($age['age_gt4_id']['gt4_id']==2) {
+            $usd = $this->t4monedas->selectRegistro(2);
+            for ($i=0; $i < count($arrCaj); $i++) {
+                $r = array();
+                $r['egr_gt4_id'] = $usd;
+                $r['egr_fecha'] = $arrCaj[$i]['caj_fecha'];
+                $r['egr_tipo'] = CAJ[$arrCaj[$i]['caj_tipo']];
+                $r['egr_cuenta'] = $arrCaj[$i]['caj_cue_id']['cue_nombre'];
+                $r['egr_descripcion'] = '<a href="#" onclick="viewCaj('.$arrCaj[$i]['caj_id'].','.$arrCaj[$i]['caj_tipo'].')">'.$arrCaj[$i]['caj_observaciones'].'</a>' ; 
+                $r['egr_monto'] = abs($arrCaj[$i]['caj_monto'])/floatval($tga);
+                array_push($egr,$r);
+            }
+            for ($i=0; $i < count($arrCaj_d); $i++) {
+                $r = array();
+                $r['egr_gt4_id'] = $arrCaj_d[$i]['caj_gt4_id'];
+                $r['egr_fecha'] = $arrCaj_d[$i]['caj_fecha'];
+                $r['egr_tipo'] = CAJ[$arrCaj_d[$i]['caj_tipo']];
+                $r['egr_cuenta'] = $arrCaj_d[$i]['caj_cue_id']['cue_nombre'];
+                $r['egr_descripcion'] = '<a href="#" onclick="viewCaj('.$arrCaj_d[$i]['caj_id'].','.$arrCaj_d[$i]['caj_tipo'].')">'.$arrCaj_d[$i]['caj_observaciones'].'</a>' ; 
+                $r['egr_monto'] = abs($arrCaj_d[$i]['caj_monto']);
+                array_push($egr,$r);
+            }
+        } 
+        if ($age['age_gt4_id']['gt4_id']==1) {
+            for ($i=0; $i < count($arrCaj); $i++) {
+                $r = array();
+                $r['egr_gt4_id'] = $arrCaj[$i]['caj_gt4_id'];
+                $r['egr_fecha'] = $arrCaj[$i]['caj_fecha'];
+                $r['egr_tipo'] = CAJ[$arrCaj[$i]['caj_tipo']];
+                $r['egr_cuenta'] = $arrCaj[$i]['caj_cue_id']['cue_nombre'];
+                $r['egr_descripcion'] = '<a href="#" onclick="viewCaj('.$arrCaj[$i]['caj_id'].','.$arrCaj[$i]['caj_tipo'].')">'.$arrCaj[$i]['caj_observaciones'].'</a>' ; 
+                $r['egr_monto'] = abs($arrCaj[$i]['caj_monto']);
+                array_push($egr,$r);
+            }
+            for ($i=0; $i < count($arrCaj_d); $i++) {
+                $r = array();
+                $r['egr_gt4_id'] = $arrCaj_d[$i]['caj_gt4_id'];
+                $r['egr_fecha'] = $arrCaj_d[$i]['caj_fecha'];
+                $r['egr_tipo'] = CAJ[$arrCaj_d[$i]['caj_tipo']];
+                $r['egr_cuenta'] = $arrCaj_d[$i]['caj_cue_id']['cue_nombre'];
+                $r['egr_descripcion'] = '<a href="#" onclick="viewCaj('.$arrCaj_d[$i]['caj_id'].','.$arrCaj_d[$i]['caj_tipo'].')">'.$arrCaj_d[$i]['caj_observaciones'].'</a>' ; 
+                $r['egr_monto'] = abs($arrCaj_d[$i]['caj_monto']);
+                array_push($egr,$r);
+            }
+        } 
+
+
         for ($i=0; $i < count($nc); $i++) {
             $r = array();
             $r['egr_gt4_id'] = $nc[$i]['caj_gt4_id'];

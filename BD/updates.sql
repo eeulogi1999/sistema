@@ -99,3 +99,4 @@ CREATE TABLE `company5_bd_20602849172`.`inversiones`
 
 
 INSERT INTO `modulos` (`gmo_id`, `gmo_titulo`, `gmo_descripcion`, `gmo_gmo_id`, `gmo_path`, `gmo_icon`, `gmo_order`, `gmo_status`) VALUES (NULL, 'COMISIONES DE VENTAS', 'COMISIONES DE VENTAS', '37', '/Analiticas/comVentas', 'fas fa-tag', '1', '1');
+

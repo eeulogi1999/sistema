@@ -193,8 +193,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }else{
             fetch(base_url+'/Dashboard/getBieGen/'+sbi_table.getSelectedItem().sbi_bie_id.bie_id)
             .then(r=>r.json())
-            .then(r=>{$('#mde_vu').val(parseFloat(r.pri_p).toFixed(2));
-            mdeProducto();})
+            .then(r=>{
+                $('#mde_vu').val(parseFloat(r?.pri_p??0).toFixed(2));
+                    mdeProducto();
+                })
             // $('#mde_vu').val(parseFloat(sbi_table.getSelectedItem().sbi_p).toFixed(2));
         }
         mdeProducto();

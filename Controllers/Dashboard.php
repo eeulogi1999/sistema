@@ -153,11 +153,12 @@
 			die();
 		}
 		public function getBieGen($id){
+			
 			$this->newModel('prices');
 			$k = $this->prices->searchRegistro(array('pri_bie_id'=>$id,'custom'=>'pri_tipo = 1'),'pri_bie_id,MAX(pri_fecha) AS pri_fecha');
 				$where['pri_bie_id'] = $id;
 				$where['pri_tipo'] = 1;
-				$where['pri_fecha'] = $k['pri_fecha'];
+				$where['pri_fecha'] = $k['pri_fecha']??'2023-01-01';
 			$p = $this->prices->searchRegistro($where,'*',array('pri_bie_id','pri_gus_id'));
 			echo json_encode($p,JSON_UNESCAPED_UNICODE);
 			die();

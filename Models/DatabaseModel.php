@@ -213,6 +213,7 @@
 					}
 				}
 			}
+			
 			$sql = "SELECT $select FROM {$this->name_table} $strWhere";
 			$request = $this->x->select($sql);
 			if (!empty($request)){
