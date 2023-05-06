@@ -24,7 +24,7 @@ class Ppagos extends Controllers{
     public function getPpagos(){
         $pre = 'ppa';
         $tabla = $this->getTable($pre);
-        $arrData = $this->{$tabla}->selectRegistros();
+        $arrData = $this->{$tabla}->selectRegistros(array('custom'=>'DATE_FORMAT(ppa_fecha, "%Y-%m") = '.$_SESSION['periodo']));
         for ($i=0; $i < count($arrData); $i++) {
             $btnView = '';
             $btnEdit = '';

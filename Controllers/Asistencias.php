@@ -19,7 +19,7 @@ class Asistencias extends Controllers{
         $this->views->getView($this,"asistencias",$data);
     }
     public function getAsistencias(){
-        $rwcol = $this->colaboradores->selectRegistros();
+        $rwcol = $this->colaboradores->selectRegistros(array('col_status'=>1));
         $rw = array();
         for ($i=0; $i < count($rwcol); $i++) { 
             $r['asi_col_id'] = $rwcol[$i];

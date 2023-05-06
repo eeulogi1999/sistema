@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded',function () {
         });
     }
     if (document.querySelector('#asi_col_id')) {
-        $('#asi_col_id').loadOptions('colaboradores',['col_gpe_id.gpe_nombre','col_gpe_id.gpe_apellidos']);   
+        $('#asi_col_id').loadOptions('colaboradores',['col_gpe_id.gpe_nombre','col_gpe_id.gpe_apellidos'],{'col_status':1});   
     }
     if (document.querySelector("#week")) {
         document.querySelector("#week").value  = data.asi.asi_week;

@@ -134,9 +134,9 @@ class Gerencial extends Controllers{
             array('caj_gt4_id'=>2,'custom'=>'caj_cue_id != 22 AND caj_cue_id IS NOT NULL AND DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']),' SUM(caj_monto) AS saldo ')['saldo'];
 
         $this->newController('Main');
-        $tce = $this->Main->getTcambio(date('Y-m-d'),true);
+        $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
         unset($this->Main);
-        $res[1]['res_total'] = $s+($d*$tce['tce_gtc_id']['gtc_tcompra']);
+        $res[1]['res_total'] = $s+($d*floatval($tga));
 
         $res[1]['res_options']='<button class="btn btn-warning  btn-sm" onClick="resCuentas()"><i class="far fa-eye"></i></button>';
 

@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded',function () {
             ]
         });
     }
-    $('#ppa_col_id').loadOptions('colaboradores',['col_gpe_id.gpe_nombre']);    
+    $('#ppa_col_id').loadOptions('colaboradores',['col_gpe_id.gpe_nombre','col_gpe_id.gpe_apellidos'],{'col_status':1});    
     $('#caj_cue_id').loadOptions('cuentas',['cue_nombre'],{'cue_status':1});
     $('#caj_t1m_id').loadOptions('t1mediopagos',['t1m_descripcion'],{'t1m_status':1});
 });
