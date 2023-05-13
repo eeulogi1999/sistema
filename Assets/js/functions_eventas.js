@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded',function () {
             "numerate": true,
             "columns":[
                 {"data":"mov_doc",header:{t:"DOC.",align:'center'},tipo:'string'},
-                {"data":"mov_age_id.age_gem_id.gem_razonsocial",header:"AGENTE",tipo:'string'},
+                {"data":"mov_age_id.age_gem_id.gem_razonsocial",header:"AGENTE",tipo:'string',render:(r)=>r.mov_age_id.age_gem_id?.gem_razonsocial??r.mov_age_id.age_gpe_id?.gpe_nombre},
                 {"data":"mov_cue_id.cue_nombre",header:"CUENTAS",tipo:'string'},
                 {"data":"mov_bie_id.bie_nombre",header:"MATERIAL",tipo:'string'},
                 {"data":"mov_mde_id.0.mde_q",header:{t:"CANT./KG",align:'right'},tipo:'float'},
