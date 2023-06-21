@@ -86,12 +86,21 @@ class Planillas extends Controllers{
 
             $swe = $this->sweeks->searchRegistro(array(
                 'swe_col_id'=>$rwcol[$i]['col_id'],
+                'swe_tipo'=>0,
                 'swe_week'=>$week-1));
-
             if (!empty($swe)) {
                 $r['pla_saldo'] = floatval($swe['swe_saldo']);
             }
-            $r['pla_tpagar'] = $r['pla_saldo']-abs($r['pla_adelantos']);
+            $r['pla_ext']=0;
+            $ext = $this->sweeks->searchRegistro(array(
+                'swe_col_id'=>$rwcol[$i]['col_id'],
+                'swe_week'=>$week-1,
+                'custom'=>'swe_tipo != 0',
+                ),'SUM(swe_saldo) as swe_saldo');
+            if (!empty($ext)) {
+                $r['pla_ext'] = floatval($ext['swe_saldo']);
+            }
+            $r['pla_tpagar'] = $r['pla_saldo']-abs($r['pla_adelantos'])+$r['pla_ext'];
 
             if ($r['pla_ndias']>0) {
                 $r['pla_tpagar'] += $r['pla_sueldo']+$r['pla_mhxtras'];
