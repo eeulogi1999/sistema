@@ -492,7 +492,6 @@ class Liquidez extends Controllers{
         unset($this->Main);
         foreach ($res as $i => $d) {
             if ($d['mov_cue_id']['cue_gt4_id']['gt4_id']==2) {
-                $d['mov_sum'] = $d['mov_sum']*floatval($tga);
                 $res[$i]['mov_sum'] = $d['mov_sum']*floatval($tga);
             }
             $res[$i]['mov_detraccion'] = $d['mov_sum']*0.177;
