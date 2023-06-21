@@ -35,7 +35,7 @@
         <!-- User Menu-->
         <li>
           <div class="app-nav__item p-2">
-          <a class="btn-primary btn btn-sm" target="_blank" href="https://micro-logistica-oi0hunlbb-eeulogi1999.vercel.app/apps/comisiones/">NEW SISTEM</a>
+          <a class="btn-primary btn btn-sm" target="_blank" href="https://muxt-one.vercel.app">NEW SISTEM</a>
           </div>
         </li>
         <?php if(!empty($_SESSION['per'][3]['r'])){ ?>
