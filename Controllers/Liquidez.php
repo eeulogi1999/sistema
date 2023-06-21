@@ -486,14 +486,14 @@ class Liquidez extends Controllers{
             $out = false;
         }
         
-        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND '.$trim.'  GROUP BY mov_cue_id'));
+        $res = $this->movimientos->selectCustoms('mov_cue_id,SUM(mov_subtotal) as mov_sum',array('mov_alm_id'=>$_SESSION['alm']['alm_id'],'mov_tipo'=>1,'mov_gt4_id'=>1,'custom'=>'mov_t10_id != 51 AND mov_cue_id IS NOT NULL AND '.$trim.'  GROUP BY mov_cue_id'));
         $this->newController('Main');
         $tga = $this->Main->getTcambio(date('Y-m-d'),true)['tce_gtc_id']['gtc_tcompra'];
         unset($this->Main);
         foreach ($res as $i => $d) {
-            if ($d['mov_cue_id']['cue_gt4_id']['gt4_id']==2) {
-                $res[$i]['mov_sum'] = $d['mov_sum']*floatval($tga);
-            }
+            // if ($d['mov_cue_id']['cue_gt4_id']['gt4_id']==2) {
+            //     $res[$i]['mov_sum'] = $d['mov_sum']*floatval($tga);
+            // }
             $res[$i]['mov_detraccion'] = $d['mov_sum']*0.177;
             $res[$i]['mov_impuesto'] = $d['mov_sum']*0.025; //($res[$i]['mov_cue_id']['cue_porcentaje']/100)
             $res[$i]['mov_det_liq'] = $res[$i]['mov_detraccion']-$res[$i]['mov_impuesto'];
