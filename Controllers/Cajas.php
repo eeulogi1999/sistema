@@ -1,5 +1,5 @@
 <?php 
-@ob_start();
+// @ob_start();
 class Cajas extends Controllers{
     public function __construct(){
         parent::__construct('cajas');   
