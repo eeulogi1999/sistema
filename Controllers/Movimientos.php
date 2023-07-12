@@ -1,5 +1,7 @@
 <?php 
-
+if ($method=='getPdf'||$method=='getHtml') {
+    @ob_start();
+}
 require 'Libraries/html2pdf/vendor/autoload.php';
 require 'Libraries/numero2letras/vendor/autoload.php';
 require_once 'Libraries/dompdf/vendor/autoload.php';
@@ -474,7 +476,6 @@ class Movimientos extends Controllers{
         die();
     }
     public function getPdf($mov_id){
-        @ob_start();
         ob_end_clean();
         $result = Endroid\QrCode\Builder\Builder::create()
             ->writer(new Endroid\QrCode\Writer\PngWriter())
