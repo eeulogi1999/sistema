@@ -527,7 +527,7 @@ class Movimientos extends Controllers{
         die();
     }
     public function getHtml($mov_id){
-        //ob_end_clean();
+        ob_end_clean();
         $result = Endroid\QrCode\Builder\Builder::create()
             ->writer(new Endroid\QrCode\Writer\PngWriter())
             ->writerOptions([])
@@ -610,5 +610,5 @@ class Movimientos extends Controllers{
         die();  
     }
 }
-//@ob_start('getPdf');
+@ob_start('getPdf');
 ?>
