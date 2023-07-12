@@ -1,5 +1,5 @@
 <?php 
-@ob_start();
+// @ob_start();
 require 'Libraries/html2pdf/vendor/autoload.php';
 require 'Libraries/numero2letras/vendor/autoload.php';
 require_once 'Libraries/dompdf/vendor/autoload.php';
