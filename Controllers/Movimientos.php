@@ -1,5 +1,5 @@
 <?php 
-// @ob_start();
+@ob_start();
 require 'Libraries/html2pdf/vendor/autoload.php';
 require 'Libraries/numero2letras/vendor/autoload.php';
 require_once 'Libraries/dompdf/vendor/autoload.php';
@@ -405,7 +405,8 @@ class Movimientos extends Controllers{
         echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function getMovimiento($mov_id,$return = false) {     
+    public function getMovimiento($mov_id,$return = false) {    
+        ob_end_clean(); 
         $mov = $this->movimientos->selectRegistro($mov_id);
         $mov['mov_mde_id'] = $this->mdetalles->selectRegistros(array('mde_mov_id'=>$mov_id),array('mde_mov_id')); 
         if (!empty($mov['mov_age_id'])) {
@@ -473,8 +474,7 @@ class Movimientos extends Controllers{
         die();
     }
     public function getPdf($mov_id){
-        @ob_start();
-        // ob_end_clean();
+        ob_end_clean();
         $result = Endroid\QrCode\Builder\Builder::create()
             ->writer(new Endroid\QrCode\Writer\PngWriter())
             ->writerOptions([])
@@ -528,8 +528,7 @@ class Movimientos extends Controllers{
         die();
     }
     public function getHtml($mov_id){
-        @ob_start();
-        // ob_end_clean();
+        ob_end_clean();
         $result = Endroid\QrCode\Builder\Builder::create()
             ->writer(new Endroid\QrCode\Writer\PngWriter())
             ->writerOptions([])

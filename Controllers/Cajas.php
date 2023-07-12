@@ -1,5 +1,5 @@
 <?php 
-// @ob_start();
+@ob_start();
 class Cajas extends Controllers{
     public function __construct(){
         parent::__construct('cajas');   
@@ -110,6 +110,7 @@ class Cajas extends Controllers{
         $this->views->getView($this,"cajas",$data);
     }
     public function getCajas($caj_tipo){
+        ob_end_clean();
         $arrData = $this->cajas->selectRegistros(array('caj_tipo'=>$caj_tipo,'custom'=>'DATE_FORMAT(caj_fecha, "%Y-%m") = '.$_SESSION['periodo']));
         $pre = 'caj'; $tabla = 'Cajas';
         for ($i=0; $i < count($arrData); $i++) { 
