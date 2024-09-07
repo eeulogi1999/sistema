@@ -8,13 +8,13 @@
 	date_default_timezone_set('America/Lima');
 
 	//Datos de conexión a Base de Datos
-	const DB_HOST = "localhost";
+	const DB_HOST = "smysql";
 
 	const DB_SUBNAME = "company5_bd_"; 
 	const DB_NAME = "company5_bd_cacel";
 
-	const DB_USER = "company5_root";
-	const DB_PASSWORD = "1root-SOM";
+	const DB_USER = "root";
+	const DB_PASSWORD = "example";
 
 	const DB_CHARSET = "utf8";
 
