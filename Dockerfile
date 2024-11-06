@@ -16,7 +16,6 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install zip \
     && a2enmod rewrite
 
-COPY . /var/www/html/sistema
 COPY .htaccess.base /var/www/html/.htaccess
-
+VOLUME ["/var/www/html"]
 CMD ["apache2-foreground"]

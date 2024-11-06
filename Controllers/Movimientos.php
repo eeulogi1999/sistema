@@ -512,11 +512,13 @@ class Movimientos extends Controllers{
         $data['mov']['mov_qr'] = $result->getDataUri();
         $data['mov']['mov_qr_web'] = $web->getDataUri();
         $html = getFile("Movimientos/pdf",$data);
+        error_reporting(E_ALL & ~E_WARNING);
         $html2pdf = new Spipu\Html2Pdf\Html2Pdf('p','A4','es','true','UTF-8');
         $html2pdf->pdf->setTitle($data['mov']['mov_serie'].'-'.str_pad($data['mov']['mov_numero'],8,0,STR_PAD_LEFT));
         $html2pdf->writeHTML($html);
         $html2pdf->output('comprobante-'.$mov_id.'.pdf');   
 
+        error_reporting(E_ALL);
         // $dompdf = new Dompdf\Dompdf();
         // ob_end_clean();
         // $options = new Dompdf\Options();
