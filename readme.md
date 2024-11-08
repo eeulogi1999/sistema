@@ -10,7 +10,7 @@ docker service create
   --name sphpserver
   --network netlink
   --mount type=bind,source=C:/laragon/www/sistema,target=/var/www/html/sistema
-  --publish 80:80
+  --publish mode=host,target=80,published=8086
  phpserver
 
 --ejemplo
